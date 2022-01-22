@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: DEV WORKFLOW
+name: BUILD WORKFLOW
 
 on:
   push:
@@ -10,14 +10,13 @@ on:
     branches: [ master ]
 
 jobs:
-  build_app:
+  build:
 
-    environment: DEV
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [17.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -30,26 +29,8 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: |
-          sudo apt-get install tree
-          tree /dist
-
-
-      # Heroku login
-      - name: Heroku login
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:login
-
-      # Push the Docker image to Heroku Container Registry
-      - name: Publish
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          APP_NAME: ${{ secrets.HEROKU_APP }}
-        run: |
-          heroku container:push web -a ${{ secrets.HEROKU_APP }}
-          heroku container:release web -a ${{ secrets.HEROKU_APP }}
-
-
+              sudo apt-get install tree
+              tree
 
 
 
