@@ -6,7 +6,7 @@
         class="brand-image img-circle elevation-3"
         style="opacity: 0.8"
     />
-    <span class="brand-text font-weight-light">AdminLTE 3</span>
+    <span class="brand-text font-weight-light">Risk Evaluator</span>
 </a>
 
 <!-- Sidebar -->
@@ -21,13 +21,19 @@
             />
         </div>
         <div class="info">
-            <a [routerLink]="['/profile']" class="d-block">
-                {{ user.email }}
+          <div *ngIf="user.email">
+            <a  [routerLink]="['/profile']" class="d-block">
+              {{ user.email }}
             </a>
+          </div>
+          <div *ngIf="!user.email">
+            <a  [routerLink]="['/profile']" class="d-block">
+              Visitor
+            </a>
+          </div>
         </div>
     </div>
-
-    <!-- Sidebar Menu -->
+   <!-- Sidebar Menu -->
     <nav class="mt-2" style="overflow-y: hidden">
         <ul
             class="nav nav-pills nav-sidebar flex-column"
@@ -41,4 +47,22 @@
             ></app-menu-item>
         </ul>
     </nav>
+  <br>
+  <li class="nav-header">ADMINISTRATION </li>
+
+  <nav class="mt-2" style="overflow-y: hidden">
+    <ul
+      class="nav nav-pills nav-sidebar flex-column"
+      data-widget="treeview"
+      role="menu"
+      data-accordion="false"
+    >
+      <app-menu-item
+        *ngFor="let item of adminMenu"
+        [menuItem]="item"
+      ></app-menu-item>
+    </ul>
+  </nav>
+
+
 </div>

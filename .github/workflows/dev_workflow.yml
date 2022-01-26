@@ -4,15 +4,14 @@
 name: DEV WORKFLOW
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
+    types: [ closed ]
 
 jobs:
   build_app:
 
-    environment: DEV
+    environment: DEV2
     runs-on: ubuntu-latest
 
     strategy:

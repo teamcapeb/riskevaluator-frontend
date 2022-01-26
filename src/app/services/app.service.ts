@@ -2,20 +2,21 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Gatekeeper} from 'gatekeeper-client-sdk';
+/* eslint-disable */
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppService {
-    public user: any = null;
+    public user: any = true;
 
     constructor(private router: Router, private toastr: ToastrService) {}
 
     async loginByAuth({email, password}) {
         try {
-            const token = await Gatekeeper.loginByAuth(email, password);
-            localStorage.setItem('token', token);
-            await this.getProfile();
+            //const token = await Gatekeeper.loginByAuth(email, password);
+            //localStorage.setItem('token', token);
+            // await this.getProfile();
             this.router.navigate(['/']);
         } catch (error) {
             this.toastr.error(error.message);
@@ -24,9 +25,9 @@ export class AppService {
 
     async registerByAuth({email, password}) {
         try {
-            const token = await Gatekeeper.registerByAuth(email, password);
-            localStorage.setItem('token', token);
-            await this.getProfile();
+            //const token = await Gatekeeper.registerByAuth(email, password);
+            //localStorage.setItem('token', token);
+            //await this.getProfile();
             this.router.navigate(['/']);
         } catch (error) {
             this.toastr.error(error.message);
@@ -35,9 +36,9 @@ export class AppService {
 
     async loginByGoogle() {
         try {
-            const token = await Gatekeeper.loginByGoogle();
-            localStorage.setItem('token', token);
-            await this.getProfile();
+            //const token = await Gatekeeper.loginByGoogle();
+            //localStorage.setItem('token', token);
+            //await this.getProfile();
             this.router.navigate(['/']);
         } catch (error) {
             this.toastr.error(error.message);
@@ -46,9 +47,9 @@ export class AppService {
 
     async registerByGoogle() {
         try {
-            const token = await Gatekeeper.registerByGoogle();
-            localStorage.setItem('token', token);
-            await this.getProfile();
+            //const token = await Gatekeeper.registerByGoogle();
+            //localStorage.setItem('token', token);
+            //await this.getProfile();
             this.router.navigate(['/']);
         } catch (error) {
             this.toastr.error(error.message);
@@ -57,9 +58,9 @@ export class AppService {
 
     async loginByFacebook() {
         try {
-            const token = await Gatekeeper.loginByFacebook();
-            localStorage.setItem('token', token);
-            await this.getProfile();
+            //const token = await Gatekeeper.loginByFacebook();
+            //localStorage.setItem('token', token);
+            //await this.getProfile();
             this.router.navigate(['/']);
         } catch (error) {
             this.toastr.error(error.message);
@@ -68,9 +69,9 @@ export class AppService {
 
     async registerByFacebook() {
         try {
-            const token = await Gatekeeper.registerByFacebook();
-            localStorage.setItem('token', token);
-            await this.getProfile();
+            //const token = await Gatekeeper.registerByFacebook();
+            //localStorage.setItem('token', token);
+            //await this.getProfile();
             this.router.navigate(['/']);
         } catch (error) {
             this.toastr.error(error.message);
@@ -79,16 +80,16 @@ export class AppService {
 
     async getProfile() {
         try {
-            this.user = await Gatekeeper.getProfile();
+            //this.user = await Gatekeeper.getProfile();
         } catch (error) {
-            this.logout();
+            //this.logout();
             throw error;
         }
     }
 
     logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('gatekeeper_token');
+        //localStorage.removeItem('token');
+       // localStorage.removeItem('gatekeeper_token');
         this.user = null;
         this.router.navigate(['/login']);
     }

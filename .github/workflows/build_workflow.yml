@@ -5,9 +5,8 @@ name: BUILD WORKFLOW
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches-ignore:
+      - master
 
 jobs:
   build:
@@ -29,8 +28,8 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: |
-              sudo apt-get install tree
-              tree
+          sudo apt-get install tree
+          tree -I 'node_modules*|node_modules'
 
 
 
