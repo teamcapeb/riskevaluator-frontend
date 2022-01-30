@@ -9,7 +9,7 @@ import {AppService} from '@services/app.service';
 })
 export class HeaderComponent implements OnInit {
     @Output() toggleMenuSidebar: EventEmitter<any> = new EventEmitter<any>();
-    public searchForm: FormGroup;
+    public searchForm: FormGroup | undefined;
 
     constructor(private appService: AppService) {}
 

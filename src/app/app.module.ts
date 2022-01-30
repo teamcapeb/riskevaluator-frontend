@@ -25,7 +25,6 @@ import localeEn from '@angular/common/locales/en';
 import {UserComponent} from '@modules/main/header/user/user.component';
 import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.component';
 import {RecoverPasswordComponent} from '@modules/recover-password/recover-password.component';
-import {LanguageComponent} from '@modules/main/header/language/language.component';
 import {PrivacyPolicyComponent} from './modules/privacy-policy/privacy-policy.component';
 import {MainMenuComponent} from './pages/main-menu/main-menu.component';
 import {SubMenuComponent} from './pages/main-menu/sub-menu/sub-menu.component';
@@ -53,7 +52,6 @@ registerLocaleData(localeEn, 'en-EN');
         UserComponent,
         ForgotPasswordComponent,
         RecoverPasswordComponent,
-        LanguageComponent,
         PrivacyPolicyComponent,
         MainMenuComponent,
         SubMenuComponent,
