@@ -1,6 +1,6 @@
 <div class="card card-outline card-primary">
     <div class="card-header text-center">
-        <a [routerLink]="['/']" class="h1"><b>Admin</b>LTE</a>
+        <a [routerLink]="['/']" class="h1"><b>RISK</b>EVALUATOR</a>
     </div>
     <div class="card-body">
         <p class="login-box-msg">Sign in to start your session</p>
@@ -53,29 +53,6 @@
                 <!-- /.col -->
             </div>
         </form>
-
-        <div class="social-auth-links text-center mb-3">
-            <app-button
-                class="mb-2"
-                [block]="true"
-                [loading]="isFacebookLoading"
-                [disabled]="isAuthLoading || isGoogleLoading"
-                [icon]="'facebook'"
-                (click)="loginByFacebook()"
-            >
-                Sign in using Facebook
-            </app-button>
-            <app-button
-                [block]="true"
-                [loading]="isGoogleLoading"
-                [disabled]="isAuthLoading || isFacebookLoading"
-                [icon]="'google'"
-                [color]="'danger'"
-                (click)="loginByGoogle()"
-            >
-                Sign in using Google+
-            </app-button>
-        </div>
 
         <p class="mb-1">
             <a [routerLink]="['/forgot-password']">I forgot my password</a>

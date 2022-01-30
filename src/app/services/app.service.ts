@@ -12,17 +12,19 @@ export class AppService {
 
     constructor(private router: Router, private toastr: ToastrService) {}
 
+    // @ts-ignore
     async loginByAuth({email, password}) {
-        try {
-            //const token = await Gatekeeper.loginByAuth(email, password);
-            //localStorage.setItem('token', token);
-            // await this.getProfile();
-            this.router.navigate(['/']);
-        } catch (error) {
-            this.toastr.error(error.message);
-        }
-    }
+          try {
+              //const token = await Gatekeeper.loginByAuth(email, password);
+              //localStorage.setItem('token', token);
+              // await this.getProfile();
+              this.router.navigate(['/']);
+          } catch (error) {
+              this.toastr.error(error.message);
+          }
+      }
 
+    // @ts-ignore
     async registerByAuth({email, password}) {
         try {
             //const token = await Gatekeeper.registerByAuth(email, password);

@@ -25,29 +25,29 @@ export const MENU = [
     },
     {
         name: 'Evaluer',
-        path: ['/blank']
+        path: ['/evaluer']
     },
     {
         name: 'Historiques',
-        path: ['/Historiques']
+        path: ['/historiques']
     },
     {
         name: 'Contact',
-        path: ['/Contact']
+        path: ['/contact']
     }
     ];
 
 export const ADMIN_MENU = [
   {
     name: 'Gestion questionnaire',
-    path: ['/gestion_questionnaire']
+    path: ['/gestion-questionnaire']
   },
   {
     name: 'Gestion métiers',
-    path: ['/gestion_metiers']
+    path: ['/gestion-metiers']
   },
   {
     name: 'Gestion Comptes',
-    path: ['/gestion_compte']
+    path: ['/gestion-compte']
   }
 ];

@@ -26,11 +26,15 @@ import {UserComponent} from '@modules/main/header/user/user.component';
 import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.component';
 import {RecoverPasswordComponent} from '@modules/recover-password/recover-password.component';
 import {PrivacyPolicyComponent} from './modules/privacy-policy/privacy-policy.component';
-import {MainMenuComponent} from './pages/main-menu/main-menu.component';
-import {SubMenuComponent} from './pages/main-menu/sub-menu/sub-menu.component';
 import {MenuItemComponent} from './components/menu-item/menu-item.component';
 import {DropdownComponent} from './components/dropdown/dropdown.component';
 import {DropdownMenuComponent} from './components/dropdown/dropdown-menu/dropdown-menu.component';
+import { GestionComptesComponent } from './pages/administration/gestion-comptes/gestion-comptes.component';
+import { GestionMetiersComponent } from './pages/administration/gestion-metiers/gestion-metiers.component';
+import { GestionQuestionnaireComponent } from './pages/administration/gestion-questionnaire/gestion-questionnaire.component';
+import { EvaluerComponent } from './pages/visitor/evaluer/evaluer.component';
+import { HistoriqueComponent } from './pages/visitor/historique/historique.component';
+import { ContactComponent } from './pages/visitor/contact/contact.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -53,11 +57,15 @@ registerLocaleData(localeEn, 'en-EN');
         ForgotPasswordComponent,
         RecoverPasswordComponent,
         PrivacyPolicyComponent,
-        MainMenuComponent,
-        SubMenuComponent,
         MenuItemComponent,
         DropdownComponent,
-        DropdownMenuComponent
+        DropdownMenuComponent,
+        GestionComptesComponent,
+        GestionMetiersComponent,
+        GestionQuestionnaireComponent,
+        EvaluerComponent,
+        HistoriqueComponent,
+        ContactComponent
     ],
     imports: [
         BrowserModule,

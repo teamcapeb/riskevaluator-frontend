@@ -11,6 +11,8 @@
 
 @import '../node_modules/ngx-toastr/toastr.css';
 
+
+
 body {
     width: 100vw;
     height: 100vh;
@@ -86,6 +88,11 @@ body {
         color: #495057 !important;
     }
 }
+
+.nave-active {
+  color: red;
+}
+
 
 .user-menu > .dropdown-menu > .user-footer {
     background-color: #f8f9fa;

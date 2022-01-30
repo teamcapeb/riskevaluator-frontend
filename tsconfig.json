@@ -18,8 +18,10 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
+    "useUnknownInCatchVariables": false,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
+    "strictNullChecks" : false,
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "path": ["../node_modules/path-browserify"],
@@ -42,7 +44,6 @@
     "useUnknownInCatchVariables": false,
     "strictPropertyInitialization": false,
     "strictNullChecks" : false,
-    "strictFunctionTypes": false
-
+    "strictFunctionTypes": false,
   }
 }
