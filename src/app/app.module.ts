@@ -36,6 +36,10 @@ import { EvaluerComponent } from './pages/visitor/evaluer/evaluer.component';
 import { HistoriqueComponent } from './pages/visitor/historique/historique.component';
 import { ContactComponent } from './pages/visitor/contact/contact.component';
 import { authInterceptorProviders } from "@services/_helpers/auth.interceptor";
+import { GestionQuestionComponent } from './pages/administration/gestion-question/gestion-question.component';
+import { ListComponent } from './components/list/list.component';
+import { ListItemComponent } from './components/list-item/list-item.component';
+import { ListItemButtonComponent } from './components/list-item-button/list-item-button.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -66,7 +70,11 @@ registerLocaleData(localeEn, 'en-EN');
         GestionQuestionnaireComponent,
         EvaluerComponent,
         HistoriqueComponent,
-        ContactComponent
+        ContactComponent,
+        GestionQuestionComponent,
+        ListComponent,
+        ListItemComponent,
+        ListItemButtonComponent
     ],
   imports: [
     BrowserModule,

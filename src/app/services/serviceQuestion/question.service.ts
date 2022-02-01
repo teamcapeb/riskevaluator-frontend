@@ -14,8 +14,8 @@ export class QuestionService {
 
   constructor(private http: HttpClient) {}
 
-  getAllReponses(questionId: string): Observable<Reponse> {
-    return this.http.get<Reponse>(`${this.baseUrl}/${questionId}/Reponses`);
+  getAllReponses(questionId: string): Observable<Reponse[]> {
+    return this.http.get<Reponse[]>(`${this.baseUrl}/${questionId}/Reponses`);
   }
 
   createReponse(questionId: string, reponse: Reponse): Observable<Reponse | string>{
@@ -26,11 +26,11 @@ export class QuestionService {
     return this.http.get<Question>(`${this.baseUrl}/${questionId}`);
   }
 
-  update(questionId: string, question: Question): Observable<Question> {
+  update(questionId: string, question: Question): Observable<Question | string> {
     return this.http.put<Question>(`${this.baseUrl}/${questionId}`, question);
   }
 
-  delete(questionId: string): Observable<Question> {
+  delete(questionId: string): Observable<Question | string> {
     return this.http.delete<Question>(`${this.baseUrl}/${questionId}`);
   }
 }
