@@ -8,6 +8,7 @@ import {ToastrService} from 'ngx-toastr';
 import { AuthService } from "@services/auth.service";
 import { Router, RouterLink } from "@angular/router";
 
+
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
