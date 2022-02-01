@@ -1,71 +1,49 @@
 import {
     Component,
     OnInit,
-    Renderer2,
-    OnDestroy,
-    HostBinding
 } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AppService} from '@services/app.service';
 import {ToastrService} from 'ngx-toastr';
+import { AuthService } from "@services/auth.service";
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit, OnDestroy {
-    @HostBinding('class') class = 'register-box';
+export class RegisterComponent implements OnInit {
 
-    public registerForm: FormGroup;
-    public isAuthLoading = false;
-    public isGoogleLoading = false;
-    public isFacebookLoading = false;
+      form: any = {};
+      isSuccessful = false;
+      isSignUpFailed = false;
+      errorMessage = '';
+
 
     constructor(
-        private renderer: Renderer2,
         private toastr: ToastrService,
-        private appService: AppService
+        private authService: AuthService
     ) {}
 
     ngOnInit() {
-        this.renderer.addClass(
-            document.querySelector('app-root'),
-            'register-page'
-        );
-        this.registerForm = new FormGroup({
+        this.form = new FormGroup({
             email: new FormControl(null, Validators.required),
             password: new FormControl(null, [Validators.required]),
             retypePassword: new FormControl(null, [Validators.required])
         });
     }
 
-    async registerByAuth() {
-        if (this.registerForm.valid) {
-            this.isAuthLoading = true;
-            await this.appService.registerByAuth(this.registerForm.value);
-            this.isAuthLoading = false;
-        } else {
-            this.toastr.error('Form is not valid!');
+    onSubmit() {
+      this.authService.register(this.form).subscribe(
+        data => {
+          console.log(data);
+          this.isSuccessful = true;
+          this.isSignUpFailed = false;
+        },
+        err => {
+          this.errorMessage = err.error.message;
+          this.isSignUpFailed = true;
         }
-    }
-
-    async registerByGoogle() {
-        this.isGoogleLoading = true;
-        await this.appService.registerByGoogle();
-        this.isGoogleLoading = false;
-    }
-
-    async registerByFacebook() {
-        this.isFacebookLoading = true;
-        await this.appService.registerByFacebook();
-        this.isFacebookLoading = false;
-    }
-
-    ngOnDestroy() {
-        this.renderer.removeClass(
-            document.querySelector('app-root'),
-            'register-page'
-        );
+      );
     }
 }
