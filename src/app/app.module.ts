@@ -10,7 +10,7 @@ import {HeaderComponent} from '@modules/main/header/header.component';
 import {FooterComponent} from '@modules/main/footer/footer.component';
 import {MenuSidebarComponent} from '@modules/main/menu-sidebar/menu-sidebar.component';
 import {BlankComponent} from '@pages/blank/blank.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {ProfileComponent} from '@pages/profile/profile.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RegisterComponent} from '@modules/register/register.component';
@@ -35,6 +35,7 @@ import { GestionQuestionnaireComponent } from './pages/administration/gestion-qu
 import { EvaluerComponent } from './pages/visitor/evaluer/evaluer.component';
 import { HistoriqueComponent } from './pages/visitor/historique/historique.component';
 import { ContactComponent } from './pages/visitor/contact/contact.component';
+import { authInterceptorProviders } from "@services/_helpers/auth.interceptor";
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -67,19 +68,20 @@ registerLocaleData(localeEn, 'en-EN');
         HistoriqueComponent,
         ContactComponent
     ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        ToastrModule.forRoot({
-            timeOut: 3000,
-            positionClass: 'toast-top-right',
-            preventDuplicates: true
-        })
-    ],
-    providers: [],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: "toast-top-right",
+      preventDuplicates: true
+    }),
+    FormsModule
+  ],
+    providers: [authInterceptorProviders],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
