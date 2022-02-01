@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import Question from '../../interfaces/Question';
+import Reponse from '../../interfaces/Reponse';
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +14,23 @@ export class QuestionService {
 
   constructor(private http: HttpClient) {}
 
-  get(id: string): Observable<Question> {
-    return this.http.get<Question>(`${this.baseUrl}/${id}`);
+  getAllReponses(questionId: string): Observable<Reponse> {
+    return this.http.get<Reponse>(`${this.baseUrl}/${questionId}/Reponses`);
   }
 
-  update(id: string, question: Question): Observable<Question> {
-    return this.http.put<Question>(`${this.baseUrl}/${id}`, question);
+  createReponse(questionId: string, reponse: Reponse): Observable<Reponse | string>{
+    return this.http.post<Reponse>(`${this.baseUrl}/${questionId}/Reponses`, reponse);
   }
 
-  delete(id: string): Observable<Question> {
-    return this.http.delete<Question>(`${this.baseUrl}/${id}`);
+  get(questionId: string): Observable<Question> {
+    return this.http.get<Question>(`${this.baseUrl}/${questionId}`);
   }
 
+  update(questionId: string, question: Question): Observable<Question> {
+    return this.http.put<Question>(`${this.baseUrl}/${questionId}`, question);
+  }
+
+  delete(questionId: string): Observable<Question> {
+    return this.http.delete<Question>(`${this.baseUrl}/${questionId}`);
+  }
 }
