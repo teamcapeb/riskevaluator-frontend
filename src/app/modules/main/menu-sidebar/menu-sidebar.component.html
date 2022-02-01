@@ -15,18 +15,18 @@
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
             <img
-                [src]="user.picture || 'assets/img/default-profile.png'"
+                [src]="user?.picture || 'assets/img/default-profile.png'"
                 class="img-circle elevation-2"
                 alt="User Image"
             />
         </div>
         <div class="info">
-          <div *ngIf="user.email">
+          <div *ngIf="user?.email">
             <a  [routerLink]="['/profile']" class="d-block">
               {{ user.email }}
             </a>
           </div>
-          <div *ngIf="!user.email">
+          <div *ngIf="!user?.email">
             <a  [routerLink]="['/profile']" class="d-block">
               Visitor
             </a>
@@ -48,21 +48,26 @@
         </ul>
     </nav>
   <br>
-  <li class="nav-header">ADMINISTRATION </li>
 
-  <nav class="mt-2" style="overflow-y: hidden">
-    <ul
-      class="nav nav-pills nav-sidebar flex-column"
-      data-widget="treeview"
-      role="menu"
-      data-accordion="false"
-    >
-      <app-menu-item
-        *ngFor="let item of adminMenu"
-        [menuItem]="item"
-      ></app-menu-item>
-    </ul>
-  </nav>
+  <ng-container *ngIf="isLoggedIn && showAdminBoard">
+
+    <li class="nav-header">ADMINISTRATION </li>
+
+    <nav class="mt-2" style="overflow-y: hidden">
+      <ul
+        class="nav nav-pills nav-sidebar flex-column"
+        data-widget="treeview"
+        role="menu"
+        data-accordion="false"
+      >
+        <app-menu-item
+          *ngFor="let item of adminMenu"
+          [menuItem]="item"
+        ></app-menu-item>
+      </ul>
+    </nav>
+
+  </ng-container>
 
 
 </div>

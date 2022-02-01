@@ -1,12 +1,12 @@
 <app-dropdown class="user-menu">
     <ng-container dropdown-button>
         <img
-            [src]="user.picture || 'assets/img/default-profile.png'"
+            [src]="user?.picture || 'assets/img/default-profile.png'"
             class="user-image img-circle elevation-2"
             alt="User Image"
         />
     </ng-container>
-    <ng-container dropdown-menu>
+    <ng-container *ngIf="isLoggedIn" dropdown-menu>
         <li class="user-header bg-primary">
             <img
                 [src]="user.picture || 'assets/img/default-profile.png'"
@@ -18,16 +18,14 @@
                 <span>{{ user.email }}</span>
                 <small>
                     <span>Member since </span>
-                    <span>{{ formatDate(user.createdAt) }}</span>
+                    <span>{{ formatDate(user?.createdAt) }}</span>
                 </small>
             </p>
         </li>
         <!-- Menu Body -->
         <li class="user-body">
             <div class="row">
-                <div class="col-4 text-center">
-                    <a [routerLink]="['/']"> Tests</a>
-                </div>
+              {{ showAdminBoard?"You are admin": user?.email }}
             </div>
             <!-- /.row -->
         </li>
@@ -41,4 +39,24 @@
             >
         </li>
     </ng-container>
+    <ng-container *ngIf="!isLoggedIn" dropdown-menu>
+    <!-- Menu Body -->
+    <li class="user-body">
+      <div class="row">
+        <div class="col-4 text-center">
+          <a [routerLink]="['/login']" class="btn btn-default btn-flat">
+            Sign in
+          </a>
+        </div>
+        <div class="col-4 text-center">
+          <a [routerLink]="['/register']" class="btn btn-default btn-flat">
+            Register
+          </a>
+        </div>
+      </div>
+      <!-- /.row -->
+    </li>
+  </ng-container>
+
+
 </app-dropdown>

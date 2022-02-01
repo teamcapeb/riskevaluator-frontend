@@ -60,9 +60,10 @@ const visitors: Routes = [
   }
 ]
 
+// canActivate: [AuthGuard], canActivateChild: [AuthGuard]
 const routes: Routes = [
     {
-        path: '', component: MainComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard],
+        path: '', component: MainComponent,
         children: [ ...administration, ...visitors]
     },
     {

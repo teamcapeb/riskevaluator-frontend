@@ -1,5 +1,8 @@
 import {Component, HostBinding, OnInit, Renderer2} from '@angular/core';
 import {AppService} from '@services/app.service';
+import { ADMIN_MENU, MENU } from "@modules/main/menu-sidebar/menu-sidebar.component";
+import { TokenStorageService } from "@services/token-storage.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
     selector: 'app-main',
@@ -10,7 +13,18 @@ export class MainComponent implements OnInit {
     @HostBinding('class') class = 'wrapper';
     public sidebarMenuOpened = true;
 
-    constructor(private renderer: Renderer2, private appService: AppService) {}
+
+
+  private roles: string[];
+  isLoggedIn = false;
+  showAdminBoard = false;
+  username: string;
+  user:any;
+
+  constructor(private renderer: Renderer2,
+              private tokenStorageService: TokenStorageService,
+              private toastr: ToastrService,
+  ) {}
 
     ngOnInit() {
         this.renderer.removeClass(
@@ -21,7 +35,21 @@ export class MainComponent implements OnInit {
             document.querySelector('app-root'),
             'register-page'
         );
-    }
+
+
+      this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+        if (this.isLoggedIn) {
+          this.user = this.tokenStorageService.getUser();
+          this.roles = this.user.roles;
+
+          this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+
+          if(this.showAdminBoard)  this.toastr.info("you are connected as an admin","Admin Role")
+
+          this.username = this.user.username;
+        }
+      }
 
     toggleMenuSidebar() {
         if (this.sidebarMenuOpened) {
