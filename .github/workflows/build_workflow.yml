@@ -7,6 +7,10 @@ on:
   push:
     branches-ignore:
       - master
+  pull_request:
+    branches: [ main,  master]
+    types: [ opened ]
+
 
 jobs:
   build:
