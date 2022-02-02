@@ -17,6 +17,7 @@ import { HistoriqueComponent } from '@pages/visitor/historique/historique.compon
 import { GestionMetiersComponent } from '@pages/administration/gestion-metiers/gestion-metiers.component';
 import { GestionQuestionnaireComponent } from '@pages/administration/gestion-questionnaire/gestion-questionnaire.component';
 import { GestionComptesComponent } from '@pages/administration/gestion-comptes/gestion-comptes.component';
+import { GestionQuestionComponent } from './pages/administration/gestion-question/gestion-question.component';
 
 const administration: Routes = [
   {
@@ -26,6 +27,10 @@ const administration: Routes = [
   {
     path: 'gestion-questionnaire',
     component: GestionQuestionnaireComponent
+  },
+  {
+    path: 'gestion-question',
+    component: GestionQuestionComponent
   },
   {
     path: 'gestion-compte',
