@@ -3,7 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./src",
-    "outDir": "./dist/out-tsc",
+    "outDir": "./dist/app",
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
