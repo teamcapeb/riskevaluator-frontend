@@ -38,8 +38,8 @@ import { ContactComponent } from './pages/visitor/contact/contact.component';
 import { authInterceptorProviders } from "@services/_helpers/auth.interceptor";
 import { GestionQuestionComponent } from './pages/administration/gestion-question/gestion-question.component';
 import { ListComponent } from './components/list/list.component';
-import { ListItemComponent } from './components/list-item/list-item.component';
-import { ListItemButtonComponent } from './components/list-item-button/list-item-button.component';
+import { ListItemComponent } from './components/list/list-item/list-item.component';
+import { MetierFormComponent } from './pages/administration/gestion-metiers/metier-form/metier-form.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -74,7 +74,7 @@ registerLocaleData(localeEn, 'en-EN');
         GestionQuestionComponent,
         ListComponent,
         ListItemComponent,
-        ListItemButtonComponent
+        MetierFormComponent,
     ],
   imports: [
     BrowserModule,

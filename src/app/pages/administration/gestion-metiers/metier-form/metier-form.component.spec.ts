@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListItemButtonComponent } from './list-item-button.component';
+import { MetierFormComponent } from './metier-form.component';
 
-describe('ListItemButtonComponent', () => {
-  let component: ListItemButtonComponent;
-  let fixture: ComponentFixture<ListItemButtonComponent>;
+describe('MetierFormComponent', () => {
+  let component: MetierFormComponent;
+  let fixture: ComponentFixture<MetierFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListItemButtonComponent ]
+      declarations: [ MetierFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListItemButtonComponent);
+    fixture = TestBed.createComponent(MetierFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
