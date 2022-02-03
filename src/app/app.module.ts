@@ -40,6 +40,7 @@ import { GestionQuestionComponent } from './pages/administration/gestion-questio
 import { ListComponent } from './components/list/list.component';
 import { ListItemComponent } from './components/list/list-item/list-item.component';
 import { MetierFormComponent } from './pages/administration/gestion-metiers/metier-form/metier-form.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -87,7 +88,8 @@ registerLocaleData(localeEn, 'en-EN');
       positionClass: "toast-top-right",
       preventDuplicates: true
     }),
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]

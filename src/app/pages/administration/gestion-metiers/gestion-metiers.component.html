@@ -1,8 +1,14 @@
 
-<app-list title="Liste des metiers" (onAdd)="addMetierClick($event)" formId="formMetier">
+<app-list title="Liste des metiers" (onAdd)="add()" formId="formMetier">
     <ng-template [ngIf]="metiers | async" [ngIfElse]="loading">
         <ng-container *ngFor="let metier of metiers | async">
-            <app-list-item id="{{metier.idMetier}}" content="{{metier.nomMetier}}" data="{{metier}}"></app-list-item>
+            <app-list-item 
+                id="{{metier.idMetier}}" 
+                content="{{metier.nomMetier}}" 
+                [data]="metier" 
+                (onUpdate)="update($event)"
+                (onDelete)="delete($event)"
+            ></app-list-item>
         </ng-container>
     </ng-template>
 </app-list>
@@ -13,5 +19,5 @@
         </div>
     </div>
 </ng-template>
-<button data-target="#formMetier">modal</button>
-<app-metier-form [idForm]="'formMetier'" [metier]="actualMetier"></app-metier-form>
+
+<app-metier-form [metier]="actualMetier" (onConfirmation)="createOrUpdateOrDeleteMetier($event)" #metierForm></app-metier-form>

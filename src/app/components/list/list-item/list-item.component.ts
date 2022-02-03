@@ -21,13 +21,11 @@ export class ListItemComponent implements OnInit {
   }
 
   delete(): void {
-    console.log("Delete");
-    this.onDelete.emit([this.data]);
+    this.onDelete.emit({data: this.data, action:'delete'});
   }
 
   update(): void {
-    console.log("Update");
-    this.onUpdate.emit([this.data]);
+    this.onUpdate.emit({data: this.data, action:'update'});
   }
 
 }

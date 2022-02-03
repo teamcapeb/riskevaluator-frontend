@@ -1,4 +1,5 @@
 import { Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList } from '@angular/core';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ListItemComponent } from './list-item/list-item.component';
 
 @Component({
@@ -9,21 +10,22 @@ import { ListItemComponent } from './list-item/list-item.component';
 export class ListComponent implements OnInit {
 
   @Input() title!: string;
-  @Input() formId: string;
   @Output() onAdd: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren(ListItemComponent)
   listItems: QueryList<ListItemComponent>;
 
-  constructor() { }
+  closeResult = '';
+
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {}
 
   ngAfterViewInit(){
   }
 
-  add(event: any): void {
-    this.onAdd.emit([event]);
+  add(): void {
+    this.onAdd.emit({action:'add'});
   }
 
 }
