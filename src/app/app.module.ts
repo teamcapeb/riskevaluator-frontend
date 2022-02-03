@@ -41,6 +41,7 @@ import { ListComponent } from './components/list/list.component';
 import { ListItemComponent } from './components/list/list-item/list-item.component';
 import { MetierFormComponent } from './pages/administration/gestion-metiers/metier-form/metier-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorModalComponent } from './components/error-modal/error-modal.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -76,6 +77,7 @@ registerLocaleData(localeEn, 'en-EN');
         ListComponent,
         ListItemComponent,
         MetierFormComponent,
+        ErrorModalComponent,
     ],
   imports: [
     BrowserModule,

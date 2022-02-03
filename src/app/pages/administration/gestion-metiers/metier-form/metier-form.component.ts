@@ -1,6 +1,7 @@
 import Metier from '@/objects/Metier';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-metier-form',
@@ -9,9 +10,10 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class MetierFormComponent implements OnInit {
 
-  @Input() metier: Metier;
   closeResult = '';
   public title: string;
+  public registerForm: FormGroup;
+  @Input() metier: Metier;
   @ViewChild('modalContentCreateOrUpdate') modalContentCreateOrUpdate: any;
   @ViewChild('modalDelete') modalDelete: any;
   @Output() onConfirmation: EventEmitter<any> = new EventEmitter();
@@ -19,6 +21,9 @@ export class MetierFormComponent implements OnInit {
   constructor(private modalService: NgbModal) {}
 
   ngOnInit(): void {
+    this.registerForm = new FormGroup({
+      metierName: new FormControl()
+    });
   }
 
 
@@ -31,7 +36,7 @@ export class MetierFormComponent implements OnInit {
       content = this.modalDelete;
       this.title = 'Supprimer';
     }
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, {animation: true, centered: true}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       console.log(result)
       if(result === 'Valider'){
