@@ -15,9 +15,11 @@ import { ErrorModalComponent } from '@components/error-modal/error-modal.compone
 export class GestionMetiersComponent implements OnInit {
 
   private _metiers: Observable<Metier[]>;
+
   @ViewChild('metierForm') metierForm: any;
   @ViewChild('errorModal') errorModal: any;
-  actualMetier: Metier;
+
+  public actualMetier: Metier;
 
   constructor(private metierService: MetierService, 
               private modalService: NgbModal) { }
