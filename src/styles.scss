@@ -13,7 +13,7 @@
 
 
 
-body {
+html, body {
     width: 100vw;
     height: 100vh;
 }
@@ -139,3 +139,6 @@ body {
     margin-right: 0;
     margin-left: -8px;
 }
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

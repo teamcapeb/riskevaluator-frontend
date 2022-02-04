@@ -1,0 +1,18 @@
+:host {
+    display: inline-block !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.loader{
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2 !important;
+    width: 100px !important;
+    height: 100px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

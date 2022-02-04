@@ -1,4 +1,4 @@
-export default interface Metier {
+export default interface IMetier {
     idMetier: string;
     nomMetier: string;
 }

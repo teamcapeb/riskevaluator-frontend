@@ -1,8 +1,8 @@
-import Metier from "./Metier";
+import IMetier from "./IMetier";
 
 export default interface Question {
     idQuestion: string;
     type: string;
     libelleQuestion: string;
-    metiers: Metier[];
+    metiers: IMetier[];
 }

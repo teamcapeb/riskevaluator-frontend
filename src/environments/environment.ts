@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://riskevaluator-backend-dev.herokuapp.com/',
+  apiUrl: 'http://localhost:3001/api',
 
 };
 

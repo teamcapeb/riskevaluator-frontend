@@ -1,1 +1,24 @@
-<p>gestion-metiers works!</p>
+
+<app-list title="Liste des metiers" (onAdd)="add()" formId="formMetier">
+    <ng-template [ngIf]="metiers | async" [ngIfElse]="loading">
+        <ng-container *ngFor="let metier of metiers | async">
+            <app-list-item 
+                id="{{metier.idMetier}}" 
+                content="{{metier.nomMetier}}" 
+                [data]="metier" 
+                (onUpdate)="update($event)"
+                (onDelete)="delete($event)"
+            ></app-list-item>
+        </ng-container>
+    </ng-template>
+</app-list>
+<ng-template #loading>
+    <div class="loader">
+        <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</ng-template>
+
+<app-metier-form [metier]="actualMetier" (onConfirmation)="createOrUpdateOrDeleteMetier($event)" #metierForm></app-metier-form>
+<app-error-modal #errorModal></app-error-modal>

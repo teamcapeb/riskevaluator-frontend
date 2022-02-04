@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ContentChildren, EventEmitter, Input, OnInit, Output, QueryList } from '@angular/core';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ListItemComponent } from './list-item/list-item.component';
 
 @Component({
   selector: 'app-list',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  @Input() title!: string;
+  @Output() onAdd: EventEmitter<any> = new EventEmitter();
 
-  ngOnInit(): void {
+  @ContentChildren(ListItemComponent)
+  listItems: QueryList<ListItemComponent>;
+
+  closeResult = '';
+
+  constructor(private modalService: NgbModal) { }
+
+  ngOnInit(): void {}
+
+  ngAfterViewInit(){
+  }
+
+  add(): void {
+    this.onAdd.emit({action:'add'});
   }
 
 }

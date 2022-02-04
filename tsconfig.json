@@ -2,6 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "types": ["jquery", "bootstrap"],
     "baseUrl": "./src",
     "outDir": "./dist/app",
     "sourceMap": true,
