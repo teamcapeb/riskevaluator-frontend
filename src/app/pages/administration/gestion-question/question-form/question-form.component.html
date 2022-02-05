@@ -4,7 +4,7 @@
       <h1>Libellé catégorie de question</h1>
     </div>
     <div class="col-9">
-      <h2 class="text-white">Créer Question</h2>
+      <h2 class="text-white">{{action === 'update' ? 'Modifier' : 'Créer'}} Question</h2>
     </div>
     <div class="col-3">
       <div class="row h-100">
@@ -70,10 +70,22 @@
               <app-list-item-col>{{reponse.nbPoints}}</app-list-item-col>
             </app-list-item>
         </ng-container>
+
+        <ng-container *ngFor="let addedReponse of addedReponses">
+          <app-list-item 
+          id="{{addedReponse.idReponse}}"
+          [data]="addedReponse" 
+          (onUpdate)="update($event)"
+          (onDelete)="delete($event)"
+          >
+            <app-list-item-col>{{addedReponse.contenu}}</app-list-item-col>
+            <app-list-item-col>{{addedReponse.nbPoints}}</app-list-item-col>
+          </app-list-item>
+        </ng-container>
       </app-list>
       </div>
     </div>
   </div>
 </div>
 
-<app-reponse-form [reponse]="actualReponse" #reponseForm></app-reponse-form>
+<app-reponse-form [reponse]="actualReponse" (onConfirmation)="createOrUpdateOrDeleteReponse($event)" #reponseForm></app-reponse-form>

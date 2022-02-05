@@ -5,6 +5,7 @@ import { QuestionService } from '@services/serviceQuestion/question.service';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CategorieQuestionService } from '../../../services/serviceCategorieQuestion/categorie-question.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-question',
@@ -18,7 +19,9 @@ export class GestionQuestionComponent implements OnInit {
   @ViewChild('errorModal') errorModal: any;
   @ViewChild('questionModal') questionModal: any;
 
-  constructor(private questionService: QuestionService, private categorieQuestionService: CategorieQuestionService) { }
+  constructor(private questionService: QuestionService, 
+              private categorieQuestionService: CategorieQuestionService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this._questions = this.getAll();
@@ -40,12 +43,26 @@ export class GestionQuestionComponent implements OnInit {
   }
 
   add(): void{
-    //this.actualQuestion = new Question('', '', '', []);
-    //this.questionModal.open('add');
+    this.router.navigateByUrl('gestion-question/question', 
+      { 
+        state: { 
+                  action: 'update' , 
+                  question: new Question('', '', '', [])
+                } 
+      }
+    );
   }
 
   update(event: IListEvent){
     //this.actualQuestion = event.data;
+    this.router.navigateByUrl('gestion-question/question', 
+      { 
+        state: { 
+                  action: 'update' , 
+                  question: event.data
+                } 
+      }
+    );
     //this.questionModal.open('update');
   }
 
