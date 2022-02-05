@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import Question from '../../interfaces/Question';
 import Reponse from '../../interfaces/Reponse';
+import IPreconisationGlobale from '@/interfaces/IPreconisationGlobale';
+import { map } from 'rxjs/operators';
+import PreconisationGlobale from '@/objects/PreconisationGlobale';
 
 @Injectable({
   providedIn: 'root'
@@ -33,4 +36,6 @@ export class QuestionService {
   delete(questionId: string): Observable<Question | string> {
     return this.http.delete<Question>(`${this.baseUrl}/${questionId}`);
   }
+
+
 }

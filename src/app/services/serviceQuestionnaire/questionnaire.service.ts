@@ -4,8 +4,10 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import Questionnaire from '../../interfaces/Questionnaire';
-import PreconisationGlobale from '@/interfaces/PreconisationGlobale';
 import CategorieQuestion from '../../interfaces/CategorieQuestion';
+import IPreconisationGlobale from '@/interfaces/IPreconisationGlobale';
+import { map } from 'rxjs/operators';
+import PreconisationGlobale from '@/objects/PreconisationGlobale';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +16,21 @@ export class QuestionnaireService {
   private baseUrl: string = environment.apiUrl + '/Questionnaires';
   constructor(private http: HttpClient) {}
 
-  getAllPreconisationGlobale(questionnaireId: string): Observable<Question[]> {
-    return this.http.get<Question[]>(`${this.baseUrl}/${questionnaireId}/Questions`);
-  }
+  getAllPreconisationGlobale(questionnaireId: string): Observable<PreconisationGlobale[]> {
+    return this.http.get<IPreconisationGlobale[]>(`${this.baseUrl}/${questionnaireId}/PreconisationGlobale`).pipe(map((receivedData: IPreconisationGlobale[]) => {
+      return receivedData.map<PreconisationGlobale>((value: IPreconisationGlobale, index:number, array:IPreconisationGlobale[]) => {
+        return new PreconisationGlobale(
+        value.idPreconisationGlobale,
+        value.viewIfPourcentageScoreLessThan,
+        value.Contenue
+      )
+      });
+  }));  }
 
   getAllCategoriesQuestion(questionnaireId: string): Observable<CategorieQuestion[]> {
     return this.http.get<CategorieQuestion[]>(`${this.baseUrl}/${questionnaireId}/categoriesQuestion`);
   }
-  
+
   getAll(): Observable<Questionnaire[]> {
     return this.http.get<Questionnaire[]>(`${this.baseUrl}`);
   }

@@ -43,6 +43,7 @@ import { MetierFormComponent } from './pages/administration/gestion-metiers/meti
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ErrorModalComponent } from './components/error-modal/error-modal.component';
 import { GestionCategorieQuestionsComponent } from './pages/administration/gestion-categorie-questions/gestion-categorie-questions.component';
+import { PreconisationGlobalFormComponent } from './pages/administration/gestion-categorie-questions/preconisation-global-form/preconisation-global-form.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -80,6 +81,7 @@ registerLocaleData(localeEn, 'en-EN');
         MetierFormComponent,
         ErrorModalComponent,
         GestionCategorieQuestionsComponent,
+        PreconisationGlobalFormComponent,
     ],
   imports: [
     BrowserModule,
