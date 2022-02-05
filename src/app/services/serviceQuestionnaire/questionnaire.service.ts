@@ -1,4 +1,4 @@
-import Question from '@/interfaces/Question';
+import IQuestion from '@/interfaces/IQuestion';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
@@ -14,8 +14,8 @@ export class QuestionnaireService {
   private baseUrl: string = environment.apiUrl + '/Questionnaires';
   constructor(private http: HttpClient) {}
 
-  getAllPreconisationGlobale(questionnaireId: string): Observable<Question[]> {
-    return this.http.get<Question[]>(`${this.baseUrl}/${questionnaireId}/Questions`);
+  getAllPreconisationGlobale(questionnaireId: string): Observable<IQuestion[]> {
+    return this.http.get<IQuestion[]>(`${this.baseUrl}/${questionnaireId}/Questions`);
   }
 
   getAllCategoriesQuestion(questionnaireId: string): Observable<CategorieQuestion[]> {

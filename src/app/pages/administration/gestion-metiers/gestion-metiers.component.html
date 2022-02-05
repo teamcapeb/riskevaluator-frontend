@@ -1,14 +1,15 @@
 
-<app-list title="Liste des metiers" (onAdd)="add()" formId="formMetier">
+<app-list title="Liste des metiers" (onAdd)="add()">
     <ng-template [ngIf]="metiers | async" [ngIfElse]="loading">
         <ng-container *ngFor="let metier of metiers | async">
             <app-list-item 
-                id="{{metier.idMetier}}" 
-                content="{{metier.nomMetier}}" 
+                id="{{metier.idMetier}}"
                 [data]="metier" 
                 (onUpdate)="update($event)"
                 (onDelete)="delete($event)"
-            ></app-list-item>
+            >
+                <app-list-item-col>{{metier.nomMetier}}</app-list-item-col>
+            </app-list-item>
         </ng-container>
     </ng-template>
 </app-list>
