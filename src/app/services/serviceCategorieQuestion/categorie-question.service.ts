@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import CategorieQuestion from '../../interfaces/CategorieQuestion';
+import CategorieQuestion from '../../interfaces/ICategorieQuestion';
 import IQuestion from '../../interfaces/IQuestion';
 import IReponse from '../../interfaces/IReponse';
 import Reponse from '../../objects/Reponse';
