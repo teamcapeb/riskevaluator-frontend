@@ -4,10 +4,11 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import Questionnaire from '../../interfaces/Questionnaire';
-import CategorieQuestion from '../../interfaces/CategorieQuestion';
+import ICategorieQuestion from '../../interfaces/ICategorieQuestion';
 import IPreconisationGlobale from '@/interfaces/IPreconisationGlobale';
 import { map } from 'rxjs/operators';
 import PreconisationGlobale from '@/objects/PreconisationGlobale';
+import CategorieQuestion from '@/objects/CategorieQuestion';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,15 @@ export class QuestionnaireService {
   }));  }
 
   getAllCategoriesQuestion(questionnaireId: string): Observable<CategorieQuestion[]> {
-    return this.http.get<CategorieQuestion[]>(`${this.baseUrl}/${questionnaireId}/categoriesQuestion`);
+    return this.http.get<ICategorieQuestion[]>(`${this.baseUrl}/${questionnaireId}/categoriesQuestion`).pipe(map((receivedData: ICategorieQuestion[]) => {
+      return receivedData.map<CategorieQuestion>((value: ICategorieQuestion, index:number, array:ICategorieQuestion[]) => {
+        return new CategorieQuestion(
+        value.idCategoriesQuestion,
+        value.libelle
+      )
+      });
+  }));
+
   }
 
   getAll(): Observable<Questionnaire[]> {
@@ -44,8 +53,8 @@ export class QuestionnaireService {
     return this.http.post<PreconisationGlobale>(`${this.baseUrl}/${questionnaireId}/PreconisationGlobale`, preconisation);
   }
 
-  createCategorieQuestion(questionnaireId: string, categorieQuestion: CategorieQuestion): Observable<CategorieQuestion | string>{
-    return this.http.post<CategorieQuestion>(`${this.baseUrl}/${questionnaireId}/categoriesQuestion`, categorieQuestion);
+  createCategorieQuestion(questionnaireId: string, categorieQuestion: ICategorieQuestion): Observable<ICategorieQuestion | string>{
+    return this.http.post<ICategorieQuestion>(`${this.baseUrl}/${questionnaireId}/categoriesQuestion`, categorieQuestion);
   }
 
   update(questionnaireId: string, questionnaire: Questionnaire): Observable<Questionnaire | string> {
