@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+
+import PreconisationGlobale from '@/objects/PreconisationGlobale';
+
 import IQuestion from '../../interfaces/IQuestion';
 import IReponse from '../../interfaces/IReponse';
 import Question from '@/objects/Question';
@@ -21,7 +24,7 @@ export class QuestionService {
     return this.http.get<IReponse[]>(`${this.baseUrl}/${questionId}/Reponses`).pipe(map((receivedData: IReponse[]) => {
       return receivedData.map<Reponse>((value: IReponse, index: number, array: IReponse[]) => {
         return new Reponse(
-          value.idReponse, 
+          value.idReponse,
           value.nbPoints,
           value.contenu
       )
@@ -44,4 +47,6 @@ export class QuestionService {
   delete(questionId: string): Observable<IQuestion | string> {
     return this.http.delete<IQuestion>(`${this.baseUrl}/${questionId}`);
   }
+
+
 }

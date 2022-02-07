@@ -18,13 +18,20 @@ import { GestionMetiersComponent } from '@pages/administration/gestion-metiers/g
 import { GestionQuestionnaireComponent } from '@pages/administration/gestion-questionnaire/gestion-questionnaire.component';
 import { GestionComptesComponent } from '@pages/administration/gestion-comptes/gestion-comptes.component';
 import { GestionQuestionComponent } from './pages/administration/gestion-question/gestion-question.component';
+import { GestionCategorieQuestionsComponent } from '@pages/administration/gestion-categorie-questions/gestion-categorie-questions.component';
 import { QuestionFormComponent } from './pages/administration/gestion-question/question-form/question-form.component';
+
 
 const administration: Routes = [
   {
     path: 'gestion-metiers',
     component: GestionMetiersComponent
   },
+  {
+    path: 'gestion-categories-questions',
+    component: GestionCategorieQuestionsComponent
+  },
+
   {
     path: 'gestion-questionnaire',
     component: GestionQuestionnaireComponent
