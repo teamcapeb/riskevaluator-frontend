@@ -1,13 +1,19 @@
 <app-list title="Liste des Suggestions Global" (onAdd)="add()" >
+  <app-list-item [header]="true">
+    <app-list-item-col>Reponses</app-list-item-col>
+    <app-list-item-col>Inférieur à</app-list-item-col>
+  </app-list-item>
   <ng-template [ngIf]="preconisationGlobales | async" [ngIfElse]="loading">
     <ng-container *ngFor="let preconisationGlobale of preconisationGlobales | async">
         <app-list-item
             id="{{preconisationGlobale.idPreconisationGlobale}}"
-            content="{{preconisationGlobale.Contenue}}"
             [data]="preconisationGlobale"
             (onUpdate)="update($event)"
             (onDelete)="delete($event)"
-        ></app-list-item>
+        >
+      <app-list-item-col>{{preconisationGlobale.Contenue}}</app-list-item-col>
+      <app-list-item-col>{{preconisationGlobale.viewIfPourcentageScoreLessThan}}</app-list-item-col>
+      </app-list-item>
     </ng-container>
 </ng-template>
 <ng-template #loading>

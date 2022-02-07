@@ -3,13 +3,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'app-list-item',
   templateUrl: './list-item.component.html',
-  styleUrls: ['./list-item.component.scss']
+  styleUrls: ['./list-item.component.scss'],
 })
 export class ListItemComponent implements OnInit {
 
   @Input() id!: string;
-  @Input() content!: string;
   @Input() data!: any;
+  @Input() header: boolean = false;
 
 
   @Output() onDelete: EventEmitter<any> = new EventEmitter();

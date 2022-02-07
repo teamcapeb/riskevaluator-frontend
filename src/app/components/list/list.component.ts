@@ -10,12 +10,12 @@ import { ListItemComponent } from './list-item/list-item.component';
 export class ListComponent implements OnInit {
 
   @Input() title!: string;
+  @Input() header: boolean = true;
   @Output() onAdd: EventEmitter<any> = new EventEmitter();
+
 
   @ContentChildren(ListItemComponent)
   listItems: QueryList<ListItemComponent>;
-
-  closeResult = '';
 
   constructor(private modalService: NgbModal) { }
 

@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import IListEvent from '@/interfaces/IListEvent';
+import Question from '@/objects/Question';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { QuestionService } from '@services/serviceQuestion/question.service';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { CategorieQuestionService } from '../../../services/serviceCategorieQuestion/categorie-question.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-question',
@@ -7,9 +14,90 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GestionQuestionComponent implements OnInit {
 
-  constructor() { }
+  private _questions: Observable<Question[]>;
+  public actualQuestion: Question;
+  public idCategoriQuestion: string = '1';
+  @ViewChild('errorModal') errorModal: any;
+  @ViewChild('questionModal') questionModal: any;
+
+  constructor(private questionService: QuestionService, 
+              private categorieQuestionService: CategorieQuestionService,
+              private router: Router) { }
 
   ngOnInit(): void {
+    this._questions = this.getAll();
+  }
+
+  getAll(): Observable<Question[]>{
+    let finalise = new Subject();
+    let obs = this.categorieQuestionService.getAllQuestionsCategoriesQuestion(this.idCategoriQuestion);
+    obs.pipe(takeUntil(finalise)).subscribe(() =>{
+      finalise.next();
+      finalise.complete();
+    },
+    (err) => {
+      this.errorModal.open(JSON.stringify(err.error));
+      finalise.next();
+      finalise.complete();
+    });
+    return obs; 
+  }
+
+  add(): void{
+    this.router.navigateByUrl('gestion-question/question', 
+      { 
+        state: { 
+                  action: 'update' , 
+                  question: new Question('', '', '', [], []),
+                  idCategoriQuestion : this.idCategoriQuestion
+                } 
+      }
+    );
+  }
+
+  update(event: IListEvent){
+    //this.actualQuestion = event.data;
+    this.router.navigate(['gestion-question/question'], 
+      { 
+        state: { 
+                  action: 'update' , 
+                  question: event.data
+                } 
+      }
+    );
+    //this.questionModal.open('update');
+  }
+
+  delete(event: IListEvent){
+    this.actualQuestion = event.data;
+    this.questionModal.open('delete');
+  }
+
+  createOrUpdateOrDeleteQuestion(event: IListEvent){
+    this._questions = null;
+    let finalise = new Subject();
+    let obs = null;
+    if(event.action === 'update'){
+      obs = this.questionService.update(event.data);
+    }else if (event.action === 'add'){
+      obs = this.categorieQuestionService.createQuestionCategoriesQuestion('1' ,event.data);
+    }else if(event.action === 'delete'){
+      obs = this.questionService.delete(event.data);
+    }
+    obs.pipe(takeUntil(finalise)).subscribe((res) =>{
+      this._questions = this.getAll();
+      finalise.next();
+      finalise.complete();
+    },
+    (err) => {
+      this.errorModal.open(JSON.stringify(err.error));
+      finalise.next();
+      finalise.complete();
+    });
+  }
+
+  get questions(): Observable<Question[]> {
+    return this._questions;
   }
 
 }

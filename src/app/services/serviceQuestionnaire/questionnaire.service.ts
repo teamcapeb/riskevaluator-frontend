@@ -1,4 +1,4 @@
-import Question from '@/interfaces/Question';
+import IQuestion from '@/interfaces/IQuestion';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
@@ -15,6 +15,7 @@ import PreconisationGlobale from '@/objects/PreconisationGlobale';
 export class QuestionnaireService {
   private baseUrl: string = environment.apiUrl + '/Questionnaires';
   constructor(private http: HttpClient) {}
+
 
   getAllPreconisationGlobale(questionnaireId: string): Observable<PreconisationGlobale[]> {
     return this.http.get<IPreconisationGlobale[]>(`${this.baseUrl}/${questionnaireId}/PreconisationGlobale`).pipe(map((receivedData: IPreconisationGlobale[]) => {

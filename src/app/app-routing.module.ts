@@ -19,6 +19,8 @@ import { GestionQuestionnaireComponent } from '@pages/administration/gestion-que
 import { GestionComptesComponent } from '@pages/administration/gestion-comptes/gestion-comptes.component';
 import { GestionQuestionComponent } from './pages/administration/gestion-question/gestion-question.component';
 import { GestionCategorieQuestionsComponent } from '@pages/administration/gestion-categorie-questions/gestion-categorie-questions.component';
+import { QuestionFormComponent } from './pages/administration/gestion-question/question-form/question-form.component';
+
 
 const administration: Routes = [
   {
@@ -37,6 +39,10 @@ const administration: Routes = [
   {
     path: 'gestion-question',
     component: GestionQuestionComponent
+  },
+  {
+    path: 'gestion-question/question',
+    component: QuestionFormComponent
   },
   {
     path: 'gestion-compte',

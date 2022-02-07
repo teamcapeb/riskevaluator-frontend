@@ -1,4 +1,4 @@
-export default interface Reponse {
+export default interface IReponse {
   idReponse: string;
   nbPoints: number;
   contenu: string;
