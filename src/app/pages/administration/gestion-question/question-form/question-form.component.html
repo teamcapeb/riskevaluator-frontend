@@ -9,7 +9,7 @@
     <div class="col-3">
       <div class="row h-100">
         <div class="col-6 d-flex justify-content-end align-items-center">
-          <button type="button" class="btn btn-light btn-sm">
+          <button type="button" class="btn btn-light btn-sm" (click)="save()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
               <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
             </svg>
@@ -17,7 +17,7 @@
           </button>
         </div>
         <div class="col-6 d-flex justify-content-end align-items-center">
-          <button type="button" class="btn btn-light btn-sm">
+          <button type="button" class="btn btn-light btn-sm" (click)="back()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
               <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"></path>
             </svg>
@@ -27,6 +27,7 @@
       </div>
     </div>
   </div>
+  <ng-template [ngIf]="saved" [ngIfElse]="loading">
   <div class="row pt-4">
     <div class="col-12 d-flex justify-content-center align-items-center">
       <form class="w-75 p-2">
@@ -47,7 +48,7 @@
         <div class="form-group">
           <label for="inputGroupSelect02">Métier concerné par la question</label>
           <select class="form-select form-control-sm" id="inputGroupSelect02">
-            <option *ngFor="let metier of question.metiers"> metier.nomMetier</option>
+            <option *ngFor="let metier of question.metiers"> {{metier.nomMetier}}</option>
           </select>
         </div>
       </form>
@@ -86,6 +87,14 @@
       </div>
     </div>
   </div>
+</ng-template>
 </div>
 
 <app-reponse-form [reponse]="actualReponse" (onConfirmation)="createOrUpdateOrDeleteReponse($event)" #reponseForm></app-reponse-form>
+<ng-template #loading>
+  <div class="loader">
+      <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
+          <span class="sr-only">Loading...</span>
+      </div>
+  </div>
+</ng-template>

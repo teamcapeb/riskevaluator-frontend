@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import CategorieQuestion from '../../interfaces/CategorieQuestion';
 import IQuestion from '../../interfaces/IQuestion';
+import IReponse from '../../interfaces/IReponse';
+import Reponse from '../../objects/Reponse';
 
 @Injectable({
   providedIn: 'root'
@@ -22,20 +24,25 @@ export class CategorieQuestionService {
 
   getAllQuestionsCategoriesQuestion(categorieQuestionId: string): Observable<Question[]> {
     return this.http.get<IQuestion[]>(`${this.baseUrl}/${categorieQuestionId}/Questions`).pipe(map((receivedData: IQuestion[]) => {
-      return receivedData.map<Question>((value: IQuestion, index:number, array:IQuestion[]) => {
+      return receivedData.map<Question>((valueQ: IQuestion, index:number, array:IQuestion[]) => {
         return new Question(
-        value.idQuestion, 
-        value.type,
-        value.libelleQuestion,
-        value.metiers.map<Metier>((value: IMetier, index:number, array:IMetier[]) => {
+          valueQ.idQuestion, 
+          valueQ.type,
+          valueQ.libelleQuestion,
+          valueQ.metiers.map<Metier>((valueM: IMetier, index:number, array:IMetier[]) => {
           return new Metier(
-          value.idMetier, 
-          value.nomMetier
-        )
+            valueM.idMetier, 
+            valueM.nomMetier
+          )}),
+          valueQ.reponses.map<Reponse>((value: IReponse, index:number, array:IReponse[]) => {
+          return new Reponse(
+            value.idReponse, 
+            value.nbPoints,
+            value.contenu
+          )
         })
       );
-      });
-  }));
+    })}));
   }
 
 

@@ -16,6 +16,7 @@ export class GestionQuestionComponent implements OnInit {
 
   private _questions: Observable<Question[]>;
   public actualQuestion: Question;
+  public idCategoriQuestion: string = '1';
   @ViewChild('errorModal') errorModal: any;
   @ViewChild('questionModal') questionModal: any;
 
@@ -29,7 +30,7 @@ export class GestionQuestionComponent implements OnInit {
 
   getAll(): Observable<Question[]>{
     let finalise = new Subject();
-    let obs = this.categorieQuestionService.getAllQuestionsCategoriesQuestion('1');
+    let obs = this.categorieQuestionService.getAllQuestionsCategoriesQuestion(this.idCategoriQuestion);
     obs.pipe(takeUntil(finalise)).subscribe(() =>{
       finalise.next();
       finalise.complete();
@@ -47,7 +48,8 @@ export class GestionQuestionComponent implements OnInit {
       { 
         state: { 
                   action: 'update' , 
-                  question: new Question('', '', '', [])
+                  question: new Question('', '', '', [], []),
+                  idCategoriQuestion : this.idCategoriQuestion
                 } 
       }
     );
@@ -55,7 +57,7 @@ export class GestionQuestionComponent implements OnInit {
 
   update(event: IListEvent){
     //this.actualQuestion = event.data;
-    this.router.navigateByUrl('gestion-question/question', 
+    this.router.navigate(['gestion-question/question'], 
       { 
         state: { 
                   action: 'update' , 
