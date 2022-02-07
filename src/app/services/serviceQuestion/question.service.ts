@@ -1,9 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
-import Question from '../../interfaces/Question';
-import Reponse from '../../interfaces/Reponse';
+import IQuestion from '../../interfaces/IQuestion';
+import IReponse from '../../interfaces/IReponse';
+import Question from '@/objects/Question';
+import Reponse from '../../objects/Reponse';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,22 +18,30 @@ export class QuestionService {
   constructor(private http: HttpClient) {}
 
   getAllReponses(questionId: string): Observable<Reponse[]> {
-    return this.http.get<Reponse[]>(`${this.baseUrl}/${questionId}/Reponses`);
+    return this.http.get<IReponse[]>(`${this.baseUrl}/${questionId}/Reponses`).pipe(map((receivedData: IReponse[]) => {
+      return receivedData.map<Reponse>((value: IReponse, index: number, array: IReponse[]) => {
+        return new Reponse(
+          value.idReponse, 
+          value.nbPoints,
+          value.contenu
+      )
+      });
+    }));
   }
 
-  createReponse(questionId: string, reponse: Reponse): Observable<Reponse | string>{
-    return this.http.post<Reponse>(`${this.baseUrl}/${questionId}/Reponses`, reponse);
+  createReponse(questionId: string, reponse: IReponse): Observable<IReponse | string>{
+    return this.http.post<IReponse>(`${this.baseUrl}/${questionId}/Reponses`, reponse);
   }
 
-  get(questionId: string): Observable<Question> {
-    return this.http.get<Question>(`${this.baseUrl}/${questionId}`);
+  get(questionId: string): Observable<IQuestion> {
+    return this.http.get<IQuestion>(`${this.baseUrl}/${questionId}`);
   }
 
-  update(questionId: string, question: Question): Observable<Question | string> {
-    return this.http.put<Question>(`${this.baseUrl}/${questionId}`, question);
+  update(question: Question): Observable<IQuestion | string> {
+    return this.http.put<IQuestion>(`${this.baseUrl}/${question.idQuestion}`, question.toJSON());
   }
 
-  delete(questionId: string): Observable<Question | string> {
-    return this.http.delete<Question>(`${this.baseUrl}/${questionId}`);
+  delete(questionId: string): Observable<IQuestion | string> {
+    return this.http.delete<IQuestion>(`${this.baseUrl}/${questionId}`);
   }
 }

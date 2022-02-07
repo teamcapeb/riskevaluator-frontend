@@ -21,8 +21,7 @@ export class GestionMetiersComponent implements OnInit {
 
   public actualMetier: Metier;
 
-  constructor(private metierService: MetierService, 
-              private modalService: NgbModal) { }
+  constructor(private metierService: MetierService) { }
 
   ngOnInit(): void {
     

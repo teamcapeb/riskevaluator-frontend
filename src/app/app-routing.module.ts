@@ -18,6 +18,7 @@ import { GestionMetiersComponent } from '@pages/administration/gestion-metiers/g
 import { GestionQuestionnaireComponent } from '@pages/administration/gestion-questionnaire/gestion-questionnaire.component';
 import { GestionComptesComponent } from '@pages/administration/gestion-comptes/gestion-comptes.component';
 import { GestionQuestionComponent } from './pages/administration/gestion-question/gestion-question.component';
+import { QuestionFormComponent } from './pages/administration/gestion-question/question-form/question-form.component';
 
 const administration: Routes = [
   {
@@ -31,6 +32,10 @@ const administration: Routes = [
   {
     path: 'gestion-question',
     component: GestionQuestionComponent
+  },
+  {
+    path: 'gestion-question/question',
+    component: QuestionFormComponent
   },
   {
     path: 'gestion-compte',
