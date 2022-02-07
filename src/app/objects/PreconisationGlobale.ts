@@ -6,9 +6,9 @@ export default class PreconisationGlobale {
   public Contenue: string;
 
   constructor(idPreconisationGlobale: string, viewIfPourcentageScoreLessThan: number, Contenue: string ){
-      this.idPreconisationGlobale;
-      this.viewIfPourcentageScoreLessThan;
-      this.Contenue;
+      this.idPreconisationGlobale =idPreconisationGlobale;
+      this.viewIfPourcentageScoreLessThan = viewIfPourcentageScoreLessThan;
+      this.Contenue = Contenue;
   }
 
   public toJSON(): IPreconisationGlobale{

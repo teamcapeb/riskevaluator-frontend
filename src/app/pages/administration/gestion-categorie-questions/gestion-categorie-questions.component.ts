@@ -40,7 +40,8 @@ export class GestionCategorieQuestionsComponent implements OnInit {
   getAll(): Observable<PreconisationGlobale[]>{
     let finalise = new Subject();
     let obs = this.questionnaireService.getAllPreconisationGlobale('1');
-    obs.pipe(takeUntil(finalise)).subscribe(() =>{
+    obs.pipe(takeUntil(finalise)).subscribe((data) =>{
+      //console.log(data)
       finalise.next();
       finalise.complete();
     },

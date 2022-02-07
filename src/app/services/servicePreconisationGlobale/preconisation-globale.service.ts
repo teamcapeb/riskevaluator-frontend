@@ -12,7 +12,7 @@ import PreconisationGlobale from '@/objects/PreconisationGlobale';
 })
 export class PreconisationGlobaleService {
 
-  private baseUrl: string = environment.apiUrl + '/PreconisationGlobale';
+  private baseUrl: string = environment.apiUrl + '/PreconisationGlobales';
 
   constructor(private http: HttpClient) {}
 
