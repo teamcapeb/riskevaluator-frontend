@@ -1,13 +1,16 @@
 import IQuestion from '@/interfaces/IQuestion';
+import IQuestionnaire from '@/interfaces/IQuestionnaire';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import Questionnaire from '../../interfaces/Questionnaire';
-import CategorieQuestion from '../../interfaces/CategorieQuestion';
 import IPreconisationGlobale from '@/interfaces/IPreconisationGlobale';
 import { map } from 'rxjs/operators';
 import PreconisationGlobale from '@/objects/PreconisationGlobale';
+import Questionnaire from '@/objects/Questionnaire';
+import CategorieQuestion from '@/objects/CategorieQuestion';
+import ICategorieQuestion from '@/interfaces/ICategorieQuestion';
+
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +36,29 @@ export class QuestionnaireService {
   }
 
   getAll(): Observable<Questionnaire[]> {
-    return this.http.get<Questionnaire[]>(`${this.baseUrl}`);
-  }
+    return this.http.get<IQuestionnaire[]>(`${this.baseUrl}`).pipe(map((receivedData: IQuestionnaire[]) => {
+        return receivedData.map<Questionnaire>((value: IQuestionnaire, index:number, array:IQuestionnaire[]) => {
+          return new Questionnaire(
+          value.idQuestionnaire, 
+          value.thematique,
+          value.preconisationsGlobales.map<PreconisationGlobale>((value: IPreconisationGlobale
+            , index:number, array:IPreconisationGlobale[]) => {
+            return new PreconisationGlobale(
+            value.idPreconisationGlobale,
+            value.viewIfPourcentageScoreLessThan,
+            value.Contenue
+          )
+          }),
+          value.categoriesQuestions.map<CategorieQuestion>((value: ICategorieQuestion
+            , index:number, array:ICategorieQuestion[]) => {
+            return new CategorieQuestion(
+            value.idCategorieQuestion,
+            value.libelle,
+          )
+          }),
+        )
+        });
+    }));}
 
   get(questionnaireId: string): Observable<Questionnaire> {
     return this.http.get<Questionnaire>(`${this.baseUrl}/${questionnaireId}`);
@@ -54,5 +78,9 @@ export class QuestionnaireService {
 
   delete(questionId: string): Observable<Questionnaire | string> {
     return this.http.delete<Questionnaire>(`${this.baseUrl}/${questionId}`);
+  }
+
+  create(questionnaire: Questionnaire): Observable<IQuestionnaire | string>{
+    return this.http.post<IQuestionnaire>(`${this.baseUrl}`, questionnaire.toJSON());
   }
 }

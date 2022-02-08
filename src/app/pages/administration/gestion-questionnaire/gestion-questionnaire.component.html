@@ -1,1 +1,26 @@
-<p>gestion-questionnaire works!</p>
+<app-list title="Liste des Questionnaires" (onAdd)="add()">
+    <ng-template [ngIf]="questionnaires | async" [ngIfElse]="loading">
+        <ng-container *ngFor="let questionnaire of questionnaires | async">
+            <app-list-item 
+                id="{{questionnaire.idQuestionnaire}}"
+                [data]="questionnaire" 
+                (onUpdate)="update($event)"
+                (onDelete)="delete($event)"
+            >
+                <app-list-item-col>{{questionnaire.thematique}}</app-list-item-col>
+            </app-list-item>
+        </ng-container>
+    </ng-template>
+</app-list>
+<ng-template #loading>
+    <div class="loader">
+        <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</ng-template>
+
+<app-questionnaire-form [questionnaire]="actualQuestionnaire" (onConfirmation)="createOrUpdateOrDeleteQuestionnaire($event)" #QuestionnaireForm></app-questionnaire-form>
+<app-error-modal #errorModal></app-error-modal>
+
+
