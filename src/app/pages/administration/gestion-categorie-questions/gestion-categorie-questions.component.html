@@ -30,21 +30,18 @@
 </app-list>
 
 
-<app-list title="Liste des tototototototototo Global" (onAdd)="add()" >
+<app-list title="Liste des Categories de questions" (onAdd)="add()" >
   <app-list-item [header]="true">
-    <app-list-item-col>Reponses</app-list-item-col>
-    <app-list-item-col>Inférieur à</app-list-item-col>
   </app-list-item>
-  <ng-template [ngIf]="preconisationGlobales | async" [ngIfElse]="loading">
-    <ng-container *ngFor="let preconisationGlobale of preconisationGlobales | async">
+  <ng-template [ngIf]="categorieQuestions | async" [ngIfElse]="loading">
+    <ng-container *ngFor="let CategorieQuestion of categorieQuestions | async">
         <app-list-item
-            id="{{preconisationGlobale.idPreconisationGlobale}}"
-            [data]="preconisationGlobale"
-            (onUpdate)="update($event)"
-            (onDelete)="delete($event)"
+            id="{{CategorieQuestion.idCategoriesQuestion}}"
+            [data]="CategorieQuestion"
+            (onUpdate)="updateC($event)"
+            (onDelete)="deleteC($event)"
         >
-      <app-list-item-col>{{preconisationGlobale.Contenue}}</app-list-item-col>
-      <app-list-item-col>{{preconisationGlobale.viewIfPourcentageScoreLessThan}}</app-list-item-col>
+      <app-list-item-col>{{CategorieQuestion.libelle}}</app-list-item-col>
       </app-list-item>
     </ng-container>
 </ng-template>
@@ -55,5 +52,9 @@
       </div>
   </div>
 </ng-template>
+
+
+<app-categorie-question-form [CategorieQuestion]="actualCategorieQuestion" (onConfirmation)="createOrUpdateOrDeleteCategorieQuestion($event)" #categorieQuestionForm></app-categorie-question-form>
+<app-error-modal #errorModal></app-error-modal>
 </app-list>
 
