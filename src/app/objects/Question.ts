@@ -47,6 +47,7 @@ export default class Question {
             idQuestion: this.idQuestion,
             categorieQuestion: this.categorieQuestion.toJSON(),
             qType: this.qType,
+            aide: this.aide,
             libelleQuestion: this.libelleQuestion,
             metiers: metiers,
             reponses: reponses
