@@ -1,3 +1,4 @@
+
 import ICategorieQuestion from '../interfaces/ICategorieQuestion';
 export default class CategorieQuestion {
     public idCategoriesQuestion: string;

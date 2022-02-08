@@ -1,17 +1,22 @@
 import IMetier from '@/interfaces/IMetier';
-import PreconisationCategorieQuestion from '@/interfaces/PreconisationCategorieQuestion';
+
 import CategorieQuestion from '@/objects/CategorieQuestion';
 import Metier from '@/objects/Metier';
+import PreconisationCategorieQuestion from '@/objects/PreconisationCategorieQuestion';
 import Question from '@/objects/Question';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import ICategorieQuestion from '../../interfaces/ICategorieQuestion';
+
 import IQuestion from '../../interfaces/IQuestion';
 import IReponse from '../../interfaces/IReponse';
 import Reponse from '../../objects/Reponse';
+import IPreconisationCategorieQuestion from '@/interfaces/IPreconisationCategorieQuestion';
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +27,17 @@ export class CategorieQuestionService {
 
   constructor(private http: HttpClient) {}
 
+  getAllPreconisationCategoriesQuestion(categorieQuestionId: string): Observable<PreconisationCategorieQuestion[]> {
+    return this.http.get<PreconisationCategorieQuestion[]>(`${this.baseUrl}/${categorieQuestionId}/PreconisationCategoriesQuestion`).pipe(map((receivedData: IPreconisationCategorieQuestion[]) => {
+      return receivedData.map<PreconisationCategorieQuestion>((value: IPreconisationCategorieQuestion, index:number, array:IPreconisationCategorieQuestion[]) => {
+        return new PreconisationCategorieQuestion(
+          value.idPreconisationCategoriesQuestion,
+          value.viewIfPourcentageScoreLessThan,
+          value.Contenue
+        )
+      });
+    }));
+  }
 
   getAllQuestionsCategoriesQuestion(categorieQuestionId: string): Observable<Question[]> {
     return this.http.get<IQuestion[]>(`${this.baseUrl}/${categorieQuestionId}/Questions`).pipe(map((receivedData: IQuestion[]) => {
@@ -47,9 +63,6 @@ export class CategorieQuestionService {
   }
 
 
-  getAllPreconisationCategoriesQuestion(categorieQuestionId: string): Observable<PreconisationCategorieQuestion[]> {
-    return this.http.get<PreconisationCategorieQuestion[]>(`${this.baseUrl}/${categorieQuestionId}/PreconisationCategoriesQuestion`);
-  }
   createQuestionCategoriesQuestion(categorieQuestionId: string, question: Question): Observable<IQuestion | string>{
     return this.http.post<IQuestion>(`${this.baseUrl}/${categorieQuestionId}/Questions`, question.toJSON());
   }

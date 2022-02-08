@@ -1,4 +1,4 @@
-export default interface PreconisationGlobale {
+export default interface IPreconisationGlobale {
     idPreconisationGlobale: string;
     viewIfPourcentageScoreLessThan: number;
     Contenue: string;
