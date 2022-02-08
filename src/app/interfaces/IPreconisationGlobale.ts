@@ -1,5 +1,7 @@
+import IQuestionnaire from './IQuestionnaire';
 export default interface IPreconisationGlobale {
-    idPreconisationGlobale: string;
+    idPreconisationG: number;
+    questionnaire: IQuestionnaire;
+    contenue: string;
     viewIfPourcentageScoreLessThan: number;
-    Contenue: string;
 }

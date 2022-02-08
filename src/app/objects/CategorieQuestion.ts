@@ -1,18 +1,42 @@
+import IPreconisationCategorieQuestion from "@/interfaces/IPreconisationCategorieQuestion";
+import IQuestion from "@/interfaces/IQuestion";
+import IQuestionnaire from "@/interfaces/IQuestionnaire";
+import PreconisationCategorieQuestion from "./PreconisationCategorieQuestion";
+import Question from "./Question";
+import Questionnaire from "./Questionnaire";
 
-import ICategorieQuestion from '../interfaces/ICategorieQuestion';
+
 export default class CategorieQuestion {
-    public idCategoriesQuestion: string;
+    public idCategorie: number;
     public libelle: string;
+    public questionnaire: Questionnaire;
+    public scoreEvaluations: number[];
+    public questions: Question[];
+    public preconisations: PreconisationCategorieQuestion;
 
-    constructor(idCategoriesQuestion: string, libelle: string){
-        this.idCategoriesQuestion = idCategoriesQuestion;
+    constructor(idCategorie: number, 
+                libelle: string,
+                questionnaire: IQuestionnaire,
+                scoreEvaluations: number[],
+                questions: IQuestion[],
+                preconisations: IPreconisationCategorieQuestion
+                ){
+        this.idCategorie = idCategorie;
         this.libelle = libelle;
+        this.questionnaire = questionnaire;
+        this.scoreEvaluations = scoreEvaluations;
+        this.questions = questions;
+        this.preconisations = preconisations;
     }
 
     public toJSON(): ICategorieQuestion{
         return {
-            "idCategoriesQuestion": this.idCategoriesQuestion,
-            "libelle": this.libelle
+            "idCategorie": this.idCategoriesQuestion,
+            "libelle": this.libelle,
+            "questionnaire": IQuestionnaire,
+            "scoreEvaluations": number[],
+            "questions": IQuestion[],
+            "preconisations": IPreconisationCategorieQuestion
         }
     }
 }
