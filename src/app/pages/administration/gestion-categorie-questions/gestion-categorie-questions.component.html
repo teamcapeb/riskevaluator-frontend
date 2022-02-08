@@ -24,7 +24,37 @@
   </div>
 </ng-template>
 
-<app-preconisation-global-form [preconisationGlobale]="actualCategorieQuestion" (onConfirmation)="createOrUpdateOrDeletePreconisationGlobale($event)" #preconisationGlobaleForm></app-preconisation-global-form>
+<app-preconisation-global-form [preconisationGlobale]="actualPreconisationGlobale" (onConfirmation)="createOrUpdateOrDeletePreconisationGlobale($event)" #preconisationGlobaleForm></app-preconisation-global-form>
 <app-error-modal #errorModal></app-error-modal>
 
 </app-list>
+
+
+<app-list title="Liste des Categories de questions" (onAdd)="add()" >
+  <app-list-item [header]="true">
+  </app-list-item>
+  <ng-template [ngIf]="categorieQuestions | async" [ngIfElse]="loading">
+    <ng-container *ngFor="let CategorieQuestion of categorieQuestions | async">
+        <app-list-item
+            id="{{CategorieQuestion.idCategoriesQuestion}}"
+            [data]="CategorieQuestion"
+            (onUpdate)="updateC($event)"
+            (onDelete)="deleteC($event)"
+        >
+      <app-list-item-col>{{CategorieQuestion.libelle}}</app-list-item-col>
+      </app-list-item>
+    </ng-container>
+</ng-template>
+<ng-template #loading>
+  <div class="loader">
+      <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
+          <span class="sr-only">Loading...</span>
+      </div>
+  </div>
+</ng-template>
+
+
+<app-categorie-question-form [CategorieQuestion]="actualCategorieQuestion" (onConfirmation)="createOrUpdateOrDeleteCategorieQuestion($event)" #categorieQuestionForm></app-categorie-question-form>
+<app-error-modal #errorModal></app-error-modal>
+</app-list>
+

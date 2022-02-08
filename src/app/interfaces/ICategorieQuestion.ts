@@ -1,4 +1,4 @@
 export default interface ICategorieQuestion {
-    idCategorieQuestion: string;
+    idCategoriesQuestion: string;
     libelle: string;
 }

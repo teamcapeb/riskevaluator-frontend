@@ -50,8 +50,12 @@ import { QuestionFormComponent } from './pages/administration/gestion-question/q
 import { QuestionModalComponent } from './pages/administration/gestion-question/question-modal/question-modal.component';
 import { ListItemColComponent } from './components/list/list-item/list-item-col/list-item-col.component';
 import { ReponseFormComponent } from './pages/administration/gestion-question/question-form/reponse-form/reponse-form.component';
+
+import { CategorieQuestionFormComponent } from './pages/administration/gestion-categorie-questions/categorie-question-form/categorie-question-form.component';
+
 import { PreconisationCategorieQuestionFormComponent } from './pages/administration/gestion-question/preconisation-categorie-question-form/preconisation-categorie-question-form.component';
 import { QuestionnaireFormComponent } from '@pages/administration/gestion-questionnaire/questionnaire-form/questionnaire-form.component';
+
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -96,6 +100,8 @@ registerLocaleData(localeEn, 'en-EN');
         QuestionModalComponent,
         ListItemColComponent,
         ReponseFormComponent,
+
+        CategorieQuestionFormComponent,
 
         QuestionnaireFormComponent,
         PreconisationCategorieQuestionFormComponent,

@@ -1,18 +1,18 @@
-import ICategorieQuestion from '@/interfaces/ICategorieQuestion';
 
-export default class Metier {
-    public idCategorieQuestion: string;
-    public libelle : string;
+import ICategorieQuestion from '../interfaces/ICategorieQuestion';
+export default class CategorieQuestion {
+    public idCategoriesQuestion: string;
+    public libelle: string;
 
-    constructor(idCategorieQuestion: string, libelle : string){
-        this.idCategorieQuestion = idCategorieQuestion;
-        this.libelle  = libelle ;
+    constructor(idCategoriesQuestion: string, libelle: string){
+        this.idCategoriesQuestion = idCategoriesQuestion;
+        this.libelle = libelle;
     }
 
     public toJSON(): ICategorieQuestion{
         return {
-            "idCategorieQuestion": this.idCategorieQuestion,
-            "libelle": this. libelle
+            "idCategoriesQuestion": this.idCategoriesQuestion,
+            "libelle": this.libelle
         }
     }
 }

@@ -11,7 +11,6 @@ import Questionnaire from '@/objects/Questionnaire';
 import CategorieQuestion from '@/objects/CategorieQuestion';
 import ICategorieQuestion from '@/interfaces/ICategorieQuestion';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -32,14 +31,22 @@ export class QuestionnaireService {
   }));  }
 
   getAllCategoriesQuestion(questionnaireId: string): Observable<CategorieQuestion[]> {
-    return this.http.get<CategorieQuestion[]>(`${this.baseUrl}/${questionnaireId}/categoriesQuestion`);
+    return this.http.get<ICategorieQuestion[]>(`${this.baseUrl}/${questionnaireId}/categoriesQuestion`).pipe(map((receivedData: ICategorieQuestion[]) => {
+      return receivedData.map<CategorieQuestion>((value: ICategorieQuestion, index:number, array:ICategorieQuestion[]) => {
+        return new CategorieQuestion(
+        value.idCategoriesQuestion,
+        value.libelle
+      )
+      });
+  }));
+
   }
 
   getAll(): Observable<Questionnaire[]> {
     return this.http.get<IQuestionnaire[]>(`${this.baseUrl}`).pipe(map((receivedData: IQuestionnaire[]) => {
         return receivedData.map<Questionnaire>((value: IQuestionnaire, index:number, array:IQuestionnaire[]) => {
           return new Questionnaire(
-          value.idQuestionnaire, 
+          value.idQuestionnaire,
           value.thematique,
           value.preconisationsGlobales.map<PreconisationGlobale>((value: IPreconisationGlobale
             , index:number, array:IPreconisationGlobale[]) => {
@@ -52,7 +59,7 @@ export class QuestionnaireService {
           value.categoriesQuestions.map<CategorieQuestion>((value: ICategorieQuestion
             , index:number, array:ICategorieQuestion[]) => {
             return new CategorieQuestion(
-            value.idCategorieQuestion,
+            value.idCategoriesQuestion,
             value.libelle,
           )
           }),
@@ -68,8 +75,8 @@ export class QuestionnaireService {
     return this.http.post<PreconisationGlobale>(`${this.baseUrl}/${questionnaireId}/PreconisationGlobale`, preconisation);
   }
 
-  createCategorieQuestion(questionnaireId: string, categorieQuestion: CategorieQuestion): Observable<CategorieQuestion | string>{
-    return this.http.post<CategorieQuestion>(`${this.baseUrl}/${questionnaireId}/categoriesQuestion`, categorieQuestion);
+  createCategorieQuestion(questionnaireId: string, categorieQuestion: ICategorieQuestion): Observable<ICategorieQuestion | string>{
+    return this.http.post<ICategorieQuestion>(`${this.baseUrl}/${questionnaireId}/categoriesQuestion`, categorieQuestion);
   }
 
   update(questionnaireId: string, questionnaire: Questionnaire): Observable<Questionnaire | string> {
