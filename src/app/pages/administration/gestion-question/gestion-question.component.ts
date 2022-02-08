@@ -123,7 +123,7 @@ export class GestionQuestionComponent implements OnInit {
     if(event.action === 'update'){
       obs = this.questionService.update(event.data);
     }else if (event.action === 'add'){
-      obs = this.questionService.createReponse('1' ,event.data);
+      obs = this.categorieQuestionService.createQuestionCategoriesQuestion('1' ,event.data);
     }else if(event.action === 'delete'){
       obs = this.questionService.delete(event.data);
     }
