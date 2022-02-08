@@ -11,37 +11,77 @@ import {NonAuthGuard} from '@guards/non-auth.guard';
 import {ForgotPasswordComponent} from '@modules/forgot-password/forgot-password.component';
 import {RecoverPasswordComponent} from '@modules/recover-password/recover-password.component';
 import {PrivacyPolicyComponent} from '@modules/privacy-policy/privacy-policy.component';
-import {MainMenuComponent} from '@pages/main-menu/main-menu.component';
-import {SubMenuComponent} from '@pages/main-menu/sub-menu/sub-menu.component';
+import { ContactComponent } from "@pages/visitor/contact/contact.component";
+import { EvaluerComponent } from '@pages/visitor/evaluer/evaluer.component';
+import { HistoriqueComponent } from '@pages/visitor/historique/historique.component';
+import { GestionMetiersComponent } from '@pages/administration/gestion-metiers/gestion-metiers.component';
+import { GestionQuestionnaireComponent } from '@pages/administration/gestion-questionnaire/gestion-questionnaire.component';
+import { GestionComptesComponent } from '@pages/administration/gestion-comptes/gestion-comptes.component';
+import { GestionQuestionComponent } from './pages/administration/gestion-question/gestion-question.component';
+import { GestionCategorieQuestionsComponent } from '@pages/administration/gestion-categorie-questions/gestion-categorie-questions.component';
+import { QuestionFormComponent } from './pages/administration/gestion-question/question-form/question-form.component';
 
+
+const administration: Routes = [
+  {
+    path: 'gestion-metiers',
+    component: GestionMetiersComponent
+  },
+  {
+    path: 'gestion-categories-questions',
+    component: GestionCategorieQuestionsComponent
+  },
+
+  {
+    path: 'gestion-questionnaire',
+    component: GestionQuestionnaireComponent
+  },
+  {
+    path: 'gestion-question',
+    component: GestionQuestionComponent
+  },
+  {
+    path: 'gestion-question/question',
+    component: QuestionFormComponent
+  },
+  {
+    path: 'gestion-compte',
+    component: GestionComptesComponent
+  }
+
+]
+const visitors: Routes = [
+  {
+    path: 'profile',
+    component: ProfileComponent
+  },
+  {
+    path: 'contact',
+    component: ContactComponent
+  },
+  {
+    path: 'historiques',
+    component: HistoriqueComponent
+  },
+  {
+    path: 'evaluer',
+    component: EvaluerComponent
+  },
+  {
+    path: 'Acceuil',
+    component: DashboardComponent
+  },
+  {
+    path: '',
+    component: DashboardComponent
+  }
+]
+
+// canActivate: [AuthGuard], canActivateChild: [AuthGuard]
 const routes: Routes = [
     {
-        path: '',
-        component: MainComponent,
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        children: [
-            {
-                path: 'profile',
-                component: ProfileComponent
-            },
-            {
-                path: 'blank',
-                component: BlankComponent
-            },
-            {
-                path: 'sub-menu-1',
-                component: SubMenuComponent
-            },
-            {
-                path: 'sub-menu-2',
-                component: BlankComponent
-            },
-            {
-                path: '',
-                component: DashboardComponent
-            }
-        ]
+        path: '', component: MainComponent,
+        children: [ ...administration, ...visitors]
     },
     {
         path: 'login',

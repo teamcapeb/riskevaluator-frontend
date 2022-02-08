@@ -1,0 +1,38 @@
+<ng-template #modalContentCreateOrUpdate let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{title}} Questionnaire</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Nom de la thematique </label>
+          <input
+            type="text"
+            class="form-control"
+            id="thematique"
+            [(ngModel)]="questionnaire.thematique">
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
+    </div>
+  </ng-template>
+  
+  <ng-template #modalDelete let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{title}} Questionnaire</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Voulez-vous vraiment supprimer ce questionnaire ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Annuler')">Annuler</button>
+    </div>
+  </ng-template>
+  

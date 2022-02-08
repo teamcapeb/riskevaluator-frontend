@@ -26,8 +26,8 @@ export class MenuItemComponent implements OnInit {
             this.isExpandable = true;
         }
         this.calculateIsActive(this.router.url);
-        this.router.events
-            .pipe(filter((event) => event instanceof NavigationEnd))
+      this.router.events
+            .pipe(filter((event :any) => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => {
                 this.calculateIsActive(event.url);
             });
@@ -49,7 +49,7 @@ export class MenuItemComponent implements OnInit {
         this.isMainActive = false;
         this.isOneOfChildrenActive = false;
         if (this.isExpandable) {
-            this.menuItem.children.forEach((item) => {
+            this.menuItem.children.forEach((item: any) => {
                 if (item.path[0] === url) {
                     this.isOneOfChildrenActive = true;
                     this.isMenuExtended = true;

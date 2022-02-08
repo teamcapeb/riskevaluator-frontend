@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AppService} from '@services/app.service';
+import { TokenStorageService } from "@services/token-storage.service";
 
 @Component({
     selector: 'app-menu-sidebar',
@@ -11,10 +12,26 @@ export class MenuSidebarComponent implements OnInit {
     public menu = MENU;
     public adminMenu = ADMIN_MENU;
 
-    constructor(public appService: AppService) {}
+
+    private roles: string[];
+    isLoggedIn = false;
+    showAdminBoard = false;
+    username: string;
+
+
+    constructor(private tokenStorageService: TokenStorageService) {}
 
     ngOnInit() {
-        this.user = this.appService.user;
+      this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+      if (this.isLoggedIn) {
+        this.user = this.tokenStorageService.getUser();
+        this.roles = this.user.roles;
+
+        this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+
+        this.username = this.user.username;
+      }
     }
 }
 
@@ -25,29 +42,29 @@ export const MENU = [
     },
     {
         name: 'Evaluer',
-        path: ['/blank']
+        path: ['/evaluer']
     },
     {
         name: 'Historiques',
-        path: ['/Historiques']
+        path: ['/historiques']
     },
     {
         name: 'Contact',
-        path: ['/Contact']
+        path: ['/contact']
     }
     ];
 
 export const ADMIN_MENU = [
   {
     name: 'Gestion questionnaire',
-    path: ['/gestion_questionnaire']
+    path: ['/gestion-questionnaire']
   },
   {
     name: 'Gestion métiers',
-    path: ['/gestion_metiers']
+    path: ['/gestion-metiers']
   },
   {
     name: 'Gestion Comptes',
-    path: ['/gestion_compte']
+    path: ['/gestion-compte']
   }
 ];

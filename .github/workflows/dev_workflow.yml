@@ -4,9 +4,8 @@
 name: DEV WORKFLOW
 
 on:
-  pull_request:
-    branches: [ master ]
-    types: [ closed ]
+  push:
+    branches: [ main ]
 
 jobs:
   build_app:
@@ -20,7 +19,12 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+      - name: Skip Duplicate Actions
+        uses: fkirc/skip-duplicate-actions@v3.4.1
+
       - uses: actions/checkout@v2
+        with:
+          ref: main
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:

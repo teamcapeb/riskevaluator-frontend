@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+// @ts-ignore
 import {DateTime} from 'luxon';
 import packageInfo from './../../../../../package.json';
 

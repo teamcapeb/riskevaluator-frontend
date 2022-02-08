@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "adminlte": {
+    "riskevaluator": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -26,8 +26,12 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
-            "scripts": [],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.scss"
+            ],
+            "scripts":  [
+            ],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
@@ -42,6 +46,15 @@
             ]
           },
           "configurations": {
+            "development": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -74,18 +87,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "adminlte:build"
+            "browserTarget": "riskevaluator:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "adminlte:build:production"
+              "browserTarget": "riskevaluator:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "adminlte:build"
+            "browserTarget": "riskevaluator:build"
           }
         },
         "test": {
@@ -110,12 +123,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "adminlte:serve"
+            "devServerTarget": "riskevaluator:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "adminlte:serve:production"
-            }
+              "devServerTarget": "riskevaluator:serve:production"
+            },
+            "development": {
+              "browserTarget": "riskevaluator:build:development"
+            },
+            "defaultConfiguration": "development"
           }
         }
       }
