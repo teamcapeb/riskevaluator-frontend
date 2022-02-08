@@ -18,49 +18,26 @@ import IPreconisationCategorieQuestion from '@/interfaces/IPreconisationCategori
 })
 export class QuestionService {
 
-  private baseUrl: string = environment.apiUrl + '/Questions';
+  private baseUrl: string = environment.apiUrl + '/questions/';
 
   constructor(private http: HttpClient) {}
-
-  getAllPreconisationCategoriesQuestion(categorieQuestionId: string): Observable<PreconisationCategorieQuestion[]> {
-    return this.http.get<PreconisationCategorieQuestion[]>(`${this.baseUrl}/${categorieQuestionId}/PreconisationCategoriesQuestion`).pipe(map((receivedData: IPreconisationCategorieQuestion[]) => {
-      return receivedData.map<PreconisationCategorieQuestion>((value: IPreconisationCategorieQuestion, index:number, array:IPreconisationCategorieQuestion[]) => {
-        return new PreconisationCategorieQuestion(
-          value.idPreconisationCategoriesQuestion,
-          value.viewIfPourcentageScoreLessThan,
-          value.Contenue
-        )
-      });
+  
+  get(questionId: string): Observable<Question> {
+    return this.http.get<IQuestion>(`${this.baseUrl}${questionId}`).pipe(map((iQuestion: IQuestion) => {
+      return Question.toQuestion(iQuestion);
     }));
   }
 
-  getAllReponses(questionId: string): Observable<Reponse[]> {
-    return this.http.get<IReponse[]>(`${this.baseUrl}/${questionId}/Reponses`).pipe(map((receivedData: IReponse[]) => {
-      return receivedData.map<Reponse>((value: IReponse, index: number, array: IReponse[]) => {
-        return new Reponse(
-          value.idReponse,
-          value.nbPoints,
-          value.contenu
-      )
-      });
-    }));
+  createReponse(questionId: string, reponse: IReponse): Promise<IReponse | string>{
+    return this.http.post<IReponse>(`${this.baseUrl}${questionId}/Reponses`, reponse).toPromise();
   }
 
-  createReponse(questionId: string, reponse: IReponse): Observable<IReponse | string>{
-    return this.http.post<IReponse>(`${this.baseUrl}/${questionId}/Reponses`, reponse);
+  update(question: Question): Promise<IQuestion | string> {
+    return this.http.put<IQuestion>(`${this.baseUrl}${question.idQuestion}`, question.toJSON()).toPromise();
   }
 
-  get(questionId: string): Observable<IQuestion> {
-    return this.http.get<IQuestion>(`${this.baseUrl}/${questionId}`);
+  delete(questionId: string): Promise<IQuestion | string> {
+    return this.http.delete<IQuestion>(`${this.baseUrl}${questionId}`).toPromise();
   }
-
-  update(question: Question): Observable<IQuestion | string> {
-    return this.http.put<IQuestion>(`${this.baseUrl}/${question.idQuestion}`, question.toJSON());
-  }
-
-  delete(questionId: string): Observable<IQuestion | string> {
-    return this.http.delete<IQuestion>(`${this.baseUrl}/${questionId}`);
-  }
-
 
 }
