@@ -10,6 +10,8 @@ import IReponse from '../../interfaces/IReponse';
 import Question from '@/objects/Question';
 import Reponse from '../../objects/Reponse';
 import { map } from 'rxjs/operators';
+import PreconisationCategorieQuestion from '@/objects/PreconisationCategorieQuestion';
+import IPreconisationCategorieQuestion from '@/interfaces/IPreconisationCategorieQuestion';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,18 @@ export class QuestionService {
   private baseUrl: string = environment.apiUrl + '/Questions';
 
   constructor(private http: HttpClient) {}
+
+  getAllPreconisationCategoriesQuestion(categorieQuestionId: string): Observable<PreconisationCategorieQuestion[]> {
+    return this.http.get<PreconisationCategorieQuestion[]>(`${this.baseUrl}/${categorieQuestionId}/PreconisationCategoriesQuestion`).pipe(map((receivedData: IPreconisationCategorieQuestion[]) => {
+      return receivedData.map<PreconisationCategorieQuestion>((value: IPreconisationCategorieQuestion, index:number, array:IPreconisationCategorieQuestion[]) => {
+        return new PreconisationCategorieQuestion(
+          value.idPreconisationCategoriesQuestion,
+          value.viewIfPourcentageScoreLessThan,
+          value.Contenue
+        )
+      });
+    }));
+  }
 
   getAllReponses(questionId: string): Observable<Reponse[]> {
     return this.http.get<IReponse[]>(`${this.baseUrl}/${questionId}/Reponses`).pipe(map((receivedData: IReponse[]) => {

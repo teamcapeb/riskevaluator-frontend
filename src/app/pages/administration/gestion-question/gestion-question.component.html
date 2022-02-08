@@ -1,9 +1,9 @@
 <app-list title="Liste des questions" (onAdd)="add()">
     <ng-template [ngIf]="questions | async" [ngIfElse]="loading">
         <ng-container *ngFor="let question of questions | async">
-            <app-list-item 
+            <app-list-item
                 id="{{question.idQuestion}}"
-                [data]="question" 
+                [data]="question"
                 (onUpdate)="update($event)"
                 (onDelete)="delete($event)"
             >
@@ -12,6 +12,22 @@
         </ng-container>
     </ng-template>
 </app-list>
+
+<app-list title="Liste des suggestions" (onAdd)="addSuggestion()">
+  <ng-template [ngIf]="preconisationCategorieQuestion | async" [ngIfElse]="loading">
+    <ng-container *ngFor="let suggestions of preconisationCategorieQuestion | async">
+      <app-list-item
+        id="{{suggestions.idPreconisationCategoriesQuestion}}"
+        [data]="suggestions"
+        (onUpdate)="updateSuggestion($event)"
+        (onDelete)="deleteSuggestion($event)"
+      >
+        <app-list-item-col>{{suggestions.Contenue}}</app-list-item-col>
+      </app-list-item>
+    </ng-container>
+  </ng-template>
+</app-list>
+
 <ng-template #loading>
     <div class="loader">
         <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
@@ -19,6 +35,8 @@
         </div>
     </div>
 </ng-template>
+
+<app-preconisation-categorie-question-form [preconisationCategorieQuestion]="actualPreconisationCategorieQuestion" (onConfirmation)="createOrUpdateOrDeletePreconisationCategorieQuestion($event)" #preconisationCategorieQuestionForm></app-preconisation-categorie-question-form>
 
 <app-question-modal [question]="actualQuestion" (onConfirmation)="createOrUpdateOrDeleteQuestion($event)" #questionModal></app-question-modal>
 <app-error-modal #errorModal></app-error-modal>
