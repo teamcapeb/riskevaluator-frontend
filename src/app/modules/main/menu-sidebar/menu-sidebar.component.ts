@@ -38,33 +38,41 @@ export class MenuSidebarComponent implements OnInit {
 export const MENU = [
     {
         name: 'Acceuil',
-        path: ['/']
+        path: ['/'],
+        icon: "fas fa-tachometer-alt"
     },
     {
         name: 'Evaluer',
-        path: ['/evaluer']
+        path: ['/evaluer'],
+        icon: "fas fa-tachometer-alt"
     },
     {
         name: 'Historiques',
-        path: ['/historiques']
+        path: ['/historiques'],
+        icon: "fas fa-tachometer-alt"
     },
     {
         name: 'Contact',
-        path: ['/contact']
+        path: ['/contact'],
+        icon: "fas fa-tachometer-alt"
     }
     ];
 
 export const ADMIN_MENU = [
   {
     name: 'Gestion questionnaire',
-    path: ['/gestion-questionnaire']
+    path: ['/gestion-questionnaire'],
+    icon: "fas fa-tachometer-alt"
+
   },
   {
     name: 'Gestion métiers',
-    path: ['/gestion-metiers']
+    path: ['/gestion-metiers'],
+    icon: "fas fa-tachometer-alt"
   },
   {
     name: 'Gestion Comptes',
-    path: ['/gestion-compte']
+    path: ['/gestion-compte'],
+    icon: "fas fa-tachometer-alt"
   }
 ];

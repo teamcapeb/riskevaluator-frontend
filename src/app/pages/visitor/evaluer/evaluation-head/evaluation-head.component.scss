@@ -1,0 +1,86 @@
+.animated-background {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #a5a5a5;
+  background: linear-gradient(to right, #e4e4e4 8%, #dfdfdf 18%, #f0f0f0d5 33%);
+  border-radius: 4%;
+  // background-size: 20% 10%;
+  height: 7em;
+  position: relative;
+  margin-top: 8%;
+  margin-left: 10%;
+}
+
+.animated-backgroundDescription {
+  height: 5em;
+  margin-top: 3%;
+}
+
+.animated-backgroundTitle {
+  height: 3em;
+  margin-top: 10%;
+  margin-left: 5%;
+}
+
+.animated-backgroundQuestion {
+  height: 2em;
+  margin-top: 6%;
+  // margin-left: 0;
+}
+
+.animated-backgroundLongQuestion {
+  height: 10em;
+  margin-top: 2%;
+  // margin-left: 0;
+}
+
+.animated-backgroundQuestion2 {
+  height: 2em;
+  margin-top: 2%;
+  // margin-left: 0;
+}
+
+.progressBar {
+  margin-bottom: 2%;
+}
+
+.categorieTitle {
+  margin-top: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  // background-color: red;
+  color: white;
+  transform: rotate(-2deg);
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 2.5vw;
+
+  box-shadow: 7px 7px 10px -2px #8e8e8e;
+  border-radius: 4%;
+}
+
+
+.categorieDescription {
+  margin-top: 3%;
+  padding-left: 12%;
+  padding-right: 12%;
+  text-align: center;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+  font-size: 1.2vw;
+  margin-bottom: 1%;
+}
+
+
+
+@media (max-width: 767px) {
+
+  .categorieDescription {
+    font-size: medium;
+  }
+
+}

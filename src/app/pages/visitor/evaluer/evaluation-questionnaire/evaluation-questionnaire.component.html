@@ -1,0 +1,20 @@
+
+<app-evaluation-head *ngIf="true"> </app-evaluation-head>
+
+<app-evaluation-body *ngIf="true"> </app-evaluation-body>
+<div class="row justify-content-center">
+
+  <div class="col-lg-6 nextPreviousButtons">
+    <button mat-button class="previousButton" (click)="previousButtonClick()">Retour</button>
+
+    <span matTooltip="Vous devez renseigner tous les champs pour passer à la suite."
+          matTooltipPosition="above" matTooltipClass="example-tooltip-red"
+          [matTooltipDisabled]="!disableNextButton()">
+                    <button mat-button class="nextButton" (click)="nextButtonClick()" id="nextButton"
+                    >Suivant</button>
+                    <button mat-button (click)="nextButtonClick()" id="finishButton" >Terminer</button>
+    </span>
+
+  </div>
+
+</div>
