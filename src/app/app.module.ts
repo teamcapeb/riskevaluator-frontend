@@ -58,7 +58,6 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from "@angular/material/select";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatMenuModule } from "@angular/material/menu";
@@ -69,17 +68,20 @@ import { MatInputModule } from "@angular/material/input";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import { EvaluationWelcomeComponent } from './pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component';
-import { EvaluationHeadComponent } from './pages/visitor/evaluer/evaluation-head/evaluation-head.component';
-import { EvaluationQuestionnaireComponent } from './pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component';
-import { EvaluationBodyComponent } from './pages/visitor/evaluer/evaluation-body/evaluation-body.component';
-import { EvalationQuestionComponent } from './pages/visitor/evaluer/evalation-question/evalation-question.component';
 
 import { CategorieQuestionFormComponent } from './pages/administration/gestion-categorie-questions/categorie-question-form/categorie-question-form.component';
 
 import { PreconisationCategorieQuestionFormComponent } from './pages/administration/gestion-question/preconisation-categorie-question-form/preconisation-categorie-question-form.component';
 import { QuestionnaireFormComponent } from '@pages/administration/gestion-questionnaire/questionnaire-form/questionnaire-form.component';
 
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { EvaluationQuestionComponent } from "@pages/visitor/evaluer/evaluation-question/evaluation-question.component";
+import { EvaluationHeadComponent } from "@pages/visitor/evaluer/evaluation-head/evaluation-head.component";
+import {
+  EvaluationQuestionnaireComponent
+} from "@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component";
+import { EvaluationWelcomeComponent } from "@pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component";
+import { EvaluationBodyComponent } from "@pages/visitor/evaluer/evaluation-body/evaluation-body.component";
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -119,7 +121,11 @@ registerLocaleData(localeEn, 'en-EN');
 
         GestionCategorieQuestionsComponent,
         PreconisationGlobalFormComponent,
-
+        EvaluationQuestionComponent,
+        EvaluationHeadComponent,
+        EvaluationQuestionnaireComponent,
+        EvaluationWelcomeComponent,
+        EvaluationBodyComponent,
         QuestionFormComponent,
         QuestionModalComponent,
         ListItemColComponent,

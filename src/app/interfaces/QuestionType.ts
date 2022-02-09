@@ -1,8 +1,12 @@
 export enum QuestionType {
-  OUVERTE,
+
+  QUESTION_CHOIX_UNIQUE,
+  QUESTION_CHOIX_MULTIPLE
+
+/*OUVERTE,
   MULTIPLE,
   edit,
   create,
-  wait
+  wait*/
 }
 

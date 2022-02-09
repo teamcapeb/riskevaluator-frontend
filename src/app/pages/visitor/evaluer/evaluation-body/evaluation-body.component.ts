@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
+import { QuestionType } from "@/interfaces/QuestionType";
 
 @Component({
   selector: 'app-evaluation-body',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./evaluation-body.component.scss']
 })
 export class EvaluationBodyComponent implements OnInit {
+
+  readonly QuestionType = QuestionType;
 
   q1:any = {
     contenu : "Quel est le nom de l'entreprise",
