@@ -1,6 +1,6 @@
 <app-list title="Liste des questions" (onAdd)="add()">
-    <ng-template [ngIf]="questions | async" [ngIfElse]="loading">
-        <ng-container *ngFor="let question of questions | async">
+    <ng-template [ngIf]="categorieQuestion | async" [ngIfElse]="loading">
+        <ng-container *ngFor="let question of (categorieQuestion | async)?.questions">
             <app-list-item
                 id="{{question.idQuestion}}"
                 [data]="question"
@@ -14,15 +14,15 @@
 </app-list>
 
 <app-list title="Liste des suggestions" (onAdd)="addSuggestion()">
-  <ng-template [ngIf]="preconisationCategorieQuestion | async" [ngIfElse]="loading">
-    <ng-container *ngFor="let suggestions of preconisationCategorieQuestion | async">
+  <ng-template [ngIf]="categorieQuestion | async" [ngIfElse]="loading">
+    <ng-container *ngFor="let suggestions of (categorieQuestion | async)?.preconisationsCategorie">
       <app-list-item
-        id="{{suggestions.idPreconisationCategoriesQuestion}}"
+        id="{{suggestions.idPreconisation}}"
         [data]="suggestions"
         (onUpdate)="updateSuggestion($event)"
         (onDelete)="deleteSuggestion($event)"
       >
-        <app-list-item-col>{{suggestions.Contenue}}</app-list-item-col>
+        <app-list-item-col>{{suggestions.contenu}}</app-list-item-col>
       </app-list-item>
     </ng-container>
   </ng-template>

@@ -19,8 +19,8 @@ export class QuestionnaireService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Questionnaire[]> {
-    return this.http.get<IQuestionnaire[]>(`${this.baseUrl}`).pipe(map((iuestionnaires: IQuestionnaire[]) => {
-        return iuestionnaires.map<Questionnaire>((iQuestionnaire: IQuestionnaire) => {
+    return this.http.get<IQuestionnaire[]>(`${this.baseUrl}`).pipe(map((iQuestionnaires: IQuestionnaire[]) => {
+        return iQuestionnaires.map((iQuestionnaire: IQuestionnaire) => {
           return Questionnaire.toQuestionnaire(iQuestionnaire);
         });
     }));
@@ -30,14 +30,6 @@ export class QuestionnaireService {
     return this.http.get<IQuestionnaire>(`${this.baseUrl}${questionnaireId}`).pipe(map((iQuestionnaire: IQuestionnaire) => {
      return Questionnaire.toQuestionnaire(iQuestionnaire);
     }));
-  }
-
-  createPreconisationGlobale(questionnaireId: string, preconisation: PreconisationGlobale): Promise<PreconisationGlobale | string>{
-    return this.http.post<PreconisationGlobale>(`${this.baseUrl}${questionnaireId}/PreconisationGlobale`, preconisation.toJSON()).toPromise();
-  }
-
-  createCategorieQuestion(questionnaireId: string, categorieQuestion: CategorieQuestion): Promise<ICategorieQuestion | string>{
-    return this.http.post<ICategorieQuestion>(`${this.baseUrl}${questionnaireId}/categoriesQuestion`, categorieQuestion.toJSON()).toPromise();
   }
 
   create(questionnaire: Questionnaire): Promise<IQuestionnaire | string>{

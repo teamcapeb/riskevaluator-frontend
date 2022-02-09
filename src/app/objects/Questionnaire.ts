@@ -14,17 +14,21 @@ export default class Questionnaire {
     constructor(
         idQuestionnaire: number,
         thematique: string,
-        preconisationGlobales: IPreconisationGlobale[],
-        categorieQuestions: ICategorieQuestion[]
+        preconisationGlobales?: IPreconisationGlobale[],
+        categorieQuestions?: ICategorieQuestion[]
         ){
             this.idQuestionnaire = idQuestionnaire;
             this.thematique = thematique;
-            this.preconisationGlobales= preconisationGlobales.map((iPreconisationsGlobales: IPreconisationGlobale) => {
-                return PreconisationGlobale.toPreconisationGlobale(iPreconisationsGlobales);
-            });
-            this.categorieQuestions= categorieQuestions.map((iCategorieQuestion: ICategorieQuestion) => {
-                return CategorieQuestion.toCategorieQuestion(iCategorieQuestion);
-            });;
+            if(preconisationGlobales){
+                this.preconisationGlobales= preconisationGlobales.map((iPreconisationsGlobale: IPreconisationGlobale) => {
+                    return PreconisationGlobale.toPreconisationGlobale(iPreconisationsGlobale);
+                });
+            }
+            if(categorieQuestions){
+                this.categorieQuestions= categorieQuestions.map((iCategorieQuestion: ICategorieQuestion) => {
+                    return CategorieQuestion.toCategorieQuestion(iCategorieQuestion);
+                });
+            }
         }
         
     static toQuestionnaire(iQuestionnaire: IQuestionnaire): Questionnaire {

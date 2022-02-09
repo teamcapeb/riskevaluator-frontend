@@ -8,12 +8,12 @@ export default class PreconisationGlobale {
   public contenu: string;
   public viewIfPourcentageScoreLessThan: number;
   
-  constructor(idPreconisationG: number, 
-              iQuestionnaire: IQuestionnaire,
+  constructor(idPreconisationG: number,
               contenu: string,
-              viewIfPourcentageScoreLessThan: number){
+              viewIfPourcentageScoreLessThan: number,
+              iQuestionnaire?: IQuestionnaire){
     this.idPreconisationG = idPreconisationG;
-    this.questionnaire = Questionnaire.toQuestionnaire(iQuestionnaire);
+    this.questionnaire = iQuestionnaire ? Questionnaire.toQuestionnaire(iQuestionnaire) : null;
     this.contenu = contenu;
     this.viewIfPourcentageScoreLessThan = viewIfPourcentageScoreLessThan;
   }
@@ -21,16 +21,16 @@ export default class PreconisationGlobale {
   static toPreconisationGlobale(iPreconisationsGlobales: IPreconisationGlobale): PreconisationGlobale  {
       return new PreconisationGlobale(
         iPreconisationsGlobales.idPreconisationG,
-        iPreconisationsGlobales.questionnaire,
         iPreconisationsGlobales.contenu,
-        iPreconisationsGlobales.viewIfPourcentageScoreLessThan
+        iPreconisationsGlobales.viewIfPourcentageScoreLessThan,
+        iPreconisationsGlobales.questionnaire
       );
   }
 
   public toJSON(): IPreconisationGlobale{
       return {
         "idPreconisationG": this.idPreconisationG,
-        "questionnaire": this.questionnaire.toJSON(),
+        "questionnaire": this.questionnaire ? this.questionnaire.toJSON() : null,
         "contenu": this.contenu,
         "viewIfPourcentageScoreLessThan": this.viewIfPourcentageScoreLessThan
       }

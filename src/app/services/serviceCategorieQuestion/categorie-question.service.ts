@@ -25,10 +25,10 @@ export class CategorieQuestionService {
       return CategorieQuestion.toCategorieQuestion(receivedData);
     }));
   }
-  createQuestionCategoriesQuestion(categorieQuestionId: string, question: Question): Promise<IQuestion | string>{
+  createQuestionCategoriesQuestion(categorieQuestionId: number, question: Question): Promise<IQuestion | string>{
     return this.http.post<IQuestion>(`${this.baseUrl}/${categorieQuestionId}/Questions`, question.toJSON()).toPromise();
   }
-  createPreconisationCategoriesQuestion(questionnaireId: string, preconisation: PreconisationCategorieQuestion): Promise<IPreconisationCategorieQuestion | string>{
+  createPreconisationCategoriesQuestion(questionnaireId: number, preconisation: PreconisationCategorieQuestion): Promise<IPreconisationCategorieQuestion | string>{
     return this.http.post<IPreconisationCategorieQuestion>(`${this.baseUrl}${questionnaireId}/PreconisationCategoriesQuestion`, preconisation.toJSON()).toPromise();
   }
   create(categorieQuestion: CategorieQuestion): Promise<ICategorieQuestion | string>{

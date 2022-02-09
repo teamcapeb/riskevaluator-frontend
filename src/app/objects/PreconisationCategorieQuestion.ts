@@ -10,23 +10,23 @@ export default class PreconisationCategorieQuestion {
   public categorieQuestion: CategorieQuestion;
 
   constructor(idPreconisation: number,
-              idCategorie: number,
               contenu: string,
-              viewIfPourcentageScoreLessThan: number, 
-              iCategorieQuestion: ICategorieQuestion ){
+              viewIfPourcentageScoreLessThan: number,
+              idCategorie?: number, 
+              iCategorieQuestion?: ICategorieQuestion ){
       this.idPreconisation = idPreconisation;
-      this.idCategorie = idCategorie;
+      this.idCategorie = idCategorie ? idCategorie : null;
       this.contenu = contenu;
       this.viewIfPourcentageScoreLessThan = viewIfPourcentageScoreLessThan;
-      this.categorieQuestion = CategorieQuestion.toCategorieQuestion(iCategorieQuestion);
+      this.categorieQuestion = iCategorieQuestion ? CategorieQuestion.toCategorieQuestion(iCategorieQuestion) : null;
   }
 
   static toPreconisationCategorieQuestion(iPreconisationCategorieQuestion: IPreconisationCategorieQuestion): PreconisationCategorieQuestion {
     return new PreconisationCategorieQuestion(
       iPreconisationCategorieQuestion.idPreconisation,
-      iPreconisationCategorieQuestion.idCategorie,
       iPreconisationCategorieQuestion.contenu,
       iPreconisationCategorieQuestion.viewIfPourcentageScoreLessThan,
+      iPreconisationCategorieQuestion.idCategorie,
       iPreconisationCategorieQuestion.categorieQuestion
     );
   }

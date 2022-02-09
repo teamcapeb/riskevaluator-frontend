@@ -14,16 +14,20 @@ export default class Question {
     metiers: Metier[];
     reponses: Reponse[];
 
-    constructor(idQuestion: number, qType: string, libelleQuestion: string, metiers: IMetier[], reponses: IReponse[]){
+    constructor(idQuestion: number, qType: string, libelleQuestion: string, metiers?: IMetier[], reponses?: IReponse[]){
         this.idQuestion = idQuestion;
         this.qType = qType;
         this.libelleQuestion = libelleQuestion;
-        this.metiers = metiers.map((iMetier: IMetier) => {
-            return Metier.toMetier(iMetier);
-        });
-        this.reponses = reponses.map((iReponse: IReponse) => {
-            return Reponse.toReponse(iReponse);
-        });
+        if(metiers){
+            this.metiers = metiers.map((iMetier: IMetier) => {
+                return Metier.toMetier(iMetier);
+            });
+        }
+        if(reponses){
+            this.reponses = reponses.map((iReponse: IReponse) => {
+                return Reponse.toReponse(iReponse);
+            });
+        }
     }
 
     public static toQuestion(iQuestion: IQuestion): Question{

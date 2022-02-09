@@ -28,16 +28,16 @@ const administration: Routes = [
     component: GestionMetiersComponent
   },
   {
-    path: 'gestion-categories-questions',
+    path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions',
     component: GestionCategorieQuestionsComponent
   },
 
   {
-    path: 'gestion-questionnaire',
+    path: 'gestion-questionnaires',
     component: GestionQuestionnaireComponent
   },
   {
-    path: 'gestion-question',
+    path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions/:idCategorie/gestion-questions',
     component: GestionQuestionComponent
   },
   {

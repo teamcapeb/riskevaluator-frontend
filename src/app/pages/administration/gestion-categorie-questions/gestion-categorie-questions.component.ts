@@ -1,14 +1,13 @@
 import IListEvent from '@/interfaces/IListEvent';
 import PreconisationGlobale from '@/objects/PreconisationGlobale';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PreconisationGlobaleService } from '@services/servicePreconisationGlobale/preconisation-globale.service';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { ErrorModalComponent } from '@components/error-modal/error-modal.component';
+import { Observable } from 'rxjs';
 import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnaire.service';
 import CategorieQuestion from '@/objects/CategorieQuestion';
 import { CategorieQuestionService } from '@services/serviceCategorieQuestion/categorie-question.service';
+import Questionnaire from '../../../objects/Questionnaire';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-gestion-categorie-questions',
@@ -17,85 +16,62 @@ import { CategorieQuestionService } from '@services/serviceCategorieQuestion/cat
 })
 export class GestionCategorieQuestionsComponent implements OnInit {
 
-  private _preconisationGlobale: Observable<PreconisationGlobale[]>;
-  private _categorieQuestion: Observable<CategorieQuestion[]>
+  //private _preconisationGlobale: Observable<PreconisationGlobale[]>;
+  //private _categorieQuestion: Observable<CategorieQuestion[]>
+
+  private _questionnaire: Observable<Questionnaire>;
+  private _idQuestionnaire: number = 0;;
 
   @ViewChild('preconisationGlobaleForm') preconisationGlobaleForm: any;
   @ViewChild('errorModal') errorModal: any;
   @ViewChild('categorieQuestionForm') categorieQuestionForm: any;
 
-  public actualPreconisationGlobale: PreconisationGlobale
-  public actualCategorieQuestion: CategorieQuestion
+  public actualPreconisationGlobale: PreconisationGlobale;
+  public actualCategorieQuestion: CategorieQuestion;
+
+
 
   constructor(private questionnaireService: QuestionnaireService,
               private preconisationGlobaleService: PreconisationGlobaleService,
               private categorieQuestionService: CategorieQuestionService,
-              private modalService: NgbModal) { }
+              private activatedRoute: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
-
+    let idQuestionnaire = this.activatedRoute.snapshot.paramMap.get('idQuestionnaire')
+    if(idQuestionnaire){
+      this._idQuestionnaire = parseInt(idQuestionnaire);
+      this._questionnaire = this.questionnaireService.get(this._idQuestionnaire);
+    }else{
+      this.router.navigate(['/']);
+    }
   }
 
 
   ngAfterViewInit(){
-    let finalise = new Subject();
-    this._preconisationGlobale = this.getAll();
-    this._categorieQuestion = this.getAllC();
-
-  }
-
-  getAll(): Observable<PreconisationGlobale[]>{
-    let finalise = new Subject();
-    let obs = this.questionnaireService.getAllPreconisationGlobale('1');
-    obs.pipe(takeUntil(finalise)).subscribe((data) =>{
-      //console.log(data)
-      finalise.next();
-      finalise.complete();
-    },
-    (err) => {
-      this.errorModal.open(JSON.stringify(err.error));
-      finalise.next();
-      finalise.complete();
-    });
-    return obs;
-  }
-
-
-
-  getAllC(): Observable<CategorieQuestion[]>{
-    let finalise = new Subject();
-    let obs = this.questionnaireService.getAllCategoriesQuestion('1');
-    obs.pipe(takeUntil(finalise)).subscribe((data) =>{
-      finalise.next();
-      finalise.complete();
-    },
-    (err) => {
-      this.errorModal.open(JSON.stringify(err.error));
-      finalise.next();
-      finalise.complete();
-    });
-    return obs;
+    //this._preconisationGlobale = this.questionnaireService.
+    //this._categorieQuestion = this.getAllC();
   }
 
 
   add(): void{
-    this.actualPreconisationGlobale = new PreconisationGlobale('',0,'');
+    this.actualPreconisationGlobale = new PreconisationGlobale(0,'', 0, new Questionnaire(this._idQuestionnaire, '', [], []).toJSON());
     this.preconisationGlobaleForm.open('add');
   }
 
   addC(): void{
-    this.actualCategorieQuestion = new CategorieQuestion('','');
+    this.actualCategorieQuestion = new CategorieQuestion(0, '', new Questionnaire(this._idQuestionnaire, '', [], []).toJSON(), [], []);
     this.categorieQuestionForm.open('add');
   }
 
   update(event: IListEvent){
+    event.data.questionnaire = new Questionnaire(this._idQuestionnaire, '', [], []);
     this.actualPreconisationGlobale = event.data;
     this.preconisationGlobaleForm.open('update');
   }
 
   updateC(event: IListEvent){
-    this.actualCategorieQuestion = event.data;
-    this.categorieQuestionForm.open('update');
+    this.router.navigate(['/gestion-questionnaires', this._idQuestionnaire, 'gestion-categories-questions', event.data.idCategorie, 'gestion-questions']);
   }
 
   delete(event: IListEvent){
@@ -108,53 +84,45 @@ export class GestionCategorieQuestionsComponent implements OnInit {
     this.categorieQuestionForm.open('delete');
   }
 
-  createOrUpdateOrDeleteCategorieQuestion(event: IListEvent){
-    this._categorieQuestion = null;
-    let finalise = new Subject();
-    let obs = null;
-    if(event.action === 'update'){
-      obs = this.categorieQuestionService.update(event.data);
-    }else if (event.action === 'add'){
-      obs = this.categorieQuestionService.create(event.data);
-    }else if(event.action === 'delete'){
-      obs = this.categorieQuestionService.delete(event.data);
+  public async createOrUpdateOrDeleteCategorieQuestion(event: IListEvent): Promise<void>{
+    this._questionnaire = null;
+    let res = null;
+    try{
+      if(event.action === 'update'){
+        res = await this.categorieQuestionService.update(event.data);
+      }else if (event.action === 'add'){
+        res = await this.categorieQuestionService.create(event.data);
+      }else if(event.action === 'delete'){
+        res = await this.categorieQuestionService.delete(event.data);
+      }
+      this._questionnaire = this.questionnaireService.get(this._idQuestionnaire);
+    }catch(error){
+      this.errorModal.open(error.message);
     }
-    obs.pipe(takeUntil(finalise)).subscribe((res) =>{
-      this._categorieQuestion = this.categorieQuestionService.getAll();
-      finalise.next();
-      finalise.complete();
-    },
-    (err) => {
-      this.errorModal.open(JSON.stringify(err.error));
-      finalise.next();
-      finalise.complete();
-    });
   }
 
 
-  createOrUpdateOrDeletePreconisationGlobale(event: IListEvent){
-    this._preconisationGlobale = null;
-    let finalise = new Subject();
-    let obs = null;
-    if(event.action === 'update'){
-      obs = this.preconisationGlobaleService.update(event.data);
-    }else if (event.action === 'add'){
-      obs = this.preconisationGlobaleService.create(event.data);
-    }else if(event.action === 'delete'){
-      obs = this.preconisationGlobaleService.delete(event.data);
+  public async createOrUpdateOrDeletePreconisationGlobale(event: IListEvent): Promise<void>{
+    this._questionnaire = null;
+    let res = null;
+    try{
+      if(event.action === 'update'){
+        res = await this.preconisationGlobaleService.update(event.data);
+      }else if (event.action === 'add'){
+        res = await this.preconisationGlobaleService.create(event.data);
+      }else if(event.action === 'delete'){
+        res = await this.preconisationGlobaleService.delete(event.data);
+      }
+      this._questionnaire = this.questionnaireService.get(this._idQuestionnaire);
+    }catch(error){
+      this.errorModal.open(error.message);
     }
-    obs.pipe(takeUntil(finalise)).subscribe((res) =>{
-      this._preconisationGlobale = this.preconisationGlobaleService.getAll();
-      finalise.next();
-      finalise.complete();
-    },
-    (err) => {
-      this.errorModal.open(JSON.stringify(err.error));
-      finalise.next();
-      finalise.complete();
-    });
   }
 
+  get questionnaire(): Observable<Questionnaire> {
+    return this._questionnaire;
+  }
+/*
   get preconisationGlobales(): Observable<PreconisationGlobale[]> {
     return this._preconisationGlobale;
   }
@@ -162,5 +130,5 @@ export class GestionCategorieQuestionsComponent implements OnInit {
   get categorieQuestions(): Observable<CategorieQuestion[]> {
     return this._categorieQuestion;
   }
-
+*/
 }

@@ -15,27 +15,34 @@ export default class CategorieQuestion {
     public questionnaire: Questionnaire;
     public scoreEvaluations: ScoreCategory[];
     public questions: Question[];
-    public preconisations: PreconisationCategorieQuestion[];
+    public preconisationsCategorie: PreconisationCategorieQuestion[];
 
     constructor(idCategorie: number, 
                 libelle: string,
-                iQuestionnaire: IQuestionnaire,
-                scoreEvaluations: IScoreCategory[],
-                iQuestions: IQuestion[],
-                iPreconisations: IPreconisationCategorieQuestion[]
+                iQuestionnaire?: IQuestionnaire,
+                scoreEvaluations?: IScoreCategory[],
+                iQuestions?: IQuestion[],
+                iPreconisations?: IPreconisationCategorieQuestion[]
                 ){
         this.idCategorie = idCategorie;
         this.libelle = libelle;
-        this.questionnaire = Questionnaire.toQuestionnaire(iQuestionnaire);
-        this.scoreEvaluations = scoreEvaluations.map((iScoreCategory: IScoreCategory) => {
-            return ScoreCategory.toScoreCategory(iScoreCategory);
-        });
-        this.questions = iQuestions.map((iQuestion: IQuestion) => {
-            return Question.toQuestion(iQuestion);
-        });
-        this.preconisations = iPreconisations.map((iPreconisation: IPreconisationCategorieQuestion) => {
-            return PreconisationCategorieQuestion.toPreconisationCategorieQuestion(iPreconisation);
-        });
+
+        this.questionnaire = iQuestionnaire ? Questionnaire.toQuestionnaire(iQuestionnaire) : null;
+        if(scoreEvaluations){
+            this.scoreEvaluations = scoreEvaluations.map((iScoreCategory: IScoreCategory) => {
+                return ScoreCategory.toScoreCategory(iScoreCategory);
+            });
+        }
+        if(iQuestions){
+            this.questions = iQuestions.map((iQuestion: IQuestion) => {
+                return Question.toQuestion(iQuestion);
+            });
+        }
+        if(iPreconisations){
+            this.preconisationsCategorie = iPreconisations.map((iPreconisation: IPreconisationCategorieQuestion) => {
+                return PreconisationCategorieQuestion.toPreconisationCategorieQuestion(iPreconisation);
+            });
+        }
     }
 
     static toCategorieQuestion(iCategorie: ICategorieQuestion): CategorieQuestion {
@@ -45,27 +52,38 @@ export default class CategorieQuestion {
             iCategorie.questionnaire,
             iCategorie.scoreEvaluations,
             iCategorie.questions,
-            iCategorie.preconisations
+            iCategorie.preconisationsCategorie
         );
     }
     
     public toJSON(): ICategorieQuestion{
-        let iScoreEvaluations: IScoreCategory[] = this.scoreEvaluations.map((scoreCategory: ScoreCategory) => {
-            return scoreCategory.toJSON();
-        });
-        let iQuestions: IQuestion[] = this.questions.map((question: Question) => {
-            return question.toJSON();
-        });
-        let iPreconisationsCategoriesQuestions: IPreconisationCategorieQuestion[] = this.preconisations.map((preconisation: PreconisationCategorieQuestion) => {
-            return preconisation.toJSON();
-        });
+        let iScoreEvaluations: IScoreCategory[] = null;
+        let iQuestions: IQuestion[] = null;
+        let iPreconisationsCategoriesQuestions: IPreconisationCategorieQuestion[] = null;
+        if(this.scoreEvaluations){
+            this.scoreEvaluations.map((scoreCategory: ScoreCategory) => {
+                return scoreCategory.toJSON();
+            });
+        }
+
+        if(this.questions){
+            iQuestions = this.questions.map((question: Question) => {
+                return question.toJSON();
+            });
+        }
+
+        if(this.preconisationsCategorie){
+            iPreconisationsCategoriesQuestions = this.preconisationsCategorie.map((preconisation: PreconisationCategorieQuestion) => {
+                return preconisation.toJSON();
+            });
+        }
         return {
             "idCategorie": this.idCategorie,
             "libelle": this.libelle,
             "questionnaire": this.questionnaire.toJSON(),
             "scoreEvaluations": iScoreEvaluations,
             "questions": iQuestions,
-            "preconisations": iPreconisationsCategoriesQuestions
+            "preconisationsCategorie": iPreconisationsCategoriesQuestions
         }
     }
 }

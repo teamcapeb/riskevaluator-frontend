@@ -1,6 +1,8 @@
 import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
+import IEvaluation from "@/interfaces/IEvaluation";
 import IScoreCategory from "@/interfaces/IScoreCategory";
 import CategorieQuestion from "./CategorieQuestion";
+import Evaluation from "./Evaluation";
 
 export default class ScoreCategory{
     private evaluation: Evaluation;

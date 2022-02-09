@@ -16,8 +16,12 @@ export class PreconisationGlobaleService {
 
   constructor(private http: HttpClient) {}
 
+  create(preconisation: PreconisationGlobale): Promise<PreconisationGlobale | string>{
+    return this.http.post<PreconisationGlobale>(`${this.baseUrl}`, preconisation.toJSON()).toPromise();
+  }
+
   update(preconisationGlobale: PreconisationGlobale): Promise<IPreconisationGlobale | string> {
-    return this.http.put<IPreconisationGlobale>(`${this.baseUrl}${preconisationGlobale.idPreconisationG}`, preconisationGlobale.toJSON()).toPromise();
+    return this.http.put<IPreconisationGlobale>(`${this.baseUrl}`, preconisationGlobale.toJSON()).toPromise();
   }
 
   delete(preconisationGlobale: IPreconisationGlobale): Promise<string> {

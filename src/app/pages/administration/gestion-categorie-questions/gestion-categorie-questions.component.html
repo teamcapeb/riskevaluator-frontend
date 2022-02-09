@@ -1,42 +1,13 @@
-<app-list title="Liste des Suggestions Global" (onAdd)="add()" >
-  <app-list-item [header]="true">
-    <app-list-item-col>Reponses</app-list-item-col>
-    <app-list-item-col>Inférieur à</app-list-item-col>
-  </app-list-item>
-  <ng-template [ngIf]="preconisationGlobales | async" [ngIfElse]="loading">
-    <ng-container *ngFor="let preconisationGlobale of preconisationGlobales | async">
-        <app-list-item
-            id="{{preconisationGlobale.idPreconisationGlobale}}"
-            [data]="preconisationGlobale"
-            (onUpdate)="update($event)"
-            (onDelete)="delete($event)"
-        >
-      <app-list-item-col>{{preconisationGlobale.Contenue}}</app-list-item-col>
-      <app-list-item-col>{{preconisationGlobale.viewIfPourcentageScoreLessThan}}</app-list-item-col>
-      </app-list-item>
-    </ng-container>
-</ng-template>
-<ng-template #loading>
-  <div class="loader">
-      <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
-          <span class="sr-only">Loading...</span>
-      </div>
-  </div>
-</ng-template>
-
-<app-preconisation-global-form [preconisationGlobale]="actualPreconisationGlobale" (onConfirmation)="createOrUpdateOrDeletePreconisationGlobale($event)" #preconisationGlobaleForm></app-preconisation-global-form>
-<app-error-modal #errorModal></app-error-modal>
-
-</app-list>
 
 
-<app-list title="Liste des Categories de questions" (onAdd)="add()" >
+
+<app-list title="Liste des Categories de questions" (onAdd)="addC()" >
   <app-list-item [header]="true">
   </app-list-item>
-  <ng-template [ngIf]="categorieQuestions | async" [ngIfElse]="loading">
-    <ng-container *ngFor="let CategorieQuestion of categorieQuestions | async">
+  <ng-template [ngIf]="questionnaire | async" [ngIfElse]="loading">
+    <ng-container *ngFor="let CategorieQuestion of (questionnaire | async)?.categorieQuestions">
         <app-list-item
-            id="{{CategorieQuestion.idCategoriesQuestion}}"
+            id="{{CategorieQuestion.idCategorie}}"
             [data]="CategorieQuestion"
             (onUpdate)="updateC($event)"
             (onDelete)="deleteC($event)"
@@ -45,6 +16,9 @@
       </app-list-item>
     </ng-container>
 </ng-template>
+
+
+</app-list>
 <ng-template #loading>
   <div class="loader">
       <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
@@ -52,9 +26,37 @@
       </div>
   </div>
 </ng-template>
-
-
 <app-categorie-question-form [CategorieQuestion]="actualCategorieQuestion" (onConfirmation)="createOrUpdateOrDeleteCategorieQuestion($event)" #categorieQuestionForm></app-categorie-question-form>
 <app-error-modal #errorModal></app-error-modal>
+
+
+
+<app-list title="Liste des Suggestions Global" (onAdd)="add()" >
+  <app-list-item [header]="true">
+    <app-list-item-col>Reponses</app-list-item-col>
+    <app-list-item-col>Inférieur à</app-list-item-col>
+  </app-list-item>
+  <ng-template [ngIf]="questionnaire | async" [ngIfElse]="loading">
+    <ng-container *ngFor="let preconisationGlobale of (questionnaire | async)?.preconisationGlobales">
+        <app-list-item
+            id="{{preconisationGlobale.idPreconisationG}}"
+            [data]="preconisationGlobale"
+            (onUpdate)="update($event)"
+            (onDelete)="delete($event)"
+        >
+      <app-list-item-col>{{preconisationGlobale.contenu}}</app-list-item-col>
+      <app-list-item-col>{{preconisationGlobale.viewIfPourcentageScoreLessThan}}</app-list-item-col>
+      </app-list-item>
+    </ng-container>
+</ng-template>
 </app-list>
+<ng-template #loading>
+  <div class="loader">
+      <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
+          <span class="sr-only">Loading...</span>
+      </div>
+  </div>
+</ng-template>
+<app-preconisation-global-form [preconisationGlobale]="actualPreconisationGlobale" (onConfirmation)="createOrUpdateOrDeletePreconisationGlobale($event)" #preconisationGlobaleForm></app-preconisation-global-form>
+
 

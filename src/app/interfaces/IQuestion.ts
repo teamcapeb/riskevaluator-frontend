@@ -4,10 +4,10 @@ import ICategorieQuestion from './ICategorieQuestion';
 
 export default interface IQuestion {
     idQuestion: number;
-    categorieQuestion: ICategorieQuestion
+    categorieQuestion?: ICategorieQuestion
     qType: string; // type : QuestionType ?
     aide: string;
     libelleQuestion: string;
-    metiers: IMetier[];
-    reponses: IReponse[];
+    metiers?: IMetier[];
+    reponses?: IReponse[];
 }
