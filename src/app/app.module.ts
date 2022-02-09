@@ -75,6 +75,12 @@ import { EvaluationQuestionnaireComponent } from './pages/visitor/evaluer/evalua
 import { EvaluationBodyComponent } from './pages/visitor/evaluer/evaluation-body/evaluation-body.component';
 import { EvalationQuestionComponent } from './pages/visitor/evaluer/evalation-question/evalation-question.component';
 
+import { CategorieQuestionFormComponent } from './pages/administration/gestion-categorie-questions/categorie-question-form/categorie-question-form.component';
+
+import { PreconisationCategorieQuestionFormComponent } from './pages/administration/gestion-question/preconisation-categorie-question-form/preconisation-categorie-question-form.component';
+import { QuestionnaireFormComponent } from '@pages/administration/gestion-questionnaire/questionnaire-form/questionnaire-form.component';
+
+
 registerLocaleData(localeEn, 'en-EN');
 
 @NgModule({
@@ -118,11 +124,11 @@ registerLocaleData(localeEn, 'en-EN');
         QuestionModalComponent,
         ListItemColComponent,
         ReponseFormComponent,
-        EvaluationWelcomeComponent,
-        EvaluationHeadComponent,
-        EvaluationQuestionnaireComponent,
-        EvaluationBodyComponent,
-        EvalationQuestionComponent,
+
+        CategorieQuestionFormComponent,
+
+        QuestionnaireFormComponent,
+        PreconisationCategorieQuestionFormComponent,
     ],
   imports: [
     BrowserModule,

@@ -1,16 +1,22 @@
 import IMetier from '@/interfaces/IMetier';
-import PreconisationCategorieQuestion from '@/interfaces/PreconisationCategorieQuestion';
+
+import CategorieQuestion from '@/objects/CategorieQuestion';
 import Metier from '@/objects/Metier';
+import PreconisationCategorieQuestion from '@/objects/PreconisationCategorieQuestion';
 import Question from '@/objects/Question';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import CategorieQuestion from '../../interfaces/CategorieQuestion';
+
+import ICategorieQuestion from '../../interfaces/ICategorieQuestion';
+
 import IQuestion from '../../interfaces/IQuestion';
 import IReponse from '../../interfaces/IReponse';
 import Reponse from '../../objects/Reponse';
+import IPreconisationCategorieQuestion from '@/interfaces/IPreconisationCategorieQuestion';
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,22 +27,33 @@ export class CategorieQuestionService {
 
   constructor(private http: HttpClient) {}
 
+  getAllPreconisationCategoriesQuestion(categorieQuestionId: string): Observable<PreconisationCategorieQuestion[]> {
+    return this.http.get<PreconisationCategorieQuestion[]>(`${this.baseUrl}/${categorieQuestionId}/PreconisationCategoriesQuestion`).pipe(map((receivedData: IPreconisationCategorieQuestion[]) => {
+      return receivedData.map<PreconisationCategorieQuestion>((value: IPreconisationCategorieQuestion, index:number, array:IPreconisationCategorieQuestion[]) => {
+        return new PreconisationCategorieQuestion(
+          value.idPreconisationCategoriesQuestion,
+          value.viewIfPourcentageScoreLessThan,
+          value.Contenue
+        )
+      });
+    }));
+  }
 
   getAllQuestionsCategoriesQuestion(categorieQuestionId: string): Observable<Question[]> {
     return this.http.get<IQuestion[]>(`${this.baseUrl}/${categorieQuestionId}/Questions`).pipe(map((receivedData: IQuestion[]) => {
       return receivedData.map<Question>((valueQ: IQuestion, index:number, array:IQuestion[]) => {
         return new Question(
-          valueQ.idQuestion, 
+          valueQ.idQuestion,
           valueQ.type,
           valueQ.libelleQuestion,
           valueQ.metiers.map<Metier>((valueM: IMetier, index:number, array:IMetier[]) => {
           return new Metier(
-            valueM.idMetier, 
+            valueM.idMetier,
             valueM.nomMetier
           )}),
           valueQ.reponses.map<Reponse>((value: IReponse, index:number, array:IReponse[]) => {
           return new Reponse(
-            value.idReponse, 
+            value.idReponse,
             value.nbPoints,
             value.contenu
           )
@@ -46,9 +63,6 @@ export class CategorieQuestionService {
   }
 
 
-  getAllPreconisationCategoriesQuestion(categorieQuestionId: string): Observable<PreconisationCategorieQuestion[]> {
-    return this.http.get<PreconisationCategorieQuestion[]>(`${this.baseUrl}/${categorieQuestionId}/PreconisationCategoriesQuestion`);
-  }
   createQuestionCategoriesQuestion(categorieQuestionId: string, question: Question): Observable<IQuestion | string>{
     return this.http.post<IQuestion>(`${this.baseUrl}/${categorieQuestionId}/Questions`, question.toJSON());
   }
@@ -57,15 +71,38 @@ export class CategorieQuestionService {
     return this.http.post<PreconisationCategorieQuestion>(`${this.baseUrl}/${questionnaireId}/PreconisationCategoriesQuestion`, preconisation);
   }
 
+
+  getAll(): Observable<CategorieQuestion[]> {
+    return this.http.get<ICategorieQuestion[]>(`${this.baseUrl}`).pipe(map((receivedData: ICategorieQuestion[]) => {
+        return receivedData.map<CategorieQuestion>((value: ICategorieQuestion, index:number, array:ICategorieQuestion[]) => {
+          return new CategorieQuestion(
+          value.idCategoriesQuestion,
+          value.libelle
+        )
+        });
+    }));
+  }
+
+
+  create(categorieQuestion: CategorieQuestion): Observable<ICategorieQuestion | string>{
+    return this.http.post<ICategorieQuestion>(`${this.baseUrl}`, categorieQuestion.toJSON());
+  }
+
   get(categorieQuestionId: string): Observable<CategorieQuestion> {
-    return this.http.get<CategorieQuestion>(`${this.baseUrl}/${categorieQuestionId}`);
+    return this.http.get<ICategorieQuestion>(`${this.baseUrl}/${categorieQuestionId}`).pipe(map((receivedData: ICategorieQuestion) => {
+      return new CategorieQuestion(
+          receivedData.idCategoriesQuestion,
+          receivedData.libelle
+      )
+}));
+
   }
 
-  update(categorieQuestionId: string, categorieQuestion: CategorieQuestion): Observable<CategorieQuestion | string> {
-    return this.http.put<CategorieQuestion>(`${this.baseUrl}/${categorieQuestionId}`, categorieQuestion);
+  update(categorieQuestion: ICategorieQuestion): Observable<ICategorieQuestion | string> {
+    return this.http.put<ICategorieQuestion>(`${this.baseUrl}/${categorieQuestion.idCategoriesQuestion}`, categorieQuestion);
   }
 
-  delete(categorieQuestionId: string): Observable<CategorieQuestion | string> {
-    return this.http.delete<CategorieQuestion>(`${this.baseUrl}/${categorieQuestionId}`);
+  delete(categorieQuestion: ICategorieQuestion): Observable<string> {
+    return this.http.delete<string>(`${this.baseUrl}/${categorieQuestion.idCategoriesQuestion}`);
   }
 }
