@@ -16,11 +16,15 @@ export class PreconisationCategoriesQuestionService {
 
   constructor(private http: HttpClient) {}
 
+  create(preconisation: PreconisationCategorieQuestion): Promise<IPreconisationCategorieQuestion | string>{
+    return this.http.post<IPreconisationCategorieQuestion>(`${this.baseUrl}`, preconisation.toJSON()).toPromise();
+  }
+
   update(preconisationCategorieQuestion: PreconisationCategorieQuestion): Promise<PreconisationCategorieQuestion | string> {
-    return this.http.put<PreconisationCategorieQuestion>(`${this.baseUrl}${preconisationCategorieQuestion.idCategorie}`, preconisationCategorieQuestion.toJSON()).toPromise();
+    return this.http.put<PreconisationCategorieQuestion>(`${this.baseUrl}`, preconisationCategorieQuestion.toJSON()).toPromise();
   }
 
   delete(preconisationCategorieQuestion: PreconisationCategorieQuestion): Promise<PreconisationCategorieQuestion | string> {
-    return this.http.delete<PreconisationCategorieQuestion>(`${this.baseUrl}${preconisationCategorieQuestion.idCategorie}`).toPromise();
+    return this.http.delete<PreconisationCategorieQuestion>(`${this.baseUrl}${preconisationCategorieQuestion.idPreconisation}`).toPromise();
   }
 }

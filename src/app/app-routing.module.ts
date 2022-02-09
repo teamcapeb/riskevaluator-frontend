@@ -41,7 +41,7 @@ const administration: Routes = [
     component: GestionQuestionComponent
   },
   {
-    path: 'gestion-question/question',
+    path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions/:idCategorie/gestion-questions/:idQuestion/question',
     component: QuestionFormComponent
   },
   {

@@ -80,7 +80,7 @@ export default class CategorieQuestion {
         return {
             "idCategorie": this.idCategorie,
             "libelle": this.libelle,
-            "questionnaire": this.questionnaire.toJSON(),
+            "questionnaire": this.questionnaire ? this.questionnaire.toJSON() : null,
             "scoreEvaluations": iScoreEvaluations,
             "questions": iQuestions,
             "preconisationsCategorie": iPreconisationsCategoriesQuestions

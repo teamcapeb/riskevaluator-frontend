@@ -53,7 +53,7 @@ export class GestionQuestionComponent implements OnInit {
   }
 
   add(): void{
-    this.router.navigateByUrl('gestion-question/question',
+    this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions', -1 ,'question'],
       {
         state: {
                   action: 'update' ,
@@ -66,23 +66,28 @@ export class GestionQuestionComponent implements OnInit {
 
 
   addSuggestion(): void{
-    //this.actualPreconisationCategorieQuestion = new PreconisationCategorieQuestion('',0,'');
-    //this.preconisationCategorieQuestionForm.open('add');
+    let cq = new CategorieQuestion(this._idCategorie, '');
+    let iCq = cq.toJSON();
+    this.actualPreconisationCategorieQuestion = new PreconisationCategorieQuestion(0, '', 0, this._idCategorie, cq.toJSON());
+    this.preconisationCategorieQuestionForm.open('add');
   }
 
   updateSuggestion(event: IListEvent){
-    //this.actualPreconisationCategorieQuestion = event.data;
-    //this.preconisationCategorieQuestionForm.open('update');
+    event.data.idCategorie = this._idCategorie;
+    event.data.categorieQuestion = new CategorieQuestion(this._idCategorie, '');
+    
+    this.actualPreconisationCategorieQuestion = event.data;
+    this.preconisationCategorieQuestionForm.open('update');
   }
 
   deleteSuggestion(event: IListEvent){
-    //this.actualPreconisationCategorieQuestion = event.data;
-    //this.preconisationCategorieQuestionForm.open('delete');
+    this.actualPreconisationCategorieQuestion = event.data;
+    this.preconisationCategorieQuestionForm.open('delete');
   }
 
   update(event: IListEvent){
     //this.actualQuestion = event.data;
-    this.router.navigate(['gestion-question/question'],
+    this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions', event.data.idQuestion ,'question'],
       {
         state: {
                   action: 'update' ,
@@ -98,32 +103,37 @@ export class GestionQuestionComponent implements OnInit {
     this.questionModal.open('delete');
   }
 
-  createOrUpdateOrDeleteQuestion(event: IListEvent){
+  public async createOrUpdateOrDeleteQuestion(event: IListEvent){
+    this._categorieQuestion = null;
     let res = null;
     try{
       if(event.action === 'update'){
-        res = this.questionService.update(event.data);
+        res = await this.questionService.update(event.data);
       }else if (event.action === 'add'){
-        res = this.categorieQuestionService.createQuestionCategoriesQuestion(0 ,event.data);
+        res = await this.categorieQuestionService.createQuestionCategoriesQuestion(0 ,event.data);
       }else if(event.action === 'delete'){
-        res = this.questionService.delete(event.data);
+        res = await this.questionService.delete(event.data);
       }
+      this._categorieQuestion = this.categorieQuestionService.get(this._idCategorie);
     }catch(error){
       this.errorModal.open(error.message);
     }
 
   }
 
-  createOrUpdateOrDeletePreconisationCategorieQuestion(event: IListEvent){
+  public async createOrUpdateOrDeletePreconisationCategorieQuestion(event: IListEvent){
+    this._categorieQuestion = null;
     let res = null;
     try{
       if(event.action === 'update'){
-        res = this.preconisationCategoriesQuestionService.update(event.data);
+        res = await this.preconisationCategoriesQuestionService.update(event.data);
       }else if (event.action === 'add'){
-        res = this.categorieQuestionService.createQuestionCategoriesQuestion(0,event.data);
+        res = await this.preconisationCategoriesQuestionService.create(event.data);
       }else if(event.action === 'delete'){
-        res = this.preconisationCategoriesQuestionService.delete(event.data);
+        console.log(event.data);
+        res = await this.preconisationCategoriesQuestionService.delete(event.data);
       }
+      this._categorieQuestion = this.categorieQuestionService.get(this._idCategorie);
     }catch(error){
       this.errorModal.open(error.message);
     }

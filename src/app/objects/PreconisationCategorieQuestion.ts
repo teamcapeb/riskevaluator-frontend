@@ -37,7 +37,7 @@ export default class PreconisationCategorieQuestion {
         "idCategorie": this.idCategorie,
         "contenu": this.contenu,
         "viewIfPourcentageScoreLessThan": this.viewIfPourcentageScoreLessThan,
-        "categorieQuestion": this.categorieQuestion.toJSON()
+        "categorieQuestion": this.categorieQuestion ? this.categorieQuestion.toJSON(): null
       }
   }
 }
