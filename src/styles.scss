@@ -12,12 +12,6 @@
 @import '../node_modules/ngx-toastr/toastr.css';
 
 
-
-html, body {
-    width: 100vw;
-    height: 100vh;
-}
-
 ::-webkit-scrollbar {
     width: 0px;
     background: transparent;
@@ -94,6 +88,12 @@ html, body {
 }
 
 
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+  background-color: #e33b1a;
+  color: #fff;
+}
+
+
 .user-menu > .dropdown-menu > .user-footer {
     background-color: #f8f9fa;
     padding: 10px;
@@ -140,5 +140,11 @@ html, body {
     margin-left: -8px;
 }
 
+
+
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -20,6 +20,8 @@ import { GestionComptesComponent } from '@pages/administration/gestion-comptes/g
 import { GestionQuestionComponent } from './pages/administration/gestion-question/gestion-question.component';
 import { GestionCategorieQuestionsComponent } from '@pages/administration/gestion-categorie-questions/gestion-categorie-questions.component';
 import { QuestionFormComponent } from './pages/administration/gestion-question/question-form/question-form.component';
+import { EvaluationWelcomeComponent } from "@pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component";
+import { EvaluationQuestionnaireComponent } from '@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component';
 
 
 const administration: Routes = [
@@ -66,6 +68,13 @@ const visitors: Routes = [
   {
     path: 'evaluer',
     component: EvaluerComponent
+  },
+  {
+    path: 'evaluer/questionnaire-evaluation',
+    component: EvaluationQuestionnaireComponent
+  }, {
+    path: 'evaluer/welcome-evaluation',
+    component: EvaluationWelcomeComponent
   },
   {
     path: 'Acceuil',

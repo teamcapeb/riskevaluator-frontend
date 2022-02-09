@@ -1,0 +1,327 @@
+//Chargement de l'évaluation
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+
+//Intro avant evaluation
+
+
+.allIntro {
+  box-shadow: 0px 0px 20px -9px rgba(0, 0, 0, 0.522);
+  margin: 4% 4% 4% 4%;
+  padding: 2% 4% 4% 4%;
+  background-color: #ffffff;
+  opacity: 0;
+}
+
+.introTitle {
+  text-align: center;
+  font-size: 2.4vw;
+  font-weight: 500;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.introSousTitre {
+  // text-align: center;
+  margin-top: 4%;
+  font-size: 1.4vw;
+  font-weight: 400;
+  white-space: pre-wrap;
+}
+
+.introQuestion {
+  line-height: 120%;
+  font-size: 1.8vw;
+  font-weight: 400;
+}
+
+.introContent {
+  line-height: 120%;
+  margin-top: 4%;
+  font-size: 1vw;
+  font-weight: 300;
+  white-space: pre-wrap;
+}
+
+.buttonIntro {
+  text-align: center;
+  margin-bottom: 5%;
+}
+
+.beginEvalButton {
+  color: green;
+  border: 3px solid green;
+  font-size: 1vw;
+  height: 100%;
+}
+
+//Evaluation
+
+#evaluationStep {
+  background-color: #f3f3f388;
+  margin: 2% 8% 2% 8%;
+  border: 2px solid rgba(235, 235, 235, 0.6);
+  box-shadow: 0px 0px 20px -9px rgba(0, 0, 0, 0.522);
+  background-color: #ffffffd0;
+}
+
+.categorieTitle {
+  margin-top: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  // background-color: red;
+  color: white;
+  transform: rotate(-2deg);
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 2.5vw;
+
+  box-shadow: 7px 7px 10px -2px #8e8e8e;
+  border-radius: 4%;
+}
+
+.categorieDescription {
+  margin-top: 3%;
+  padding-left: 12%;
+  padding-right: 12%;
+  text-align: center;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+  font-size: 1.2vw;
+  margin-bottom: 1%;
+}
+
+.progressBar {
+  margin-bottom: 2%;
+}
+
+.material-icons {
+  vertical-align: center;
+  color: rgb(0, 166, 255);
+}
+
+::ng-deep .helpTooltip {
+  background-color: rgb(55, 185, 255);
+  font-size: medium;
+}
+
+.allQuestions {
+  text-align: center;
+}
+
+// Taille min et max des entrées
+.questionOuverte {
+  min-width: 42vw;
+  max-width: 42vw;
+}
+
+// ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+//   color: rgb(181, 181, 181);
+// }
+
+// Taille min et max des entrées
+.choixUniqueQuestionButtons {
+  width: 41vw;
+
+  margin-bottom: 1.7%;
+  border: 1px solid rgba(202, 202, 202, 0.6);
+  border-radius: 2%;
+  text-align: left;
+  color: #797979;
+  font-size: 1vw;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+}
+
+.choixUniqueQuestionButtons:hover {
+  border: 2px solid rgb(0, 0, 0);
+}
+
+.choixUniqueQuestionSelect {
+  margin-left: -0.5vw;
+  width: 40.5vw;
+}
+
+.radio-group-label {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif !important;
+  color: #797979eb;
+  font-size: 1.4vw;
+  padding: 3% 2% 2% 0%;
+  line-height: 130%;
+  // box-shadow: 3px 3px 5px -1px #d1d1d1;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 0 6%;
+  width: 60%;
+}
+
+.radio-button {
+  margin: 2%;
+}
+
+.checkBoxGroup {
+  display: flex;
+  flex-direction: column;
+  margin: 0 6%;
+}
+
+.checkBox {
+  margin: 1%;
+  line-height: 20px;
+}
+
+::ng-deep .mat-checkbox-label {
+  white-space: initial;
+}
+
+.nextPreviousButtons {
+  margin-top: 2%;
+  text-align: center;
+  margin-bottom: 3%;
+}
+
+.previousButton {
+  color: red;
+  border: 3px solid red;
+
+  margin-right: 30%;
+  font-size: large;
+  height: 120%;
+}
+
+.nextButton {
+  color: green;
+  border: 3px solid green;
+  // width: 30%;
+  // transform: rotate(1deg);
+  font-size: large;
+  height: 120%;
+}
+
+#finishButton {
+  color: green;
+  border: 3px solid green;
+  font-size: large;
+  height: 120%;
+}
+::ng-deep .example-tooltip-red {
+  background: #b71c1c;
+  font-size: small;
+  margin-bottom: 20px;
+}
+
+::ng-deep .mat-button-disabled {
+  border: 1px solid rgb(148, 148, 148) !important;
+}
+
+.checkedCheckBoxAucun {
+  color: red;
+  font-style: italic;
+  font-size: small;
+}
+
+.previousButton:hover:not(.mat-button-disabled) {
+  animation: shake 0.3s;
+  animation-iteration-count: 2;
+}
+
+.nextButton:hover:not(.mat-button-disabled) {
+  animation: shake 0.3s;
+  animation-iteration-count: 2;
+  // -webkit-box-shadow: 0px 0px 6px 5px rgba(21, 255, 0, 0.3);
+  // box-shadow: 0px 0px 6px 5px rgba(0, 255, 8, 0.3);
+}
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(-2deg);
+  }
+  50% {
+    transform: translate(1px, 1px) rotate(2deg);
+  }
+}
+
+
+
+
+@media (max-width: 767px) {
+  .allIntro {
+    // box-shadow: 0px 0px 20px -9px rgba(0, 0, 0, 0.522);
+    // width: 130%;
+    margin: 1% -4% 1% 1% !important;
+    padding: 1% 4% 1% 1% !important;
+  }
+
+  .introTitle {
+    font-size: 200%;
+    line-height: 120%;
+  }
+
+  .introSousTitre {
+    font-size: 100%;
+    font-weight: 400;
+  }
+
+  .introQuestion {
+    font-size: 100%;
+    font-weight: 400;
+  }
+
+  .introContent {
+    font-size: 100%;
+  }
+
+  .beginEvalButton {
+    border: 2px solid green;
+    // width: 32%;
+    font-size: medium;
+    height: 110%;
+  }
+
+  .categorieTitle {
+    font-size: x-large;
+  }
+
+  .categorieDescription {
+    font-size: medium;
+  }
+
+  .previousButton {
+    margin-right: 15%;
+    font-size: medium;
+  }
+
+  .nextButton {
+    font-size: medium;
+  }
+  #finishButton{
+    font-size: medium;
+  }
+  .choixUniqueQuestionButtons {
+    margin-bottom: 5%;
+    min-width: 81%;
+    max-width: 83%;
+    font-size: small !important;
+  }
+  .radio-group-label{
+    margin-left: -3%;
+    font-size: small !important;
+  }
+
+  .choixUniqueQuestionSelect {
+    min-width: 94%;
+  }
+  .questionOuverte{
+    max-width: 90%;
+  }
+
+}

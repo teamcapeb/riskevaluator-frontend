@@ -1,0 +1,36 @@
+<div >
+  <div class="justify-content-center" *ngIf="false">
+    <div class="col-md-5">
+      <div class="animated-background animated-backgroundTitle">
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="animated-background animated-backgroundDescription">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row justify-content-center" >
+    <div class="categorieTitle"  [ngStyle]="{'background-color': 'yellow'}">
+      {{display.nomCategorie}}
+    </div>
+  </div>
+
+
+  <div class="row justify-content-center questions">
+    <div class="categorieDescription">
+      {{display.descriptionCategorie}}
+    </div>
+  </div>
+
+
+  <div class="row ">
+    <div class="col-lg-12 progressBar">
+      <mat-progress-bar mode="determinate" [value]="progressBarValue"></mat-progress-bar>
+
+    </div>
+  </div>
+</div>
+
+

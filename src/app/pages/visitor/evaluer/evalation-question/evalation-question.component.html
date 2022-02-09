@@ -1,0 +1,23 @@
+<div class="row justify-content-center">
+  <div class="col-lg-6 choixUniqueQuestionButtons">
+    <label class="radio-group-label">{{question.contenu}} *</label>
+    <span  matTooltip="{{question.aide}}" *ngIf="question.aide"
+           matTooltipPosition="right" matTooltipClass="helpTooltip">
+                            <mat-icon class="material-icons" matSuffix >
+                                help_outline
+                            </mat-icon>
+                        </span>
+    <section class="checkBoxGroup">
+      <mat-checkbox *ngFor="let reponse of question.reponses; let indexReponse = index;"
+                    [value]="reponse" class="checkBox" [disabled]="false"
+                    [(ngModel)]="reponse.checked">{{reponse.contenu}}
+        <span *ngIf="reponse.contenu=='Aucun'&&reponse.checked" class="checkedCheckBoxAucun">
+                                    En cochant cette case, les autres réponses ne sont pas prises en compte.
+                                </span>
+        <!-- {{reponse.checked}} -->
+      </mat-checkbox>
+    </section>
+  </div>
+
+
+</div>
