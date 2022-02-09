@@ -1,1 +1,11 @@
-<p>evaluation-metier works!</p>
+<div class = "metiers">
+  <h2>Metiers</h2>
+  <ng-container *ngFor="let metiers of metiers | async">
+    <div class="mt-3">
+      <input type="checkbox" value="{{metiers.idMetier}}">
+      {{metiers.nomMetier}}
+    </div>
+  </ng-container>
+
+</div>
+
