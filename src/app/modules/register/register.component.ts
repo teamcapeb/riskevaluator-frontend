@@ -3,9 +3,9 @@ import {
     OnInit,
 } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {AppService} from '@services/app.service';
+import {AppService} from '@services/serviceUser/app.service';
 import {ToastrService} from 'ngx-toastr';
-import { AuthService } from "@services/auth.service";
+import { AuthService } from "@services/serviceUser/auth.service";
 import { Router, RouterLink } from "@angular/router";
 
 @Component({

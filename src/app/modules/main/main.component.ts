@@ -1,7 +1,7 @@
 import {Component, HostBinding, OnInit, Renderer2} from '@angular/core';
-import {AppService} from '@services/app.service';
+import {AppService} from '@services/serviceUser/app.service';
 import { ADMIN_MENU, MENU } from "@modules/main/menu-sidebar/menu-sidebar.component";
-import { TokenStorageService } from "@services/token-storage.service";
+import { TokenStorageService } from "@services/serviceUser/token-storage.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({

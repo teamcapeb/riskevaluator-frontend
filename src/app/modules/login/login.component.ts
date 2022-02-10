@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
-import {AppService} from '@services/app.service';
-import { TokenStorageService } from "@services/token-storage.service";
-import { AuthService } from "@services/auth.service";
+import {AppService} from '@services/serviceUser/app.service';
+import { TokenStorageService } from "@services/serviceUser/token-storage.service";
+import { AuthService } from "@services/serviceUser/auth.service";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 
 // @ts-nocheck
