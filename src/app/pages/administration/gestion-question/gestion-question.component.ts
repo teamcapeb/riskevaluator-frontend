@@ -18,8 +18,6 @@ import CategorieQuestion from '../../../objects/CategorieQuestion';
 })
 export class GestionQuestionComponent implements OnInit {
 
-  //private _questions: Observable<Question[]>;
-  //private _preconisationCategorieQuestion: Observable<PreconisationCategorieQuestion[]>;
   private _categorieQuestion: Observable<CategorieQuestion>;
   private _idQuestionnaire: number;
   private _idCategorie: number;
@@ -40,7 +38,6 @@ export class GestionQuestionComponent implements OnInit {
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    
     let idQuestionnaire = this.activatedRoute.snapshot.paramMap.get('idQuestionnaire')
     let idCategorie = this.activatedRoute.snapshot.paramMap.get('idCategorie')
     if(idQuestionnaire && idCategorie){
@@ -53,15 +50,7 @@ export class GestionQuestionComponent implements OnInit {
   }
 
   add(): void{
-    this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions', -1 ,'question'],
-      {
-        state: {
-                  action: 'update' ,
-                  question: new Question(0, '', '', [], []),
-                  idCategoriQuestion : this.idCategoriQuestion
-                }
-      }
-    );
+    this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions', 'new' ,'question']);
   }
 
 
@@ -87,14 +76,7 @@ export class GestionQuestionComponent implements OnInit {
 
   update(event: IListEvent){
     //this.actualQuestion = event.data;
-    this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions', event.data.idQuestion ,'question'],
-      {
-        state: {
-                  action: 'update' ,
-                  question: event.data
-                }
-      }
-    );
+    this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions', event.data.idQuestion ,'question']);
     //this.questionModal.open('update');
   }
 
@@ -110,7 +92,7 @@ export class GestionQuestionComponent implements OnInit {
       if(event.action === 'update'){
         res = await this.questionService.update(event.data);
       }else if (event.action === 'add'){
-        res = await this.categorieQuestionService.createQuestionCategoriesQuestion(0 ,event.data);
+        //res = await this.categorieQuestionService.createQuestionCategoriesQuestion(0 ,event.data);
       }else if(event.action === 'delete'){
         res = await this.questionService.delete(event.data);
       }

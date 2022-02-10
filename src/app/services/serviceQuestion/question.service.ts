@@ -22,22 +22,26 @@ export class QuestionService {
 
   constructor(private http: HttpClient) {}
   
-  get(questionId: string): Observable<Question> {
+  get(questionId: number): Promise<Question> {
     return this.http.get<IQuestion>(`${this.baseUrl}${questionId}`).pipe(map((iQuestion: IQuestion) => {
       return Question.toQuestion(iQuestion);
-    }));
+    })).toPromise();
   }
 
   createReponse(questionId: string, reponse: IReponse): Promise<IReponse | string>{
     return this.http.post<IReponse>(`${this.baseUrl}${questionId}/Reponses`, reponse).toPromise();
   }
 
-  update(question: Question): Promise<IQuestion | string> {
-    return this.http.put<IQuestion>(`${this.baseUrl}${question.idQuestion}`, question.toJSON()).toPromise();
+  create(question: Question): Promise<IQuestion | string>{
+    return this.http.post<IQuestion>(`${this.baseUrl}`, question.toJSON()).toPromise();
   }
 
-  delete(questionId: string): Promise<IQuestion | string> {
-    return this.http.delete<IQuestion>(`${this.baseUrl}${questionId}`).toPromise();
+  update(question: Question): Promise<IQuestion | string> {
+    return this.http.put<IQuestion>(`${this.baseUrl}`, question.toJSON()).toPromise();
+  }
+
+  delete(question: Question): Promise<IQuestion | string> {
+    return this.http.delete<IQuestion>(`${this.baseUrl}${question.idQuestion}`).toPromise();
   }
 
 }

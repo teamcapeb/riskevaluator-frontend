@@ -2,7 +2,7 @@ import IQuestion from "./IQuestion";
 
 export default interface IReponse {
   idReponse: number;
-  question: IQuestion;
+  question?: IQuestion;
   nbPoints: number;
   contenu: string;
 }

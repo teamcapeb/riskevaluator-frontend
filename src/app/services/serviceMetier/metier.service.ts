@@ -11,7 +11,7 @@ import Metier from '../../objects/Metier';
 })
 export class MetierService {
 
-  private baseUrl: string = environment.apiUrl + '/Metiers';
+  private baseUrl: string = environment.apiUrl + '/metiers/';
 
   constructor(private http: HttpClient) {}
 

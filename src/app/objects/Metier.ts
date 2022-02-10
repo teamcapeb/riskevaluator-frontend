@@ -9,9 +9,11 @@ export default class Metier {
     constructor(idMetier: number, nomMetier: string, questions: IQuestion[]){
         this.idMetier = idMetier;
         this.nomMetier = nomMetier;
-        this.questions = questions.map((iQuestion: IQuestion) => {
-            return Question.toQuestion(iQuestion);
-        });
+        if(questions) {
+            this.questions = questions.map((iQuestion: IQuestion) => {
+                return Question.toQuestion(iQuestion);
+            });
+        }
     }
 
     static toMetier(iMetier: IMetier) {
@@ -23,9 +25,12 @@ export default class Metier {
     }
 
     public toJSON(): IMetier{
-        let iQuestions = this.questions.map((question: Question) => {
-            return question.toJSON();
-        });
+        let iQuestions = null;
+        if(this.questions) {
+            iQuestions = this.questions.map((question: Question) => {
+                return question.toJSON();
+            });
+        }
         return {
             "idMetier": this.idMetier,
             "nomMetier": this.nomMetier,

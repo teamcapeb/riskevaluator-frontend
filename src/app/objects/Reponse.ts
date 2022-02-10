@@ -14,7 +14,7 @@ export default class Reponse {
         contenu: string
     ){
         this.idReponse = idReponse;
-        this.question = Question.toQuestion(question);
+        this.question = question ? Question.toQuestion(question) : null;
         this.nbPoints = nbPoints;
         this.contenu = contenu;
     }
@@ -31,7 +31,7 @@ export default class Reponse {
     public toJSON(): IReponse{
         return {
             idReponse: this.idReponse,
-            question: this.question.toJSON(),
+            question: this.question ? this.question.toJSON() : null,
             nbPoints: this.nbPoints,
             contenu: this.contenu
         }

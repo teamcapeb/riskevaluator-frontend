@@ -36,6 +36,7 @@
     "core-js": "3.8.0",
     "jquery": "^3.6.0",
     "luxon": "2.1.1",
+    "ng-multiselect-dropdown": "^0.3.8",
     "ngx-toastr": "14.1.4",
     "process": "^0.11.10",
     "rxjs": "6.6.7",
