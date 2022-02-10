@@ -1,29 +1,10 @@
-<div >
-  <div class="justify-content-center" *ngIf="false">
-    <div class="col-md-5">
-      <div class="animated-background animated-backgroundTitle">
-      </div>
-    </div>
-    <div class="col-md-9">
-      <div class="animated-background animated-backgroundDescription">
-      </div>
-    </div>
-  </div>
-
+<ng-container *ngIf="categorieQuestion$">
 
   <div class="row justify-content-center" >
     <div class="categorieTitle"  [ngStyle]="{'background-color': 'yellow'}">
-      {{display.nomCategorie}}
+      {{categorieQuestion$.libelle}}
     </div>
   </div>
-
-
-  <div class="row justify-content-center questions">
-    <div class="categorieDescription">
-      {{display.descriptionCategorie}}
-    </div>
-  </div>
-
 
   <div class="row ">
     <div class="col-lg-12 progressBar">
@@ -31,6 +12,6 @@
 
     </div>
   </div>
-</div>
+</ng-container>
 
 

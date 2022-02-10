@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { QuestionType } from "@/interfaces/QuestionType";
+import { IQuestionType } from "@/interfaces/IQuestionType";
+import CategorieQuestion from "@/objects/CategorieQuestion";
+import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
+import IQuestion from "@/interfaces/IQuestion";
 
 @Component({
   selector: 'app-evaluation-question',
@@ -7,39 +10,19 @@ import { QuestionType } from "@/interfaces/QuestionType";
   styleUrls: ['./evaluation-question.component.scss']
 })
 export class EvaluationQuestionComponent implements OnInit {
-  @Input() questionType: QuestionType;
+  @Input() question$: IQuestion;
 
-  readonly QuestionType=QuestionType;
+  aide:string = "Here should be aide tip"
+  readonly QuestionType=IQuestionType;
+  questionTypeEnum : IQuestionType
 
-  question:any = {
-    contenu : "Which gender are you ",
-    noTypeQuestion : 1,
-    aide : "HERE AAAAA1",
-    reponses : [
-      {
-        checked : false,
-        contenu : "Are you Female"
-      },
-      {
-        checked : true,
-        contenu : "Are you Male"
-      },
-      {
-        checked : false,
-        contenu : "I don't wanna answer question"
-      }
-    ]
+  selectedReponse: string;
+
+  constructor() {
   }
-
-  q2:any = {
-    contenu : "Quel est le nom de l'entreprise",
-    noTypeQuestion : 4,
-    aide : "HERE BBBBBBBBBBBB1"
-  }
-
-  constructor() { }
 
   ngOnInit(): void {
+    this.questionTypeEnum = this.question$?.typeQuestion;
   }
 
 }

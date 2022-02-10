@@ -1,57 +1,56 @@
-<ng-container [ngSwitch]="questionType">
+<ng-container  *ngIf="question$" [ngSwitch] ="questionTypeEnum" >
 
+  <div  class="row justify-content-center" *ngSwitchCase="QuestionType.QuestionChoixMultiple" >
+      <div class="col-lg-6 choixUniqueQuestionButtons">
+        <label class="radio-group-label">{{question$.libelleQuestion}} *</label>
+        <span  matTooltip="{{aide}}" *ngIf="question$.aide"
+               matTooltipPosition="right" matTooltipClass="helpTooltip">
+                              <mat-icon class="material-icons" matSuffix >
+                                  help_outline
+                              </mat-icon>
+                          </span>
+        <section class="checkBoxGroup">
+          <mat-checkbox *ngFor="let reponse of question$.reponses; let indexReponse = index;"
+                        [value]="reponse.contenu" class="checkBox" [disabled]="false" >{{reponse.contenu}}
+            <!-- [(ngModel)]="reponse.checked"
 
-  <div *ngSwitchCase="QuestionType.QUESTION_CHOIX_MULTIPLE" class="row justify-content-center" >
-    <div class="col-lg-6 choixUniqueQuestionButtons">
-      <label class="radio-group-label">{{question.contenu}} *</label>
-      <span  matTooltip="{{question.aide}}" *ngIf="question.aide"
-             matTooltipPosition="right" matTooltipClass="helpTooltip">
-                            <mat-icon class="material-icons" matSuffix >
-                                help_outline
-                            </mat-icon>
-                        </span>
-      <section class="checkBoxGroup">
-        <mat-checkbox *ngFor="let reponse of question.reponses; let indexReponse = index;"
-                      [value]="reponse" class="checkBox" [disabled]="false"
-                      [(ngModel)]="reponse.checked">{{reponse.contenu}}
-          <span *ngIf="reponse.contenu=='Aucun'&&reponse.checked" class="checkedCheckBoxAucun">
-                                    En cochant cette case, les autres réponses ne sont pas prises en compte.
-                                </span>
-          <!-- {{reponse.checked}} -->
-        </mat-checkbox>
-      </section>
+            <span *ngIf="reponse.contenu=='Aucun'&&reponse.checked" class="checkedCheckBoxAucun">
+                                      En cochant cette case, les autres réponses ne sont pas prises en compte.
+                                  </span> -->
+            <!-- {{reponse.checked}} -->
+          </mat-checkbox>
+        </section>
+      </div>
+
     </div>
 
-  </div>
 
 
-  <div *ngSwitchCase="QuestionType.QUESTION_CHOIX_UNIQUE" class="row justify-content-center">
-    <div class="col-lg-6 choixUniqueQuestionButtons">
 
-                        <span class="radioButtonLabelIcon">
-                            <label class="radio-group-label">{{question.contenu}} *</label>
-                            <span  matTooltip="{{question.aide}}" *ngIf="question.aide"
-                                   matTooltipPosition="right" matTooltipClass="helpTooltip">
-                                <mat-icon class="material-icons" matSuffix >
-                                    help_outline
-                                </mat-icon>
-                            </span>
-                        </span>
+  <div *ngSwitchCase="QuestionType.QuestionChoixUnique" class="row justify-content-center">
+      <div class="col-lg-6 choixUniqueQuestionButtons">
 
-      <mat-radio-group [(ngModel)]="question.reponse" aria-labelledby="radio-group-label" class="radio-group">
+                          <span class="radioButtonLabelIcon">
+                              <label class="radio-group-label">{{question$.libelleQuestion}} *</label>
+                              <span  matTooltip="{{question$.aide}}" *ngIf="question$.aide"
+                                     matTooltipPosition="right" matTooltipClass="helpTooltip">
+                                  <mat-icon class="material-icons" matSuffix >
+                                      help_outline
+                                  </mat-icon>
+                              </span>
+                          </span>
 
 
-        <mat-radio-button class="radio-button" *ngFor="let reponse of question.reponses"
-                          [value]="reponse">
-          {{reponse.contenu}}
-        </mat-radio-button>
-      </mat-radio-group>
+        <mat-radio-group [(ngModel)]="selectedReponse" aria-labelledby="radio-group-label" class="radio-group">
+
+          <mat-radio-button class="radio-button" *ngFor="let reponse of question$.reponses">
+            {{reponse.contenu}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <!--
+      <div>Your favorite season is: {{favoriteSeason}}</div> -->
     </div>
 
-    <!--
-    <div>Your favorite season is: {{favoriteSeason}}</div> -->
-  </div>
-
-</ng-container>
-
-
+  </ng-container>

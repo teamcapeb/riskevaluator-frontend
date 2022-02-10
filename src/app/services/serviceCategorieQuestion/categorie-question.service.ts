@@ -19,7 +19,11 @@ export class CategorieQuestionService {
   private baseUrl: string = environment.apiUrl + '/categoriesQuestion/';
 
   constructor(private http: HttpClient) {}
-  
+
+  getAll(): Observable<ICategorieQuestion[]> {
+    return this.http.get<ICategorieQuestion[]>(`${this.baseUrl}`);
+  }
+
   get(categorieQuestionId: number): Observable<CategorieQuestion> {
     return this.http.get<ICategorieQuestion>(`${this.baseUrl}${categorieQuestionId}`).pipe(map((receivedData: ICategorieQuestion) => {
       return CategorieQuestion.toCategorieQuestion(receivedData);

@@ -251,6 +251,11 @@
 }
 
 
+.wrapper {
+  overflow-y: auto;
+  overflow-x:hidden;
+  height:600px;
+}
 
 
 @media (max-width: 767px) {

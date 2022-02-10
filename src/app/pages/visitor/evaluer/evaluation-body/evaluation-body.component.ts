@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { QuestionType } from "@/interfaces/QuestionType";
+import { Observable, of } from "rxjs";
+import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
+import { CategorieQuestionService } from "@services/serviceCategorieQuestion/categorie-question.service";
+import CategorieQuestion from "@/objects/CategorieQuestion";
+import { catchError, map, startWith } from "rxjs/operators";
 
 @Component({
   selector: 'app-evaluation-body',
@@ -7,59 +11,10 @@ import { QuestionType } from "@/interfaces/QuestionType";
   styleUrls: ['./evaluation-body.component.scss']
 })
 export class EvaluationBodyComponent implements OnInit {
-
-  readonly QuestionType = QuestionType;
-
-  q1:any = {
-    contenu : "Quel est le nom de l'entreprise",
-    noTypeQuestion : 1,
-    aide : "HERE AAAAA1"
-  }
-
-  q2:any = {
-    contenu : "Quel est le nom de l'entreprise",
-    noTypeQuestion : 4,
-    aide : "HERE BBBBBBBBBBBB1"
-  }
-  display: any = {
-    nomCategorie : " ECONOMICA",
-    descriptionCategorie : "Descritpiton",
-    questions : [
-      this.q1, this.q2
-    ]
-
-
-  } ;
-  actualCategorieNumber: number;
-  allCategories: any;
-  intro: boolean = false;
-  red: any ;
-  progressBarValue: any;
-
-  constructor() { }
+  @Input() categorieQuestion$: ICategorieQuestion;
 
   ngOnInit(): void {
+    console.log(this.categorieQuestion$.questions);
   }
-
-  disableCheckBoxes(question: any, reponse: any) {
-    return true;
-  }
-
-  previousButtonClick() {
-
-  }
-
-  disableNextButton() {
-    return false;
-  }
-
-  nextButtonClick() {
-
-  }
-
-  begintEvaluation() {
-
-  }
-
 
 }

@@ -1,50 +1,7 @@
-.animated-background {
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: placeHolderShimmer;
-  animation-timing-function: linear;
-  background: #a5a5a5;
-  background: linear-gradient(to right, #e4e4e4 8%, #dfdfdf 18%, #f0f0f0d5 33%);
-  border-radius: 4%;
-  // background-size: 20% 10%;
-  height: 7em;
-  position: relative;
-  margin-top: 8%;
-  margin-left: 10%;
-}
 
-.animated-backgroundDescription {
-  height: 5em;
-  margin-top: 3%;
-}
-
-.animated-backgroundTitle {
-  height: 3em;
-  margin-top: 10%;
-  margin-left: 5%;
-}
-
-.animated-backgroundQuestion {
-  height: 2em;
-  margin-top: 6%;
-  // margin-left: 0;
-}
-
-.animated-backgroundLongQuestion {
-  height: 10em;
-  margin-top: 2%;
-  // margin-left: 0;
-}
-
-.animated-backgroundQuestion2 {
-  height: 2em;
-  margin-top: 2%;
-  // margin-left: 0;
-}
 
 .progressBar {
-  margin-bottom: 2%;
+  margin-top: 5%;
 }
 
 .categorieTitle {

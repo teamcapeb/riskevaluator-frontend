@@ -35,7 +35,7 @@ export class QuestionnaireService {
   create(questionnaire: Questionnaire): Promise<IQuestionnaire | string>{
     return this.http.post<IQuestionnaire>(`${this.baseUrl}`, questionnaire.toJSON()).toPromise();
   }
-  
+
   update(questionnaire: Questionnaire): Promise<IQuestionnaire | string> {
     return this.http.put<IQuestionnaire>(`${this.baseUrl}${questionnaire.idQuestionnaire}`, questionnaire.toJSON()).toPromise();
   }
@@ -44,4 +44,13 @@ export class QuestionnaireService {
     return this.http.delete<IQuestionnaire>(`${this.baseUrl}${questionnaire.idQuestionnaire}`).toPromise();
   }
 
+  getCategoriesQuestions(questionnaireId: number, metiers : number[]) : Observable<ICategorieQuestion[]> {
+
+    let joindMetiers:string;
+
+    if(metiers.length >0 )
+      joindMetiers = "metierId=" + metiers.join("&metierId=");
+
+    return this.http.get<ICategorieQuestion[]>(`${this.baseUrl}${questionnaireId}/questions?${joindMetiers}`)
+  }
 }

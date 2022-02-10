@@ -1,20 +1,17 @@
 
-<app-evaluation-head *ngIf="true"> </app-evaluation-head>
+<div class="wrapper" *ngIf="(categoriesQuestion$ | async) as result" [ngSwitch]="result.dataState">
 
-<app-evaluation-body *ngIf="true"> </app-evaluation-body>
-<div class="row justify-content-center">
+  <app-evaluation-loading *ngSwitchCase="DataStateEnum.LOADING" ></app-evaluation-loading>
 
-  <div class="col-lg-6 nextPreviousButtons">
-    <button mat-button class="previousButton" (click)="previousButtonClick()">Retour</button>
+  <ng-container *ngSwitchCase="DataStateEnum.LOADED">
 
-    <span matTooltip="Vous devez renseigner tous les champs pour passer à la suite."
-          matTooltipPosition="above" matTooltipClass="example-tooltip-red"
-          [matTooltipDisabled]="!disableNextButton()">
-                    <button mat-button class="nextButton" (click)="nextButtonClick()" id="nextButton"
-                    >Suivant</button>
-                    <button mat-button (click)="nextButtonClick()" id="finishButton" >Terminer</button>
-    </span>
+    <ng-container *ngIf="(this.evaluationService.actualCategorieNumberObs | async) as index " >
 
-  </div>
+        <app-evaluation-head [categorieQuestion$]="result?.data[index.current]"> </app-evaluation-head>
+        <app-evaluation-body [categorieQuestion$]="result?.data[index.current]"> </app-evaluation-body>
+        <app-evaluation-footer [categorieQuestion$]="result?.data[index.current]"></app-evaluation-footer>
 
+    </ng-container>
+
+  </ng-container>
 </div>

@@ -17,8 +17,12 @@ export default class CategorieQuestion {
     public questions: Question[];
     public preconisationsCategorie: PreconisationCategorieQuestion[];
 
-    constructor(idCategorie: number, 
-                libelle: string,
+    getMsg() :string {
+      return "HEREHREHRE"
+    }
+
+    constructor(idCategorie? :  number,
+                libelle? : string,
                 iQuestionnaire?: IQuestionnaire,
                 scoreEvaluations?: IScoreCategory[],
                 iQuestions?: IQuestion[],
@@ -55,7 +59,7 @@ export default class CategorieQuestion {
             iCategorie.preconisationsCategorie
         );
     }
-    
+
     public toJSON(): ICategorieQuestion{
         let iScoreEvaluations: IScoreCategory[] = null;
         let iQuestions: IQuestion[] = null;

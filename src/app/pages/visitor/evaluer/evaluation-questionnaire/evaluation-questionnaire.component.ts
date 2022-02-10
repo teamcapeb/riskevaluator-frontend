@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { catchError, map, startWith } from "rxjs/operators";
+import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
+import { Observable, of } from "rxjs";
+import { CategorieQuestionService } from "@services/serviceCategorieQuestion/categorie-question.service";
+import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
+import { IQuestionType } from "@/interfaces/IQuestionType";
+import { EvaluationService } from "@services/serviceEvaluation/evaluation.service";
+import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnaire.service';
 
 @Component({
   selector: 'app-evaluation-questionnaire',
@@ -7,55 +15,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EvaluationQuestionnaireComponent implements OnInit {
 
-  q1:any = {
-    contenu : "Quel est le nom de l'entreprise",
-    noTypeQuestion : 1,
-    aide : "HERE AAAAA1"
-  }
+  categoriesQuestion$:Observable<AppDataState<ICategorieQuestion[]>> |null=null;
+  public categoriesQuestionSize: number
+  actualCategorieNumber: number = 0;
 
-  q2:any = {
-    contenu : "Quel est le nom de l'entreprise",
-    noTypeQuestion : 4,
-    aide : "HERE BBBBBBBBBBBB1"
-  }
-  display: any = {
-    nomCategorie : " ECONOMICA",
-    descriptionCategorie : "Descritpiton",
-    questions : [
-      this.q1, this.q2
-    ]
+  DataStateEnum = DataStateEnum
+  readonly questionnaireId:number = 1;
+  readonly metierIds:number[] = [5,6];
 
-
-  } ;
-  actualCategorieNumber: number;
-  allCategories: any;
-  intro: boolean = false;
-  red: any ;
   progressBarValue: any;
 
-  constructor() { }
+  constructor(private questionnaireService:QuestionnaireService, public evaluationService: EvaluationService) { }
 
   ngOnInit(): void {
+    this.onGetAllCategoriesQuestion();
   }
 
-  disableCheckBoxes(question: any, reponse: any) {
-    return true;
-  }
-
-  previousButtonClick() {
-
-  }
-
-  disableNextButton() {
-    return false;
-  }
-
-  nextButtonClick() {
-
-  }
-
-  begintEvaluation() {
-
+  onGetAllCategoriesQuestion() {
+    this.categoriesQuestion$= this.questionnaireService.getCategoriesQuestions(this.questionnaireId,this.metierIds).pipe(
+      map((data: ICategorieQuestion[])=>{
+        console.log(data);
+        this.evaluationService.onUpdateCategorieMax(data.length);
+        return ({dataState:DataStateEnum.LOADED,data:data})
+      }),
+      startWith({dataState:DataStateEnum.LOADING}),
+      catchError(err=> {
+        return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
+      })
+    );
   }
 
 }

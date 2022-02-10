@@ -4,19 +4,20 @@ import Metier from './Metier';
 import Reponse from './Reponse';
 import IReponse from '../interfaces/IReponse';
 import CategorieQuestion from "./CategorieQuestion";
+import { IQuestionType } from "@/interfaces/IQuestionType";
 
 export default class Question {
     idQuestion: number;
     categorieQuestion: CategorieQuestion
     aide: string;
-    qType: string;
+    qType: IQuestionType;
     libelleQuestion: string;
     metiers: Metier[];
     reponses: Reponse[];
 
     constructor(idQuestion: number, qType: string, libelleQuestion: string, metiers?: IMetier[], reponses?: IReponse[]){
         this.idQuestion = idQuestion;
-        this.qType = qType;
+        this.qType = IQuestionType[qType as keyof typeof IQuestionType];
         this.libelleQuestion = libelleQuestion;
         if(metiers){
             this.metiers = metiers.map((iMetier: IMetier) => {
@@ -33,7 +34,7 @@ export default class Question {
     public static toQuestion(iQuestion: IQuestion): Question{
         return new Question(
             iQuestion.idQuestion,
-            iQuestion.qType,
+            iQuestion.typeQuestion.toString(),
             iQuestion.libelleQuestion,
             iQuestion.metiers,
             iQuestion.reponses
@@ -50,7 +51,7 @@ export default class Question {
         return {
             idQuestion: this.idQuestion,
             categorieQuestion: this.categorieQuestion.toJSON(),
-            qType: this.qType,
+            typeQuestion: this.qType,
             aide: this.aide,
             libelleQuestion: this.libelleQuestion,
             metiers: metiers,

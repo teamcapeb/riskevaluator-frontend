@@ -1,35 +1,13 @@
-<div id="evaluationStep">
+<div *ngIf="categorieQuestion$" id="evaluationStep" >
 
-    <div class="row justify-content-center questions" >
-      <div class="categorieDescription">
-        <div class="row ">
-          <div class="col-md-11">
-            <div class="animated-background animated-backgroundQuestion">
-            </div>
-          </div>
-          <div class="col-md-11 ">
-            <div class="animated-background animated-backgroundLongQuestion">
-            </div>
-          </div>
-          <div class="col-md-11">
-            <div class="animated-background animated-backgroundQuestion2">
-            </div>
-          </div>
-          <div class="col-md-11">
-            <div class="animated-background animated-backgroundLongQuestion">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  <div class="row">
-
+  <div class="row" >
     <div class="allQuestions col-lg-12">
-      <app-evaluation-question [questionType]="QuestionType.QUESTION_CHOIX_MULTIPLE"></app-evaluation-question>
-      <app-evaluation-question [questionType]="QuestionType.QUESTION_CHOIX_UNIQUE" ></app-evaluation-question>
-      <app-evaluation-question [questionType]="QuestionType.QUESTION_CHOIX_UNIQUE" ></app-evaluation-question>
+
+      <ng-container *ngFor="let item of categorieQuestion$.questions" >
+
+        {{item | json}}
+        <app-evaluation-question *ngIf="item" [question$]="item"></app-evaluation-question>
+      </ng-container>
 
     </div>
 
