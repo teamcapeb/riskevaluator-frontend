@@ -37,7 +37,7 @@ export class QuestionnaireService {
   }
   
   update(questionnaire: Questionnaire): Promise<IQuestionnaire | string> {
-    return this.http.put<IQuestionnaire>(`${this.baseUrl}${questionnaire.idQuestionnaire}`, questionnaire.toJSON()).toPromise();
+    return this.http.put<IQuestionnaire>(`${this.baseUrl}`, questionnaire.toJSON()).toPromise();
   }
 
   delete(questionnaire: Questionnaire): Promise<IQuestionnaire | string> {

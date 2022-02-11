@@ -56,6 +56,7 @@ import { CategorieQuestionFormComponent } from './pages/administration/gestion-c
 import { PreconisationCategorieQuestionFormComponent } from './pages/administration/gestion-question/preconisation-categorie-question-form/preconisation-categorie-question-form.component';
 import { QuestionnaireFormComponent } from '@pages/administration/gestion-questionnaire/questionnaire-form/questionnaire-form.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ToastsContainerComponent } from './components/toasts-container/toasts-container.component';
 
 
 registerLocaleData(localeEn, 'en-EN');
@@ -106,6 +107,7 @@ registerLocaleData(localeEn, 'en-EN');
 
         QuestionnaireFormComponent,
         PreconisationCategorieQuestionFormComponent,
+        ToastsContainerComponent,
     ],
   imports: [
     BrowserModule,

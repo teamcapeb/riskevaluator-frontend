@@ -39,6 +39,12 @@ export class GestionQuestionnaireComponent implements OnInit {
   }
 
   update(event: IListEvent){
+    this.actualQuestionnaire = event.data;
+    this.QuestionnaireForm.open('update');
+    //this.router.navigate(['/gestion-questionnaires', event.data.idQuestionnaire, 'gestion-categories-questions']);
+  }
+
+  questionnaireDetails(event: IListEvent){
     this.router.navigate(['/gestion-questionnaires', event.data.idQuestionnaire, 'gestion-categories-questions']);
   }
 

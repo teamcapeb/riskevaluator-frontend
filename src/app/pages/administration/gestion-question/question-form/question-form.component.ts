@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import CategorieQuestion from '../../../../objects/CategorieQuestion';
 import Metier from '../../../../objects/Metier';
 import { MetierService } from '../../../../services/serviceMetier/metier.service';
+import { ToastService } from '../../../../services/serviceToast/toast.service';
 
 @Component({
   selector: 'app-question-form',
@@ -48,7 +49,8 @@ export class QuestionFormComponent implements OnInit {
   constructor(private questionService: QuestionService,
               private metierService: MetierService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) { 
+              private activatedRoute: ActivatedRoute,
+              private toastService: ToastService) { 
 
               }
 
@@ -95,31 +97,36 @@ export class QuestionFormComponent implements OnInit {
   }
 
   public async save(){
-    this.saved = false;
-    this._addedReponses = this.addedReponses.map<Reponse>((reponse: Reponse) => {
-      reponse.idReponse = 0;
-      return reponse;
-    });
     if(!this.question.reponses){
       this.question.reponses = [];
     }
-    this.question.metiers = this.selectedItems.map((metier: Metier) => {
-      return new Metier(metier.idMetier, metier.nomMetier, null);
-    });
-    this.question.reponses.push(...this.addedReponses);
-    let res = null;
-    try{
-      if(this._idQuestion !== -1){
-        console.log(this.question);
-        res = await this.questionService.update(this.question);
-      }else{
-        console.log(this.question);
-        res = await this.questionService.create(this.question);
+    console.log(this.question.reponses.length + this._addedReponses.length);
+    if(this.question.reponses.length + this._addedReponses.length >= 2){
+      this.saved = false;
+      this._addedReponses = this.addedReponses.map<Reponse>((reponse: Reponse) => {
+        reponse.idReponse = 0;
+        return reponse;
+      });
+      this.question.metiers = this.selectedItems.map((metier: Metier) => {
+        return new Metier(metier.idMetier, metier.nomMetier, null);
+      });
+      this.question.reponses.push(...this.addedReponses);
+      let res = null;
+      try{
+        if(this._idQuestion !== -1){
+          console.log(this.question);
+          res = await this.questionService.update(this.question);
+        }else{
+          console.log(this.question);
+          res = await this.questionService.create(this.question);
+        }
+        this.saved = true;
+        this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
+      }catch(error){
+        this.errorModal.open(error.message);
       }
-      this.saved = true;
-      this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
-    }catch(error){
-      this.errorModal.open(error.message);
+    }else{
+      this.toastService.show('Il doit y avoir 2 réponses minimum', { classname: 'bg-danger text-light', delay: 15000 });
     }
   }
 
@@ -139,7 +146,7 @@ export class QuestionFormComponent implements OnInit {
         this._idConteur = 0;
       }
     }else if(event.action === 'delete'){
-      this._reponses = this._reponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
+      this.question.reponses = this.question.reponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
       this._addedReponses = this._addedReponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);  
     }
   }

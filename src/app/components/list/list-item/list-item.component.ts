@@ -4,6 +4,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   selector: 'app-list-item',
   templateUrl: './list-item.component.html',
   styleUrls: ['./list-item.component.scss'],
+  host: {'class': 'row'}
 })
 export class ListItemComponent implements OnInit {
 
@@ -14,6 +15,7 @@ export class ListItemComponent implements OnInit {
 
   @Output() onDelete: EventEmitter<any> = new EventEmitter();
   @Output() onUpdate: EventEmitter<any> = new EventEmitter();
+  @Output() onRowClick: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -26,6 +28,10 @@ export class ListItemComponent implements OnInit {
 
   update(): void {
     this.onUpdate.emit({data: this.data, action:'update'});
+  }
+
+  rowClick(): void {
+    this.onRowClick.emit({data: this.data, action:'click'});
   }
 
 }

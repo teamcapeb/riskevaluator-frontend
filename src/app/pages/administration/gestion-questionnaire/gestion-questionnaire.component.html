@@ -6,6 +6,7 @@
                 [data]="questionnaire" 
                 (onUpdate)="update($event)"
                 (onDelete)="delete($event)"
+                (onRowClick)="questionnaireDetails($event)"
             >
                 <app-list-item-col>{{questionnaire.thematique}}</app-list-item-col>
             </app-list-item>

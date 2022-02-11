@@ -29,7 +29,7 @@ export class CategorieQuestionService {
     return this.http.post<ICategorieQuestion>(`${this.baseUrl}`, categorieQuestion.toJSON()).toPromise();
   }
   update(categorieQuestion: CategorieQuestion): Promise<ICategorieQuestion | string> {
-    return this.http.put<ICategorieQuestion>(`${this.baseUrl}${categorieQuestion.idCategorie}`, categorieQuestion.toJSON()).toPromise();
+    return this.http.put<ICategorieQuestion>(`${this.baseUrl}`, categorieQuestion.toJSON()).toPromise();
   }
   delete(categorieQuestion: ICategorieQuestion): Promise<string> {
     return this.http.delete<string>(`${this.baseUrl}${categorieQuestion.idCategorie}`).toPromise();

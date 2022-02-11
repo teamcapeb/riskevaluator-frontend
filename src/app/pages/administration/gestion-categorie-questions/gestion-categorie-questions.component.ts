@@ -71,6 +71,13 @@ export class GestionCategorieQuestionsComponent implements OnInit {
   }
 
   updateC(event: IListEvent){
+    event.data.questionnaire = new Questionnaire(this._idQuestionnaire, '', [], []);
+    this.actualCategorieQuestion = event.data;
+    this.categorieQuestionForm.open('update');
+   
+  }
+
+  categorieDetails(event: IListEvent){
     this.router.navigate(['/gestion-questionnaires', this._idQuestionnaire, 'gestion-categories-questions', event.data.idCategorie, 'gestion-questions']);
   }
 

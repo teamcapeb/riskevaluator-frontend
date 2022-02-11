@@ -1,3 +1,7 @@
+<div class="header text-center p-4">
+  <h1>{{(categorieQuestion | async)?.libelle}}</h1>
+</div>
+
 <app-list title="Liste des questions" (onAdd)="add()">
     <ng-template [ngIf]="categorieQuestion | async" [ngIfElse]="loading">
         <ng-container *ngFor="let question of (categorieQuestion | async)?.questions">

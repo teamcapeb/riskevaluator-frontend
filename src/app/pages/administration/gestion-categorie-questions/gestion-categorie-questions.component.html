@@ -1,9 +1,9 @@
 
 
-
+<div class="header text-center p-4">
+  <h1>{{(questionnaire | async)?.thematique}}</h1>
+</div>
 <app-list title="Liste des Categories de questions" (onAdd)="addC()" >
-  <app-list-item [header]="true">
-  </app-list-item>
   <ng-template [ngIf]="questionnaire | async" [ngIfElse]="loading">
     <ng-container *ngFor="let CategorieQuestion of (questionnaire | async)?.categorieQuestions">
         <app-list-item
@@ -11,6 +11,7 @@
             [data]="CategorieQuestion"
             (onUpdate)="updateC($event)"
             (onDelete)="deleteC($event)"
+            (onRowClick)="categorieDetails($event)"
         >
       <app-list-item-col>{{CategorieQuestion.libelle}}</app-list-item-col>
       </app-list-item>
@@ -33,7 +34,7 @@
 
 <app-list title="Liste des Suggestions Global" (onAdd)="add()" >
   <app-list-item [header]="true">
-    <app-list-item-col>Reponses</app-list-item-col>
+    <app-list-item-col>Libellé</app-list-item-col>
     <app-list-item-col>Inférieur à</app-list-item-col>
   </app-list-item>
   <ng-template [ngIf]="questionnaire | async" [ngIfElse]="loading">

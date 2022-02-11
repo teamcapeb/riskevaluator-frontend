@@ -32,6 +32,9 @@ export class QuestionnaireFormComponent implements OnInit {
     if(action === 'add' ){
       content = this.modalContentCreateOrUpdate;
       this.title =  'Ajouter' ;
+    }else if(action === 'update'){
+      content = this.modalContentCreateOrUpdate;
+      this.title =  'Modifier' ;
     }else if(action === 'delete'){
       content = this.modalDelete;
       this.title = 'Supprimer';
