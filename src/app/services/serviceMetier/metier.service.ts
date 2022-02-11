@@ -27,11 +27,11 @@ export class MetierService {
     return this.http.post<IMetier>(`${this.baseUrl}`, metier.toJSON()).toPromise();
   }
 
-  update(metier: IMetier): Promise<IMetier | string> {
-    return this.http.put<IMetier>(`${this.baseUrl}/${metier.idMetier}`, metier).toPromise();
+  update(metier: Metier): Promise<IMetier | string> {
+    return this.http.put<IMetier>(`${this.baseUrl}`, metier.toJSON()).toPromise();
   }
 
-  delete(metier: IMetier): Promise<string> {
-    return this.http.delete<string>(`${this.baseUrl}/${metier.idMetier}`).toPromise();
+  delete(metier: Metier): Promise<string> {
+    return this.http.delete<string>(`${this.baseUrl}${metier.idMetier}`).toPromise();
   }
 }

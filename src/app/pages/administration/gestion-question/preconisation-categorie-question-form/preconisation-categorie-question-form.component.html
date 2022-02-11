@@ -15,9 +15,10 @@
         [(ngModel)] = "preconisationCategorieQuestion.contenu"></textarea>
       <label for="exampleInputEmail1">Pourcentages</label>
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="Pourcentages"
+        (input)="checkInputRange($event)"
         [(ngModel)] = "preconisationCategorieQuestion.viewIfPourcentageScoreLessThan">
     </div>
   </div>

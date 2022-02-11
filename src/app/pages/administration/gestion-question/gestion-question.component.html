@@ -23,6 +23,7 @@
         (onDelete)="deleteSuggestion($event)"
       >
         <app-list-item-col>{{suggestions.contenu}}</app-list-item-col>
+        <app-list-item-col>{{suggestions.viewIfPourcentageScoreLessThan}}</app-list-item-col>
       </app-list-item>
     </ng-container>
   </ng-template>

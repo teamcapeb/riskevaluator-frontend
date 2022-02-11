@@ -27,6 +27,15 @@ export class PreconisationGlobalFormComponent implements OnInit {
     });
   }
 
+  checkInputRange($event: any){
+    if($event.target.value < 0){
+      $event.target.value = 0;
+    }
+    if($event.target.value > 100){
+      $event.target.value = 100;
+    }
+  }
+
   public open(action: string) {
     let content = null;
     if(action === 'add' || action === 'update'){

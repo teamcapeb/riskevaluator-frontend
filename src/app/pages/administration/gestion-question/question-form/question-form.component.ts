@@ -4,9 +4,7 @@ import Reponse from '@/objects/Reponse';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QuestionService } from '@services/serviceQuestion/question.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CategorieQuestionService } from '@services/serviceCategorieQuestion/categorie-question.service';
 import CategorieQuestion from '../../../../objects/CategorieQuestion';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import Metier from '../../../../objects/Metier';
 import { MetierService } from '../../../../services/serviceMetier/metier.service';
 
@@ -55,10 +53,8 @@ export class QuestionFormComponent implements OnInit {
               }
 
   onItemSelect(item: any) {
-    console.log(this.question);
   }
   onSelectAll(items: any) {
-    console.log(items);
   }
 
   async ngOnInit() {
@@ -100,7 +96,6 @@ export class QuestionFormComponent implements OnInit {
 
   public async save(){
     this.saved = false;
-    this.question.reponses = this.reponses;
     this._addedReponses = this.addedReponses.map<Reponse>((reponse: Reponse) => {
       reponse.idReponse = 0;
       return reponse;
@@ -108,11 +103,13 @@ export class QuestionFormComponent implements OnInit {
     if(!this.question.reponses){
       this.question.reponses = [];
     }
+    this.question.metiers = this.selectedItems.map((metier: Metier) => {
+      return new Metier(metier.idMetier, metier.nomMetier, null);
+    });
     this.question.reponses.push(...this.addedReponses);
     let res = null;
     try{
       if(this._idQuestion !== -1){
-        this.question.metiers = [];
         console.log(this.question);
         res = await this.questionService.update(this.question);
       }else{
@@ -152,6 +149,10 @@ export class QuestionFormComponent implements OnInit {
   }
   get addedReponses(): Reponse[]{
     return this._addedReponses;
+  }
+
+  get idQuestion(): number {
+    return this._idQuestion;
   }
 
 }
