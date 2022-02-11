@@ -19,7 +19,7 @@ export class EvaluerComponent implements OnInit {
   private baseUrl: string = environment.apiUrl + '/Metiers';
   private _metiers : Observable<Metier[]>;
   @ViewChild('input') input : any;
-  private idMetierChecked: string[] = [];
+  private idMetierChecked: number[] = [];
   private metierExtras: NavigationExtras = {
     state: {
       metierList : [],
@@ -31,8 +31,6 @@ export class EvaluerComponent implements OnInit {
                   private route: ActivatedRoute,
                   private router: Router,
                   private metierService :MetierService) {}
-
-  constructor(private categorieQuestionService:CategorieQuestionService) { }
 
   ngOnInit(): void {
     this._metiers = this.getAll();
@@ -46,12 +44,10 @@ export class EvaluerComponent implements OnInit {
     let finalise = new Subject();
     let obs = this.metierService.getAll();
     obs.pipe(takeUntil(finalise)).subscribe((data) =>{
-        finalise.next();
         finalise.complete();
       },
       (err) => {
         this.errorModal.open(JSON.stringify(err.error));
-        finalise.next();
         finalise.complete();
       });
     return obs;

@@ -74,23 +74,13 @@ import { CategorieQuestionFormComponent } from './pages/administration/gestion-c
 import { PreconisationCategorieQuestionFormComponent } from './pages/administration/gestion-question/preconisation-categorie-question-form/preconisation-categorie-question-form.component';
 import { QuestionnaireFormComponent } from '@pages/administration/gestion-questionnaire/questionnaire-form/questionnaire-form.component';
 
-import {MatTooltipModule} from '@angular/material/tooltip';
 import { EvaluationQuestionComponent } from "@pages/visitor/evaluer/evaluation-question/evaluation-question.component";
-import { EvaluationHeadComponent } from "@pages/visitor/evaluer/evaluation-head/evaluation-head.component";
-import {
-  EvaluationQuestionnaireComponent
-} from "@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component";
+import { EvaluationQuestionnaireComponent } from "@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component";
 import { EvaluationWelcomeComponent } from "@pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component";
-import { EvaluationBodyComponent } from "@pages/visitor/evaluer/evaluation-body/evaluation-body.component";
 import { EvaluationLoadingComponent } from './pages/visitor/evaluer/evaluation-loading/evaluation-loading.component';
 import { EvaluationFooterComponent } from './pages/visitor/evaluer/evaluation-footer/evaluation-footer.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { EvaluationQuestionComponent } from "@pages/visitor/evaluer/evaluation-question/evaluation-question.component";
 import { EvaluationHeadComponent } from "@pages/visitor/evaluer/evaluation-head/evaluation-head.component";
-import {
-  EvaluationQuestionnaireComponent
-} from "@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component";
-import { EvaluationWelcomeComponent } from "@pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component";
 import { EvaluationBodyComponent } from "@pages/visitor/evaluer/evaluation-body/evaluation-body.component";
 import { EvaluationThematiqueComponent } from './pages/visitor/evaluer/evaluation-thematique/evaluation-thematique.component';
 

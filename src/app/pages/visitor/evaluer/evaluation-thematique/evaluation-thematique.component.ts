@@ -46,18 +46,16 @@ export class EvaluationThematiqueComponent implements OnInit {
     let obs = this.questionnaireService.getAll();
     obs.pipe(takeUntil(finalise)).subscribe((data) =>{
         //console.log(data)
-        finalise.next();
         finalise.complete();
       },
       (err) => {
         this.errorModal.open(JSON.stringify(err.error));
-        finalise.next();
         finalise.complete();
       });
     return obs;
   }
 
-  myFunction(idQuestionnaire : string) : void {
+  myFunction(idQuestionnaire : number) : void {
     //console.log(this.state);
     this.metierExtras.state['idQuestionnaire'] = idQuestionnaire;
     this.router.navigate(['evaluer/welcome-evaluation'], this.metierExtras);
