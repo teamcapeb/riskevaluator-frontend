@@ -4,13 +4,9 @@
     <div class="allQuestions col-lg-12">
 
       <ng-container *ngFor="let item of categorieQuestion$.questions" >
-
-        {{item | json}}
-        <app-evaluation-question *ngIf="item" [question$]="item"></app-evaluation-question>
+        <app-evaluation-question *ngIf="item?.reponses.length >= 2" [question$]="item"></app-evaluation-question>
       </ng-container>
 
     </div>
-
   </div>
-
 </div>

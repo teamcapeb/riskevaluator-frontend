@@ -83,6 +83,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { EvaluationHeadComponent } from "@pages/visitor/evaluer/evaluation-head/evaluation-head.component";
 import { EvaluationBodyComponent } from "@pages/visitor/evaluer/evaluation-body/evaluation-body.component";
 import { EvaluationThematiqueComponent } from './pages/visitor/evaluer/evaluation-thematique/evaluation-thematique.component';
+import { EvaluationResultatComponent } from './pages/visitor/evaluer/evaluation-resultat/evaluation-resultat.component';
+import { ResultatItemComponent } from './pages/visitor/evaluer/evaluation-resultat/resultat-item/resultat-item.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -139,6 +141,8 @@ registerLocaleData(localeEn, 'en-EN');
         EvaluationLoadingComponent,
         EvaluationFooterComponent,
         EvaluationThematiqueComponent,
+        EvaluationResultatComponent,
+        ResultatItemComponent,
     ],
   imports: [
     BrowserModule,

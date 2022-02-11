@@ -1,0 +1,44 @@
+<div class="row justify-content-md-center collapsablePannel"
+     *ngFor="let categorie of evaluation.categoriesEvaluation; let index = index; let last=last;"
+     [ngClass]="{'last-child': last}"
+     id="{{ 'sectionCategorie-' + index }}">
+  <div class="col-md-10 evaluationSection" id="{{ 'evaluationSection-' + index }}">
+    <div class="row" >
+      <div class="col-md-3">
+
+        <ngx-gauge class="jauge" [size]="categorie.gaugeSize" thick="6" duration="2000"
+                   [type]="gaugeType" aria-label="testtt" [value]="categorie.scorePercent"
+                   [label]="categorie.categorie.nomCategorie" [thresholds]="thresholdConfig" [append]="gaugeAppendText"
+                   [backgroundColor]="gaugeBackGround">
+        </ngx-gauge>
+      </div>
+
+      <div class="col-md-9">
+        <div class="row nomCategorie" id="{{ 'nomCategorie-' + index }}" [ngStyle]="{'color': categorie.categorie.background}">
+          {{categorie.categorie.nomCategorie}}
+        </div>
+        <div class="row categoriePreconisation"  id="{{ 'categoriePreconisation-' + index }}">
+
+          <span *ngIf="categorie.gaugeSize==100" >{{categorie.preconisationCategorie.contenu | slice:0:200}}...</span>
+          <span *ngIf="categorie.gaugeSize!=100" >{{categorie.preconisationCategorie.contenu}}</span>
+        </div>
+        <div class="row">
+          <div class="col-md-2 offset-md-10">
+                                <span class="material-icons downUpArrowButton" (click)="sectionClick(index)"
+                                      *ngIf="categorie.gaugeSize==100">
+                                    keyboard_arrow_down
+                                </span>
+
+            <span class="material-icons downUpArrowButton" (click)="sectionClick(index)"
+                  *ngIf="categorie.gaugeSize!=100">
+                                    keyboard_arrow_up
+                                </span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
