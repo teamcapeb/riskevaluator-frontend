@@ -5,4 +5,6 @@ export default interface IReponse {
   question: IQuestion;
   nbPoints: number;
   contenu: string;
+  isChecked?: boolean;
+
 }

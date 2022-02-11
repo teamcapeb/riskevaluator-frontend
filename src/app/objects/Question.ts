@@ -10,14 +10,14 @@ export default class Question {
     idQuestion: number;
     categorieQuestion: CategorieQuestion
     aide: string;
-    qType: IQuestionType;
+    qType: string;
     libelleQuestion: string;
     metiers: Metier[];
     reponses: Reponse[];
 
     constructor(idQuestion: number, qType: string, libelleQuestion: string, metiers?: IMetier[], reponses?: IReponse[]){
         this.idQuestion = idQuestion;
-        this.qType = IQuestionType[qType as keyof typeof IQuestionType];
+        this.qType = qType,
         this.libelleQuestion = libelleQuestion;
         if(metiers){
             this.metiers = metiers.map((iMetier: IMetier) => {
@@ -34,7 +34,7 @@ export default class Question {
     public static toQuestion(iQuestion: IQuestion): Question{
         return new Question(
             iQuestion.idQuestion,
-            iQuestion.typeQuestion.toString(),
+            iQuestion.typeQuestion,
             iQuestion.libelleQuestion,
             iQuestion.metiers,
             iQuestion.reponses

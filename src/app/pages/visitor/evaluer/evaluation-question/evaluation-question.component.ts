@@ -22,7 +22,8 @@ export class EvaluationQuestionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.questionTypeEnum = this.question$?.typeQuestion;
+    this.questionTypeEnum = this.question$?.typeQuestion as IQuestionType;
+
   }
 
 }

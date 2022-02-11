@@ -1,4 +1,3 @@
-
 <div class="wrapper" *ngIf="(categoriesQuestion$ | async) as result" [ngSwitch]="result.dataState">
 
   <app-evaluation-loading *ngSwitchCase="DataStateEnum.LOADING" ></app-evaluation-loading>
@@ -9,7 +8,7 @@
 
         <app-evaluation-head [categorieQuestion$]="result?.data[index.current]"> </app-evaluation-head>
         <app-evaluation-body [categorieQuestion$]="result?.data[index.current]"> </app-evaluation-body>
-        <app-evaluation-footer [categorieQuestion$]="result?.data[index.current]"></app-evaluation-footer>
+        <app-evaluation-footer [categoriesQuestions$]="result.data" [categorieQuestion$]="result?.data[index.current]"></app-evaluation-footer>
 
     </ng-container>
 

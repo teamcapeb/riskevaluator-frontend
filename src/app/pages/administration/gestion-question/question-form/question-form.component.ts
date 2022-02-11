@@ -5,7 +5,6 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuestionService } from '@services/serviceQuestion/question.service';
 import { Router, ActivatedRoute, Navigation } from '@angular/router';
-import { Route } from '@angular/compiler/src/core';
 import { CategorieQuestionService } from '@services/serviceCategorieQuestion/categorie-question.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -32,8 +31,8 @@ export class QuestionFormComponent implements OnInit {
 
   constructor(private questionService: QuestionService,
               private router: Router,
-              private route: ActivatedRoute, 
-              private categorieQuestionService: CategorieQuestionService) { 
+              private route: ActivatedRoute,
+              private categorieQuestionService: CategorieQuestionService) {
                 let nav: Navigation = this.router.getCurrentNavigation();
                 this.action = nav.extras.state['action'];
                 this.question = nav.extras.state['question'];
@@ -107,7 +106,7 @@ export class QuestionFormComponent implements OnInit {
       }
     }else if(event.action === 'delete'){
       this._reponses = this._reponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
-      this._addedReponses = this._addedReponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);  
+      this._addedReponses = this._addedReponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
       //obs = this.metierService.delete(event.data);
     }
   }

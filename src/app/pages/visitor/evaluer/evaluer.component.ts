@@ -21,7 +21,6 @@ export class EvaluerComponent implements OnInit {
       let x: any = ele[0];
 
       let result: CategorieQuestion = Object.assign(new CategorieQuestion(), x)
-      console.log(result.getMsg());
     });
   }
 

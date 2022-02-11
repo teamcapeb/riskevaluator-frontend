@@ -9,6 +9,7 @@ import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
 })
 export class EvaluationFooterComponent implements OnInit {
   @Input() categorieQuestion$: ICategorieQuestion;
+  @Input() categoriesQuestions$ : ICategorieQuestion[]
 
   constructor(private evaluationService: EvaluationService) { }
 
@@ -17,12 +18,15 @@ export class EvaluationFooterComponent implements OnInit {
   }
 
   previousButtonClick() {
-
     this.evaluationService.onNextCategorieNumber(CategorieNumberAction.DECREASE)
   }
 
   disableNextButton() {
     return false;
+  }
+
+  finishButtonClick(){
+    this.evaluationService.onCalculateScore(this.categoriesQuestions$);
   }
 
   nextButtonClick() {

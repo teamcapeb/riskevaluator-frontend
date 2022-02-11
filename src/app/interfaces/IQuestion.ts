@@ -6,9 +6,10 @@ import { IQuestionType } from "./IQuestionType";
 export default interface IQuestion {
     idQuestion: number;
     categorieQuestion?: ICategorieQuestion
-    typeQuestion: IQuestionType; // type : IQuestionType ?
-    aide: string;
-    libelleQuestion: string;
+    typeQuestion?: string; // type : IQuestionType ?
+    aide?: string;
+    libelleQuestion?: string;
+    scoreMaxPossibleQuestion?: number;
     metiers?: IMetier[];
     reponses?: IReponse[];
 }

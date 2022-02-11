@@ -14,7 +14,6 @@ export class EvaluationBodyComponent implements OnInit {
   @Input() categorieQuestion$: ICategorieQuestion;
 
   ngOnInit(): void {
-    console.log(this.categorieQuestion$.questions);
   }
 
 }

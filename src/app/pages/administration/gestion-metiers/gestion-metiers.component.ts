@@ -22,7 +22,7 @@ export class GestionMetiersComponent implements OnInit {
   constructor(private metierService: MetierService) { }
 
   ngOnInit(): void {
-    
+
   }
 
   ngAfterViewInit(){
@@ -31,18 +31,7 @@ export class GestionMetiersComponent implements OnInit {
   }
 
   getAll(): Observable<Metier[]>{
-    let finalise = new Subject();
-    let obs = this.metierService.getAll();
-    obs.pipe(takeUntil(finalise)).subscribe(() =>{
-      finalise.next();
-      finalise.complete();
-    },
-    (err) => {
-      this.errorModal.open(JSON.stringify(err.error));
-      finalise.next();
-      finalise.complete();
-    });
-    return obs; 
+    return null
   }
 
   add(): void{
