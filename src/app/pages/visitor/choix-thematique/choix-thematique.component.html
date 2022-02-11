@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <ng-template [ngIf]="questionnaires | async" [ngIfElse]="loading">
+      <ng-container *ngFor="let questionnaires of questionnaires | async" >
+    <div class="col-md-4 col-xl-3  ">
+      <div class="card bg-c-blue order-card">
+        <div class="card-block">
+          <a class = text-decoration-none [routerLink] = "['/choix-metier',questionnaires.idQuestionnaire]"><h3 class="m-b-20 text-white">{{questionnaires.thematique}}</h3></a>
+        </div>
+      </div>
+    </div>
+      </ng-container>
+      </ng-template>
+
+
+</div>
+

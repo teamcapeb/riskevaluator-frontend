@@ -22,6 +22,9 @@ import { GestionCategorieQuestionsComponent } from '@pages/administration/gestio
 import { QuestionFormComponent } from './pages/administration/gestion-question/question-form/question-form.component';
 import { EvaluationWelcomeComponent } from "@pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component";
 import { EvaluationQuestionnaireComponent } from '@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component';
+import { EvaluationWelcomeComponent } from "@pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component";
+import { EvaluationQuestionnaireComponent } from '@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component';
+import { EvaluationThematiqueComponent } from '@pages/visitor/evaluer/evaluation-thematique/evaluation-thematique.component';
 
 
 const administration: Routes = [
@@ -72,9 +75,14 @@ const visitors: Routes = [
   {
     path: 'evaluer/questionnaire-evaluation',
     component: EvaluationQuestionnaireComponent
-  }, {
+  }, 
+  {
     path: 'evaluer/welcome-evaluation',
     component: EvaluationWelcomeComponent
+  },
+  {
+    path: 'evaluer/evaluation-thematique',
+    component: EvaluationThematiqueComponent
   },
   {
     path: 'Acceuil',
