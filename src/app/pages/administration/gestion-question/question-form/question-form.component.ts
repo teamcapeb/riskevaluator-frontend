@@ -5,7 +5,6 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { QuestionService } from '@services/serviceQuestion/question.service';
 import { Router, ActivatedRoute, Navigation } from '@angular/router';
-import { Route } from '@angular/compiler/src/core';
 import { CategorieQuestionService } from '@services/serviceCategorieQuestion/categorie-question.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -32,8 +31,8 @@ export class QuestionFormComponent implements OnInit {
 
   constructor(private questionService: QuestionService,
               private router: Router,
-              private route: ActivatedRoute, 
-              private categorieQuestionService: CategorieQuestionService) { 
+              private route: ActivatedRoute,
+              private categorieQuestionService: CategorieQuestionService) {
                 let nav: Navigation = this.router.getCurrentNavigation();
                 this.action = nav.extras.state['action'];
                 this.question = nav.extras.state['question'];
@@ -43,13 +42,15 @@ export class QuestionFormComponent implements OnInit {
   ngOnInit(): void {
     //this.question = new Question('', '', '', []);
     this._addedReponses = [];
+    /*
     this.questionService.getAllReponses(this.question.idQuestion).subscribe((reponses: Reponse[]) => {
       this._reponses = reponses;
     });
+    */
   }
 
   add(): void{
-    this.actualReponse = new Reponse('', 0, '');
+    this.actualReponse = new Reponse(0, null, 0, '');
     this.reponseForm.open('add');
   }
 
@@ -63,32 +64,26 @@ export class QuestionFormComponent implements OnInit {
     this.reponseForm.open('delete');
   }
 
-  save(){
+  public async save(){
     this.saved = false;
     this.question.reponses = this.reponses;
     this._addedReponses = this.addedReponses.map<Reponse>((reponse: Reponse) => {
-      reponse.idReponse = '';
+      reponse.idReponse = 0;
       return reponse;
     });
     this.question.reponses.push(...this.addedReponses);
-    let obs = null;
-    let finalise = new Subject();
-    if(this.action === 'update'){
-      obs = this.questionService.update(this.question);
-    }else if (this.action === 'add'){
-      obs = this.categorieQuestionService.createQuestionCategoriesQuestion(this.idCategorieQuestion, this.question);
-    }
-    obs.pipe(takeUntil(finalise)).subscribe(() =>{
+    let res = null;
+    try{
+      if(this.action === 'update'){
+        res = await this.questionService.update(this.question);
+      }else if (this.action === 'add'){
+        res = await this.categorieQuestionService.createQuestionCategoriesQuestion(0, this.question);
+      }
       this.saved = true;
       this.router.navigate(['gestion-question'], {state:{idCategorieQuestion: this.idCategorieQuestion}});
-      finalise.next();
-      finalise.complete();
-    },
-    (err) => {
-      this.errorModal.open(JSON.stringify(err.error));
-      finalise.next();
-      finalise.complete();
-    });
+    }catch(error){
+      this.errorModal.open(error.message);
+    }
   }
 
   back(){
@@ -111,21 +106,9 @@ export class QuestionFormComponent implements OnInit {
       }
     }else if(event.action === 'delete'){
       this._reponses = this._reponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
-      this._addedReponses = this._addedReponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);  
+      this._addedReponses = this._addedReponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
       //obs = this.metierService.delete(event.data);
     }
-    /*
-    obs.pipe(takeUntil(finalise)).subscribe((res) =>{
-      this._metiers = this.metierService.getAll();
-      finalise.next();
-      finalise.complete();
-    },
-    (err) => {
-      this.errorModal.open(JSON.stringify(err.error));
-      finalise.next();
-      finalise.complete();
-    });
-    */
   }
 
   get reponses(): Reponse[]{

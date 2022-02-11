@@ -20,6 +20,9 @@ import { GestionComptesComponent } from '@pages/administration/gestion-comptes/g
 import { GestionQuestionComponent } from './pages/administration/gestion-question/gestion-question.component';
 import { GestionCategorieQuestionsComponent } from '@pages/administration/gestion-categorie-questions/gestion-categorie-questions.component';
 import { QuestionFormComponent } from './pages/administration/gestion-question/question-form/question-form.component';
+import { EvaluationWelcomeComponent } from "@pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component";
+import { EvaluationQuestionnaireComponent } from '@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component';
+import { EvaluationThematiqueComponent } from '@pages/visitor/evaluer/evaluation-thematique/evaluation-thematique.component';
 
 
 const administration: Routes = [
@@ -28,20 +31,20 @@ const administration: Routes = [
     component: GestionMetiersComponent
   },
   {
-    path: 'gestion-categories-questions',
+    path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions',
     component: GestionCategorieQuestionsComponent
   },
 
   {
-    path: 'gestion-questionnaire',
+    path: 'gestion-questionnaires',
     component: GestionQuestionnaireComponent
   },
   {
-    path: 'gestion-question',
+    path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions/:idCategorie/gestion-questions',
     component: GestionQuestionComponent
   },
   {
-    path: 'gestion-question/question',
+    path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions/:idCategorie/gestion-questions/:idQuestion/question',
     component: QuestionFormComponent
   },
   {
@@ -66,6 +69,18 @@ const visitors: Routes = [
   {
     path: 'evaluer',
     component: EvaluerComponent
+  },
+  {
+    path: 'evaluer/questionnaire-evaluation',
+    component: EvaluationQuestionnaireComponent
+  },
+  {
+    path: 'evaluer/welcome-evaluation',
+    component: EvaluationWelcomeComponent
+  },
+  {
+    path: 'evaluer/evaluation-thematique',
+    component: EvaluationThematiqueComponent
   },
   {
     path: 'Acceuil',

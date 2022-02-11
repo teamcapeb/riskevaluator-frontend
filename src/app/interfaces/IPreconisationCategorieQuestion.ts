@@ -1,5 +1,8 @@
+import ICategorieQuestion from './ICategorieQuestion';
 export default interface IPreconisationCategorieQuestion {
-    idPreconisationCategoriesQuestion: string;
+    idPreconisation: number;
+    idCategorie?: number;
+    contenu: string;
     viewIfPourcentageScoreLessThan: number;
-    Contenue: string;
+    categorieQuestion?: ICategorieQuestion;
 }

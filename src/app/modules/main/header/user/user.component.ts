@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 // @ts-ignore
 import {DateTime} from 'luxon';
-import { TokenStorageService } from "@services/token-storage.service";
+import { TokenStorageService } from "@services/serviceUser/token-storage.service";
 
 @Component({
     selector: 'app-user',

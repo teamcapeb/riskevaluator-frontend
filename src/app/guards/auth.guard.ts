@@ -8,7 +8,7 @@ import {
     Router
 } from '@angular/router';
 import {Observable} from 'rxjs';
-import {AppService} from '@services/app.service';
+import {AppService} from '@services/serviceUser/app.service';
 
 @Injectable({
     providedIn: 'root'

@@ -50,12 +50,39 @@ import { QuestionFormComponent } from './pages/administration/gestion-question/q
 import { QuestionModalComponent } from './pages/administration/gestion-question/question-modal/question-modal.component';
 import { ListItemColComponent } from './components/list/list-item/list-item-col/list-item-col.component';
 import { ReponseFormComponent } from './pages/administration/gestion-question/question-form/reponse-form/reponse-form.component';
+import { MatStepperModule } from "@angular/material/stepper";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatSelectModule } from "@angular/material/select";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatInputModule } from "@angular/material/input";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatToolbarModule } from "@angular/material/toolbar";
 
 import { CategorieQuestionFormComponent } from './pages/administration/gestion-categorie-questions/categorie-question-form/categorie-question-form.component';
 
 import { PreconisationCategorieQuestionFormComponent } from './pages/administration/gestion-question/preconisation-categorie-question-form/preconisation-categorie-question-form.component';
 import { QuestionnaireFormComponent } from '@pages/administration/gestion-questionnaire/questionnaire-form/questionnaire-form.component';
 
+import { EvaluationQuestionComponent } from "@pages/visitor/evaluer/evaluation-question/evaluation-question.component";
+import { EvaluationQuestionnaireComponent } from "@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component";
+import { EvaluationWelcomeComponent } from "@pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component";
+import { EvaluationLoadingComponent } from './pages/visitor/evaluer/evaluation-loading/evaluation-loading.component';
+import { EvaluationFooterComponent } from './pages/visitor/evaluer/evaluation-footer/evaluation-footer.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { EvaluationHeadComponent } from "@pages/visitor/evaluer/evaluation-head/evaluation-head.component";
+import { EvaluationBodyComponent } from "@pages/visitor/evaluer/evaluation-body/evaluation-body.component";
+import { EvaluationThematiqueComponent } from './pages/visitor/evaluer/evaluation-thematique/evaluation-thematique.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -95,7 +122,11 @@ registerLocaleData(localeEn, 'en-EN');
 
         GestionCategorieQuestionsComponent,
         PreconisationGlobalFormComponent,
-
+        EvaluationQuestionComponent,
+        EvaluationHeadComponent,
+        EvaluationQuestionnaireComponent,
+        EvaluationWelcomeComponent,
+        EvaluationBodyComponent,
         QuestionFormComponent,
         QuestionModalComponent,
         ListItemColComponent,
@@ -105,6 +136,9 @@ registerLocaleData(localeEn, 'en-EN');
 
         QuestionnaireFormComponent,
         PreconisationCategorieQuestionFormComponent,
+        EvaluationLoadingComponent,
+        EvaluationFooterComponent,
+        EvaluationThematiqueComponent,
     ],
   imports: [
     BrowserModule,
@@ -118,7 +152,28 @@ registerLocaleData(localeEn, 'en-EN');
       preventDuplicates: true
     }),
     FormsModule,
-    NgbModule
+    NgbModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatProgressBarModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatDatepickerModule,
+    MatSnackBarModule
+
   ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]

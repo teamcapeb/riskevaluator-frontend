@@ -11,39 +11,27 @@ import Metier from '../../objects/Metier';
 })
 export class MetierService {
 
-  private baseUrl: string = environment.apiUrl + '/Metiers';
+  private baseUrl: string = environment.apiUrl + '/metiers/';
 
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Metier[]> {
     return this.http.get<IMetier[]>(`${this.baseUrl}`).pipe(map((receivedData: IMetier[]) => {
-        return receivedData.map<Metier>((value: IMetier, index:number, array:IMetier[]) => {
-          return new Metier(
-          value.idMetier, 
-          value.nomMetier
-        )
+        return receivedData.map<Metier>((iMetier: IMetier) => {
+          return Metier.toMetier(iMetier);
         });
     }));
   }
 
-  create(metier: Metier): Observable<IMetier | string>{
-    return this.http.post<IMetier>(`${this.baseUrl}`, metier.toJSON());
+  create(metier: Metier): Promise<IMetier | string>{
+    return this.http.post<IMetier>(`${this.baseUrl}`, metier.toJSON()).toPromise();
   }
 
-  get(metierId: string): Observable<Metier> {
-    return this.http.get<IMetier>(`${this.baseUrl}/${metierId}`).pipe(map((receivedData: IMetier) => {
-            return new Metier(
-                receivedData.idMetier, 
-                receivedData.nomMetier
-            )
-    }));
+  update(metier: IMetier): Promise<IMetier | string> {
+    return this.http.put<IMetier>(`${this.baseUrl}/${metier.idMetier}`, metier).toPromise();
   }
 
-  update(metier: IMetier): Observable<IMetier | string> {
-    return this.http.put<IMetier>(`${this.baseUrl}/${metier.idMetier}`, metier);
-  }
-
-  delete(metier: IMetier): Observable<string> {
-    return this.http.delete<string>(`${this.baseUrl}/${metier.idMetier}`);
+  delete(metier: IMetier): Promise<string> {
+    return this.http.delete<string>(`${this.baseUrl}/${metier.idMetier}`).toPromise();
   }
 }

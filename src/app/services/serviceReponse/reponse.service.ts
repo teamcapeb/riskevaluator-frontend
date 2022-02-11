@@ -13,11 +13,6 @@ export class ReponseService {
 
   constructor(private http: HttpClient) { }
 
-
-  get(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`);
-  }
-
   update(id: string, reponse: Reponse): Observable<Reponse> {
     return this.http.put<Reponse>(`${this.baseUrl}/${id}`, reponse);
   }

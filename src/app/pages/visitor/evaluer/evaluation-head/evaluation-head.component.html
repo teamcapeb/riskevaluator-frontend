@@ -1,0 +1,17 @@
+<ng-container *ngIf="categorieQuestion$">
+
+  <div class="row justify-content-center" >
+    <div class="categorieTitle"  [ngStyle]="{'background-color': 'yellow'}">
+      {{categorieQuestion$.libelle}}
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-lg-12 progressBar">
+      <mat-progress-bar mode="determinate" [value]="progressBarValue"></mat-progress-bar>
+
+    </div>
+  </div>
+</ng-container>
+
+

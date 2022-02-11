@@ -12,26 +12,19 @@ import { map } from 'rxjs/operators';
 })
 export class PreconisationCategoriesQuestionService {
 
-  private baseUrl: string = environment.apiUrl + '/PreconisationCategoriesQuestion';
+  private baseUrl: string = environment.apiUrl + '/preconisationcategorie/';
 
   constructor(private http: HttpClient) {}
 
-
-
-  get(preconisationCategorieQuestionId: string): Observable<PreconisationCategorieQuestion> {
-    return this.http.get<PreconisationCategorieQuestion>(`${this.baseUrl}/${preconisationCategorieQuestionId}`);
+  create(preconisation: PreconisationCategorieQuestion): Promise<IPreconisationCategorieQuestion | string>{
+    return this.http.post<IPreconisationCategorieQuestion>(`${this.baseUrl}`, preconisation.toJSON()).toPromise();
   }
 
-  update(preconisationCategorieQuestion: PreconisationCategorieQuestion): Observable<PreconisationCategorieQuestion | string> {
-    return this.http.put<PreconisationCategorieQuestion>(`${this.baseUrl}/${preconisationCategorieQuestion.idPreconisationCategoriesQuestion}`, preconisationCategorieQuestion);
+  update(preconisationCategorieQuestion: PreconisationCategorieQuestion): Promise<PreconisationCategorieQuestion | string> {
+    return this.http.put<PreconisationCategorieQuestion>(`${this.baseUrl}`, preconisationCategorieQuestion.toJSON()).toPromise();
   }
 
-  create(categorieQuestionId: string,preconisationCategorieQuestion: PreconisationCategorieQuestion): Observable<IPreconisationCategorieQuestion | string>{
-    return this.http.post<IPreconisationCategorieQuestion>(`${this.baseUrl}/${categorieQuestionId}/PreconisationCategoriesQuestion`, preconisationCategorieQuestion.toJSON());
-  }
-
-
-  delete(preconisationCategorieQuestionId: string): Observable<PreconisationCategorieQuestion | string> {
-    return this.http.delete<PreconisationCategorieQuestion>(`${this.baseUrl}/${preconisationCategorieQuestionId}`);
+  delete(preconisationCategorieQuestion: PreconisationCategorieQuestion): Promise<PreconisationCategorieQuestion | string> {
+    return this.http.delete<PreconisationCategorieQuestion>(`${this.baseUrl}${preconisationCategorieQuestion.idPreconisation}`).toPromise();
   }
 }

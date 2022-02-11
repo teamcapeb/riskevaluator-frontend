@@ -1,9 +1,9 @@
 <ng-template #modalContentCreateOrUpdate let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{title}} Suggestion</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <h4 class="modal-title" id="modal-basic-title"> Suggestion</h4>
+    <!--button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
-    </button>
+    </button-->
   </div>
   <div class="modal-body">
     <div class="form-group">
@@ -12,13 +12,13 @@
         class="form-control"
         id="Contenue"
         rows="5"
-        [(ngModel)]="preconisationCategorieQuestion.Contenue"></textarea>
+        [(ngModel)] = "preconisationCategorieQuestion.contenu"></textarea>
       <label for="exampleInputEmail1">Pourcentages</label>
       <input
         type="text"
         class="form-control"
         id="Pourcentages"
-        [(ngModel)]="preconisationCategorieQuestion.viewIfPourcentageScoreLessThan">
+        [(ngModel)] = "preconisationCategorieQuestion.viewIfPourcentageScoreLessThan">
     </div>
   </div>
   <div class="modal-footer">
@@ -28,7 +28,7 @@
 
 <ng-template #modalDelete let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{title}} Suggestion</h4>
+    <h4 class="modal-title" id="modal-basic-title">Suggestion</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>

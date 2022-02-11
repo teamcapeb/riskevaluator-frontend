@@ -2,8 +2,8 @@ import ICategorieQuestion from "./ICategorieQuestion";
 import IPreconisationGlobale from "./IPreconisationGlobale";
 
 export default interface IQuestionnaire {
-    idQuestionnaire: string;
+    idQuestionnaire: number;
     thematique: string;
-    preconisationsGlobales: IPreconisationGlobale [];
-    categoriesQuestions: ICategorieQuestion[];
+    preconisationGlobales: IPreconisationGlobale[];
+    categorieQuestions: ICategorieQuestion[];
 }
