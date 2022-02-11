@@ -31,8 +31,8 @@ export class PreconisationCategorieQuestionFormComponent implements OnInit {
     if($event.target.value < 0){
       $event.target.value = 0;
     }
-    if($event.target.value > 100){
-      $event.target.value = 100;
+    if($event.target.value > 101){
+      $event.target.value = 101;
     }
   }
 

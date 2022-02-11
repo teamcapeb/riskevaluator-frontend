@@ -57,7 +57,8 @@ export class GestionQuestionComponent implements OnInit {
   addSuggestion(): void{
     let cq = new CategorieQuestion(this._idCategorie, '');
     let iCq = cq.toJSON();
-    this.actualPreconisationCategorieQuestion = new PreconisationCategorieQuestion(0, '', 0, this._idCategorie, cq.toJSON());
+    this.actualPreconisationCategorieQuestion = new PreconisationCategorieQuestion(0, '', 0, cq.toJSON());
+    console.log(this.actualPreconisationCategorieQuestion)
     this.preconisationCategorieQuestionForm.open('add');
   }
 

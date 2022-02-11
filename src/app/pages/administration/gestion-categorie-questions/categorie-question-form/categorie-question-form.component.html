@@ -9,14 +9,16 @@
       <div class="form-group">
         <label for="exampleInputEmail1">Nom Categorie de question</label>
         <input
+          required 
           type="text"
           class="form-control"
           id="idCategoriesQuestion"
-          [(ngModel)]="CategorieQuestion.libelle">
+          [(ngModel)]="CategorieQuestion.libelle"
+          #name="ngModel">
       </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
+    <button [disabled]="name.errors?.['required']" type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
   </div>
 </ng-template>
 
