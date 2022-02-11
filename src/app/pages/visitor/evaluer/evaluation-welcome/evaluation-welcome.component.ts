@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router } from '@angular/router';
 import { environment } from "../../../../../environments/environment";
 
 @Component({
@@ -8,10 +9,24 @@ import { environment } from "../../../../../environments/environment";
 })
 export class EvaluationWelcomeComponent implements OnInit {
   introDisplay = environment.evaluerIHM.introDisplay;
+  state : any;
 
-  constructor() { }
+
+
+  constructor(private router: Router,
+              private route: ActivatedRoute,) {
+    type idQuestionnaireListMetier = {
+      metierList: string[],
+      idQuestionnaire: string
+    }
+    const navigation = this.router.getCurrentNavigation();
+    this.state = navigation.extras.state as idQuestionnaireListMetier;
+    console.log(this.state);
+
+  }
 
   ngOnInit(): void {
+
   }
 
 }

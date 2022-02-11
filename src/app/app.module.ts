@@ -82,7 +82,7 @@ import {
 } from "@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component";
 import { EvaluationWelcomeComponent } from "@pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component";
 import { EvaluationBodyComponent } from "@pages/visitor/evaluer/evaluation-body/evaluation-body.component";
-import { EvaluationMetierComponent } from './pages/visitor/evaluer/evaluation-metier/evaluation-metier.component';
+import { EvaluationThematiqueComponent } from './pages/visitor/evaluer/evaluation-thematique/evaluation-thematique.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -136,7 +136,7 @@ registerLocaleData(localeEn, 'en-EN');
 
         QuestionnaireFormComponent,
         PreconisationCategorieQuestionFormComponent,
-        EvaluationMetierComponent,
+        EvaluationThematiqueComponent,
     ],
   imports: [
     BrowserModule,

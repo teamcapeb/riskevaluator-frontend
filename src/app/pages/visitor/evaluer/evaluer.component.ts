@@ -1,8 +1,13 @@
-import Questionnaire from '@/objects/Questionnaire';
+import IMetier from '@/interfaces/IMetier';
+import Metier from '@/objects/Metier';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnaire.service';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { MetierService } from '@services/serviceMetier/metier.service';
+import { environment } from 'environments/environment';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-evaluer',
@@ -11,19 +16,34 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class EvaluerComponent implements OnInit {
   @ViewChild('errorModal') errorModal: any;
-  private _questionnaires: Observable<Questionnaire[]>;
+  private baseUrl: string = environment.apiUrl + '/Metiers';
+  private _metiers : Observable<Metier[]>;
+  @ViewChild('input') input : any;
+  private idMetierChecked: string[] = [];
+  private metierExtras: NavigationExtras = {
+    state: {
+      metierList : [],
+      idQuestionnaire : ''
+    }
+  };
 
-  constructor(private questionnaireService : QuestionnaireService) { }
+  constructor(    private http: HttpClient,
+                  private route: ActivatedRoute,
+                  private router: Router,
+                  private metierService :MetierService) {}
 
   ngOnInit(): void {
-    this._questionnaires = this.getAll();
+    this._metiers = this.getAll();
+   // this.route.params.subscribe(params => this.metierIdQuestionnaireExtras.state['idQuestionnaire']  = params['id']);
+    this.metierExtras.state['metierList'] = this.idMetierChecked;
+    // a enlever
+    //this.metierExtras.state['idQuestionnaire'] = "4";
   }
 
-  getAll(): Observable<Questionnaire[]>{
+  getAll(): Observable<Metier[]>{
     let finalise = new Subject();
-    let obs = this.questionnaireService.getAll();
+    let obs = this.metierService.getAll();
     obs.pipe(takeUntil(finalise)).subscribe((data) =>{
-        //console.log(data)
         finalise.next();
         finalise.complete();
       },
@@ -35,8 +55,30 @@ export class EvaluerComponent implements OnInit {
     return obs;
   }
 
-  get questionnaires() : Observable<Questionnaire[]>{
-    return this._questionnaires;
+
+
+
+  myFunction() : void {
+    this.router.navigate(['evaluer/evaluation-thematique'], this.metierExtras);
+
+  }
+
+
+  check(event : any, metier : Metier) : void {
+
+    var rep = [];
+    if (event.checked === true) {
+      this.idMetierChecked.push(metier.idMetier);
+    }
+
+    if (event.checked === false) {
+      var index: number = this.idMetierChecked.indexOf(metier.idMetier);
+      this.idMetierChecked.splice(index, 1);
+    }
+  }
+
+  get metiers(): Observable<Metier[]> {
+    return this._metiers;
   }
 
 }

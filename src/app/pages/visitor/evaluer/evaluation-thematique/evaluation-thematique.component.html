@@ -1,0 +1,21 @@
+
+
+<div class="container">
+  <div class="row pt-5">
+    <div *ngFor="let questionnaires of questionnaires | async"  class="col-md-4 col-xl-3">
+      <div class="card bg-c-blue order-card" role= "button"(click)="myFunction(questionnaires.idQuestionnaire)">
+        <div class="card-block">
+          <h2 class="m-b-20 ">{{questionnaires.thematique}}</h2>
+        </div>
+      </div>
+    </div>
+
+
+  <ng-template #loading>
+    <div class="loader">
+      <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </ng-template>
+</div>

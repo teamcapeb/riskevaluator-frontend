@@ -6,10 +6,6 @@ body{
   color: #fff;
 }
 
-.text-lit-white{
-  color: rgba(245, 245, 245, 0.93);
-}
-
 .bg-c-blue {
   background: linear-gradient(45deg,#4099ff,#73b4ff);
 }
@@ -17,14 +13,6 @@ body{
 .bg-c-green {
   background: linear-gradient(45deg,#2ed8b6,#59e0c5);
 }
-.bg-c-dark {
-  background: rgba(6, 110, 199, 0.89);
-}
-
-.bg-c-grey {
-  background: rgb(115, 120, 126);
-}
-
 
 .bg-c-yellow {
   background: linear-gradient(45deg,#FFB64D,#ffcb80);
@@ -43,9 +31,7 @@ body{
   margin-bottom: 30px;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  height: auto;
-  width: 500px;
-  padding-top: 10px;
+  height: 200px;
 }
 
 .card .card-block {

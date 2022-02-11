@@ -1,41 +1,15 @@
-<a [routerLink]="['/evaluer/welcome-evaluation']" class="btn btn-default btn-flat">
-  Questionnare II  </a>
-
-<div class="container">
-  <div class="row">
-    <ng-template [ngIf]="questionnaires | async" [ngIfElse]="loading">
-      <ng-container *ngFor="let questionnaires of questionnaires | async" >
-        <p>{{questionnaires.thematique}}</p>
-        <a class = text-decoration-none [routerLink] = "['/choix-metier',questionnaires.idQuestionnaire]"><h3 class="m-b-20 text-white">{{questionnaires.thematique}}</h3></a>
-
-        <div class="col-md-4 col-xl-3  ">
-          <div class="card bg-c-blue order-card">
-            <div class="card-block">
-              <a class = text-decoration-none [routerLink] = "['/choix-metier',questionnaires.idQuestionnaire]"><h3 class="m-b-20 text-white">{{questionnaires.thematique}}</h3></a>
-            </div>
-          </div>
-        </div>
-      </ng-container>
-    </ng-template>
-
-    <ng-template #loading>
-      <div class="loader">
-        <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-    </ng-template>
+<div class="d-flex justify-content-center">
+<h1 class="pt-2">Metiers</h1>
+</div>
+<div class="card bg-c-grey order-card mx-auto">
+  <section *ngFor="let metier of metiers | async"  >
+    <mat-checkbox (change)="check($event,metier)" class="pl-2 text-lit-white" >
+     {{metier.nomMetier}}
+    </mat-checkbox>
+  </section>
+</div>
 
 
+<div class="d-flex justify-content-center">
+<button mat-raised-button color="primary" class ="mx-auto" (click)="myFunction()">Valider</button>
 
-
-
-  </div>
-
-  <ng-template #loading>
-    <div class="loader">
-      <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
-  </ng-template>
