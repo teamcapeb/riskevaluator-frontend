@@ -1,6 +1,7 @@
 import Questionnaire from '@/objects/Questionnaire';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {NavigationExtras, Router } from '@angular/router';
+import { MetierService } from '@services/serviceMetier/metier.service';
 import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnaire.service';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,6 +15,7 @@ export class EvaluationThematiqueComponent implements OnInit {
   @ViewChild('errorModal') errorModal: any;
   private _questionnaires: Observable<Questionnaire[]>;
   private test : any;
+  private listMetier: number[] = [];
   state : any;
   private metierExtras: NavigationExtras = {
     state: {
@@ -30,22 +32,22 @@ export class EvaluationThematiqueComponent implements OnInit {
     }
    const navigation = this.router.getCurrentNavigation();
     this.state = navigation.extras.state as idQuestionnaireListMetier;
+
+    this.listMetier = this.state['metierList'];
     this.metierExtras.state['metierList'] = this.state.metierList;
-    this.metierExtras.state['idQuestionnaire'] = this.state.idQuestionnaire;
-    //this.test = this.router.getCurrentNavigation().extras.state;
-    //console.log(this.state);
+
 
   }
 
   ngOnInit(): void {
-    this._questionnaires = this.getAll();
+    this._questionnaires = this.getListQuestionnaire();
   }
 
-  getAll(): Observable<Questionnaire[]>{
+
+  getListQuestionnaire(): Observable<Questionnaire[]>{
     let finalise = new Subject();
-    let obs = this.questionnaireService.getAll();
+    let obs = this.questionnaireService.getListQuestionnaire(this.listMetier);
     obs.pipe(takeUntil(finalise)).subscribe((data) =>{
-        //console.log(data)
         finalise.complete();
       },
       (err) => {

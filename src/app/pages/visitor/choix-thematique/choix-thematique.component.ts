@@ -24,12 +24,10 @@ export class ChoixThematiqueComponent implements OnInit {
     let obs = this.questionnaireService.getAll();
     obs.pipe(takeUntil(finalise)).subscribe((data) =>{
         //console.log(data)
-        finalise.next();
         finalise.complete();
       },
       (err) => {
         this.errorModal.open(JSON.stringify(err.error));
-        finalise.next();
         finalise.complete();
       });
     return obs;
