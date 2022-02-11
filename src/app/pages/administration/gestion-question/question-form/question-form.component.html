@@ -46,10 +46,10 @@
           <label for="inputGroupSelect02">Métier concerné par la question</label>
           <ng-multiselect-dropdown
           name="dsd"
-          [placeholder]="'custom placeholder'"
+          [placeholder]="'Sélectionner Metier(s)...'"
           [settings]="dropdownSettings"
           [data]="dropdownList"
-          [(ngModel)]="question.metiers"
+          [(ngModel)]="selectedItems"
           (onSelect)="onItemSelect($event)"
           (onSelectAll)="onSelectAll($event)"
         >

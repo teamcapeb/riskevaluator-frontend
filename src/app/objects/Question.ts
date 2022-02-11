@@ -53,6 +53,7 @@ export default class Question {
         let reponses: IReponse[] = null;
         if(this.metiers) {
             metiers = this.metiers.map((metier: Metier) => {
+                console.log(metier as Metier)
                 return metier.toJSON();
             });
         }

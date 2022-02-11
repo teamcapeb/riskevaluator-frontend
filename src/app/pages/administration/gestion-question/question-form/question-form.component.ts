@@ -35,13 +35,14 @@ export class QuestionFormComponent implements OnInit {
 
   public dropdownList: Metier[] = [
   ];
-  selectedItems: any[] = [];
+  selectedItems: Metier[] = [];
   dropdownSettings = {
     singleSelection: false,
     idField: 'idMetier',
     textField: 'nomMetier',
-    selectAllText: 'Select All',
-    unSelectAllText: 'UnSelect All',
+    selectAllText: 'Tout',
+    unSelectAllText: 'Aucun',
+    searchPlaceholderText: 'Chercher',
     itemsShowLimit: 3,
     allowSearchFilter: true
   };
@@ -54,7 +55,7 @@ export class QuestionFormComponent implements OnInit {
               }
 
   onItemSelect(item: any) {
-    console.log(item);
+    console.log(this.question);
   }
   onSelectAll(items: any) {
     console.log(items);
@@ -75,13 +76,10 @@ export class QuestionFormComponent implements OnInit {
     if(this._idQuestion === -1){
       this.question = new Question(-1, 0, '', '', new CategorieQuestion(this._idCategorie, '').toJSON(), [], []);
     }else {
-        this.questionService.get(this._idQuestion).then((question: Question) => {
-          this.question = question;
-        }).catch((reason: any) => {
-          console.error(reason);
-        });
+      this.question = await this.questionService.get(this._idQuestion);
       
     }
+    this.selectedItems = this.question.metiers; 
     this._addedReponses = [];
   }
 
@@ -133,14 +131,11 @@ export class QuestionFormComponent implements OnInit {
   }
 
   createOrUpdateOrDeleteReponse(event: IListEvent){
-    //this._reponses = null;
-    //let finalise = new Subject();
-    //let obs = null;
+    event.data.question = new Question(this._idQuestion, 0, '', '', null, [], []);
     if(event.action === 'update'){
-      //obs = this.reponseService.update(event.data);
     }else if (event.action === 'add'){
-      //obs = this.metierService.create(event.data);
       event.data.idReponse = this._idConteur.toString();
+      
       this._addedReponses.push(event.data);
       this._idConteur++;
       if(this._addedReponses.length === 0){
@@ -149,7 +144,6 @@ export class QuestionFormComponent implements OnInit {
     }else if(event.action === 'delete'){
       this._reponses = this._reponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
       this._addedReponses = this._addedReponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);  
-      //obs = this.metierService.delete(event.data);
     }
   }
 
