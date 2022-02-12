@@ -7,6 +7,8 @@ import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
 import { IQuestionType } from "@/interfaces/IQuestionType";
 import { EvaluationService } from "@services/serviceEvaluation/evaluation.service";
 import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnaire.service';
+import { IEntreprise } from '@/interfaces/IEntreprise';
+import { Navigation, NavigationExtras, Router } from "@angular/router";
 
 @Component({
   selector: 'app-evaluation-questionnaire',
@@ -25,7 +27,15 @@ export class EvaluationQuestionnaireComponent implements OnInit {
 
   progressBarValue: any;
 
-  constructor(private questionnaireService:QuestionnaireService, public evaluationService: EvaluationService) { }
+
+  constructor(private questionnaireService:QuestionnaireService, public evaluationService: EvaluationService, private route : Router) {
+
+    const navigation = this.route.getCurrentNavigation();
+    const  entreprise = navigation.extras.state as IEntreprise;
+    this.evaluationService.onSaveEntreprise(entreprise);
+
+    //if(!!entreprise) this.evaluationService.onSaveEntreprise(entreprise);
+  }
 
   ngOnInit(): void {
     this.onGetAllCategoriesQuestion();

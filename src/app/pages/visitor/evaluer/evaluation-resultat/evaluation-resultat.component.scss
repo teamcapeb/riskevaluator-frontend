@@ -1,0 +1,16 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width:60%
+}
+
+@media (max-width: 767px) {
+
+  .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width:100%
+  }
+}

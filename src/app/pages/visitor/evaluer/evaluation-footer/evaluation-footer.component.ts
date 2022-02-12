@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { CategorieNumberAction, EvaluationService } from "@services/serviceEvaluation/evaluation.service";
 import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
+import { Router } from "@angular/router";
+import { TokenStorageService } from "@services/serviceUser/token-storage.service";
+import { IUser } from "@/interfaces/IUser";
 
 @Component({
   selector: 'app-evaluation-footer',
@@ -11,7 +14,9 @@ export class EvaluationFooterComponent implements OnInit {
   @Input() categorieQuestion$: ICategorieQuestion;
   @Input() categoriesQuestions$ : ICategorieQuestion[]
 
-  constructor(private evaluationService: EvaluationService) { }
+  isLoggedIn = false;
+
+  constructor(private evaluationService: EvaluationService, private router: Router, private tokenStorageService: TokenStorageService) { }
 
 
   ngOnInit(): void {
@@ -26,7 +31,17 @@ export class EvaluationFooterComponent implements OnInit {
   }
 
   finishButtonClick(){
-    this.evaluationService.onCalculateScore(this.categoriesQuestions$);
+
+
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    let user : IUser = this.tokenStorageService.getUser();
+
+    this.evaluationService.onCalculateScore(this.categoriesQuestions$, this.isLoggedIn?user:null);
+
+
+
+    this.router.navigate(['evaluer/evaluation-resultat']);
   }
 
   nextButtonClick() {

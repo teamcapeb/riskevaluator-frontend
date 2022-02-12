@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://riskevaluator-backend-dev.herokuapp.com/api',
+  apiUrl: 'http://localhost:8080/api',
+  //apiUrl: 'https://riskevaluator-backend-dev.herokuapp.com/api',
 
   evaluerIHM: {
     introDisplay: {
@@ -18,6 +19,18 @@ export const environment = {
         "3. Pensez à vous inscrire afin d'enregistrer vos résultats. Vous pourrez réévaluer votre entreprise plus tard et constater l'impact des décisions que vous aurez pris.\n\n" +
         "4. Vous voulez aller plus loin ? Contactez nous via l'onglet associé sur la gauche, vous pourrez bénéficier de conseils et d'orientations approfondis.\n\n",
       introButton: "Commencer l'évaluation"
+    },
+    formulaireContact:{
+      noSiret:"NOSIRET",
+      noSiretPlaceHolder:"Le numéro siret de votre entreprise",
+      effectif:"Effectif",
+      effectifPlaceHolder:"L'effectif de votre entreprise",
+      annee:"année de creation",
+      anneePlaceHolder:"L'année de creation de l'entreprise",
+      nomEnterprise:"Nom Entreprise",
+      nomEnterprisePlaceHolder:"Le nom de votre entreprise",
+      startEvalButton :"Etape suivante",
+
     }
   }
 };

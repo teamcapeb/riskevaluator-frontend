@@ -20,7 +20,7 @@ export class GestionCategorieQuestionsComponent implements OnInit {
   //private _categorieQuestion: Observable<CategorieQuestion[]>
 
   private _questionnaire: Observable<Questionnaire>;
-  private _idQuestionnaire: number = 0;;
+  private _idQuestionnaire: number = 0;
 
   @ViewChild('preconisationGlobaleForm') preconisationGlobaleForm: any;
   @ViewChild('errorModal') errorModal: any;

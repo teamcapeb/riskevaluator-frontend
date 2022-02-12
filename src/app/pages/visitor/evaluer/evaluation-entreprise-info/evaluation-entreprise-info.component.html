@@ -1,0 +1,34 @@
+<div class="row justify-content-center" >
+
+  <div class="col-md-7 formulaire">
+    <form [formGroup]="frmEntreprise">
+      <mat-form-field appearance="outline" class="questionOuverte">
+        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['nomEnterprise'].hasError('required')&&frmEntreprise.controls['nomEnterprise']?.touched">Le nom de votre entreprise est obligatoire.</mat-label>
+        <mat-label  *ngIf="!frmEntreprise.controls['nomEnterprise'].invalid||!frmEntreprise.controls['nomEnterprise']?.touched">{{evaluerIHM.nomEnterprise}}</mat-label>
+        <input matInput required placeholder="{{evaluerIHM.nomEnterprisePlaceHolder}}" id="nomEnterprise"
+               formControlName="nomEnterprise" [ngClass]="frmEntreprise.controls['nomEnterprise'].invalid&&frmEntreprise.controls['nomEnterprise']?.touched ? 'is-invalid' : ''">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="questionOuverte">
+        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['noSiret'].hasError('required')&&frmEntreprise.controls['noSiret']?.touched">Votre numero SIRET est obligatoire.</mat-label>
+        <mat-label *ngIf="!frmEntreprise.controls['noSiret'].invalid||!frmEntreprise.controls['noSiret']?.touched">{{evaluerIHM.noSiret}}</mat-label>
+        <input matInput required placeholder="{{evaluerIHM.noSiret}}" id="noSiret"
+               formControlName="noSiret" [ngClass]="frmEntreprise.controls['noSiret'].invalid&&frmEntreprise.controls['noSiret']?.touched ? 'is-invalid' : ''">
+
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="questionOuverte">
+        <input matInput required placeholder="{{evaluerIHM.annee}}" id="annee" formControlName="annee">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="questionOuverte">
+        <input matInput required placeholder="{{evaluerIHM.effectif}}" id="effectif" formControlName="effectif">
+      </mat-form-field>
+
+    </form>
+
+    <div class="col-md-7 sendButtonSection">
+      <button mat-button class="sendButton" (click)="nextStep()" id="sendButton">{{evaluerIHM.startEvalButton}}
+      </button>
+    </div>
+  </div>
+
+</div>

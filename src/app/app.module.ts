@@ -85,6 +85,9 @@ import { EvaluationBodyComponent } from "@pages/visitor/evaluer/evaluation-body/
 import { EvaluationThematiqueComponent } from './pages/visitor/evaluer/evaluation-thematique/evaluation-thematique.component';
 import { EvaluationResultatComponent } from './pages/visitor/evaluer/evaluation-resultat/evaluation-resultat.component';
 import { ResultatItemComponent } from './pages/visitor/evaluer/evaluation-resultat/resultat-item/resultat-item.component';
+import { NgxGaugeModule } from "ngx-gauge";
+import { NgCircleProgressModule } from "ng-circle-progress";
+import { EvaluationEntrepriseInfoComponent } from './pages/visitor/evaluer/evaluation-entreprise-info/evaluation-entreprise-info.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -143,6 +146,7 @@ registerLocaleData(localeEn, 'en-EN');
         EvaluationThematiqueComponent,
         EvaluationResultatComponent,
         ResultatItemComponent,
+        EvaluationEntrepriseInfoComponent,
     ],
   imports: [
     BrowserModule,
@@ -176,7 +180,20 @@ registerLocaleData(localeEn, 'en-EN');
     MatTooltipModule,
     MatMenuModule,
     MatDatepickerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgxGaugeModule,
+    NgCircleProgressModule.forRoot({
+      // set defaults here
+      radius: 100,
+      outerStrokeWidth: 16,
+      innerStrokeWidth: 8,
+      outerStrokeColor: "#78C000",
+      innerStrokeColor: "#C7E596",
+      unitsColor: "#ffffff",
+      titleColor: "#ffffff",
+      subtitleColor: "#ffffff",
+      animationDuration: 300
+    })
 
   ],
     providers: [authInterceptorProviders],
