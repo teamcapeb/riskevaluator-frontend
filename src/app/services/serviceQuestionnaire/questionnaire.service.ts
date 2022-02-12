@@ -53,4 +53,20 @@ export class QuestionnaireService {
 
     return this.http.get<ICategorieQuestion[]>(`${this.baseUrl}${questionnaireId}/questions?${joindMetiers}`)
   }
+
+  getListQuestionnaire(metiers : number[]) : Observable<Questionnaire[]> {
+
+    let joindMetiers:string;
+
+    if(metiers.length >0 )
+      joindMetiers = "metierId=" + metiers.join("&metierId=");
+
+    return this.http.get<IQuestionnaire[]>(`${this.baseUrl}bymetierids?${joindMetiers}`).pipe(map((receivedData: IQuestionnaire[]) => {
+      return receivedData.map<Questionnaire>((iQuestionnaire: IQuestionnaire) => {
+        return Questionnaire.toQuestionnaire(iQuestionnaire);
+      });
+    }));
+  }
+
+
 }

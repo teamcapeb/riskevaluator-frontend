@@ -21,7 +21,7 @@ export class QuestionService {
   private baseUrl: string = environment.apiUrl + '/questions/';
 
   constructor(private http: HttpClient) {}
-  
+
   get(questionId: string): Observable<Question> {
     return this.http.get<IQuestion>(`${this.baseUrl}${questionId}`).pipe(map((iQuestion: IQuestion) => {
       return Question.toQuestion(iQuestion);
@@ -39,5 +39,5 @@ export class QuestionService {
   delete(questionId: string): Promise<IQuestion | string> {
     return this.http.delete<IQuestion>(`${this.baseUrl}${questionId}`).toPromise();
   }
-
+  
 }

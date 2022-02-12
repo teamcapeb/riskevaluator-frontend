@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router } from '@angular/router';
 import { environment } from "../../../../../environments/environment";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
@@ -36,6 +37,8 @@ export class EvaluationWelcomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
 }
+
