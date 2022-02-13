@@ -1,29 +1,31 @@
-import IQuestion from '@/interfaces/IQuestion';
 import IQuestionnaire from '@/interfaces/IQuestionnaire';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
-import IPreconisationGlobale from '@/interfaces/IPreconisationGlobale';
-import { map } from 'rxjs/operators';
-import PreconisationGlobale from '@/objects/PreconisationGlobale';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import Questionnaire from '@/objects/Questionnaire';
-import CategorieQuestion from '@/objects/CategorieQuestion';
-import ICategorieQuestion from '@/interfaces/ICategorieQuestion';
+import { ModalService } from '../serviceModal/modal.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionnaireService {
   private baseUrl: string = environment.apiUrl + '/questionnaires/';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private modalService: ModalService) {}
 
   getAll(): Observable<Questionnaire[]> {
     return this.http.get<IQuestionnaire[]>(`${this.baseUrl}`).pipe(map((iQuestionnaires: IQuestionnaire[]) => {
         return iQuestionnaires.map((iQuestionnaire: IQuestionnaire) => {
           return Questionnaire.toQuestionnaire(iQuestionnaire);
         });
-    }));
+    })).pipe(
+      catchError((err:any) => {
+        this.modalService.error(err.message);
+        return throwError(err);
+      })
+    );
   }
 
   get(questionnaireId: number): Observable<Questionnaire> {

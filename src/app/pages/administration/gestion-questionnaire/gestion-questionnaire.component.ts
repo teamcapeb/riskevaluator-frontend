@@ -2,9 +2,9 @@ import IListEvent from '@/interfaces/IListEvent';
 import Questionnaire from '@/objects/Questionnaire';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ModalService } from '@services/serviceModal/modal.service';
 import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnaire.service';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-gestion-questionnaire',
@@ -16,19 +16,18 @@ export class GestionQuestionnaireComponent implements OnInit {
   private _questionnaires: Observable<Questionnaire[]>;
 
   @ViewChild('QuestionnaireForm') QuestionnaireForm : any;
-  @ViewChild('errorModal') errorModal: any;
 
   public actualQuestionnaire: Questionnaire;
 
   constructor(private router: Router, 
+              private modalService: ModalService,
               private questionnaireService: QuestionnaireService) { }
 
   ngOnInit(): void {
-    
+      this._questionnaires = this.questionnaireService.getAll();
   }
 
   ngAfterViewInit(){
-    this._questionnaires = this.questionnaireService.getAll();
   }
 
 
@@ -66,7 +65,7 @@ export class GestionQuestionnaireComponent implements OnInit {
       }
       this._questionnaires = this.questionnaireService.getAll();
     }catch(error){
-      this.errorModal.open(error.message);
+      this.modalService.error(error.message);
     }
   }
 

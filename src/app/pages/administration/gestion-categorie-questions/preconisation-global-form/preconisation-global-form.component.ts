@@ -28,8 +28,8 @@ export class PreconisationGlobalFormComponent implements OnInit {
   }
 
   checkInputRange($event: any){
-    if($event.target.value < 0){
-      $event.target.value = 0;
+    if($event.target.value < 1){
+      $event.target.value = 1;
     }
     if($event.target.value > 101){
       $event.target.value = 101;

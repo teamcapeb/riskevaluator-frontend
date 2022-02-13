@@ -55,7 +55,7 @@ export class GestionCategorieQuestionsComponent implements OnInit {
 
 
   add(): void{
-    this.actualPreconisationGlobale = new PreconisationGlobale(0,'', 0, new Questionnaire(this._idQuestionnaire, '', [], []).toJSON());
+    this.actualPreconisationGlobale = new PreconisationGlobale(0,'', 1, new Questionnaire(this._idQuestionnaire, '', [], []).toJSON());
     this.preconisationGlobaleForm.open('add');
   }
 
