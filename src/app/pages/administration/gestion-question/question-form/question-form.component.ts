@@ -3,11 +3,11 @@ import Question from '@/objects/Question';
 import Reponse from '@/objects/Reponse';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QuestionService } from '@services/serviceQuestion/question.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import CategorieQuestion from '../../../../objects/CategorieQuestion';
 import Metier from '../../../../objects/Metier';
 import { MetierService } from '../../../../services/serviceMetier/metier.service';
 import { ToastService } from '../../../../services/serviceToast/toast.service';
+import { Router, ActivatedRoute, Navigation } from '@angular/router';
 
 @Component({
   selector: 'app-question-form',
@@ -50,8 +50,7 @@ export class QuestionFormComponent implements OnInit {
               private metierService: MetierService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private toastService: ToastService) { 
-
+              private toastService: ToastService) {
               }
 
   onItemSelect(item: any) {
@@ -75,9 +74,9 @@ export class QuestionFormComponent implements OnInit {
       this.question = new Question(-1, 0, '', '', new CategorieQuestion(this._idCategorie, '').toJSON(), [], []);
     }else {
       this.question = await this.questionService.get(this._idQuestion);
-      
+
     }
-    this.selectedItems = this.question.metiers; 
+    this.selectedItems = this.question.metiers;
     this._addedReponses = [];
   }
 
@@ -100,7 +99,6 @@ export class QuestionFormComponent implements OnInit {
     if(!this.question.reponses){
       this.question.reponses = [];
     }
-    console.log(this.question.reponses.length + this._addedReponses.length);
     if(this.question.reponses.length + this._addedReponses.length >= 2){
       this.saved = false;
       this._addedReponses = this.addedReponses.map<Reponse>((reponse: Reponse) => {
@@ -114,10 +112,8 @@ export class QuestionFormComponent implements OnInit {
       let res = null;
       try{
         if(this._idQuestion !== -1){
-          console.log(this.question);
           res = await this.questionService.update(this.question);
         }else{
-          console.log(this.question);
           res = await this.questionService.create(this.question);
         }
         this.saved = true;
@@ -139,7 +135,7 @@ export class QuestionFormComponent implements OnInit {
     if(event.action === 'update'){
     }else if (event.action === 'add'){
       event.data.idReponse = this._idConteur.toString();
-      
+
       this._addedReponses.push(event.data);
       this._idConteur++;
       if(this._addedReponses.length === 0){
@@ -147,7 +143,7 @@ export class QuestionFormComponent implements OnInit {
       }
     }else if(event.action === 'delete'){
       this.question.reponses = this.question.reponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
-      this._addedReponses = this._addedReponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);  
+      this._addedReponses = this._addedReponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
     }
   }
 

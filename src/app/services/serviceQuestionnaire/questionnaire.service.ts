@@ -6,6 +6,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import Questionnaire from '@/objects/Questionnaire';
 import { ModalService } from '../serviceModal/modal.service';
+import ICategorieQuestion from '@/interfaces/ICategorieQuestion';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class QuestionnaireService {
   create(questionnaire: Questionnaire): Promise<IQuestionnaire | string>{
     return this.http.post<IQuestionnaire>(`${this.baseUrl}`, questionnaire.toJSON()).toPromise();
   }
-  
+
   update(questionnaire: Questionnaire): Promise<IQuestionnaire | string> {
     return this.http.put<IQuestionnaire>(`${this.baseUrl}`, questionnaire.toJSON()).toPromise();
   }
@@ -45,5 +46,30 @@ export class QuestionnaireService {
   delete(questionnaire: Questionnaire): Promise<IQuestionnaire | string> {
     return this.http.delete<IQuestionnaire>(`${this.baseUrl}${questionnaire.idQuestionnaire}`).toPromise();
   }
+
+  getCategoriesQuestions(questionnaireId: number, metiers : number[]) : Observable<ICategorieQuestion[]> {
+
+    let joindMetiers:string;
+
+    if(metiers.length >0 )
+      joindMetiers = "metierId=" + metiers.join("&metierId=");
+
+    return this.http.get<ICategorieQuestion[]>(`${this.baseUrl}${questionnaireId}/questions?${joindMetiers}`)
+  }
+
+  getListQuestionnaire(metiers : number[]) : Observable<Questionnaire[]> {
+
+    let joindMetiers:string;
+
+    if(metiers.length >0 )
+      joindMetiers = "metierId=" + metiers.join("&metierId=");
+
+    return this.http.get<IQuestionnaire[]>(`${this.baseUrl}bymetierids?${joindMetiers}`).pipe(map((receivedData: IQuestionnaire[]) => {
+      return receivedData.map<Questionnaire>((iQuestionnaire: IQuestionnaire) => {
+        return Questionnaire.toQuestionnaire(iQuestionnaire);
+      });
+    }));
+  }
+
 
 }

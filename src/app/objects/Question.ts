@@ -5,7 +5,6 @@ import Reponse from './Reponse';
 import IReponse from '../interfaces/IReponse';
 import CategorieQuestion from "./CategorieQuestion";
 import ICategorieQuestion from '../interfaces/ICategorieQuestion';
-import { isThisTypeNode } from "typescript";
 
 export default class Question {
     idQuestion: number;
@@ -21,7 +20,7 @@ export default class Question {
         this.scoreMaxPossibleQuestion = scoreMaxPossibleQuestion;
         this.typeQuestion = typeQuestion;
         this.libelleQuestion = libelleQuestion;
-        this.categorieQuestion = iCategorieQuestion ? CategorieQuestion.toCategorieQuestion(iCategorieQuestion) : null; 
+        this.categorieQuestion = iCategorieQuestion ? CategorieQuestion.toCategorieQuestion(iCategorieQuestion) : null;
         this.reponses = [];
         this.metiers = [];
         if(metiers){

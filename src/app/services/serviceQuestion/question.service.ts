@@ -21,7 +21,7 @@ export class QuestionService {
   private baseUrl: string = environment.apiUrl + '/questions/';
 
   constructor(private http: HttpClient) {}
-  
+
   get(questionId: number): Promise<Question> {
     return this.http.get<IQuestion>(`${this.baseUrl}${questionId}`).pipe(map((iQuestion: IQuestion) => {
       return Question.toQuestion(iQuestion);

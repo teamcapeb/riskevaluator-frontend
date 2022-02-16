@@ -9,8 +9,8 @@ export default class Questionnaire {
     thematique: string;
     preconisationGlobales: PreconisationGlobale[];
     categorieQuestions: CategorieQuestion[];
-    
-    
+
+
     constructor(
         idQuestionnaire: number,
         thematique: string,
@@ -30,7 +30,7 @@ export default class Questionnaire {
                 });
             }
         }
-        
+
     static toQuestionnaire(iQuestionnaire: IQuestionnaire): Questionnaire {
         return new Questionnaire(
             iQuestionnaire.idQuestionnaire,

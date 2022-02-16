@@ -1,0 +1,90 @@
+.allIntro {
+  box-shadow: 0px 0px 20px -9px rgba(0, 0, 0, 0.522);
+  margin: 4% 4% 4% 4%;
+  padding: 2% 4% 4% 4%;
+  background-color: #ffffff;
+  opacity: 0;
+}
+
+.introTitle {
+  text-align: center;
+  margin-top: 2%;
+  font-size: 2.4vw;
+  font-weight: 500;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.introSousTitre {
+  // text-align: center;
+  line-height: 120%;
+  margin-top: 4%;
+  font-size: 1.4vw;
+  font-weight: 400;
+  white-space: pre-wrap;
+  margin-left: 3%;
+}
+
+.introQuestion {
+  line-height: 120%;
+  font-size: 1.8vw;
+  font-weight: 400;
+  margin-left: 3.4%;
+}
+
+.introContent {
+  line-height: 120%;
+  margin-top: 4%;
+  font-size: 1vw;
+  font-weight: 300;
+  white-space: pre-wrap;
+  margin-left: 3%;
+  padding-right: 5%;
+}
+
+.buttonIntro {
+  text-align: center;
+  margin-bottom: 5%;
+}
+
+.beginEvalButton {
+  color: green;
+  border: 3px solid green;
+  font-size: 1vw;
+  height: 100%;
+}
+
+@media (max-width: 767px) {
+  .allIntro {
+    // box-shadow: 0px 0px 20px -9px rgba(0, 0, 0, 0.522);
+    // width: 130%;
+    margin: 1% -4% 1% 1% !important;
+    padding: 1% 4% 1% 1% !important;
+  }
+
+  .introTitle {
+    font-size: 200%;
+    line-height: 120%;
+  }
+
+  .introSousTitre {
+    font-size: 100%;
+    font-weight: 400;
+  }
+
+  .introQuestion {
+    font-size: 100%;
+    font-weight: 400;
+  }
+
+  .introContent {
+    font-size: 100%;
+  }
+
+  .beginEvalButton {
+    border: 2px solid green;
+    // width: 32%;
+    font-size: medium;
+    height: 110%;
+  }
+
+}
