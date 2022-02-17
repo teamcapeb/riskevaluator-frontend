@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EvaluationWelcomeComponent } from './evaluation-welcome.component';
+import { OopsMessageComponent } from './oops-message.component';
 
-describe('EvaluationWelcomeComponent', () => {
-  let component: EvaluationWelcomeComponent;
-  let fixture: ComponentFixture<EvaluationWelcomeComponent>;
+describe('OopsMessageComponent', () => {
+  let component: OopsMessageComponent;
+  let fixture: ComponentFixture<OopsMessageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EvaluationWelcomeComponent ]
+      declarations: [ OopsMessageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EvaluationWelcomeComponent);
+    fixture = TestBed.createComponent(OopsMessageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

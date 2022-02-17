@@ -1,6 +1,15 @@
-<div class="container">
+<div class="container"  *ngIf="evaluation$ as eval">
 
-  <app-resultat-item> </app-resultat-item>
-  <app-resultat-item> </app-resultat-item>
+  <app-resultat-item  [@bounceInOnEnter]  *ngFor="let preco of precoGlobale$" [isGlobal$] = true
+                     [text$]="preco?.contenu"
+                     [percentage$]="evaluation$?.scoreGeneraleEvaluation"
+                     [title$]="'Score Global'"  > </app-resultat-item>
 
+
+  <ng-container *ngFor="let item of listScoreCategories$">
+    <app-resultat-item    *ngFor="let preco of item?.categorie?.preconisationsCategorie"
+                       [text$]="preco?.contenu"
+                       [percentage$]="item?.nbPoints"
+                       [title$]="item?.categorie?.libelle"  > </app-resultat-item>
+  </ng-container>
 </div>

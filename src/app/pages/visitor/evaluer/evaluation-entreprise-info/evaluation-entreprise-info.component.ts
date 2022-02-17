@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { EvaluationService } from '@services/serviceEvaluation/evaluation.service';
 import { NavigationExtras, Route, Router } from "@angular/router";
 import { IEntreprise } from '@/interfaces/IEntreprise';
+import IQuestionnaire from '@/interfaces/IQuestionnaire';
 
 @Component({
   selector: 'app-evaluation-entreprise-info',
@@ -19,6 +20,7 @@ export class EvaluationEntrepriseInfoComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private evaluationService: EvaluationService, private route: Router) {
+
     this.frmEntreprise = this.initForm();
 
   }
@@ -43,10 +45,11 @@ export class EvaluationEntrepriseInfoComponent implements OnInit {
 
   nextStep() {
     if(this.frmEntreprise.valid ) {
-      console.log("[ACTION] :  NEXT STEP");
       this.route.navigate(['evaluer/questionnaire-evaluation'], { state : {
           entreprise : this.frmEntreprise.value as IEntreprise
         } });
+    }else {
+      this.frmEntreprise.markAllAsTouched();
     }
   }
 }

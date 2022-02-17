@@ -24,6 +24,9 @@ export enum EvaluationData {
   INCREASE,
   DECREASE
 }
+export interface IEvalIndex {
+  current: number,max: number
+}
 
 
 @Injectable({
@@ -31,11 +34,12 @@ export enum EvaluationData {
 })
 export class EvaluationService {
 
-  actualCategorieIndex:BehaviorSubject<{current: number,max: number}>=new BehaviorSubject({current:0,max:0});
+  actualCategorieIndex:BehaviorSubject<IEvalIndex>=new BehaviorSubject({current:0,max:0});
   readonly actualCategorieNumberObs=this.actualCategorieIndex.asObservable();
 
 
-   readonly evaluation: IEvaluation = {};
+  evaluation:BehaviorSubject<IEvaluation>=new BehaviorSubject<IEvaluation>({ entreprise:null, scoreGeneraleEvaluation:0, scoreCategories: null  });
+  readonly evaluationObs=this.evaluation.asObservable();
 
 
   readonly questionnaireCalculator: ICategorieQuestion = {
@@ -48,7 +52,7 @@ export class EvaluationService {
 
 
   onSaveEntreprise(entreprise : IEntreprise) {
-    this.evaluation.entreprise = entreprise;
+    this.evaluation.value.entreprise = entreprise;
   }
 
   onNextCategorieNumber(action : CategorieNumberAction) {
@@ -68,12 +72,13 @@ export class EvaluationService {
     }
   }
 
-  onCalculateScore(categoriesQuestions$: ICategorieQuestion[], user: IUser) {
+  onCalculateScore(categoriesQuestions$: ICategorieQuestion[], user: IUser) : IEvaluation {
 
     let scoreCategories: IScoreCategory[] = [];
     let sumScoreMaxTotal: number = 0;
     let nbPointsTotal: number = 0;
-    categoriesQuestions$?.forEach( categorie => {
+
+    categoriesQuestions$?.forEach( (categorie:ICategorieQuestion)  => {
 
       let filteredReponses : IReponse[][] | undefined = categorie
          ?.questions
@@ -95,7 +100,7 @@ export class EvaluationService {
           nbPointsSum+= response.reduce(reponseReducer, initialValue);
         });
 
-      if(sumScoreMaxCategorie > 0)  scoreTotalCateorie = (nbPointsSum / sumScoreMaxCategorie)*100;
+      if(sumScoreMaxCategorie > 0)  scoreTotalCateorie = +((nbPointsSum / sumScoreMaxCategorie)*100).toFixed();
 
       scoreCategories.push({
         categorie,
@@ -104,13 +109,14 @@ export class EvaluationService {
 
       sumScoreMaxTotal+=sumScoreMaxCategorie;
       nbPointsTotal+=nbPointsSum;
-      //console.log(`[Entreprise] ${ this.entreprise?.nomEntreprise} \n [Categorie] : ${categorie.libelle} \n[Score] ${scoreTotalCateorie}`)
       }
     )
 
-    if(sumScoreMaxTotal >0 ) this.evaluation.scoreGeneraleEvaluation = nbPointsTotal / sumScoreMaxTotal;
+    if(sumScoreMaxTotal >0 ) this.evaluation.value.scoreGeneraleEvaluation = +((nbPointsTotal / sumScoreMaxTotal)*100).toFixed();
 
-    this.evaluationApiService.create(this.evaluation);
+    this.evaluation.value.scoreCategories = scoreCategories;
+
+    return this.evaluation.value;
   }
 
 

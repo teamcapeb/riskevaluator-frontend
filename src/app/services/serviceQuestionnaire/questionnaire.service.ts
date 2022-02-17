@@ -10,6 +10,7 @@ import PreconisationGlobale from '@/objects/PreconisationGlobale';
 import Questionnaire from '@/objects/Questionnaire';
 import CategorieQuestion from '@/objects/CategorieQuestion';
 import ICategorieQuestion from '@/interfaces/ICategorieQuestion';
+import { EvaluationHelper } from "@services/_helpers/EvaluationHelper";
 
 @Injectable({
   providedIn: 'root'
@@ -46,27 +47,14 @@ export class QuestionnaireService {
 
   getCategoriesQuestions(questionnaireId: number, metiers : number[]) : Observable<ICategorieQuestion[]> {
 
-    let joindMetiers:string;
+    let joindMetiers:string = "?metierId=" + metiers.join("&metierId=");
 
-    if(metiers.length >0 )
-      joindMetiers = "metierId=" + metiers.join("&metierId=");
-
-    return this.http.get<ICategorieQuestion[]>(`${this.baseUrl}${questionnaireId}/questions?${joindMetiers}`)
+    return this.http.get<ICategorieQuestion[]>(`${this.baseUrl}${questionnaireId}/questions${joindMetiers}`)
   }
 
-  getListQuestionnaire(metiers : number[]) : Observable<Questionnaire[]> {
+  getQuestionnairesByMetiers(metiers : number[]) : Observable<IQuestionnaire[]> {
 
-    let joindMetiers:string;
-
-    if(metiers.length >0 )
-      joindMetiers = "metierId=" + metiers.join("&metierId=");
-
-    return this.http.get<IQuestionnaire[]>(`${this.baseUrl}bymetierids?${joindMetiers}`).pipe(map((receivedData: IQuestionnaire[]) => {
-      return receivedData.map<Questionnaire>((iQuestionnaire: IQuestionnaire) => {
-        return Questionnaire.toQuestionnaire(iQuestionnaire);
-      });
-    }));
+    let joindMetiers:string = EvaluationHelper.joinMetiers(metiers);
+    return this.http.get<IQuestionnaire[]>(`${this.baseUrl}bymetierids${joindMetiers}`)
   }
-
-
 }

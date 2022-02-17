@@ -1,10 +1,15 @@
 import Questionnaire from '@/objects/Questionnaire';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {NavigationExtras, Router } from '@angular/router';
-import { MetierService } from '@services/serviceMetier/metier.service';
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnaire.service';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, of, Subject } from "rxjs";
+import { catchError, map, startWith, takeUntil } from "rxjs/operators";
+import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
+import IMetier from "@/interfaces/IMetier";
+import IQuestionnaire from "@/interfaces/IQuestionnaire";
+import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
+import IReponse from "@/interfaces/IReponse";
+import { EvaluationHelper } from "@services/_helpers/EvaluationHelper";
 
 @Component({
   selector: 'app-evaluation-thematique',
@@ -13,59 +18,59 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class EvaluationThematiqueComponent implements OnInit {
   @ViewChild('errorModal') errorModal: any;
-  private _questionnaires: Observable<Questionnaire[]>;
-  private test : any;
   private listMetier: number[] = [];
-  state : any;
-  private metierExtras: NavigationExtras = {
-    state: {
-      metierList : [],
-      idQuestionnaire : ''
-    }
-  };
+  DataStateEnum = DataStateEnum;
+  questionnaires$ : Observable<AppDataState<IQuestionnaire[]>> |null=null;
+  cardColor: any;
 
-  constructor(private questionnaireService : QuestionnaireService,
-              private router: Router) {
+  constructor(private questionnairesService : QuestionnaireService,
+              private router: Router,
+              private route: ActivatedRoute) {
     type idQuestionnaireListMetier = {
       metierList: string[],
-      idQuestionnaire: string
+      idQuestionnaire: number
     }
-   const navigation = this.router.getCurrentNavigation();
-    this.state = navigation.extras.state as idQuestionnaireListMetier;
 
-    this.listMetier = this.state['metierList'];
-    this.metierExtras.state['metierList'] = this.state.metierList;
-
+    let joinedMetiers = this.route.snapshot.paramMap.get('metiers') as string;
+    this.listMetier = joinedMetiers.split(",").map(Number);
 
   }
 
   ngOnInit(): void {
-    this._questionnaires = this.getListQuestionnaire();
+    this.onGetAllQuestionnaire();
   }
 
 
-  getListQuestionnaire(): Observable<Questionnaire[]>{
-    let finalise = new Subject();
-    let obs = this.questionnaireService.getListQuestionnaire(this.listMetier);
-    obs.pipe(takeUntil(finalise)).subscribe((data) =>{
-        finalise.complete();
-      },
-      (err) => {
+  onGetAllQuestionnaire() {
+    this.questionnaires$= this.questionnairesService.getQuestionnairesByMetiers(this.listMetier).pipe(
+      map((data: IQuestionnaire[])=>{
+        return ({dataState:DataStateEnum.LOADED,data:data})
+      }),
+      startWith({dataState:DataStateEnum.LOADING}),
+      catchError(err=> {
         this.errorModal.open(JSON.stringify(err.error));
-        finalise.complete();
-      });
-    return obs;
+        return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
+      })
+    );
   }
 
   myFunction(idQuestionnaire : number) : void {
     //console.log(this.state);
-    this.metierExtras.state['idQuestionnaire'] = idQuestionnaire;
-    this.router.navigate(['evaluer/welcome-evaluation'], this.metierExtras);
+    this.router.navigate(['evaluer/welcome-evaluation', {idQuestionnaire, metierIds: this.listMetier.join(",") }]);
 
   }
 
-  get questionnaires() : Observable<Questionnaire[]>{
-    return this._questionnaires;
+  calculateNbTotalQuestions(questionnaire : IQuestionnaire) : number{
+    const reducer = (previousValue: number, currentValue: ICategorieQuestion) => {
+      return previousValue + currentValue?.questions?.length;
+    }
+    const total = questionnaire?.categorieQuestions.reduce(reducer,0);
+    return total;
+  }
+
+  calculateColor = (id : number) => {
+    let colors: string[] = ["bg-c-pink","bg-c-blue", "bg-c-green", "bg-c-yellow"];
+    return colors[id%5];
   }
 
 }

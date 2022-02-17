@@ -9,7 +9,7 @@ import IReponse from "@/interfaces/IReponse";
 import IEvaluation from '@/interfaces/IEvaluation';
 
 
-const API_URL = environment.apiUrl +'api/evaluations';
+const API_URL = environment.apiUrl +'/evaluations';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class EvaluationApiService {
     return this.http.get<IEvaluation>(`${API_URL}/${evaluationId}`);
   }
 
-  create(reponse: IEvaluation): Observable<IEvaluation>{
+   create(reponse: IEvaluation): Observable<IEvaluation>{
     return this.http.post<IEvaluation>(`${API_URL}/`, reponse);
   }
 

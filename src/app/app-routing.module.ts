@@ -28,6 +28,7 @@ import {
 } from "@pages/visitor/evaluer/evaluation-resultat/resultat-item/resultat-item.component";
 import { EvaluationResultatComponent } from "@pages/visitor/evaluer/evaluation-resultat/evaluation-resultat.component";
 import { EvaluationEntrepriseInfoComponent } from '@pages/visitor/evaluer/evaluation-entreprise-info/evaluation-entreprise-info.component';
+import { ConfirmDeactivateGuard } from "@services/guards/ConfirmDeactivateGuard";
 
 
 const administration: Routes = [
@@ -69,11 +70,21 @@ const visitors: Routes = [
   },
   {
     path: 'historiques',
-    component: HistoriqueComponent
+    component: EvaluationResultatComponent
   },
   {
     path: 'evaluer',
-    component: EvaluerComponent
+    children : [
+      {
+        path: '',
+        pathMatch:'full',
+        component: EvaluerComponent
+      },
+      {
+        path: 'evaluation-thematique/:metiers',
+        component: EvaluationThematiqueComponent
+      }
+    ]
   },
   {
     path: 'evaluer/questionnaire-evaluation',
@@ -82,10 +93,6 @@ const visitors: Routes = [
   {
     path: 'evaluer/welcome-evaluation',
     component: EvaluationWelcomeComponent
-  },
-  {
-    path: 'evaluer/evaluation-thematique',
-    component: EvaluationThematiqueComponent
   },
   {
     path: 'evaluer/evaluation-resultat',

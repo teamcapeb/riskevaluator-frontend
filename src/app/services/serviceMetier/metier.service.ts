@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import IMetier from '../../interfaces/IMetier';
 import Metier from '../../objects/Metier';
+import IQuestionnaire from "@/interfaces/IQuestionnaire";
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,8 @@ export class MetierService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Metier[]> {
-    return this.http.get<IMetier[]>(`${this.baseUrl}`).pipe(map((receivedData: IMetier[]) => {
-        return receivedData.map<Metier>((iMetier: IMetier) => {
-          return Metier.toMetier(iMetier);
-        });
-    }));
+  getAll(): Observable<IMetier[]> {
+    return this.http.get<IMetier[]>(`${this.baseUrl}`);
   }
 
   create(metier: Metier): Promise<IMetier | string>{

@@ -88,6 +88,7 @@ import { ResultatItemComponent } from './pages/visitor/evaluer/evaluation-result
 import { NgxGaugeModule } from "ngx-gauge";
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { EvaluationEntrepriseInfoComponent } from './pages/visitor/evaluer/evaluation-entreprise-info/evaluation-entreprise-info.component';
+import { OopsMessageComponent } from './components/oops-message/oops-message.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -147,6 +148,7 @@ registerLocaleData(localeEn, 'en-EN');
         EvaluationResultatComponent,
         ResultatItemComponent,
         EvaluationEntrepriseInfoComponent,
+        OopsMessageComponent
     ],
   imports: [
     BrowserModule,

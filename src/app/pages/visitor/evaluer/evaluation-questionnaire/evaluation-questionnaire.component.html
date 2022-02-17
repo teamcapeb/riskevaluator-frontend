@@ -8,7 +8,11 @@
 
         <app-evaluation-head [categorieQuestion$]="result?.data[index.current]"> </app-evaluation-head>
         <app-evaluation-body [categorieQuestion$]="result?.data[index.current]"> </app-evaluation-body>
-        <app-evaluation-footer [categoriesQuestions$]="result.data" [categorieQuestion$]="result?.data[index.current]"></app-evaluation-footer>
+        <app-evaluation-footer [categoriesQuestions$]="result.data"
+                               [categorieQuestion$]="result?.data[index.current]"
+        >
+
+        </app-evaluation-footer>
 
     </ng-container>
 

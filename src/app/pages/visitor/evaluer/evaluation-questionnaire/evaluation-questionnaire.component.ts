@@ -8,7 +8,10 @@ import { IQuestionType } from "@/interfaces/IQuestionType";
 import { EvaluationService } from "@services/serviceEvaluation/evaluation.service";
 import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnaire.service';
 import { IEntreprise } from '@/interfaces/IEntreprise';
-import { Navigation, NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, Navigation, NavigationExtras, Router } from "@angular/router";
+import IQuestionnaire from "@/interfaces/IQuestionnaire";
+import IMetier from '@/interfaces/IMetier';
+import { EvalTokenStorageService } from "@services/serviceEvaluation/eval-token-storage.service";
 
 @Component({
   selector: 'app-evaluation-questionnaire',
@@ -25,16 +28,20 @@ export class EvaluationQuestionnaireComponent implements OnInit {
   readonly questionnaireId:number = 1;
   readonly metierIds:number[] = [5,6];
 
-  progressBarValue: any;
+  constructor(private questionnaireService:QuestionnaireService,
+              public evaluationService: EvaluationService,
+              public evalTokenService: EvalTokenStorageService,
+              private route : ActivatedRoute,
+              private router : Router) {
 
+    this.questionnaireId = +this.route.snapshot.paramMap.get('idQuestionnaire');
+    this.metierIds = this.route.snapshot.paramMap.get('metierIds').split(",").map(Number);
 
-  constructor(private questionnaireService:QuestionnaireService, public evaluationService: EvaluationService, private route : Router) {
+    console.log(this.questionnaireId);
+    console.log(this.metierIds);
 
-    const navigation = this.route.getCurrentNavigation();
-    const  entreprise = navigation.extras.state as IEntreprise;
+    let entreprise = evalTokenService.getEntreprise();
     this.evaluationService.onSaveEntreprise(entreprise);
-
-    //if(!!entreprise) this.evaluationService.onSaveEntreprise(entreprise);
   }
 
   ngOnInit(): void {

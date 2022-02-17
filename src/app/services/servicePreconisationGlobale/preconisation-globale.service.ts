@@ -27,4 +27,7 @@ export class PreconisationGlobaleService {
   delete(preconisationGlobale: IPreconisationGlobale): Promise<string> {
     return this.http.delete<string>(`${this.baseUrl}${preconisationGlobale.idPreconisationG}`).toPromise();
   }
+  get(pourcentage : number) : Observable<IPreconisationGlobale> {
+    return this.http.get<IPreconisationGlobale>(`${this.baseUrl}pourcentage/${pourcentage}`)
+  }
 }
