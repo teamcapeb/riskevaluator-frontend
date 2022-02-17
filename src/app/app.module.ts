@@ -85,7 +85,6 @@ import { EvaluationBodyComponent } from "@pages/visitor/evaluer/evaluation-body/
 import { EvaluationThematiqueComponent } from './pages/visitor/evaluer/evaluation-thematique/evaluation-thematique.component';
 import { EvaluationResultatComponent } from './pages/visitor/evaluer/evaluation-resultat/evaluation-resultat.component';
 import { ResultatItemComponent } from './pages/visitor/evaluer/evaluation-resultat/resultat-item/resultat-item.component';
-import { NgxGaugeModule } from "ngx-gauge";
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { EvaluationEntrepriseInfoComponent } from './pages/visitor/evaluer/evaluation-entreprise-info/evaluation-entreprise-info.component';
 import { OopsMessageComponent } from './components/oops-message/oops-message.component';
@@ -183,7 +182,6 @@ registerLocaleData(localeEn, 'en-EN');
     MatMenuModule,
     MatDatepickerModule,
     MatSnackBarModule,
-    NgxGaugeModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       radius: 100,
