@@ -1,12 +1,3 @@
-
-
-.beginEvalButton {
-  color: green;
-  border: 3px solid green;
-  font-size: 1vw;
-  height: 100%;
-}
-
 .titleRow{
   text-align: center;
   margin-top: 2%;
@@ -39,24 +30,11 @@
 }
 
 
-.introTitle {
-  text-align: center;
-  margin-top: 2%;
-  font-size: 2.4vw;
-  font-weight: 500;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
 
 
 
 @media only screen and (max-width: 1200px) {
 
-  .beginEvalButton {
-    border: 2px solid green;
-    // width: 32%;
-    font-size: medium;
-    height: 110%;
-  }
   .contactTitle{
     // text-align: center;
     margin-top: 4%;
@@ -100,4 +78,3 @@
   text-align: center;
   margin-left: 20%;
 }
-

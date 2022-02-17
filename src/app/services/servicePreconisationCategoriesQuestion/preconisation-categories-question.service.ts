@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import IPreconisationGlobale from "@/interfaces/IPreconisationGlobale";
 
 
 @Injectable({
@@ -26,5 +27,9 @@ export class PreconisationCategoriesQuestionService {
 
   delete(preconisationCategorieQuestion: PreconisationCategorieQuestion): Promise<PreconisationCategorieQuestion | string> {
     return this.http.delete<PreconisationCategorieQuestion>(`${this.baseUrl}${preconisationCategorieQuestion.idPreconisation}`).toPromise();
+  }
+
+  get(pourcentage : number) : Observable<IPreconisationCategorieQuestion> {
+    return this.http.get<IPreconisationCategorieQuestion>(`${this.baseUrl}pourcentage/${pourcentage}`)
   }
 }

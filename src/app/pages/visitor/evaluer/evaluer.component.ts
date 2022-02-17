@@ -5,8 +5,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { MetierService } from '@services/serviceMetier/metier.service';
 import { environment } from 'environments/environment';
-import { Observable, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { Observable, of, Subject } from "rxjs";
+import { catchError, map, startWith, takeUntil } from "rxjs/operators";
+import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
+import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
+import { EvaluationHelper } from "@services/_helpers/EvaluationHelper";
 
 
 @Component({
@@ -16,16 +19,11 @@ import { map, takeUntil } from 'rxjs/operators';
 })
 export class EvaluerComponent implements OnInit {
   @ViewChild('errorModal') errorModal: any;
-  private baseUrl: string = environment.apiUrl + '/Metiers';
-  private _metiers : Observable<Metier[]>;
+  DataStateEnum = DataStateEnum;
+  metiers$:Observable<AppDataState<IMetier[]>> |null=null;
+
   @ViewChild('input') input : any;
   private idMetierChecked: number[] = [];
-  private metierExtras: NavigationExtras = {
-    state: {
-      metierList : [],
-      idQuestionnaire : ''
-    }
-  };
 
   constructor(    private http: HttpClient,
                   private route: ActivatedRoute,
@@ -33,36 +31,31 @@ export class EvaluerComponent implements OnInit {
                   private metierService :MetierService) {}
 
   ngOnInit(): void {
-    this._metiers = this.getAll();
-   // this.route.params.subscribe(params => this.metierIdQuestionnaireExtras.state['idQuestionnaire']  = params['id']);
-    this.metierExtras.state['metierList'] = this.idMetierChecked;
-    // a enlever
-    //this.metierExtras.state['idQuestionnaire'] = "4";
+    this.onGetAllMetiers();
   }
 
-  getAll(): Observable<Metier[]>{
-    let finalise = new Subject();
-    let obs = this.metierService.getAll();
-    obs.pipe(takeUntil(finalise)).subscribe((data) =>{
-        finalise.complete();
-      },
-      (err) => {
+
+  onGetAllMetiers() {
+    this.metiers$= this.metierService.getAll().pipe(
+      map((data: IMetier[])=>{
+        return ({dataState:DataStateEnum.LOADED,data:data})
+      }),
+      startWith({dataState:DataStateEnum.LOADING}),
+      catchError(err=> {
         this.errorModal.open(JSON.stringify(err.error));
-        finalise.complete();
-      });
-    return obs;
+        return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
+      })
+    );
   }
-
-
 
 
   myFunction() : void {
-    this.router.navigate(['evaluer/evaluation-thematique'], this.metierExtras);
+    this.router.navigate(['evaluer/evaluation-thematique',this.idMetierChecked.join(",")]);
 
   }
 
 
-  check(event : any, metier : Metier) : void {
+  check(event : any, metier : IMetier) : void {
 
     var rep = [];
     if (event.checked === true) {
@@ -74,9 +67,4 @@ export class EvaluerComponent implements OnInit {
       this.idMetierChecked.splice(index, 1);
     }
   }
-
-  get metiers(): Observable<Metier[]> {
-    return this._metiers;
-  }
-
 }

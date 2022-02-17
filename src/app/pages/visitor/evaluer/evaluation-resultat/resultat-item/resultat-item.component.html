@@ -1,0 +1,26 @@
+<ng-container>
+
+    <div class="card bg-c-blue order-card"  >
+
+    <div class="d-flex flex-row justify-content-center" >
+      <h1 class="display-1"> <strong> {{title$}} </strong></h1>
+    </div>
+    <div class="d-flex flex-row" >
+      <div class="p-2">
+        <circle-progress
+          [options]="ngCircleOptions"
+        ></circle-progress>
+
+      </div>
+      <div class="p-2" >
+        {{(showMore) ? text$ : text$ | slice:0:300}}
+        <span *ngIf="!showMore">...</span>
+        <a href="javascript:;" *ngIf="!showMore" (click)="showMore=true">[Show More]</a>
+
+      </div>
+
+    </div>
+  </div>
+
+  </ng-container>
+

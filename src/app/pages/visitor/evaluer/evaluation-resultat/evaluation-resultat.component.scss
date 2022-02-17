@@ -1,0 +1,21 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width:60%;
+  height:550px;
+  overflow-y: scroll;
+
+}
+
+
+
+@media (max-width: 767px) {
+
+  .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width:100%
+  }
+}

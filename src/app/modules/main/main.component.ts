@@ -3,6 +3,7 @@ import {AppService} from '@services/serviceUser/app.service';
 import { ADMIN_MENU, MENU } from "@modules/main/menu-sidebar/menu-sidebar.component";
 import { TokenStorageService } from "@services/serviceUser/token-storage.service";
 import { ToastrService } from "ngx-toastr";
+import { IUser } from "@/interfaces/IUser";
 
 @Component({
     selector: 'app-main',
@@ -19,7 +20,7 @@ export class MainComponent implements OnInit {
   isLoggedIn = false;
   showAdminBoard = false;
   username: string;
-  user:any;
+  user:IUser;
 
   constructor(private renderer: Renderer2,
               private tokenStorageService: TokenStorageService,

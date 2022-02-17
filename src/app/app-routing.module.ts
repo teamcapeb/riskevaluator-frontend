@@ -23,6 +23,12 @@ import { QuestionFormComponent } from './pages/administration/gestion-question/q
 import { EvaluationWelcomeComponent } from "@pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component";
 import { EvaluationQuestionnaireComponent } from '@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component';
 import { EvaluationThematiqueComponent } from '@pages/visitor/evaluer/evaluation-thematique/evaluation-thematique.component';
+import {
+  ResultatItemComponent
+} from "@pages/visitor/evaluer/evaluation-resultat/resultat-item/resultat-item.component";
+import { EvaluationResultatComponent } from "@pages/visitor/evaluer/evaluation-resultat/evaluation-resultat.component";
+import { EvaluationEntrepriseInfoComponent } from '@pages/visitor/evaluer/evaluation-entreprise-info/evaluation-entreprise-info.component';
+import { ConfirmDeactivateGuard } from "@services/guards/ConfirmDeactivateGuard";
 
 
 const administration: Routes = [
@@ -64,11 +70,21 @@ const visitors: Routes = [
   },
   {
     path: 'historiques',
-    component: HistoriqueComponent
+    component: EvaluationResultatComponent
   },
   {
     path: 'evaluer',
-    component: EvaluerComponent
+    children : [
+      {
+        path: '',
+        pathMatch:'full',
+        component: EvaluerComponent
+      },
+      {
+        path: 'evaluation-thematique/:metiers',
+        component: EvaluationThematiqueComponent
+      }
+    ]
   },
   {
     path: 'evaluer/questionnaire-evaluation',
@@ -79,8 +95,12 @@ const visitors: Routes = [
     component: EvaluationWelcomeComponent
   },
   {
-    path: 'evaluer/evaluation-thematique',
-    component: EvaluationThematiqueComponent
+    path: 'evaluer/evaluation-resultat',
+    component: EvaluationResultatComponent
+  },
+  {
+    path: 'evaluer/evaluation-entreprise-info',
+    component: EvaluationEntrepriseInfoComponent
   },
   {
     path: 'Acceuil',

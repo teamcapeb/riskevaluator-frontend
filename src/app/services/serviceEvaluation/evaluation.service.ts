@@ -8,6 +8,10 @@ import IQuestion from "@/interfaces/IQuestion";
 import IEvaluation from "@/interfaces/IEvaluation";
 import IScoreCategory from "@/interfaces/IScoreCategory";
 import IReponse from '@/interfaces/IReponse';
+import { IEntreprise } from '@/interfaces/IEntreprise';
+import { IUser } from "@/interfaces/IUser";
+import { response } from "express";
+import { EvaluationApiService } from "@services/serviceEvaluation/evaluation-api.service";
 
 
 export enum CategorieNumberAction {
@@ -15,13 +19,28 @@ export enum CategorieNumberAction {
   DECREASE
 }
 
+
+export enum EvaluationData {
+  INCREASE,
+  DECREASE
+}
+export interface IEvalIndex {
+  current: number,max: number
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class EvaluationService {
 
-  actualCategorieIndex:BehaviorSubject<{current: number,max: number}>=new BehaviorSubject({current:0,max:0});
+  actualCategorieIndex:BehaviorSubject<IEvalIndex>=new BehaviorSubject({current:0,max:0});
   readonly actualCategorieNumberObs=this.actualCategorieIndex.asObservable();
+
+
+  evaluation:BehaviorSubject<IEvaluation>=new BehaviorSubject<IEvaluation>({ entreprise:null, scoreGeneraleEvaluation:0, scoreCategories: null  });
+  readonly evaluationObs=this.evaluation.asObservable();
+
 
   readonly questionnaireCalculator: ICategorieQuestion = {
     idCategorie: 0,
@@ -29,8 +48,12 @@ export class EvaluationService {
     questions : []
   };
 
-  constructor() { }
+  constructor(private evaluationApiService : EvaluationApiService) { }
 
+
+  onSaveEntreprise(entreprise : IEntreprise) {
+    this.evaluation.value.entreprise = entreprise;
+  }
 
   onNextCategorieNumber(action : CategorieNumberAction) {
     var currentCategoryNumber = Object.assign({}, this.actualCategorieIndex.getValue());
@@ -49,11 +72,13 @@ export class EvaluationService {
     }
   }
 
-  onCalculateScore(categoriesQuestions$: ICategorieQuestion[]) {
+  onCalculateScore(categoriesQuestions$: ICategorieQuestion[], user: IUser) : IEvaluation {
 
     let scoreCategories: IScoreCategory[] = [];
-    let evaluation: IEvaluation;
-    categoriesQuestions$?.forEach( categorie => {
+    let sumScoreMaxTotal: number = 0;
+    let nbPointsTotal: number = 0;
+
+    categoriesQuestions$?.forEach( (categorie:ICategorieQuestion)  => {
 
       let filteredReponses : IReponse[][] | undefined = categorie
          ?.questions
@@ -75,13 +100,23 @@ export class EvaluationService {
           nbPointsSum+= response.reduce(reponseReducer, initialValue);
         });
 
-      console.log(categorie.libelle + "  Score :  " + nbPointsSum + "/" + sumScoreMaxCategorie) // logs 6
+      if(sumScoreMaxCategorie > 0)  scoreTotalCateorie = +((nbPointsSum / sumScoreMaxCategorie)*100).toFixed();
 
-      if(sumScoreMaxCategorie > 0)  scoreTotalCateorie = (nbPointsSum / sumScoreMaxCategorie)*100;
+      scoreCategories.push({
+        categorie,
+        nbPoints : scoreTotalCateorie
+      });
 
-
+      sumScoreMaxTotal+=sumScoreMaxCategorie;
+      nbPointsTotal+=nbPointsSum;
       }
     )
+
+    if(sumScoreMaxTotal >0 ) this.evaluation.value.scoreGeneraleEvaluation = +((nbPointsTotal / sumScoreMaxTotal)*100).toFixed();
+
+    this.evaluation.value.scoreCategories = scoreCategories;
+
+    return this.evaluation.value;
   }
 
 

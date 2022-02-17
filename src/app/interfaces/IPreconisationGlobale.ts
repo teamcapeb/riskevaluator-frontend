@@ -4,4 +4,6 @@ export default interface IPreconisationGlobale {
     questionnaire?: IQuestionnaire;
     contenu: string;
     viewIfPourcentageScoreLessThan: number;
+    pourcentage?: number;
+
 }
