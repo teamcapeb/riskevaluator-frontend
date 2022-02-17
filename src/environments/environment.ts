@@ -20,20 +20,51 @@ export const environment = {
         "4. Vous voulez aller plus loin ? Contactez nous via l'onglet associé sur la gauche, vous pourrez bénéficier de conseils et d'orientations approfondis.\n\n",
       introButton: "Commencer l'évaluation"
     },
-    formulaireContact:{
-      noSiret:"NOSIRET",
-      noSiretPlaceHolder:"Le numéro siret de votre entreprise",
-      effectif:"Effectif",
-      effectifPlaceHolder:"L'effectif de votre entreprise",
-      annee:"année de creation",
-      anneePlaceHolder:"L'année de creation de l'entreprise",
-      nomEnterprise:"Nom Entreprise",
-      nomEnterprisePlaceHolder:"Le nom de votre entreprise",
-      startEvalButton :"Etape suivante",
+    formulaireContact: {
+      noSiret: "NOSIRET",
+      noSiretPlaceHolder: "Le numéro siret de votre entreprise",
+      effectif: "Effectif",
+      effectifPlaceHolder: "L'effectif de votre entreprise",
+      annee: "année de creation",
+      anneePlaceHolder: "L'année de creation de l'entreprise",
+      nomEnterprise: "Nom Entreprise",
+      nomEnterprisePlaceHolder: "Le nom de votre entreprise",
+      startEvalButton: "Etape suivante",
 
-    }
+    },
+
+    contactIHM: {
+      infosContact: {
+        contactPageTitle: "Vous souhaitez nous contacter?",
+        contactTelephoneName: "TELEPHONE",
+        contactTelephoneLogo: "phone",
+        contactTelephoneValue: "04 74 16 18 38",
+        contactAdresseName: "ADRESSE",
+        contactAdresseLogo: "room",
+        contactDebutAdresseValue: "3 Cours Jean Jaurès,",
+        contacFinAdresseValue: "38130 Échirolles",
+        contactEmailName: "EMAIL",
+        contactEmailLogo: "email",
+        contactEmailValue: "capeb38@capeb-isere.fr",
+        capebLocalisationLongitude: 45.15707257424074,
+        capebLocalisationLatitude: 5.709134397925588,
+        findUs: "Retrouvez nous ici"
+      },
+    },
+    gradientColors: ["card bg-primary ",
+      "card bg-secondary ",
+      "card bg-success ",
+      "card bg-info",
+      "card bg-warning ",
+      "card bg-danger ",
+      "card bg-primary ",
+      "card bg-secondary bg-gradient",
+      "card bg-success bg-gradient ",
+      "card bg-info bg-gradient ",
+      "card bg-warning bg-gradient",
+      "card bg-danger bg-gradient "]
   }
-};
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

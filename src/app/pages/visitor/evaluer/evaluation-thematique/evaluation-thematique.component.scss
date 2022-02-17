@@ -1,23 +1,9 @@
-.order-card {
-  color: #fff;
-}
+@import '/src/assets/common-css/gradient-colors.scss';
 
-.bg-c-blue {
-  background: linear-gradient(45deg,#4099ff,#73b4ff);
-}
 
-.bg-c-green {
-  background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+.container{
+  overflow-y: scroll;
 }
-
-.bg-c-yellow {
-  background: linear-gradient(45deg,#FFB64D,#ffcb80);
-}
-
-.bg-c-pink {
-  background: linear-gradient(45deg,#FF5370,#ff869a);
-}
-
 
 .card {
   border-radius: 5px;
@@ -64,4 +50,60 @@ img.logo-navbar {
     transition: all 0.3s ease-in-out;
     width: 100%;
   }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Backgrounds */
+
+
+
+
+.card:not([class*=card-outline-]) {
+  border: 0;
+}
+.card {
+  height: 100%;
+  box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;
+  -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  -webkit-border-radius: 0.4167rem;
+  -moz-border-radius: 0.4167rem;
+  -ms-border-radius: 0.4167rem;
+  -o-border-radius: 0.4167rem;
+  border-radius: 0.4167rem;
+}
+.blockquote {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+blockquote {
+  padding: .5rem 1rem;
+  font-size: 1.25rem;
+  border-left: .25rem solid #eceeef;
+}
+blockquote {
+  margin: 0 0 1rem;
+}
+.blockquote p {
+  font-size: 1.1rem;
+}
+.card .card-body p {
+  margin-bottom: 1rem;
+}
+

@@ -3,6 +3,7 @@ import { DataStateEnum } from "@/state/questionnaire.state";
 import { Component, Input, OnInit } from "@angular/core";
 import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
 import { EvaluationService } from "@services/serviceEvaluation/evaluation.service";
+import { environment } from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-evaluation-head',
@@ -25,5 +26,8 @@ export class EvaluationHeadComponent implements OnInit {
         this.progressBarValue =  ((state.current)/ (state.max-1)) *100 ;
     })
   }
-
+  calculateColor = (id : number) => {
+    let colors: string[] = environment.evaluerIHM.gradientColors;
+    return colors[id%colors.length];
+  }
 }

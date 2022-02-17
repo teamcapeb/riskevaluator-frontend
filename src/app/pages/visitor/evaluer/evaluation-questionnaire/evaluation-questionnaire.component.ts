@@ -12,6 +12,7 @@ import { ActivatedRoute, Navigation, NavigationExtras, Router } from "@angular/r
 import IQuestionnaire from "@/interfaces/IQuestionnaire";
 import IMetier from '@/interfaces/IMetier';
 import { EvalTokenStorageService } from "@services/serviceEvaluation/eval-token-storage.service";
+import { environment } from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-evaluation-questionnaire',
@@ -61,5 +62,6 @@ export class EvaluationQuestionnaireComponent implements OnInit {
       })
     );
   }
+
 
 }

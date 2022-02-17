@@ -10,6 +10,7 @@ import IQuestionnaire from "@/interfaces/IQuestionnaire";
 import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
 import IReponse from "@/interfaces/IReponse";
 import { EvaluationHelper } from "@services/_helpers/EvaluationHelper";
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-evaluation-thematique',
@@ -69,8 +70,8 @@ export class EvaluationThematiqueComponent implements OnInit {
   }
 
   calculateColor = (id : number) => {
-    let colors: string[] = ["bg-c-pink","bg-c-blue", "bg-c-green", "bg-c-yellow"];
-    return colors[id%5];
+    let colors: string[] = environment.evaluerIHM.gradientColors;
+    return colors[id%colors.length];
   }
 
 }

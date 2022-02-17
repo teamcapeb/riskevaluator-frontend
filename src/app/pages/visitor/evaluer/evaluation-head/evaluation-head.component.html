@@ -1,7 +1,7 @@
 <ng-container *ngIf="categorieQuestion$">
 
   <div class="row justify-content-center" >
-    <div class="categorieTitle"  [ngStyle]="{'background-color': 'yellow'}">
+    <div class="categorieTitle {{calculateColor(categorieQuestion$?.idCategorie)}}">
       {{categorieQuestion$.libelle}}
     </div>
   </div>

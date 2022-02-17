@@ -1,10 +1,9 @@
 <a
     (click)="handleMainMenuAction()"
     class="nav-link"
-    [ngClass]="{active: isMainActive || isOneOfChildrenActive}"
->
-    <i class="nav-icon {{menuItem.icon}}"></i>
-    <p>{{ menuItem.name }}</p>
+    [ngClass]="{active: isMainActive || isOneOfChildrenActive}">
+    <i class="{{menuItem.icon}}"></i>
+    <p> &nbsp; {{ menuItem.name }}</p>
     <i
         *ngIf="isExpandable && menuItem.children.length > 0"
         class="right fas fa-angle-left"

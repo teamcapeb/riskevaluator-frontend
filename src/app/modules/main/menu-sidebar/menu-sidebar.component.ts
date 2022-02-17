@@ -39,22 +39,22 @@ export const MENU = [
     {
         name: 'Acceuil',
         path: ['/'],
-        icon: "fas fa-tachometer-alt"
+        icon: "fa-solid fa-house-user"
     },
     {
         name: 'Evaluer',
         path: ['/evaluer'],
-        icon: "fas fa-tachometer-alt"
+        icon: "fa-solid fa-list-check"
     },
     {
         name: 'Historiques',
         path: ['/historiques'],
-        icon: "fas fa-tachometer-alt"
+        icon: "fa-solid fa-chart-pie"
     },
     {
         name: 'Contact',
         path: ['/contact'],
-        icon: "fas fa-tachometer-alt"
+        icon: "fa-solid fa-address-card"
     }
     ];
 
@@ -62,17 +62,17 @@ export const ADMIN_MENU = [
   {
     name: 'Gestion questionnaire',
     path: ['/gestion-questionnaire'],
-    icon: "fas fa-tachometer-alt"
+    icon: "fa-solid fa-money-check-pen"
 
   },
   {
     name: 'Gestion métiers',
     path: ['/gestion-metiers'],
-    icon: "fas fa-tachometer-alt"
+    icon: "fa-solid fa-money-check-pen"
   },
   {
     name: 'Gestion Comptes',
     path: ['/gestion-compte'],
-    icon: "fas fa-tachometer-alt"
+    icon: "fa-solid fa-money-check-pen"
   }
 ];

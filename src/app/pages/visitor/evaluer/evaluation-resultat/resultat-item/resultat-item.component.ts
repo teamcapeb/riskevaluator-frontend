@@ -1,21 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { PreconisationGlobaleService } from "@services/servicePreconisationGlobale/preconisation-globale.service";
-import {
-  PreconisationCategoriesQuestionService
-} from "@services/servicePreconisationCategoriesQuestion/preconisation-categories-question.service";
-import { catchError, map, startWith } from "rxjs/operators";
-import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
-import { Observable, of } from "rxjs";
-import IPreconisationGlobale from "@/interfaces/IPreconisationGlobale";
-import IPreconisationCategorieQuestion from "@/interfaces/IPreconisationCategorieQuestion";
-import PreconisationGlobale from "@/objects/PreconisationGlobale";
-import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
-import IScoreCategory from "@/interfaces/IScoreCategory";
-import IEvaluation from "@/interfaces/IEvaluation";
-import IQuestionnaire from "@/interfaces/IQuestionnaire";
 import { CircleProgressComponent } from "ng-circle-progress";
-import { animate, state, style, transition, trigger } from "@angular/animations";
-
 @Component({
   selector: 'app-resultat-item',
   templateUrl: './resultat-item.component.html',
@@ -43,7 +27,8 @@ export class ResultatItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.state = "open";
-
+    this.text$ = this.text$??this.emptyTxt;
+    this.showMore = this.text$.length <= 300;
     const calculateColor = (percent: number): string[] => {
       if(percent < 25){
         return  ["#e33b1a","rgba(227,59,26,0.43)"] ;
