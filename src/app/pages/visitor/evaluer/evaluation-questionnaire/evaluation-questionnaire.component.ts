@@ -38,9 +38,6 @@ export class EvaluationQuestionnaireComponent implements OnInit {
     this.questionnaireId = +this.route.snapshot.paramMap.get('idQuestionnaire');
     this.metierIds = this.route.snapshot.paramMap.get('metierIds').split(",").map(Number);
 
-    console.log(this.questionnaireId);
-    console.log(this.metierIds);
-
     let entreprise = evalTokenService.getEntreprise();
     this.evaluationService.onSaveEntreprise(entreprise);
   }

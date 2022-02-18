@@ -42,9 +42,9 @@
                           </span>
 
 
-        <mat-radio-group [(ngModel)]="selectedReponse" aria-labelledby="radio-group-label" class="radio-group">
+        <mat-radio-group [(ngModel)]="selectedReponse"  aria-labelledby="radio-group-label" class="radio-group">
 
-          <mat-radio-button class="radio-button" *ngFor="let reponse of question$.reponses">
+          <mat-radio-button [value]="reponse" (change)="radioChange($event)" class="radio-button" *ngFor="let reponse of question$.reponses">
             {{reponse.contenu}}
           </mat-radio-button>
         </mat-radio-group>

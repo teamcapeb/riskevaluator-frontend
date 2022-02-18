@@ -86,7 +86,9 @@ export class EvaluationService {
            return question?.reponses?.filter(reponse => reponse.isChecked);
          });
 
-        const reponseReducer = (previousValue: number, currentValue: IReponse) => previousValue + currentValue.nbPoints;
+      console.log(filteredReponses);
+
+      const reponseReducer = (previousValue: number, currentValue: IReponse) => previousValue + currentValue.nbPoints;
         const questionReducer = (previousValue: number, currentValue: IQuestion) => previousValue + currentValue.scoreMaxPossibleQuestion;
 
 
@@ -101,6 +103,7 @@ export class EvaluationService {
         });
 
       if(sumScoreMaxCategorie > 0)  scoreTotalCateorie = +((nbPointsSum / sumScoreMaxCategorie)*100).toFixed();
+
 
       scoreCategories.push({
         categorie,

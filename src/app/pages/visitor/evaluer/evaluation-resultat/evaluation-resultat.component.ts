@@ -44,12 +44,15 @@ export class EvaluationResultatComponent implements OnInit {
   ngOnInit(): void {
        this.evaluation$ = this.evalTokenStorageService.getEvaluation();
 
+
        if(this.evaluation$!=null) {
          const textReducer = (previousValue: string, currentValue: IPreconisationGlobale) => previousValue.concat('\n \n',currentValue.contenu);
          let questionnaire: IQuestionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorie?.questionnaire;
          const tempPreco : IPreconisationGlobale[] = questionnaire?.preconisationGlobales?.filter(p=> p?.viewIfPourcentageScoreLessThan > this.evaluation$?.scoreGeneraleEvaluation);
 
          this.precoGlobale$ = tempPreco?.find(el => el !== undefined)
+
+         if( this.precoGlobale$?.contenu !==null)
          this.precoGlobale$.contenu = tempPreco?.reduce(textReducer,"");
 
          this.listScoreCategories$ = this.evaluation$.scoreCategories.map( cat => {
@@ -61,5 +64,7 @@ export class EvaluationResultatComponent implements OnInit {
        }
 
   }
+
+
 
 }

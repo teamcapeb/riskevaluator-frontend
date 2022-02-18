@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { IQuestionType } from "@/interfaces/IQuestionType";
 import IQuestion from "@/interfaces/IQuestion";
+import IReponse from "@/interfaces/IReponse";
 
 @Component({
   selector: 'app-evaluation-question',
@@ -14,7 +15,7 @@ export class EvaluationQuestionComponent implements OnInit {
   readonly QuestionType=IQuestionType;
   questionTypeEnum : IQuestionType
 
-  selectedReponse: string;
+  selectedReponse : IReponse = {isChecked : false}
 
   constructor() {
   }
@@ -22,6 +23,16 @@ export class EvaluationQuestionComponent implements OnInit {
   ngOnInit(): void {
     this.questionTypeEnum = this.question$?.typeQuestion as IQuestionType;
 
+  }
+
+  radioChange(event: any) {
+    this.question$?.reponses?.forEach(item => {
+      if(item.idReponse === event.value.idReponse) {
+        item.isChecked = true;
+      }else {
+        item.isChecked = false;
+      }
+    } )
   }
 
 }
