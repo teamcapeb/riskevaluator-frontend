@@ -55,7 +55,7 @@ export class GestionCategorieQuestionsComponent implements OnInit {
 
 
   add(): void{
-    this.actualPreconisationGlobale = new PreconisationGlobale(0,'', 0, new Questionnaire(this._idQuestionnaire, '', [], []).toJSON());
+    this.actualPreconisationGlobale = new PreconisationGlobale(0,'', 1, new Questionnaire(this._idQuestionnaire, '', [], []).toJSON());
     this.preconisationGlobaleForm.open('add');
   }
 
@@ -71,6 +71,13 @@ export class GestionCategorieQuestionsComponent implements OnInit {
   }
 
   updateC(event: IListEvent){
+    event.data.questionnaire = new Questionnaire(this._idQuestionnaire, '', [], []);
+    this.actualCategorieQuestion = event.data;
+    this.categorieQuestionForm.open('update');
+   
+  }
+
+  categorieDetails(event: IListEvent){
     this.router.navigate(['/gestion-questionnaires', this._idQuestionnaire, 'gestion-categories-questions', event.data.idCategorie, 'gestion-questions']);
   }
 

@@ -3,12 +3,12 @@
   <div  class="row justify-content-center" *ngSwitchCase="QuestionType.QuestionChoixMultiple" >
       <div class="col-lg-6 choixUniqueQuestionButtons">
         <label class="radio-group-label">{{question$.libelleQuestion}} *</label>
-        <span  matTooltip="{{aide}}" *ngIf="question$.aide"
+        <!--span  matTooltip="{{aide}}" *ngIf="question$.aide"
                matTooltipPosition="right" matTooltipClass="helpTooltip">
-                              <mat-icon class="material-icons" matSuffix >
+                              <mat-icon class="material-icons" matSuffix>
                                   help_outline
                               </mat-icon>
-                          </span>
+                          </span-->
         <section class="checkBoxGroup">
           <mat-checkbox *ngFor="let reponse of question$.reponses; let indexReponse = index;"
                         [(ngModel)]="reponse.isChecked"
@@ -33,12 +33,12 @@
 
                           <span class="radioButtonLabelIcon">
                               <label class="radio-group-label">{{question$.libelleQuestion}} *</label>
-                              <span  matTooltip="{{question$.aide}}" *ngIf="question$.aide"
+                              <!--span  matTooltip="{{question$.aide}}" *ngIf="question$.aide"
                                      matTooltipPosition="right" matTooltipClass="helpTooltip">
                                   <mat-icon class="material-icons" matSuffix >
                                       help_outline
                                   </mat-icon>
-                              </span>
+                              </span-->
                           </span>
 
 

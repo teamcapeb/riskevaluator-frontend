@@ -1,3 +1,7 @@
+<div class="header text-center p-4">
+  <h1>{{(categorieQuestion | async)?.libelle}}</h1>
+</div>
+
 <app-list title="Liste des questions" (onAdd)="add()">
     <ng-template [ngIf]="categorieQuestion | async" [ngIfElse]="loading">
         <ng-container *ngFor="let question of (categorieQuestion | async)?.questions">
@@ -23,6 +27,7 @@
         (onDelete)="deleteSuggestion($event)"
       >
         <app-list-item-col>{{suggestions.contenu}}</app-list-item-col>
+        <app-list-item-col>{{suggestions.viewIfPourcentageScoreLessThan}}</app-list-item-col>
       </app-list-item>
     </ng-container>
   </ng-template>
@@ -39,4 +44,3 @@
 <app-preconisation-categorie-question-form [preconisationCategorieQuestion]="actualPreconisationCategorieQuestion" (onConfirmation)="createOrUpdateOrDeletePreconisationCategorieQuestion($event)" #preconisationCategorieQuestionForm></app-preconisation-categorie-question-form>
 
 <app-question-modal [question]="actualQuestion" (onConfirmation)="createOrUpdateOrDeleteQuestion($event)" #questionModal></app-question-modal>
-<app-error-modal #errorModal></app-error-modal>

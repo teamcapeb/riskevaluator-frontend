@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { IQuestionType } from "@/interfaces/IQuestionType";
-import CategorieQuestion from "@/objects/CategorieQuestion";
-import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
 import IQuestion from "@/interfaces/IQuestion";
 
 @Component({

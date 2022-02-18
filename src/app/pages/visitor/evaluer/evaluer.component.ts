@@ -36,7 +36,7 @@ export class EvaluerComponent implements OnInit {
 
 
   onGetAllMetiers() {
-    this.metiers$= this.metierService.getAll().pipe(
+    this.metiers$= this.metierService.getAllMetiers().pipe(
       map((data: IMetier[])=>{
         return ({dataState:DataStateEnum.LOADED,data:data})
       }),

@@ -1,12 +1,12 @@
-<li class="row list-group-item" [class.bg-secondary] = "header">
+<li class="list-group-item list-group-item-action" [class.bg-light] = "header">
     <div class="row">
-        <div class="col-8">
+        <div class="col-8" (click)="rowClick()">
             <div class="row" [class.bold] = "header">
                 <ng-content></ng-content>
             </div>
         </div>
         <div class="col-4">
-            <div class="row" *ngIf="header===false">
+            <div class="row h-100" *ngIf="header===false">
                 <div class="col-6 d-flex justify-content-center align-items-center">
                     <button class="btn btn-secondary btn-sm" (click)="update()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -24,10 +24,10 @@
             </div>
             <div class="row bold" *ngIf="header">
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    <div>Supprimer</div>
+                    <div>Modifier</div>
                 </div>
                 <div class="col-6 d-flex justify-content-center align-items-center">
-                    <div>Modifier</div>
+                    <div>Supprimer</div>
                 </div>
             </div>
         </div>

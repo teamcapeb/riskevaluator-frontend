@@ -9,20 +9,25 @@
     <div class="form-group">
       <label for="exampleInputEmail1">Suggestions</label>
       <textarea
+        required
         class="form-control"
         id="Contenue"
         rows="5"
-        [(ngModel)] = "preconisationCategorieQuestion.contenu"></textarea>
+        [(ngModel)] = "preconisationCategorieQuestion.contenu"
+        #suggestion="ngModel"></textarea>
       <label for="exampleInputEmail1">Pourcentages</label>
       <input
-        type="text"
+        required
+        type="number"
         class="form-control"
         id="Pourcentages"
-        [(ngModel)] = "preconisationCategorieQuestion.viewIfPourcentageScoreLessThan">
+        (input)="checkInputRange($event)"
+        [(ngModel)] = "preconisationCategorieQuestion.viewIfPourcentageScoreLessThan"
+        #pourcentages="ngModel">
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
+    <button [disabled]="suggestion.errors?.['required'] || pourcentages.errors?.['required']" type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
   </div>
 </ng-template>
 

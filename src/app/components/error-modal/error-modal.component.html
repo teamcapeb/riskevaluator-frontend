@@ -1,15 +1,15 @@
-<ng-template #modalError let-c="close" let-d="dismiss">
-    <div class="modal-header bg-danger">
-      <h4 class="modal-title" id="modal-basic-title">ERROR</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body bg-danger">
-        <div class="border rounded p-2  bg-dark"><code class="text-danger">{{message}}</code></div>
-        <p class="pt-3"><strong>S'il vous plait, contactez votre administrateur en lui faisant part de l'erreur si dessus.</strong></p>
-    </div>
-    <div class="modal-footer bg-danger">
-      <button type="button" class="btn btn-light" (click)="c('Ok click')">Ok</button>
-    </div>
-</ng-template>
+
+  <div class="modal-header bg-danger">
+    <h4 class="modal-title" id="modal-basic-title">ERROR</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body bg-danger">
+      <div class="border rounded p-2  bg-dark"><code class="text-danger">{{message}}</code></div>
+      <p class="pt-3"><strong>S'il vous plait, contactez votre administrateur en lui faisant part de l'erreur si dessus.</strong></p>
+  </div>
+  <div class="modal-footer bg-danger">
+    <button type="button" class="btn btn-light" (click)="activeModal.close('Close click')">Ok</button>
+  </div>
+

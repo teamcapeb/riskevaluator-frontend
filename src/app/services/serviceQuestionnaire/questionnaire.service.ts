@@ -1,14 +1,11 @@
-import IQuestion from '@/interfaces/IQuestion';
 import IQuestionnaire from '@/interfaces/IQuestionnaire';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
-import IPreconisationGlobale from '@/interfaces/IPreconisationGlobale';
-import { map } from 'rxjs/operators';
-import PreconisationGlobale from '@/objects/PreconisationGlobale';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import Questionnaire from '@/objects/Questionnaire';
-import CategorieQuestion from '@/objects/CategorieQuestion';
+import { ModalService } from '../serviceModal/modal.service';
 import ICategorieQuestion from '@/interfaces/ICategorieQuestion';
 import { EvaluationHelper } from "@services/_helpers/EvaluationHelper";
 
@@ -17,14 +14,20 @@ import { EvaluationHelper } from "@services/_helpers/EvaluationHelper";
 })
 export class QuestionnaireService {
   private baseUrl: string = environment.apiUrl + '/questionnaires/';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private modalService: ModalService) {}
 
   getAll(): Observable<Questionnaire[]> {
     return this.http.get<IQuestionnaire[]>(`${this.baseUrl}`).pipe(map((iQuestionnaires: IQuestionnaire[]) => {
         return iQuestionnaires.map((iQuestionnaire: IQuestionnaire) => {
           return Questionnaire.toQuestionnaire(iQuestionnaire);
         });
-    }));
+    })).pipe(
+      catchError((err:any) => {
+        this.modalService.error(err.message);
+        return throwError(err);
+      })
+    );
   }
 
   get(questionnaireId: number): Observable<Questionnaire> {
@@ -38,7 +41,7 @@ export class QuestionnaireService {
   }
 
   update(questionnaire: Questionnaire): Promise<IQuestionnaire | string> {
-    return this.http.put<IQuestionnaire>(`${this.baseUrl}${questionnaire.idQuestionnaire}`, questionnaire.toJSON()).toPromise();
+    return this.http.put<IQuestionnaire>(`${this.baseUrl}`, questionnaire.toJSON()).toPromise();
   }
 
   delete(questionnaire: Questionnaire): Promise<IQuestionnaire | string> {

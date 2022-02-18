@@ -29,14 +29,11 @@ export class CategorieQuestionService {
       return CategorieQuestion.toCategorieQuestion(receivedData);
     }));
   }
-  createQuestionCategoriesQuestion(categorieQuestionId: number, question: Question): Promise<IQuestion | string>{
-    return this.http.post<IQuestion>(`${this.baseUrl}/${categorieQuestionId}/Questions`, question.toJSON()).toPromise();
-  }
   create(categorieQuestion: CategorieQuestion): Promise<ICategorieQuestion | string>{
     return this.http.post<ICategorieQuestion>(`${this.baseUrl}`, categorieQuestion.toJSON()).toPromise();
   }
   update(categorieQuestion: CategorieQuestion): Promise<ICategorieQuestion | string> {
-    return this.http.put<ICategorieQuestion>(`${this.baseUrl}${categorieQuestion.idCategorie}`, categorieQuestion.toJSON()).toPromise();
+    return this.http.put<ICategorieQuestion>(`${this.baseUrl}`, categorieQuestion.toJSON()).toPromise();
   }
   delete(categorieQuestion: ICategorieQuestion): Promise<string> {
     return this.http.delete<string>(`${this.baseUrl}${categorieQuestion.idCategorie}`).toPromise();

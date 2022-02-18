@@ -73,6 +73,8 @@ import { CategorieQuestionFormComponent } from './pages/administration/gestion-c
 
 import { PreconisationCategorieQuestionFormComponent } from './pages/administration/gestion-question/preconisation-categorie-question-form/preconisation-categorie-question-form.component';
 import { QuestionnaireFormComponent } from '@pages/administration/gestion-questionnaire/questionnaire-form/questionnaire-form.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ToastsContainerComponent } from './components/toasts-container/toasts-container.component';
 
 import { EvaluationQuestionComponent } from "@pages/visitor/evaluer/evaluation-question/evaluation-question.component";
 import { EvaluationQuestionnaireComponent } from "@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component";
@@ -141,6 +143,7 @@ registerLocaleData(localeEn, 'en-EN');
 
         QuestionnaireFormComponent,
         PreconisationCategorieQuestionFormComponent,
+        ToastsContainerComponent,
         EvaluationLoadingComponent,
         EvaluationFooterComponent,
         EvaluationThematiqueComponent,
@@ -155,6 +158,7 @@ registerLocaleData(localeEn, 'en-EN');
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgMultiSelectDropDownModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: "toast-top-right",

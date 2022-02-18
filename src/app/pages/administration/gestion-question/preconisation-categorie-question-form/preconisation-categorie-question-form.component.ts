@@ -27,6 +27,15 @@ export class PreconisationCategorieQuestionFormComponent implements OnInit {
     });
   }
 
+  checkInputRange($event: any){
+    if($event.target.value < 1){
+      $event.target.value = 1;
+    }
+    if($event.target.value > 101){
+      $event.target.value = 101;
+    }
+  }
+
   public open(action: string) {
     let content = null;
     if(action === 'add' || action === 'update'){

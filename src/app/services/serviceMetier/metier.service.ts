@@ -16,7 +16,16 @@ export class MetierService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<IMetier[]> {
+
+  getAll(): Observable<Metier[]> {
+    return this.http.get<IMetier[]>(`${this.baseUrl}`).pipe(map((receivedData: IMetier[]) => {
+      return receivedData.map<Metier>((iMetier: IMetier) => {
+        return Metier.toMetier(iMetier);
+      });
+    }));
+  }
+
+  getAllMetiers(): Observable<IMetier[]> {
     return this.http.get<IMetier[]>(`${this.baseUrl}`);
   }
 
@@ -24,11 +33,11 @@ export class MetierService {
     return this.http.post<IMetier>(`${this.baseUrl}`, metier.toJSON()).toPromise();
   }
 
-  update(metier: IMetier): Promise<IMetier | string> {
-    return this.http.put<IMetier>(`${this.baseUrl}/${metier.idMetier}`, metier).toPromise();
+  update(metier: Metier): Promise<IMetier | string> {
+    return this.http.put<IMetier>(`${this.baseUrl}`, metier.toJSON()).toPromise();
   }
 
-  delete(metier: IMetier): Promise<string> {
-    return this.http.delete<string>(`${this.baseUrl}/${metier.idMetier}`).toPromise();
+  delete(metier: Metier): Promise<string> {
+    return this.http.delete<string>(`${this.baseUrl}${metier.idMetier}`).toPromise();
   }
 }

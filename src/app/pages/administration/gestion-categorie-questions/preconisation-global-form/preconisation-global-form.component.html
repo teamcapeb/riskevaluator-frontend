@@ -7,16 +7,29 @@
   </div>
   <div class="modal-body">
       <div class="form-group">
-        <label for="exampleInputEmail1">Reponses</label>
+        <label for="exampleInputEmail1">Libellé</label>
         <input
+          required
           type="text"
           class="form-control"
           id="contenu"
-          [(ngModel)]="preconisationGlobale.contenu">
+          [(ngModel)]="preconisationGlobale.contenu"
+          #name="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Pourcentages</label>
+        <input
+        required
+        type="number"
+        class="form-control"
+        id="Pourcentages"
+        (input)="checkInputRange($event)"
+        [(ngModel)] = "preconisationGlobale.viewIfPourcentageScoreLessThan"
+        #pourcentages="ngModel">
       </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
+    <button [disabled]="pourcentages.errors?.['required'] || name.errors?.['required']" type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
   </div>
 </ng-template>
 

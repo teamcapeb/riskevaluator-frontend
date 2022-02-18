@@ -2,9 +2,9 @@
 <app-list title="Liste des metiers" (onAdd)="add()">
     <ng-template [ngIf]="metiers | async" [ngIfElse]="loading">
         <ng-container *ngFor="let metier of metiers | async">
-            <app-list-item 
+            <app-list-item
                 id="{{metier.idMetier}}"
-                [data]="metier" 
+                [data]="metier"
                 (onUpdate)="update($event)"
                 (onDelete)="delete($event)"
             >
@@ -22,4 +22,3 @@
 </ng-template>
 
 <app-metier-form [metier]="actualMetier" (onConfirmation)="createOrUpdateOrDeleteMetier($event)" #metierForm></app-metier-form>
-<app-error-modal #errorModal></app-error-modal>

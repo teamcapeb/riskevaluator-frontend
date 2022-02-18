@@ -1,13 +1,13 @@
 import IListEvent from '@/interfaces/IListEvent';
 import Question from '@/objects/Question';
 import Reponse from '@/objects/Reponse';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { QuestionService } from '@services/serviceQuestion/question.service';
+import CategorieQuestion from '../../../../objects/CategorieQuestion';
+import Metier from '../../../../objects/Metier';
+import { MetierService } from '../../../../services/serviceMetier/metier.service';
+import { ToastService } from '../../../../services/serviceToast/toast.service';
 import { Router, ActivatedRoute, Navigation } from '@angular/router';
-import { CategorieQuestionService } from '@services/serviceCategorieQuestion/categorie-question.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-question-form',
@@ -23,30 +23,61 @@ export class QuestionFormComponent implements OnInit {
   public idCategorieQuestion: string = '1';
   public closeResult = '';
   public title: string;
+  private _idQuestion: number;
+  private _idCategorie: number;
+  private _idQuestionnaire: number;
   public saved: boolean = true;
-  public question: Question;
+  public question: Question = new Question(-1, 0, '', '', null, [], []);
   public actualReponse: Reponse;
   @ViewChild('reponseForm') reponseForm: any;
   @ViewChild('errorModal') errorModal: any;
 
+  public dropdownList: Metier[] = [
+  ];
+  selectedItems: Metier[] = [];
+  dropdownSettings = {
+    singleSelection: false,
+    idField: 'idMetier',
+    textField: 'nomMetier',
+    selectAllText: 'Tout',
+    unSelectAllText: 'Aucun',
+    searchPlaceholderText: 'Chercher',
+    itemsShowLimit: 3,
+    allowSearchFilter: true
+  };
+
   constructor(private questionService: QuestionService,
+              private metierService: MetierService,
               private router: Router,
-              private route: ActivatedRoute,
-              private categorieQuestionService: CategorieQuestionService) {
-                let nav: Navigation = this.router.getCurrentNavigation();
-                this.action = nav.extras.state['action'];
-                this.question = nav.extras.state['question'];
-                this.idCategorieQuestion = nav.extras.state['idCategorieQuestion'];
+              private activatedRoute: ActivatedRoute,
+              private toastService: ToastService) {
               }
 
-  ngOnInit(): void {
-    //this.question = new Question('', '', '', []);
+  onItemSelect(item: any) {
+  }
+  onSelectAll(items: any) {
+  }
+
+  async ngOnInit() {
+    this.dropdownList = await this.metierService.getAll().toPromise();
+    let idQuestionnaire = this.activatedRoute.snapshot.paramMap.get('idQuestionnaire');
+    let idCategorie = this.activatedRoute.snapshot.paramMap.get('idCategorie');
+    let idQuestion = this.activatedRoute.snapshot.paramMap.get('idQuestion');
+    if(idCategorie && idQuestion && idQuestionnaire){
+      this._idQuestionnaire = parseInt(idCategorie);
+      this._idQuestion = idQuestion === 'new' ? -1 : parseInt(idQuestion);
+      this._idCategorie = parseInt(idCategorie);
+    }else{
+      this.router.navigate(['/']);
+    }
+    if(this._idQuestion === -1){
+      this.question = new Question(-1, 0, '', '', new CategorieQuestion(this._idCategorie, '').toJSON(), [], []);
+    }else {
+      this.question = await this.questionService.get(this._idQuestion);
+
+    }
+    this.selectedItems = this.question.metiers;
     this._addedReponses = [];
-    /*
-    this.questionService.getAllReponses(this.question.idQuestion).subscribe((reponses: Reponse[]) => {
-      this._reponses = reponses;
-    });
-    */
   }
 
   add(): void{
@@ -65,24 +96,33 @@ export class QuestionFormComponent implements OnInit {
   }
 
   public async save(){
-    this.saved = false;
-    this.question.reponses = this.reponses;
-    this._addedReponses = this.addedReponses.map<Reponse>((reponse: Reponse) => {
-      reponse.idReponse = 0;
-      return reponse;
-    });
-    this.question.reponses.push(...this.addedReponses);
-    let res = null;
-    try{
-      if(this.action === 'update'){
-        res = await this.questionService.update(this.question);
-      }else if (this.action === 'add'){
-        res = await this.categorieQuestionService.createQuestionCategoriesQuestion(0, this.question);
+    if(!this.question.reponses){
+      this.question.reponses = [];
+    }
+    if(this.question.reponses.length + this._addedReponses.length >= 2){
+      this.saved = false;
+      this._addedReponses = this.addedReponses.map<Reponse>((reponse: Reponse) => {
+        reponse.idReponse = 0;
+        return reponse;
+      });
+      this.question.metiers = this.selectedItems.map((metier: Metier) => {
+        return new Metier(metier.idMetier, metier.nomMetier, null);
+      });
+      this.question.reponses.push(...this.addedReponses);
+      let res = null;
+      try{
+        if(this._idQuestion !== -1){
+          res = await this.questionService.update(this.question);
+        }else{
+          res = await this.questionService.create(this.question);
+        }
+        this.saved = true;
+        this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
+      }catch(error){
+        this.errorModal.open(error.message);
       }
-      this.saved = true;
-      this.router.navigate(['gestion-question'], {state:{idCategorieQuestion: this.idCategorieQuestion}});
-    }catch(error){
-      this.errorModal.open(error.message);
+    }else{
+      this.toastService.show('Il doit y avoir 2 réponses minimum', { classname: 'bg-danger text-light', delay: 15000 });
     }
   }
 
@@ -91,23 +131,19 @@ export class QuestionFormComponent implements OnInit {
   }
 
   createOrUpdateOrDeleteReponse(event: IListEvent){
-    //this._reponses = null;
-    //let finalise = new Subject();
-    //let obs = null;
+    event.data.question = new Question(this._idQuestion, 0, '', '', null, [], []);
     if(event.action === 'update'){
-      //obs = this.reponseService.update(event.data);
     }else if (event.action === 'add'){
-      //obs = this.metierService.create(event.data);
       event.data.idReponse = this._idConteur.toString();
+
       this._addedReponses.push(event.data);
       this._idConteur++;
       if(this._addedReponses.length === 0){
         this._idConteur = 0;
       }
     }else if(event.action === 'delete'){
-      this._reponses = this._reponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
+      this.question.reponses = this.question.reponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
       this._addedReponses = this._addedReponses.filter(({ idReponse }) => idReponse !== event.data.idReponse);
-      //obs = this.metierService.delete(event.data);
     }
   }
 
@@ -116,6 +152,10 @@ export class QuestionFormComponent implements OnInit {
   }
   get addedReponses(): Reponse[]{
     return this._addedReponses;
+  }
+
+  get idQuestion(): number {
+    return this._idQuestion;
   }
 
 }

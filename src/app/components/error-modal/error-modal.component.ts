@@ -1,25 +1,26 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, OnInit} from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-error-modal',
   templateUrl: './error-modal.component.html',
-  styleUrls: ['./error-modal.component.scss']
+  styleUrls: ['./error-modal.component.scss'],
+  providers: [NgbActiveModal]
 })
 export class ErrorModalComponent implements OnInit {
 
   @Input() public message: string;
-  @ViewChild('modalError') modalError: any;
+  @Input() public modalRef: any;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(public activeModal: NgbActiveModal) { }
 
-  ngOnInit(): void {
+  close(){
   }
 
-  public open(message: string) {
-    this.message = message;
-    let content = null;
-    this.modalService.open(this.modalError, {animation: true, centered: true});
+  dismiss(){
+  }
+
+  ngOnInit(): void {
   }
 
 }

@@ -8,6 +8,5 @@ import { QuestionService } from '../../services/serviceQuestion/question.service
 })
 export class DashboardComponent {
 
-    constructor(){
-    }
+    constructor(){ }
 }

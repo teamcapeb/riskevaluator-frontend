@@ -50,6 +50,7 @@ export class GestionMetiersComponent implements OnInit {
   }
 
   public async createOrUpdateOrDeleteMetier(event: IListEvent){
+    this._metiers = null;
     let res = null;
     try{
       if(event.action === 'update'){
@@ -59,6 +60,7 @@ export class GestionMetiersComponent implements OnInit {
       }else if(event.action === 'delete'){
         res = await this.metierService.delete(event.data);
       }
+      this._metiers = this.metierService.getAll();
     }catch(error){
       this.errorModal.open(error.message);
     }
