@@ -14,7 +14,10 @@ export interface IOopsMessageInput {
 })
 export class OopsMessageComponent implements OnInit {
 
-  @Input() oopsInput : IOopsMessageInput;
+  @Input() oopsInput$ : IOopsMessageInput = {
+    buttonText: "Test", goToUrl: "Test", message: "Test", title: "Test"
+
+  };
   constructor() { }
 
   ngOnInit(): void {

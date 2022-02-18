@@ -22,16 +22,8 @@ export class GestionMetiersComponent implements OnInit {
   constructor(private metierService: MetierService) { }
 
   ngOnInit(): void {
+    this._metiers = this.metierService.getAll();
 
-  }
-
-  ngAfterViewInit(){
-    let finalise = new Subject();
-    this._metiers = this.getAll();
-  }
-
-  getAll(): Observable<Metier[]>{
-    return null
   }
 
   add(): void{

@@ -13,3 +13,10 @@
                        [title$]="item?.categorie?.libelle"  > </app-resultat-item>
   </ng-container>
 </div>
+
+
+<div class="container">
+  <app-oops-message [oopsInput$] = oopsMessage *ngIf="evaluation$ == null" ></app-oops-message>
+
+</div>
+

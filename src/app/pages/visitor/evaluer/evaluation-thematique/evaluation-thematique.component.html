@@ -4,9 +4,9 @@
 
   <ng-container *ngSwitchCase="DataStateEnum.LOADED">
     <app-oops-message *ngIf="result.data.length <1"
-                      [oopsInput] ="{  title:'Aucun questionnaire trouvé',
+                      [oopsInput$] ="{  title:'Aucun questionnaire trouvé',
         message:'aucun questionnaire correspond aux thématiques choisis',
-        goToUrl: '/evaluer',buttonText:'Choisir autres métiers'}">
+        goToUrl: 'evaluer',buttonText:'Choisir autres métiers'}">
     </app-oops-message>
 
     <div    class="row mb-5">

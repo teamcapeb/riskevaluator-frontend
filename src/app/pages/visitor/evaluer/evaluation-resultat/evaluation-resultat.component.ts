@@ -11,6 +11,7 @@ import {
   bounceOutOnLeaveAnimation,
   fadeInUpOnEnterAnimation
 } from 'angular-animations';
+import { IOopsMessageInput, OopsMessageComponent } from "@components/oops-message/oops-message.component";
 
 @Component({
   selector: 'app-evaluation-resultat',
@@ -23,10 +24,18 @@ import {
 })
 export class EvaluationResultatComponent implements OnInit {
 
-  evaluation$ : IEvaluation;
+  evaluation$ : IEvaluation = null;
 
   precoGlobale$ : IPreconisationGlobale = { idPreconisationG: 0, viewIfPourcentageScoreLessThan: 0, contenu: ""};
   listScoreCategories$ : IScoreCategory[];
+
+
+  oopsMessage: IOopsMessageInput  = {
+    buttonText: "aller vers evaluation",
+    goToUrl: "/evaluer",
+    message: "Merci d'aller sur la rubrique évaluer, pour effectuer une évaluation",
+    title: "Aucune évaluation n'est trouvée", }
+
   constructor(private route : Router,
               private evalTokenStorageService : EvalTokenStorageService) {
 
