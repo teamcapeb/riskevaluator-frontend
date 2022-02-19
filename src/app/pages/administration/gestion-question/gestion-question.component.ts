@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import PreconisationCategorieQuestion from '@/objects/PreconisationCategorieQuestion';
 import { PreconisationCategoriesQuestionService } from '@services/servicePreconisationCategoriesQuestion/preconisation-categories-question.service';
 import CategorieQuestion from '../../../objects/CategorieQuestion';
+import { ModalService } from "@services/serviceModal/modal.service";
 
 
 @Component({
@@ -35,6 +36,7 @@ export class GestionQuestionComponent implements OnInit {
               private preconisationCategoriesQuestionService : PreconisationCategoriesQuestionService,
               private categorieQuestionService: CategorieQuestionService,
               private router: Router,
+              private modalService: ModalService,
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -65,7 +67,7 @@ export class GestionQuestionComponent implements OnInit {
   updateSuggestion(event: IListEvent){
     event.data.idCategorie = this._idCategorie;
     event.data.categorieQuestion = new CategorieQuestion(this._idCategorie, '');
-    
+
     this.actualPreconisationCategorieQuestion = event.data;
     this.preconisationCategorieQuestionForm.open('update');
   }
@@ -99,7 +101,7 @@ export class GestionQuestionComponent implements OnInit {
       }
       this._categorieQuestion = this.categorieQuestionService.get(this._idCategorie);
     }catch(error){
-      this.errorModal.open(error.message);
+      this.modalService.error(JSON.stringify(error.message));
     }
 
   }
@@ -118,14 +120,12 @@ export class GestionQuestionComponent implements OnInit {
       }
       this._categorieQuestion = this.categorieQuestionService.get(this._idCategorie);
     }catch(error){
-      this.errorModal.open(error.message);
+      this.modalService.error(JSON.stringify(error.message));
     }
   }
 
   get categorieQuestion(): Observable<CategorieQuestion> {
     return this._categorieQuestion;
   }
-
-
 
 }

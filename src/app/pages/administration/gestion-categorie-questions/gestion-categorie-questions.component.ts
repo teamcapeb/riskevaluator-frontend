@@ -8,6 +8,7 @@ import CategorieQuestion from '@/objects/CategorieQuestion';
 import { CategorieQuestionService } from '@services/serviceCategorieQuestion/categorie-question.service';
 import Questionnaire from '../../../objects/Questionnaire';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalService } from "@services/serviceModal/modal.service";
 
 @Component({
   selector: 'app-gestion-categorie-questions',
@@ -35,6 +36,7 @@ export class GestionCategorieQuestionsComponent implements OnInit {
               private preconisationGlobaleService: PreconisationGlobaleService,
               private categorieQuestionService: CategorieQuestionService,
               private activatedRoute: ActivatedRoute,
+              private modalService: ModalService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -74,7 +76,7 @@ export class GestionCategorieQuestionsComponent implements OnInit {
     event.data.questionnaire = new Questionnaire(this._idQuestionnaire, '', [], []);
     this.actualCategorieQuestion = event.data;
     this.categorieQuestionForm.open('update');
-   
+
   }
 
   categorieDetails(event: IListEvent){
@@ -104,7 +106,8 @@ export class GestionCategorieQuestionsComponent implements OnInit {
       }
       this._questionnaire = this.questionnaireService.get(this._idQuestionnaire);
     }catch(error){
-      this.errorModal.open(error.message);
+      this.modalService.error(JSON.stringify(error.message));
+
     }
   }
 
@@ -122,7 +125,7 @@ export class GestionCategorieQuestionsComponent implements OnInit {
       }
       this._questionnaire = this.questionnaireService.get(this._idQuestionnaire);
     }catch(error){
-      this.errorModal.open(error.message);
+      this.modalService.error(JSON.stringify(error.message));
     }
   }
 

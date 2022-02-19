@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { MetierService } from '../../../services/serviceMetier/metier.service';
 import { takeUntil } from 'rxjs/operators';
 import IListEvent from '@/interfaces/IListEvent';
+import { ModalService } from "@services/serviceModal/modal.service";
 
 @Component({
   selector: 'app-gestion-metiers',
@@ -19,7 +20,9 @@ export class GestionMetiersComponent implements OnInit {
 
   public actualMetier: Metier;
 
-  constructor(private metierService: MetierService) { }
+  constructor(private metierService: MetierService,
+              private modalService: ModalService
+            ) { }
 
   ngOnInit(): void {
     this._metiers = this.metierService.getAll();
@@ -54,7 +57,8 @@ export class GestionMetiersComponent implements OnInit {
       }
       this._metiers = this.metierService.getAll();
     }catch(error){
-      this.errorModal.open(error.message);
+      this.modalService.error(JSON.stringify(error.message));
+
     }
   }
 

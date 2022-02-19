@@ -8,6 +8,7 @@ import Metier from '../../../../objects/Metier';
 import { MetierService } from '../../../../services/serviceMetier/metier.service';
 import { ToastService } from '../../../../services/serviceToast/toast.service';
 import { Router, ActivatedRoute, Navigation } from '@angular/router';
+import { ModalService } from "@services/serviceModal/modal.service";
 
 @Component({
   selector: 'app-question-form',
@@ -50,6 +51,7 @@ export class QuestionFormComponent implements OnInit {
               private metierService: MetierService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
+              private modalService: ModalService,
               private toastService: ToastService) {
               }
 
@@ -119,7 +121,7 @@ export class QuestionFormComponent implements OnInit {
         this.saved = true;
         this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
       }catch(error){
-        this.errorModal.open(error.message);
+        this.modalService.error(JSON.stringify(error.message));
       }
     }else{
       this.toastService.show('Il doit y avoir 2 réponses minimum', { classname: 'bg-danger text-light', delay: 15000 });

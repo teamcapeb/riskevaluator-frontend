@@ -19,7 +19,7 @@ export class GestionQuestionnaireComponent implements OnInit {
 
   public actualQuestionnaire: Questionnaire;
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
               private modalService: ModalService,
               private questionnaireService: QuestionnaireService) { }
 
@@ -65,7 +65,7 @@ export class GestionQuestionnaireComponent implements OnInit {
       }
       this._questionnaires = this.questionnaireService.getAll();
     }catch(error){
-      this.modalService.error(error.message);
+      this.modalService.error(JSON.stringify(error.message));
     }
   }
 
