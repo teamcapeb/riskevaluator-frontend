@@ -37,11 +37,13 @@ export class QuestionnaireService {
   }
 
   create(questionnaire: Questionnaire): Promise<IQuestionnaire | string>{
-    return this.http.post<IQuestionnaire>(`${this.baseUrl}`, questionnaire.toJSON()).toPromise();
+    let liteQuestionnaire: Questionnaire = new Questionnaire(questionnaire.idQuestionnaire, questionnaire.thematique)
+    return this.http.post<IQuestionnaire>(`${this.baseUrl}`, liteQuestionnaire.toJSON()).toPromise();
   }
 
   update(questionnaire: Questionnaire): Promise<IQuestionnaire | string> {
-    return this.http.put<IQuestionnaire>(`${this.baseUrl}`, questionnaire.toJSON()).toPromise();
+    let liteQuestionnaire: Questionnaire = new Questionnaire(questionnaire.idQuestionnaire, questionnaire.thematique)
+    return this.http.put<IQuestionnaire>(`${this.baseUrl}`, liteQuestionnaire.toJSON()).toPromise();
   }
 
   delete(questionnaire: Questionnaire): Promise<IQuestionnaire | string> {
