@@ -14,6 +14,7 @@ export class ModalService {
   error(message: string) {
     this.modalRef = this.modalService.open(ErrorModalComponent,  { centered: true });
     this.modalRef.componentInstance.message = message;
+    this.modalRef.componentInstance.modalRef = this.modalRef;
   }
 
   onSave() {

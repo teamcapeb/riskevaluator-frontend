@@ -63,10 +63,12 @@ export class GestionQuestionnaireComponent implements OnInit {
       }else if(event.action === 'delete'){
         res = await this.questionnaireService.delete(event.data);
       }
-      this._questionnaires = this.questionnaireService.getAll();
     }catch(error){
-      this.modalService.error(JSON.stringify(error.message));
+      if( error.status === 409 ){
+        this.modalService.error('Ce questionnaire existe déjà !');
+      }
     }
+    this._questionnaires = this.questionnaireService.getAll();
   }
 
   get questionnaires(): Observable<Questionnaire[]> {
