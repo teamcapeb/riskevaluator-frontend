@@ -6,10 +6,9 @@
     </button>
   </div>
   <div class="modal-body bg-danger">
-      <div class="border rounded p-2  bg-dark"><code class="text-danger">{{message}}</code></div>
-      <p class="pt-3"><strong>S'il vous plait, contactez votre administrateur en lui faisant part de l'erreur si dessus.</strong></p>
+      <p class="pt-3"><strong>{{message}}</strong></p>
   </div>
   <div class="modal-footer bg-danger">
-    <button type="button" class="btn btn-light" (click)="activeModal.close('Close click')">Ok</button>
+    <button type="button" class="btn btn-light" (click)="modalRef.close()">Ok</button>
   </div>
 

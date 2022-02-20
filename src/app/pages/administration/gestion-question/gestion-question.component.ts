@@ -118,10 +118,12 @@ export class GestionQuestionComponent implements OnInit {
         console.log(event.data);
         res = await this.preconisationCategoriesQuestionService.delete(event.data);
       }
-      this._categorieQuestion = this.categorieQuestionService.get(this._idCategorie);
     }catch(error){
-      this.modalService.error(JSON.stringify(error.message));
+      if( error.status === 409 ){
+        this.modalService.error('Cette suggestion existe déjà !');
+      }
     }
+    this._categorieQuestion = this.categorieQuestionService.get(this._idCategorie);
   }
 
   get categorieQuestion(): Observable<CategorieQuestion> {

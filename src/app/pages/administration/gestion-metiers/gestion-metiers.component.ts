@@ -55,11 +55,12 @@ export class GestionMetiersComponent implements OnInit {
       }else if(event.action === 'delete'){
         res = await this.metierService.delete(event.data);
       }
-      this._metiers = this.metierService.getAll();
     }catch(error){
-      this.modalService.error(JSON.stringify(error.message));
-
+      if( error.status === 409 ){
+        this.modalService.error('Ce metier existe déjà !');
+      }
     }
+    this._metiers = this.metierService.getAll();
   }
 
   get metiers(): Observable<Metier[]> {

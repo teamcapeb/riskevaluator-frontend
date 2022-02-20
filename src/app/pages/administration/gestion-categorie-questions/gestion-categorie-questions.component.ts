@@ -104,11 +104,12 @@ export class GestionCategorieQuestionsComponent implements OnInit {
       }else if(event.action === 'delete'){
         res = await this.categorieQuestionService.delete(event.data);
       }
-      this._questionnaire = this.questionnaireService.get(this._idQuestionnaire);
     }catch(error){
-      this.modalService.error(JSON.stringify(error.message));
-
+      if( error.status === 409 ){
+        this.modalService.error('Cette catégorie de question existe déjà !');
+      }
     }
+    this._questionnaire = this.questionnaireService.get(this._idQuestionnaire);
   }
 
 
@@ -123,10 +124,12 @@ export class GestionCategorieQuestionsComponent implements OnInit {
       }else if(event.action === 'delete'){
         res = await this.preconisationGlobaleService.delete(event.data);
       }
-      this._questionnaire = this.questionnaireService.get(this._idQuestionnaire);
     }catch(error){
-      this.modalService.error(JSON.stringify(error.message));
+      if( error.status === 409 ){
+        this.modalService.error('Cette preconisation globale existe déjà !');
+      }
     }
+    this._questionnaire = this.questionnaireService.get(this._idQuestionnaire);
   }
 
   get questionnaire(): Observable<Questionnaire> {

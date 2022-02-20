@@ -34,28 +34,34 @@ import { ConfirmDeactivateGuard } from "@services/guards/ConfirmDeactivateGuard"
 const administration: Routes = [
   {
     path: 'gestion-metiers',
-    component: GestionMetiersComponent
+    component: GestionMetiersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions',
-    component: GestionCategorieQuestionsComponent
+    component: GestionCategorieQuestionsComponent,
+    canActivate: [AuthGuard]
   },
 
   {
     path: 'gestion-questionnaires',
-    component: GestionQuestionnaireComponent
+    component: GestionQuestionnaireComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions/:idCategorie/gestion-questions',
-    component: GestionQuestionComponent
+    component: GestionQuestionComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions/:idCategorie/gestion-questions/:idQuestion/question',
-    component: QuestionFormComponent
+    component: QuestionFormComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'gestion-compte',
-    component: GestionComptesComponent
+    component: GestionComptesComponent,
+    canActivate: [AuthGuard]
   }
 
 ]
