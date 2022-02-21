@@ -121,7 +121,9 @@ export class QuestionFormComponent implements OnInit {
         this.saved = true;
         this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
       }catch(error){
-        this.modalService.error(JSON.stringify(error.message));
+        if( error.status === 409 ){
+          this.modalService.error('Cette question existe déjà !');
+        }
       }
     }else{
       this.toastService.show('Il doit y avoir 2 réponses minimum', { classname: 'bg-danger text-light', delay: 15000 });
