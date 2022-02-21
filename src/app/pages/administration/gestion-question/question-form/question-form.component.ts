@@ -131,7 +131,7 @@ export class QuestionFormComponent implements OnInit {
   }
 
   back(){
-    this.router.navigate(['gestion-question'], {state:{idCategorieQuestion: this.idCategorieQuestion}});
+    this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
   }
 
   createOrUpdateOrDeleteReponse(event: IListEvent){
