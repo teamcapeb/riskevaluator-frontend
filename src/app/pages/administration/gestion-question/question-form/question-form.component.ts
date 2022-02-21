@@ -122,11 +122,12 @@ export class QuestionFormComponent implements OnInit {
         this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
       }catch(error){
         if( error.status === 409 ){
-          this.modalService.error('Cette question existe déjà !');
+          this.modalService.error('La question ou les réponses ajoutées existent déjà !');
         }
+        this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
       }
     }else{
-      this.toastService.show('Il doit y avoir 2 réponses minimum', { classname: 'bg-danger text-light', delay: 15000 });
+      this.modalService.error('Il doit y avoir 2 réponses minimum');
     }
   }
 
