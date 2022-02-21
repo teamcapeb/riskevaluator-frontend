@@ -6,13 +6,14 @@
 
     <ng-container *ngIf="(this.evaluationService.actualCategorieNumberObs | async) as index " >
 
+      <ng-container *ngIf="(result?.data[index.current]?.questions?.length >= 1)">
+
         <app-evaluation-head [categorieQuestion$]="result?.data[index.current]"> </app-evaluation-head>
         <app-evaluation-body [categorieQuestion$]="result?.data[index.current]"> </app-evaluation-body>
         <app-evaluation-footer [categoriesQuestions$]="result.data"
-                               [categorieQuestion$]="result?.data[index.current]"
-        >
+                               [categorieQuestion$]="result?.data[index.current]"></app-evaluation-footer>
 
-        </app-evaluation-footer>
+      </ng-container>
 
     </ng-container>
 

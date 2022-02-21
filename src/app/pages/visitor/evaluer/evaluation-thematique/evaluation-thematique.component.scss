@@ -1,10 +1,6 @@
 @import '/src/assets/common-css/gradient-colors.scss';
 
 
-.container{
-  overflow-y: scroll;
-}
-
 .card {
   border-radius: 5px;
   -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
@@ -14,7 +10,6 @@
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   width: 300px;
-  height : 250px;
 }
 
 .card .card-block {
@@ -106,4 +101,40 @@ blockquote {
 .card .card-body p {
   margin-bottom: 1rem;
 }
+
+
+
+.order-card {
+  color: #fff;
+}
+
+.bg-c-blue {
+  background: linear-gradient(45deg,#4099ff, rgba(115, 180, 255, 0.84));
+}
+
+.bg-c-green {
+  background: linear-gradient(45deg,#2ed8b6, rgba(89, 224, 197, 0.78));
+}
+
+.bg-c-yellow {
+  background: linear-gradient(45deg, #ffb64d, rgba(218, 136, 5, 0.84));
+}
+
+.bg-c-pink {
+  background: linear-gradient(45deg,#FF5370, rgba(255, 134, 154, 0.66));
+}
+
+.bg-c-rouge {
+  background: linear-gradient(45deg, #e33b1a, rgba(218, 59, 59, 0.55));
+}
+
+.bg-c-black {
+  background: linear-gradient(45deg, #323744, #99a0a6);
+}
+
+.bg-c-green {
+  background: linear-gradient(45deg, rgb(120, 192, 0), rgba(120, 192, 0, 0.37));
+}
+
+
 

@@ -52,7 +52,7 @@ export class EvaluationResultatComponent implements OnInit {
 
          this.precoGlobale$ = tempPreco?.find(el => el !== undefined)
 
-         if( this.precoGlobale$?.contenu !==null)
+         if( this.precoGlobale$ != null && this.precoGlobale$?.contenu !==null)
          this.precoGlobale$.contenu = tempPreco?.reduce(textReducer,"");
 
          this.listScoreCategories$ = this.evaluation$.scoreCategories.map( cat => {

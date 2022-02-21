@@ -1,5 +1,5 @@
 
-<div class="container test" *ngIf="(questionnaires$ | async) as result" [ngSwitch]="result.dataState">
+<div class="container" *ngIf="(questionnaires$ | async) as result" [ngSwitch]="result.dataState">
 
 
   <ng-container *ngSwitchCase="DataStateEnum.LOADED">
@@ -9,7 +9,7 @@
         goToUrl: 'evaluer',buttonText:'Choisir autres métiers'}">
     </app-oops-message>
 
-    <div    class="row mb-5">
+    <div  class="row mb-5">
     <div *ngFor="let questionnaire of result.data"  class="col-md-4 mb-5">
       <div  class="card {{calculateColor(questionnaire?.idQuestionnaire)}} order-card" role= "button"(click)="myFunction(questionnaire.idQuestionnaire)">
         <div class="card-block">

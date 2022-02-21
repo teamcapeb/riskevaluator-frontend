@@ -39,24 +39,6 @@
             >
         </li>
     </ng-container>
-    <ng-container *ngIf="!isLoggedIn" dropdown-menu>
-    <!-- Menu Body -->
-    <li class="user-body">
-      <div class="row">
-        <div class="col-4 text-center">
-          <a [routerLink]="['/login']" class="btn btn-default btn-flat">
-            Sign in
-          </a>
-        </div>
-        <div class="col-4 text-center">
-          <a [routerLink]="['/register']" class="btn btn-default btn-flat">
-            Register
-          </a>
-        </div>
-      </div>
-      <!-- /.row -->
-    </li>
-  </ng-container>
-
 
 </app-dropdown>
+

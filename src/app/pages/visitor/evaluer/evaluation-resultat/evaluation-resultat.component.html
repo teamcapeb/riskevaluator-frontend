@@ -1,4 +1,5 @@
 <div class="container"  *ngIf="evaluation$ as eval">
+  <app-result-radarchart-item [scorecategories$]="listScoreCategories$"></app-result-radarchart-item>
 
   <app-resultat-item  [@bounceInOnEnter] [isGlobal$] = true
                      [text$]="precoGlobale$?.contenu"
@@ -12,6 +13,7 @@
                        [percentage$]="item?.nbPoints"
                        [title$]="item?.categorie?.libelle"  > </app-resultat-item>
   </ng-container>
+
 </div>
 
 

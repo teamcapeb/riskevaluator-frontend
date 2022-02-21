@@ -90,6 +90,11 @@ import { ResultatItemComponent } from './pages/visitor/evaluer/evaluation-result
 import { NgCircleProgressModule } from "ng-circle-progress";
 import { EvaluationEntrepriseInfoComponent } from './pages/visitor/evaluer/evaluation-entreprise-info/evaluation-entreprise-info.component';
 import { OopsMessageComponent } from './components/oops-message/oops-message.component';
+import { SignupLoginComponent } from './modules/main/header/signup-login/signup-login.component';
+import { NgProgressModule } from "ngx-progressbar";
+import { NgProgressHttpModule } from "ngx-progressbar/http";
+import { NgChartsModule } from 'ng2-charts';
+import { ResultRadarchartItemComponent } from './pages/visitor/evaluer/evaluation-resultat/result-radarchart-item/result-radarchart-item.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -150,7 +155,9 @@ registerLocaleData(localeEn, 'en-EN');
         EvaluationResultatComponent,
         ResultatItemComponent,
         EvaluationEntrepriseInfoComponent,
-        OopsMessageComponent
+        OopsMessageComponent,
+        SignupLoginComponent,
+        ResultRadarchartItemComponent
     ],
   imports: [
     BrowserModule,
@@ -197,8 +204,14 @@ registerLocaleData(localeEn, 'en-EN');
       titleColor: "#ffffff",
       subtitleColor: "#ffffff",
       animationDuration: 300
-    })
-
+    }),
+    NgProgressModule.withConfig({
+      spinnerPosition: 'left',
+      color: "#da3b3b",
+      thick: true
+    }),
+    NgProgressHttpModule,
+    NgChartsModule
   ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]

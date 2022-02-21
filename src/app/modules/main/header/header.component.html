@@ -10,7 +10,8 @@
 
 
     <ul class="navbar-nav ml-auto">
-        <app-user></app-user>
+        <app-user *ngIf="isLoggedIn"></app-user>
+        <app-signup-login *ngIf="!isLoggedIn"></app-signup-login>
         <!-- <li class="nav-item">
       <a
         class="nav-link"

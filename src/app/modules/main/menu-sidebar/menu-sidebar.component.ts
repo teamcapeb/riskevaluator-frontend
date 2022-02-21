@@ -39,7 +39,7 @@ export const MENU = [
     {
         name: 'Acceuil',
         path: ['/'],
-        icon: "fa-solid fa-house-user"
+        icon: "fa-solid fa-landmark"
     },
     {
         name: 'Evaluer',
@@ -62,17 +62,17 @@ export const ADMIN_MENU = [
   {
     name: 'Gestion questionnaire',
     path: ['/gestion-questionnaires'],
-    icon: "fa-solid fa-money-check-pen"
+    icon: "fa-solid fa-atom"
 
   },
   {
     name: 'Gestion métiers',
     path: ['/gestion-metiers'],
-    icon: "fa-solid fa-money-check-pen"
+    icon: "fa-solid fa-atom"
   },
   {
     name: 'Gestion Comptes',
     path: ['/gestion-compte'],
-    icon: "fa-solid fa-money-check-pen"
+    icon: "fa-solid fa-atom"
   }
 ];

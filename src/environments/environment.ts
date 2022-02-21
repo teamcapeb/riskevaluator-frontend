@@ -51,18 +51,15 @@ export const environment = {
         findUs: "Retrouvez nous ici"
       },
     },
-    gradientColors: ["card bg-primary ",
-      "card bg-secondary ",
-      "card bg-success ",
-      "card bg-info",
-      "card bg-warning ",
-      "card bg-danger ",
-      "card bg-primary ",
-      "card bg-secondary bg-gradient",
-      "card bg-success bg-gradient ",
-      "card bg-info bg-gradient ",
-      "card bg-warning bg-gradient",
-      "card bg-danger bg-gradient "]
+    gradientColors: [
+      "card bg-c-blue ",
+      "card bg-c-green ",
+      "card bg-c-green",
+      "card bg-c-yellow",
+      "card bg-c-rouge",
+      "card bg-c-black ",
+      "card bg-c-green "
+    ]
   }
 }
 

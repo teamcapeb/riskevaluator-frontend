@@ -1,6 +1,7 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {FormGroup, FormControl} from '@angular/forms';
 import {AppService} from '@services/serviceUser/app.service';
+import { TokenStorageService } from "@services/serviceUser/token-storage.service";
 
 @Component({
     selector: 'app-header',
@@ -10,16 +11,15 @@ import {AppService} from '@services/serviceUser/app.service';
 export class HeaderComponent implements OnInit {
     @Output() toggleMenuSidebar: EventEmitter<any> = new EventEmitter<any>();
     public searchForm: FormGroup | undefined;
+    isLoggedIn: boolean;
 
-    constructor(private appService: AppService) {}
+    constructor(private tokenStorageService: TokenStorageService) {}
 
     ngOnInit() {
-        this.searchForm = new FormGroup({
+      this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+      this.searchForm = new FormGroup({
             search: new FormControl(null)
         });
-    }
-
-    logout() {
-        this.appService.logout();
     }
 }
