@@ -12,6 +12,11 @@ import { TokenStorageService } from "@services/serviceUser/token-storage.service
 import { AuthService } from "@services/serviceUser/auth.service";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { ModalService } from '@services/serviceModal/modal.service';
+import { Observable, of } from "rxjs";
+import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
+import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
+import { IUser } from '@/interfaces/IUser';
+import { catchError, map, startWith } from "rxjs/operators";
 
 // @ts-nocheck
 
@@ -22,10 +27,10 @@ import { ModalService } from '@services/serviceModal/modal.service';
 })
 export class LoginComponent implements OnInit {
 
-    form: any = {};
+  login$:Observable<AppDataState<IUser>> |null=null;
+  DataStateEnum = DataStateEnum;
+  form: any = {};
     isLoggedIn = false;
-    isLoginFailed = false;
-    errorMessage = '';
     roles: string[] = [];
 
     constructor(
@@ -43,25 +48,34 @@ export class LoginComponent implements OnInit {
         });
     }
 
+
   onSubmit() {
-    this.authService.login(this.form).subscribe(
-      data => {
-        this.tokenStorage.saveToken(data.accessToken);
+    this.login$= this.authService.login(this.form).pipe(
+      map((data: IUser)=>{
+
+        this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
 
-        this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
         this.router.navigate(['']);
-      },
-      err => {
-        console.log(err);
-        this.modalService.error(JSON.stringify(err.error));
-        this.errorMessage =  err.error.message;
-        this.isLoginFailed = true;
-      }
+
+        return ({dataState:DataStateEnum.LOADED,data:data})
+      }),
+      startWith({dataState:DataStateEnum.LOADING}),
+      catchError(err=> {
+        if(err?.status === 401)
+        {
+          return of({dataState:DataStateEnum.ERROR, errorMessage:"L'utilisateur est introuvable, merci de créer un compte"})
+          console.log(err?.status)
+        }else {
+          this.modalService.error(JSON.stringify(err.message));
+        }
+        return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
+      })
     );
   }
+
 
   reloadPage() {
     window.location.reload();
