@@ -36,16 +36,16 @@ export const environment = {
     contactIHM: {
       infosContact: {
         contactPageTitle: "Vous souhaitez nous contacter?",
+        contactValue : "Vous ne trouvez pas la réponse à votre question ?\n" +
+          "Nous restons à votre disposition via ce formulaire de contact ",
         contactTelephoneName: "TELEPHONE",
-        contactTelephoneLogo: "phone",
         contactTelephoneValue: "04 74 16 18 38",
         contactAdresseName: "ADRESSE",
-        contactAdresseLogo: "room",
         contactDebutAdresseValue: "3 Cours Jean Jaurès,",
         contacFinAdresseValue: "38130 Échirolles",
         contactEmailName: "EMAIL",
-        contactEmailLogo: "email",
         contactEmailValue: "capeb38@capeb-isere.fr",
+        contactEmailValue2: "team.capeb@gmail.com",
         capebLocalisationLongitude: 45.15707257424074,
         capebLocalisationLatitude: 5.709134397925588,
         findUs: "Retrouvez nous ici"
