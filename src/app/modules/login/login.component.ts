@@ -11,6 +11,7 @@ import {AppService} from '@services/serviceUser/app.service';
 import { TokenStorageService } from "@services/serviceUser/token-storage.service";
 import { AuthService } from "@services/serviceUser/auth.service";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { ModalService } from '@services/serviceModal/modal.service';
 
 // @ts-nocheck
 
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
           private authService: AuthService,
           private tokenStorage: TokenStorageService,
           private router: Router,
+          private modalService: ModalService
       ) {}
 
     ngOnInit() {
@@ -53,7 +55,9 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['']);
       },
       err => {
-        this.errorMessage = err.error.message;
+        console.log(err);
+        this.modalService.error(JSON.stringify(err.error));
+        this.errorMessage =  err.error.message;
         this.isLoginFailed = true;
       }
     );
