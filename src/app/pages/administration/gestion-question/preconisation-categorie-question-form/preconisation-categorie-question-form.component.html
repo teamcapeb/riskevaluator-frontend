@@ -1,13 +1,13 @@
 <ng-template #modalContentCreateOrUpdate let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title"> Suggestion</h4>
+    <h4 class="modal-title" id="modal-basic-title"> Ajouter préconisation catégorie</h4>
     <!--button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button-->
   </div>
   <div class="modal-body">
     <div class="form-group">
-      <label for="exampleInputEmail1">Suggestions</label>
+      <label for="exampleInputEmail1">Préconisation</label>
       <textarea
         required
         class="form-control"
@@ -15,7 +15,7 @@
         rows="5"
         [(ngModel)] = "preconisationCategorieQuestion.contenu"
         #suggestion="ngModel"></textarea>
-      <label for="exampleInputEmail1">Pourcentages</label>
+      <label for="exampleInputEmail1">Afficher suggestion si le score est inférieur à (%)</label>
       <input
         required
         type="number"
