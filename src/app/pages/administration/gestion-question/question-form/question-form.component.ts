@@ -121,15 +121,18 @@ export class QuestionFormComponent implements OnInit {
         this.saved = true;
         this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
       }catch(error){
-        this.modalService.error(JSON.stringify(error.message));
+        if( error.status === 409 ){
+          this.modalService.error('La question ou les réponses ajoutées existent déjà !');
+        }
+        this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
       }
     }else{
-      this.toastService.show('Il doit y avoir 2 réponses minimum', { classname: 'bg-danger text-light', delay: 15000 });
+      this.modalService.error('Il doit y avoir 2 réponses minimum');
     }
   }
 
   back(){
-    this.router.navigate(['gestion-question'], {state:{idCategorieQuestion: this.idCategorieQuestion}});
+    this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
   }
 
   createOrUpdateOrDeleteReponse(event: IListEvent){
