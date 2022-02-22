@@ -41,8 +41,8 @@
         <div class="form-group">
           <label for="inputGroupSelect01">Type de la question</label>
           <select required name="question-type" class="form-select form-control-sm" id="inputGroupSelect01" [(ngModel)]="question.typeQuestion" #type="ngModel">
-            <option>QUESTION_CHOIX_UNIQUE</option>
-            <option>QUESTION_CHOIX_MULTIPLE</option>
+            <option value="QUESTION_CHOIX_UNIQUE">Question à choix unique</option>
+            <option value="QUESTION_CHOIX_MULTIPLE">Question à choix multiple</option>
           </select>
         </div>
         <div class="form-group">
@@ -62,9 +62,9 @@
     </div>
     <div class="col-12 d-flex justify-content-center align-items-center mt-1">
       <div class="w-75 p-2">
-        <app-list title="Liste des reponses" (onAdd)="add()" [header]="false">
+        <app-list title="Liste des réponses" (onAdd)="add()" [header]="false">
           <app-list-item [header]="true">
-            <app-list-item-col>Reponses</app-list-item-col>
+            <app-list-item-col>Réponses</app-list-item-col>
             <app-list-item-col>Points</app-list-item-col>
           </app-list-item>
           <ng-container *ngFor="let reponse of question.reponses">

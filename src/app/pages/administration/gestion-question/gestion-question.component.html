@@ -8,6 +8,7 @@
             <app-list-item
                 id="{{question.idQuestion}}"
                 [data]="question"
+                (onRowClick)="update($event)"
                 (onUpdate)="update($event)"
                 (onDelete)="delete($event)"
             >
@@ -17,12 +18,17 @@
     </ng-template>
 </app-list>
 
-<app-list title="Liste des suggestions" (onAdd)="addSuggestion()">
+<app-list title="Liste des préconisations de categorie" (onAdd)="addSuggestion()">
+  <app-list-item [header]="true">
+    <app-list-item-col>Libellé</app-list-item-col>
+    <app-list-item-col>Inférieur à</app-list-item-col>
+  </app-list-item>
   <ng-template [ngIf]="categorieQuestion | async" [ngIfElse]="loading">
     <ng-container *ngFor="let suggestions of (categorieQuestion | async)?.preconisationsCategorie">
       <app-list-item
         id="{{suggestions.idPreconisation}}"
         [data]="suggestions"
+        (onRowClick)="updateSuggestion($event)"
         (onUpdate)="updateSuggestion($event)"
         (onDelete)="deleteSuggestion($event)"
       >
