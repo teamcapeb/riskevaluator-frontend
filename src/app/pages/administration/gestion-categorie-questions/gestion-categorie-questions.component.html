@@ -3,7 +3,7 @@
 <div class="header text-center p-4">
   <h1>{{(questionnaire | async)?.thematique}}</h1>
 </div>
-<app-list title="Liste des Categories de questions" (onAdd)="addC()" >
+<app-list title="Liste des catégories de questions" (onAdd)="addC()" >
   <ng-template [ngIf]="questionnaire | async" [ngIfElse]="loading">
     <ng-container *ngFor="let CategorieQuestion of (questionnaire | async)?.categorieQuestions">
         <app-list-item
@@ -31,7 +31,7 @@
 
 
 
-<app-list title="Liste des Suggestions Global" (onAdd)="add()" >
+<app-list title="Liste des préconisations Globale" (onAdd)="add()" >
   <app-list-item [header]="true">
     <app-list-item-col>Libellé</app-list-item-col>
     <app-list-item-col>Inférieur à</app-list-item-col>
@@ -41,6 +41,7 @@
         <app-list-item
             id="{{preconisationGlobale.idPreconisationG}}"
             [data]="preconisationGlobale"
+            (onRowClick)="update($event)"
             (onUpdate)="update($event)"
             (onDelete)="delete($event)"
         >
