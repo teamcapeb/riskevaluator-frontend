@@ -1,11 +1,18 @@
-<ng-container  dropdown-menu>
-  <div class="row">
-    <div class="col">
-      <button (click)='navigateTo("/login")'  type="button" class="btn btn-secondary btn-lg btn-radius">Se connecter</button>
-    </div>
+<ng-container>
+
+  <div class="container">
+   <!-- /row -->
+
+    <div class="row">
       <div class="col">
-      <button (click)='navigateTo("/register")' type="button" class="btn btn-danger btn-lg btn-radius">S'inscrire</button>
+        <button (click)='navigateTo("/login")' class="btn btn-secondary  btn-block ">Se connecter  </button>
+      </div>
+      <div class="col">
+        <button (click)='navigateTo("/register")' class="btn btn-danger   btn-block ">S'inscrire</button>
+      </div>
+
     </div>
   </div>
-  <!-- /row -->
+
+
 </ng-container >
