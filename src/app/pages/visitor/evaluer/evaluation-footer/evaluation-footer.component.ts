@@ -13,11 +13,14 @@ import { concatMap, Observable } from "rxjs";
 import IEvaluation from "@/interfaces/IEvaluation";
 import { IEntreprise } from "@/interfaces/IEntreprise";
 import { EvalTokenStorageService } from "@services/serviceEvaluation/eval-token-storage.service";
+import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 
 @Component({
   selector: 'app-evaluation-footer',
   templateUrl: './evaluation-footer.component.html',
-  styleUrls: ['./evaluation-footer.component.scss']
+  styleUrls: ['./evaluation-footer.component.scss'],
+  providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}]
+
 })
 export class EvaluationFooterComponent implements OnInit {
   @Input() categorieQuestion$: ICategorieQuestion;
@@ -30,10 +33,19 @@ export class EvaluationFooterComponent implements OnInit {
   constructor(private evaluationService: EvaluationService,
               private evaluationApiService:EvaluationApiService,
               private router: Router,
+              private location: Location,
               private tokenStorageService: TokenStorageService,
               private evalTokenStorageService : EvalTokenStorageService) {
 
+
+    // Observers subscriptions ;
     this.actualCategorieNumberObs = this.evaluationService.actualCategorieNumberObs;
+    this.actualCategorieNumberObs.subscribe(e=> {
+      if(e.isLastReturn) {
+        this.location.back();
+      }
+    });
+
   }
 
 
@@ -50,44 +62,18 @@ export class EvaluationFooterComponent implements OnInit {
 
    finishButtonClick() {
 
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
+     this.isLoggedIn = !!this.tokenStorageService.getToken();
+     let user: IUser = this.tokenStorageService.getUser();
+     this.evaluationService.onCalculateScore(this.categoriesQuestions$, this.isLoggedIn ? user : null);
+     const evaluation = this.evaluationService.evaluation.getValue();
+     if(evaluation != null) {
+       this.evalTokenStorageService.saveEvaluation(evaluation);
+       this.router.navigate(['evaluer/evaluation-resultat'], { state : {
+           evaluation
+         } });
+     }
 
-    let user: IUser = this.tokenStorageService.getUser();
-    this.evaluationService.onCalculateScore(this.categoriesQuestions$, this.isLoggedIn ? user : null);
-
-
-    this.evaluationService.evaluation.subscribe(( evaluation : IEvaluation) => {
-
-      this.evalTokenStorageService.saveEvaluation(evaluation);
-      this.router.navigate(['evaluer/evaluation-resultat'], { state : {
-          evaluation
-        } });
-    })
-
-    /*
-     this.evaluationService.evaluation
-       .pipe(
-         concatMap((evaluation : IEvaluation) => {
-
-           console.log("[evaluation] =================> ");
-           console.log(evaluation);
-           return this.evaluationApiService.create(evaluation);     //inner observable
-         })
-       )
-       .subscribe(data => {
-         console.log("[INSERTED] =================> ");
-         console.log(data)
-       })
-*/
-
-/*
-    if()
-    this.evaluationService.evaluation.subscribe(evaluation => {
-      this.evaluationApiService.create(evaluation);
-      this.router.navigate(['evaluer/evaluation-resultat']);
-    })
-*/
-  }
+   }
 
   nextButtonClick() {
     this.evaluationService.onNextCategorieNumber(CategorieNumberAction.INCREASE);

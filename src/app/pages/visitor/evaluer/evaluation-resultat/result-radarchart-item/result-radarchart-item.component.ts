@@ -12,8 +12,34 @@ export class ResultRadarchartItemComponent implements OnInit {
 
   @Input() scorecategories$ : IScoreCategory[];
 
+   notations = {
+    0: "",
+    0.5: "",
+    1: "no",
+    1.5: "",
+    2: "basic",
+    2.5: "",
+    3: "proficient",
+    3.5: "",
+    4: "great",
+    4.5: "",
+    5: "outstanding",
+  }
+
   public radarChartOptions: ChartConfiguration['options'] = {
     responsive: true,
+    scales: {
+      r: {
+        suggestedMin: 0,
+        suggestedMax: 100,
+        ticks: {
+          // Include a dollar sign in the ticks
+          callback: function(value, index, ticks) {
+            return   value + ' %';
+          }
+        }
+      }
+    }
   };
   public radarChartLabels: string[] = [];
 
@@ -37,7 +63,7 @@ export class ResultRadarchartItemComponent implements OnInit {
     this.radarChartData = {
       labels: this.radarChartLabels,
       datasets: [
-        { data, label: 'Series A' },
+        { data, label: this.scorecategories$?.at(0).categorie?.questionnaire?.thematique},
       ]
     };
 

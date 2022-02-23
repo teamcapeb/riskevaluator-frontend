@@ -2,7 +2,6 @@
 
   <div class="row" >
     <div class="allQuestions col-lg-12">
-
       <ng-container *ngFor="let item of categorieQuestion$.questions" >
         <app-evaluation-question *ngIf="item?.reponses.length >= 2" [question$]="item"></app-evaluation-question>
       </ng-container>

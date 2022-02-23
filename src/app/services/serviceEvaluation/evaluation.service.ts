@@ -13,19 +13,18 @@ import { IUser } from "@/interfaces/IUser";
 import { response } from "express";
 import { EvaluationApiService } from "@services/serviceEvaluation/evaluation-api.service";
 
-
 export enum CategorieNumberAction {
   INCREASE,
-  DECREASE
+  DECREASE,
+  INIT
 }
 
 
-export enum EvaluationData {
-  INCREASE,
-  DECREASE
-}
 export interface IEvalIndex {
-  current: number,max: number
+  current: number,
+  max: number,
+  isLastReturn? : boolean,
+  isFinished? : boolean
 }
 
 
@@ -55,13 +54,23 @@ export class EvaluationService {
     this.evaluation.value.entreprise = entreprise;
   }
 
-  onNextCategorieNumber(action : CategorieNumberAction) {
+
+  calculateNextCategorie(action : CategorieNumberAction) {
     var currentCategoryNumber = Object.assign({}, this.actualCategorieIndex.getValue());
     action === CategorieNumberAction.INCREASE? currentCategoryNumber.current++: currentCategoryNumber.current--;
 
-    if(currentCategoryNumber.current >= 0 && currentCategoryNumber.current < currentCategoryNumber.max) {
-      this.actualCategorieIndex.next(currentCategoryNumber);
-    }
+    currentCategoryNumber.isFinished = currentCategoryNumber.current >= 0 && currentCategoryNumber.current >= currentCategoryNumber.max-1;
+
+    currentCategoryNumber.isLastReturn = currentCategoryNumber.current < 0;
+
+    this.actualCategorieIndex.next(currentCategoryNumber);
+  }
+
+  initNextCategorie(){
+    this.actualCategorieIndex.next({ current: 0,max: 0,isLastReturn: false, isFinished : false });
+  }
+  onNextCategorieNumber(action : CategorieNumberAction) {
+    action=== CategorieNumberAction.INIT? this.initNextCategorie() :this.calculateNextCategorie(action);
   }
 
   onUpdateCategorieMax(newMax: number) {
@@ -72,37 +81,46 @@ export class EvaluationService {
     }
   }
 
-  onCalculateScore(categoriesQuestions$: ICategorieQuestion[], user: IUser) : IEvaluation {
+  onCalculateScore(categoriesQuestions$: ICategorieQuestion[], user: IUser) {
 
     let scoreCategories: IScoreCategory[] = [];
     let sumScoreMaxTotal: number = 0;
     let nbPointsTotal: number = 0;
+    let _evaluation: IEvaluation =  Object.assign({}, this.evaluation.value);
 
     categoriesQuestions$?.forEach( (categorie:ICategorieQuestion)  => {
 
       let filteredReponses : IReponse[][] | undefined = categorie
          ?.questions
          ?.map(question => {
-           return question?.reponses?.filter(reponse => reponse.isChecked);
+           return question?.reponses.filter(reponse => reponse.isChecked);
          });
 
-      console.log(filteredReponses);
+      if(categorie.idCategorie == 37){
+        console.log("[DEBUG]");
+        console.log(categoriesQuestions$);
+        console.log(filteredReponses);
+        _evaluation.filterResponses = filteredReponses;
+      }
 
-      const reponseReducer = (previousValue: number, currentValue: IReponse) => previousValue + currentValue.nbPoints;
+        const reponseReducer = (previousValue: number, currentValue: IReponse) => previousValue + currentValue.nbPoints;
         const questionReducer = (previousValue: number, currentValue: IQuestion) => previousValue + currentValue.scoreMaxPossibleQuestion;
 
 
-        let initialValue = 0
         let nbPointsSum=  0;
-
         let sumScoreMaxCategorie = categorie.questions.reduce(questionReducer, 0);
         let scoreTotalCateorie = 0;
 
-        filteredReponses.forEach(response => {
-          nbPointsSum+= response.reduce(reponseReducer, initialValue);
+        filteredReponses.forEach(responsesOfQuestion => {
+          nbPointsSum+= responsesOfQuestion.reduce(reponseReducer, 0);
         });
 
-      if(sumScoreMaxCategorie > 0)  scoreTotalCateorie = +((nbPointsSum / sumScoreMaxCategorie)*100).toFixed();
+
+        if(sumScoreMaxCategorie > 0)  scoreTotalCateorie = +((nbPointsSum / sumScoreMaxCategorie)*100).toFixed();
+
+
+     // if(categorie.idCategorie = 34)
+     //   _evaluation.filterResponses = {filteredReponses, sumScoreMaxCategorie,nbPointsSum, scoreTotalCateorie }
 
 
       scoreCategories.push({
@@ -115,11 +133,11 @@ export class EvaluationService {
       }
     )
 
-    if(sumScoreMaxTotal >0 ) this.evaluation.value.scoreGeneraleEvaluation = +((nbPointsTotal / sumScoreMaxTotal)*100).toFixed();
+    if(sumScoreMaxTotal >0 ) _evaluation.scoreGeneraleEvaluation = +((nbPointsTotal / sumScoreMaxTotal)*100).toFixed();
 
-    this.evaluation.value.scoreCategories = scoreCategories;
+    _evaluation.scoreCategories = scoreCategories;
 
-    return this.evaluation.value;
+    this.evaluation.next(_evaluation);
   }
 
 
