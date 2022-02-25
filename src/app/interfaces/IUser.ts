@@ -8,7 +8,7 @@ export class IUser {
 
   password?: string;
 
-  token?: string;
+  accessToken?: string;
 
   roles?:any = []
 }

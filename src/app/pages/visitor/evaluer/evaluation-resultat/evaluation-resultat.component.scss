@@ -23,11 +23,25 @@
   background: #ffffff;
   color: #000000;
   border-bottom: 1px solid grey !important;
-  border-color: none !important;
 }
 
-.nav-link.active {
-  border-bottom: 2px solid blue !important;
-  color: #ec8a00 !important;
-  background-color: #97a9b2;
+.active {
+  border-bottom: 2px solid #e33b1a !important;
+  color: #e33b1a !important;
 }
+
+img.logo-navbar {
+  width: 3rem !important;
+  height: 3rem !important;
+}
+
+span {
+  display: table;
+  margin: 0 auto;
+}
+
+
+
+
+
+
