@@ -68,7 +68,7 @@ export class EvaluationFooterComponent implements OnInit {
      const evaluation = this.evaluationService.evaluation.getValue();
      if(evaluation != null) {
        this.evalTokenStorageService.saveEvaluation(evaluation);
-       this.router.navigate(['evaluer/evaluation-resultat'], { state : {
+       this.router.navigate(['historiques'], { state : {
            evaluation
          } });
      }

@@ -1,23 +1,9 @@
 <div class="container"  *ngIf="evaluation$ as eval">
-  <app-result-radarchart-item [scorecategories$]="listScoreCategories$"></app-result-radarchart-item>
-
-  <app-resultat-item  [@bounceInOnEnter] [isGlobal$] = true
-                     [text$]="precoGlobale$?.contenu"
-                     [percentage$]="evaluation$?.scoreGeneraleEvaluation"
-                     [title$]="'Score Global'"  > </app-resultat-item>
-
-
-  <ng-container *ngFor="let item of listScoreCategories$">
-    <app-resultat-item    *ngFor="let preco of item?.categorie?.preconisationsCategorie"
-                       [text$]="preco?.contenu"
-                       [percentage$]="item?.nbPoints"
-                       [title$]="item?.categorie?.libelle"  > </app-resultat-item>
-  </ng-container>
-
-</div>
-
-
-<div class="container">
+  <ul class="nav nav-tabs">
+    <li><a class="nav-link"  [routerLink]="['resultat-chart']">Chart</a></li>
+    <li><a class="nav-link" [routerLink]="['resultat-list']"  >Liste</a></li>
+  </ul>
+  <router-outlet></router-outlet>
   <app-oops-message [oopsInput$] = oopsMessage *ngIf="evaluation$ == null" ></app-oops-message>
 
 </div>

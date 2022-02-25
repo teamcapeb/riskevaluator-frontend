@@ -12,6 +12,7 @@ import {
   fadeInUpOnEnterAnimation
 } from 'angular-animations';
 import { IOopsMessageInput, OopsMessageComponent } from "@components/oops-message/oops-message.component";
+import IPreconisationCategorieQuestion from "@/interfaces/IPreconisationCategorieQuestion";
 
 @Component({
   selector: 'app-evaluation-resultat',
@@ -36,22 +37,27 @@ export class EvaluationResultatComponent implements OnInit {
     message: "Merci d'aller sur la rubrique évaluer, pour effectuer une évaluation",
     title: "Aucune évaluation n'est trouvée", }
 
-  constructor(private route : Router,
-              private evalTokenStorageService : EvalTokenStorageService) {
-
-  }
+  constructor( private evalTokenStorageService : EvalTokenStorageService) {}
 
   ngOnInit(): void {
        this.evaluation$ = this.evalTokenStorageService.getEvaluation();
 
 
        if(this.evaluation$!=null) {
-         const textReducer = (previousValue: string, currentValue: IPreconisationGlobale) => previousValue.concat('\n \n',currentValue.contenu);
+
+
+         const textReducer = (previousValue: string, currentValue: IPreconisationGlobale | IPreconisationCategorieQuestion) => previousValue.concat('\n \n',currentValue.contenu);
+
+         // Take questionnaire from one the scoreCategories
          let questionnaire: IQuestionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorie?.questionnaire;
+
+         // filter preconisation with respect the viewIfpercentage
          const tempPreco : IPreconisationGlobale[] = questionnaire?.preconisationGlobales?.filter(p=> p?.viewIfPourcentageScoreLessThan > this.evaluation$?.scoreGeneraleEvaluation);
 
+         // take one of the Globale preconisation
          this.precoGlobale$ = tempPreco?.find(el => el !== undefined)
 
+         // concatenate contenu of all global preconisation to one
          if( this.precoGlobale$ != null && this.precoGlobale$?.contenu !==null)
          this.precoGlobale$.contenu = tempPreco?.reduce(textReducer,"");
 
@@ -60,11 +66,15 @@ export class EvaluationResultatComponent implements OnInit {
            cat.categorie.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
            return cat;
          })
-
        }
 
   }
 
+
+  concatPreconisations(preconisation :any) : string {
+    const textReducer = (previousValue: string, currentValue: IPreconisationGlobale | IPreconisationCategorieQuestion) => previousValue.concat('\n \n',currentValue.contenu);
+    return preconisation.reduce(textReducer,"");
+  }
 
 
 }

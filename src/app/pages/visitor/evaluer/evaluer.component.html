@@ -2,32 +2,35 @@
 <ng-container *ngIf="(metiers$ | async) as result" [ngSwitch]="result.dataState">
 
   <ng-container *ngSwitchCase="DataStateEnum.LOADED">
+
+
+    <nav  class="navbar navbar-light bg-light">
+      <div *ngIf="alertMetier === true"
+           class="alert alert-danger"
+           role="alert">
+        Vous devez choisir au moins un metier
+      </div>
+
+      <div *ngIf = "onCountChecked(result.data) as nbChecked"
+        class="alert alert-success"
+        role="alert">
+        Vous avez choisi {{nbChecked}} métier{{nbChecked==1?"":"s"}}
+      </div>
+
+      <form class="form-inline ms-auto">
+        <button class="btn btn-outline-success btn-lg " (click)="onValidateMetiers(result.data)"> Valider</button>
+
+      </form>
+    </nav>
     <div class="d-flex justify-content-center">
-      <h1 class="pt-2">Metiers</h1>
+      <h1 class="pt-2">Veuillez sélectionner un ou plusieurs métiers</h1>
     </div>
-
-
-    <div class="card bg-c-grey order-card mx-auto">
-      <section *ngFor="let metier of result.data"  >
-        <mat-checkbox (change)="check($event,metier)" class="pl-2 text-lit-white" >
-          {{metier.nomMetier}}
-        </mat-checkbox>
-      </section>
-
-
-
+    <div class="container">
+      <div class="row mb-5">
+        <app-evaluation-metier-item class="col-md-4 mb-5" *ngFor="let metier of result.data"
+                                    [metier$]="metier"></app-evaluation-metier-item>
+      </div>
     </div>
-
-
-
-
-    <div class="d-flex justify-content-center">
-      <button mat-raised-button color="primary" class ="mx-auto" (click)="myFunction()">Valider</button>
-
-    </div>
-
-
-
 
   </ng-container>
 

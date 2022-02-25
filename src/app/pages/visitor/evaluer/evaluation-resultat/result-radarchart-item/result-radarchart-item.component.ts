@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from "@angular/core";
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import ScoreCategory from "@/objects/ScoreCategory";
 import IScoreCategory from "@/interfaces/IScoreCategory";
+import IEvaluation from "@/interfaces/IEvaluation";
+import { EvalTokenStorageService } from "@services/serviceEvaluation/eval-token-storage.service";
 
 @Component({
   selector: 'app-result-radarchart-item',
@@ -10,7 +12,9 @@ import IScoreCategory from "@/interfaces/IScoreCategory";
 })
 export class ResultRadarchartItemComponent implements OnInit {
 
-  @Input() scorecategories$ : IScoreCategory[];
+  evaluation$ : IEvaluation = null;
+  scorecategories$ : IScoreCategory[];
+
 
    notations = {
     0: "",
@@ -55,8 +59,11 @@ export class ResultRadarchartItemComponent implements OnInit {
     console.log(event, active);
   }
 
+  constructor(private evalTokenStorageService : EvalTokenStorageService) {
+    this.evaluation$ = this.evalTokenStorageService.getEvaluation();
+  }
   ngOnInit(): void {
-
+    this.preparePrecoGlobale();
     let data : number[] = this.scorecategories$.sort().map(item => +item.nbPoints);
     this.radarChartLabels = this.scorecategories$.sort().map(item => item.categorie.libelle);
 
@@ -67,6 +74,19 @@ export class ResultRadarchartItemComponent implements OnInit {
       ]
     };
 
+  }
+
+  preparePrecoGlobale(){
+    this.evaluation$ = this.evalTokenStorageService.getEvaluation();
+
+
+    if(this.evaluation$!=null) {
+      this.scorecategories$ = this.evaluation$.scoreCategories.map( cat => {
+        let temp = cat.categorie.preconisationsCategorie;
+        cat.categorie.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
+        return cat;
+      })
+    }
   }
 
 }

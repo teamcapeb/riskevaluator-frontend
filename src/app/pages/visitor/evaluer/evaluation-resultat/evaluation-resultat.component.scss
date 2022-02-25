@@ -19,3 +19,15 @@
   }
 }
 
+.nav-link {
+  background: #ffffff;
+  color: #000000;
+  border-bottom: 1px solid grey !important;
+  border-color: none !important;
+}
+
+.nav-link.active {
+  border-bottom: 2px solid blue !important;
+  color: #ec8a00 !important;
+  background-color: #97a9b2;
+}

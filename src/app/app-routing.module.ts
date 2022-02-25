@@ -29,6 +29,10 @@ import {
 import { EvaluationResultatComponent } from "@pages/visitor/evaluer/evaluation-resultat/evaluation-resultat.component";
 import { EvaluationEntrepriseInfoComponent } from '@pages/visitor/evaluer/evaluation-entreprise-info/evaluation-entreprise-info.component';
 import { ConfirmDeactivateGuard } from "@services/guards/ConfirmDeactivateGuard";
+import {
+  ResultRadarchartItemComponent
+} from "@pages/visitor/evaluer/evaluation-resultat/result-radarchart-item/result-radarchart-item.component";
+import { ResultatListComponent } from '@pages/visitor/evaluer/evaluation-resultat/resultat-list/resultat-list.component';
 
 
 const administration: Routes = [
@@ -76,7 +80,21 @@ const visitors: Routes = [
   },
   {
     path: 'historiques',
-    component: EvaluationResultatComponent
+    component: EvaluationResultatComponent,
+    children : [
+      {
+        path: '',
+        component: ResultRadarchartItemComponent
+      },
+      {
+        path : "resultat-chart",
+        component: ResultRadarchartItemComponent
+      },
+      {
+        path :"resultat-list",
+        component : ResultatListComponent
+      }
+    ]
   },
   {
     path: 'evaluer',
