@@ -1,5 +1,5 @@
 import IEvaluation from '@/interfaces/IEvaluation';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { EvalTokenStorageService } from "@services/serviceEvaluation/eval-token-storage.service";
 import IQuestionnaire from "@/interfaces/IQuestionnaire";
@@ -13,6 +13,8 @@ import {
 } from 'angular-animations';
 import { IOopsMessageInput, OopsMessageComponent } from "@components/oops-message/oops-message.component";
 import IPreconisationCategorieQuestion from "@/interfaces/IPreconisationCategorieQuestion";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 @Component({
   selector: 'app-evaluation-resultat',
@@ -75,6 +77,33 @@ export class EvaluationResultatComponent implements OnInit {
     const textReducer = (previousValue: string, currentValue: IPreconisationGlobale | IPreconisationCategorieQuestion) => previousValue.concat('\n \n',currentValue.contenu);
     return preconisation.reduce(textReducer,"");
   }
+
+  htmlToPng() {
+    const input = document.getElementById("wrapper");
+    html2canvas(input).then(canvas => {
+      var link = document.createElement('a');
+      link.href = canvas.toDataURL();
+      link.download = this.precoGlobale$?.questionnaire?.thematique;
+      document.body.appendChild(link);
+      link.click();
+    });
+
+  }
+  htmlToPdf() {
+
+    const input = document.getElementById("wrapper");
+    html2canvas(input).then(canvas => {
+      var img = canvas.toDataURL();
+      // jspdf changes
+      var pdf = new jsPDF('p', 'mm', 'a4');
+      pdf.addImage(img, 'JPEG', 20,0, 150, 280 );
+
+      pdf.save(`${this.precoGlobale$?.questionnaire?.thematique}.pdf`);
+    });
+
+  }
+
+
 
 
 }

@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
     this.login$= this.authService.login(this.form).pipe(
       map((data: IUser)=>{
 
-        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
 
         this.isLoggedIn = true;

@@ -33,6 +33,7 @@ import {
   ResultRadarchartItemComponent
 } from "@pages/visitor/evaluer/evaluation-resultat/result-radarchart-item/result-radarchart-item.component";
 import { ResultatListComponent } from '@pages/visitor/evaluer/evaluation-resultat/resultat-list/resultat-list.component';
+import { HomePageComponent } from "@pages/visitor/home-page/home-page.component";
 
 
 const administration: Routes = [
@@ -128,11 +129,11 @@ const visitors: Routes = [
   },
   {
     path: 'Acceuil',
-    component: DashboardComponent
+    component: HomePageComponent
   },
   {
     path: '',
-    component: DashboardComponent
+    component: HomePageComponent
   }
 ]
 

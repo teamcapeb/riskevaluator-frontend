@@ -99,6 +99,7 @@ import { EvaluationMetierItemComponent } from './pages/visitor/evaluer/evaluatio
 import { MatCardModule } from "@angular/material/card";
 import { ResultatListComponent } from './pages/visitor/evaluer/evaluation-resultat/resultat-list/resultat-list.component';
 import { MatTabsModule } from "@angular/material/tabs";
+import { HomePageComponent } from './pages/visitor/home-page/home-page.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -163,7 +164,8 @@ registerLocaleData(localeEn, 'en-EN');
         SignupLoginComponent,
         ResultRadarchartItemComponent,
         EvaluationMetierItemComponent,
-        ResultatListComponent
+        ResultatListComponent,
+        HomePageComponent
     ],
   imports: [
     BrowserModule,
