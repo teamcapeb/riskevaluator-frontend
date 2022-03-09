@@ -45,9 +45,13 @@ export class EvaluationWelcomeComponent implements OnInit {
         noSiret: ["", Validators.compose([
           Validators.required, Validators.min(1000)])
         ],
-        effectif: [null],
-        annee: [null],
-        nomEnterprise: [null, Validators.compose([
+        effectif: [1, Validators.compose([
+          Validators.required,Validators.min(1), Validators.max(100000)])
+        ],
+        anneeDeCreation: [2010, Validators.compose([
+          Validators.required,Validators.min(1900), Validators.minLength(5)])
+        ],
+        nomEntreprise: [null, Validators.compose([
           Validators.required])
         ]
       });

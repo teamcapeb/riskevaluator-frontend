@@ -22,8 +22,7 @@ export class EvaluerComponent implements OnInit {
   DataStateEnum = DataStateEnum;
   metiers$:Observable<AppDataState<IMetier[]>> |null=null;
 
-  @ViewChild('input') input : any;
-  private idMetierChecked: number[] = [];
+  alertMetier : boolean = false;
 
   constructor(    private http: HttpClient,
                   private route: ActivatedRoute,
@@ -49,22 +48,24 @@ export class EvaluerComponent implements OnInit {
   }
 
 
-  myFunction() : void {
-    this.router.navigate(['evaluer/evaluation-thematique',this.idMetierChecked.join(",")]);
+  onValidateMetiers(metiers : IMetier[]) : void {
+    let idMetierChecked: number[] =  metiers.filter(m => m.isChecked === true).map(e=> e.idMetier);
+    if(idMetierChecked.length > 0) {
+      this.router.navigate(['evaluer/evaluation-thematique',idMetierChecked.join(",")]);
+    }
+    this.alertMetier = true;
 
+    setTimeout (() => {
+      this.alertMetier = false;
+    }, 4000);
   }
 
-
-  check(event : any, metier : IMetier) : void {
-
-    var rep = [];
-    if (event.checked === true) {
-      this.idMetierChecked.push(metier.idMetier);
-    }
-
-    if (event.checked === false) {
-      var index: number = this.idMetierChecked.indexOf(metier.idMetier);
-      this.idMetierChecked.splice(index, 1);
-    }
+  getCheckced(metiers : IMetier[]) {
+    let countMetiers= metiers.map(e => e.isChecked);
+    this.alertMetier = countMetiers.length > 0 ;
+    return countMetiers;
+  }
+  onCountChecked(metiers : IMetier[]){
+    return metiers.filter(e => e.isChecked == true).length;
   }
 }

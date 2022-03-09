@@ -7,10 +7,10 @@
   <div class="col-md-7 formulaire">
     <form [formGroup]="frmEntreprise">
       <mat-form-field appearance="outline" class="questionOuverte">
-        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['nomEnterprise'].hasError('required')&&frmEntreprise.controls['nomEnterprise']?.touched">Le nom de votre entreprise est obligatoire.</mat-label>
-        <mat-label  *ngIf="!frmEntreprise.controls['nomEnterprise'].invalid||!frmEntreprise.controls['nomEnterprise']?.touched">{{evaluerIHM.nomEnterprise}}</mat-label>
-        <input  matInput required placeholder="{{evaluerIHM.nomEnterprisePlaceHolder}}" id="nomEnterprise"
-               formControlName="nomEnterprise" [ngClass]="frmEntreprise.controls['nomEnterprise'].invalid&&frmEntreprise.controls['nomEnterprise']?.touched ? 'is-invalid' : ''">
+        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['nomEntreprise'].hasError('required')&&frmEntreprise.controls['nomEntreprise']?.touched">Le nom de votre entreprise est obligatoire.</mat-label>
+        <mat-label  *ngIf="!frmEntreprise.controls['nomEntreprise'].invalid||!frmEntreprise.controls['nomEntreprise']?.touched">{{evaluerIHM.nomEntreprise}}</mat-label>
+        <input  matInput required placeholder="{{evaluerIHM.nomEntreprisePlaceHolder}}" id="nomEntreprise"
+               formControlName="nomEntreprise" [ngClass]="frmEntreprise.controls['nomEntreprise'].invalid&&frmEntreprise.controls['nomEntreprise']?.touched ? 'is-invalid' : ''">
       </mat-form-field>
       <mat-form-field appearance="outline" class="questionOuverte">
         <mat-label class="text-danger" *ngIf="frmEntreprise.controls['noSiret'].hasError('required')&&frmEntreprise.controls['noSiret']?.touched">Votre numero SIRET est obligatoire.</mat-label>
@@ -20,13 +20,15 @@
 
       </mat-form-field>
       <mat-form-field appearance="outline" class="questionOuverte">
-        <mat-label  *ngIf="!frmEntreprise.controls['annee'].invalid||!frmEntreprise.controls['annee']?.touched">{{evaluerIHM.annee}}</mat-label>
-        <input matInput required placeholder="{{evaluerIHM.annee}}" id="annee" formControlName="annee">
+        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['anneeDeCreation'].hasError('required')&&frmEntreprise.controls['anneeDeCreation']?.touched">Vous devez saisir l'année de création de votre entreprise. </mat-label>
+        <mat-label  *ngIf="!frmEntreprise.controls['anneeDeCreation'].invalid||!frmEntreprise.controls['anneeDeCreation']?.touched">{{evaluerIHM.annee}}</mat-label>
+        <input type="number" matInput required placeholder="{{evaluerIHM.annee}}" id="anneeDeCreation" formControlName="anneeDeCreation">
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="questionOuverte">
+        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['effectif'].hasError('required')&&frmEntreprise.controls['effectif']?.touched">Vous devez saisir l'effectif  de votre entreprise.</mat-label>
         <mat-label  *ngIf="!frmEntreprise.controls['effectif'].invalid||!frmEntreprise.controls['effectif']?.touched">{{evaluerIHM.effectif}}</mat-label>
-        <input matInput required placeholder="{{evaluerIHM.effectif}}" id="effectif" formControlName="effectif">
+        <input type="number" matInput required placeholder="{{evaluerIHM.effectif}}" id="effectif" formControlName="effectif">
       </mat-form-field>
 
     </form>

@@ -95,6 +95,11 @@ import { NgProgressModule } from "ngx-progressbar";
 import { NgProgressHttpModule } from "ngx-progressbar/http";
 import { NgChartsModule } from 'ng2-charts';
 import { ResultRadarchartItemComponent } from './pages/visitor/evaluer/evaluation-resultat/result-radarchart-item/result-radarchart-item.component';
+import { EvaluationMetierItemComponent } from './pages/visitor/evaluer/evaluation-metier-item/evaluation-metier-item.component';
+import { MatCardModule } from "@angular/material/card";
+import { ResultatListComponent } from './pages/visitor/evaluer/evaluation-resultat/resultat-list/resultat-list.component';
+import { MatTabsModule } from "@angular/material/tabs";
+import { HomePageComponent } from './pages/visitor/home-page/home-page.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -157,7 +162,10 @@ registerLocaleData(localeEn, 'en-EN');
         EvaluationEntrepriseInfoComponent,
         OopsMessageComponent,
         SignupLoginComponent,
-        ResultRadarchartItemComponent
+        ResultRadarchartItemComponent,
+        EvaluationMetierItemComponent,
+        ResultatListComponent,
+        HomePageComponent
     ],
   imports: [
     BrowserModule,
@@ -206,12 +214,14 @@ registerLocaleData(localeEn, 'en-EN');
       animationDuration: 300
     }),
     NgProgressModule.withConfig({
-      spinnerPosition: 'left',
+      spinnerPosition: "left",
       color: "#da3b3b",
       thick: true
     }),
     NgProgressHttpModule,
-    NgChartsModule
+    NgChartsModule,
+    MatCardModule,
+    MatTabsModule
   ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]

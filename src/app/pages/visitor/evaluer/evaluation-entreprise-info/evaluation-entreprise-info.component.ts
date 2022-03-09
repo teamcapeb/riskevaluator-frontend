@@ -35,8 +35,8 @@ export class EvaluationEntrepriseInfoComponent implements OnInit {
           Validators.required])
         ],
         effectif: [null],
-        annee: [null],
-        nomEnterprise: [null, Validators.compose([
+        anneeDeCreation: [null],
+        nomEntreprise: [null, Validators.compose([
           Validators.required])
         ]
       });
@@ -45,6 +45,7 @@ export class EvaluationEntrepriseInfoComponent implements OnInit {
 
   nextStep() {
     if(this.frmEntreprise.valid ) {
+
       this.route.navigate(['evaluer/questionnaire-evaluation'], { state : {
           entreprise : this.frmEntreprise.value as IEntreprise
         } });

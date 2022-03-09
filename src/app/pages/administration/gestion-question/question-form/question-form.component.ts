@@ -101,7 +101,7 @@ export class QuestionFormComponent implements OnInit {
     if(!this.question.reponses){
       this.question.reponses = [];
     }
-    if(this.question.reponses.length + this._addedReponses.length >= 2){
+    if(this.question.reponses.length + this._addedReponses.length >= 2 && this.selectedItems.length>0 && this.question.typeQuestion.length>0 && this.question.libelleQuestion.length>0 ){
       this.saved = false;
       this._addedReponses = this.addedReponses.map<Reponse>((reponse: Reponse) => {
         reponse.idReponse = 0;
@@ -127,7 +127,21 @@ export class QuestionFormComponent implements OnInit {
         this.router.navigate(['gestion-questionnaires', this._idQuestionnaire ,'gestion-categories-questions', this._idCategorie ,'gestion-questions']);
       }
     }else{
-      this.modalService.error('Il doit y avoir 2 réponses minimum');
+      var wErreurMessage="";
+      if(this.question.libelleQuestion.length==0){
+        wErreurMessage+="* le libelle ne doit pas etre vide\n"
+      }
+      if(this.question.typeQuestion.length==0 ){
+        wErreurMessage+="* vous devez choisir un type de question\n"
+      }
+      if(this.selectedItems.length==0 ){
+        wErreurMessage+="* vous devez choisir au moin un metier qui concerne la question\n"
+      }
+      if(this.question.reponses.length + this._addedReponses.length < 2 ){
+        wErreurMessage+='* Il doit y avoir 2 réponses minimum'
+      }
+
+      this.modalService.error(wErreurMessage);
     }
   }
 

@@ -5,7 +5,7 @@ import { Observable, of } from "rxjs";
 import { CategorieQuestionService } from "@services/serviceCategorieQuestion/categorie-question.service";
 import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
 import { IQuestionType } from "@/interfaces/IQuestionType";
-import { EvaluationService } from "@services/serviceEvaluation/evaluation.service";
+import { CategorieNumberAction, EvaluationService } from "@services/serviceEvaluation/evaluation.service";
 import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnaire.service';
 import { IEntreprise } from '@/interfaces/IEntreprise';
 import { ActivatedRoute, Navigation, NavigationExtras, Router } from "@angular/router";
@@ -40,6 +40,9 @@ export class EvaluationQuestionnaireComponent implements OnInit {
 
     let entreprise = evalTokenService.getEntreprise();
     this.evaluationService.onSaveEntreprise(entreprise);
+
+    this.evaluationService.onNextCategorieNumber(CategorieNumberAction.INIT)
+
   }
 
   ngOnInit(): void {
@@ -49,7 +52,7 @@ export class EvaluationQuestionnaireComponent implements OnInit {
   onGetAllCategoriesQuestion() {
     this.categoriesQuestion$= this.questionnaireService.getCategoriesQuestions(this.questionnaireId,this.metierIds).pipe(
       map((data: ICategorieQuestion[])=>{
-        console.log(data);
+        //console.log(data);
         this.evaluationService.onUpdateCategorieMax(data.length);
         return ({dataState:DataStateEnum.LOADED,data:data})
       }),

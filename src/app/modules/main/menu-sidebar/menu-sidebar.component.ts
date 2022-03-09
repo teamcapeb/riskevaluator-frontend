@@ -37,7 +37,7 @@ export class MenuSidebarComponent implements OnInit {
 
 export const MENU = [
     {
-        name: 'Acceuil',
+        name: 'Accueil',
         path: ['/'],
         icon: "fa-solid fa-landmark"
     },
@@ -47,7 +47,7 @@ export const MENU = [
         icon: "fa-solid fa-list-check"
     },
     {
-        name: 'Historiques',
+        name: 'Evaluation précédente',
         path: ['/historiques'],
         icon: "fa-solid fa-chart-pie"
     },
@@ -68,11 +68,6 @@ export const ADMIN_MENU = [
   {
     name: 'Gestion métiers',
     path: ['/gestion-metiers'],
-    icon: "fa-solid fa-atom"
-  },
-  {
-    name: 'Gestion Comptes',
-    path: ['/gestion-compte'],
     icon: "fa-solid fa-atom"
   }
 ];

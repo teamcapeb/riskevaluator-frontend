@@ -1,24 +1,38 @@
 <div class="container"  *ngIf="evaluation$ as eval">
-  <app-result-radarchart-item [scorecategories$]="listScoreCategories$"></app-result-radarchart-item>
+  <ul class="nav nav-tabs">
+    <li><a class="nav-link"  [routerLinkActive]="['active']"  [routerLink]="['resultat-chart']">
+      <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/radar_icon.png">
+      <span class="icon-label">Graphe</span>
 
-  <app-resultat-item  [@bounceInOnEnter] [isGlobal$] = true
-                     [text$]="precoGlobale$?.contenu"
-                     [percentage$]="evaluation$?.scoreGeneraleEvaluation"
-                     [title$]="'Score Global'"  > </app-resultat-item>
+    </a></li>
+
+    <li><a class="nav-link"  [routerLinkActive]="['active']"  [routerLink]="['resultat-list']">
+      <img class="logo-navbar-score mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/score_icon.png">
+      <span class="icon-label"> Préconisations</span>
+
+    </a></li>
+
+    <li class="nav-item ml-auto">
+
+    <div class="pdfIcon"  (click)="generatePDF()">
+      <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/pdf.png">
+    </div>
+    </li>
+    <li class="nav-item">
+      <div class="pdfIcon"  (click)="htmlToPng()">
+        <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/img_icon.png">
+      </div>
+    </li>
+  </ul>
 
 
-  <ng-container *ngFor="let item of listScoreCategories$">
-    <app-resultat-item    *ngFor="let preco of item?.categorie?.preconisationsCategorie"
-                       [text$]="preco?.contenu"
-                       [percentage$]="item?.nbPoints"
-                       [title$]="item?.categorie?.libelle"  > </app-resultat-item>
-  </ng-container>
 
+  <div  id="wrapper" >
+    <router-outlet ></router-outlet>
+  </div>
 </div>
 
 
-<div class="container">
-  <app-oops-message [oopsInput$] = oopsMessage *ngIf="evaluation$ == null" ></app-oops-message>
 
-</div>
+<app-oops-message [oopsInput$] = oopsMessage *ngIf="evaluation$ == null" ></app-oops-message>
 

@@ -1,0 +1,12 @@
+<app-resultat-item  [@bounceInOnEnter] [isGlobal$] = true
+                    [text$]="precoGlobale$?.contenu"
+                    [percentage$]="evaluation$?.scoreGeneraleEvaluation"
+                    [title$]="'Score Global'"  > </app-resultat-item>
+
+
+<ng-container *ngFor="let item of listScoreCategories$">
+  <app-resultat-item
+    [text$]="concatPreconisations(item?.categorie?.preconisationsCategorie)"
+    [percentage$]="item?.nbPoints"
+    [title$]="item?.categorie?.libelle"  > </app-resultat-item>
+</ng-container>
