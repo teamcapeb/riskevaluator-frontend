@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  //apiUrl: 'http://localhost:8080/api',
-  apiUrl: 'https://riskevaluator-backend-dev.herokuapp.com/api',
+  apiUrl: 'http://localhost:8080/api',
+  //apiUrl: 'https://riskevaluator-backend-dev.herokuapp.com/api',
 
   evaluerIHM: {
     introDisplay: {
@@ -27,8 +27,8 @@ export const environment = {
       effectifPlaceHolder: "L'effectif de votre entreprise",
       annee: "année de creation",
       anneePlaceHolder: "L'année de creation de l'entreprise",
-      nomEnterprise: "Nom Entreprise",
-      nomEnterprisePlaceHolder: "Le nom de votre entreprise",
+      nomEntreprise: "Nom Entreprise",
+      nomEntreprisePlaceHolder: "Le nom de votre entreprise",
       startEvalButton: "Etape suivante",
 
     },

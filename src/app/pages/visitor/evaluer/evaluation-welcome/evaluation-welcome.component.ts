@@ -48,10 +48,10 @@ export class EvaluationWelcomeComponent implements OnInit {
         effectif: [1, Validators.compose([
           Validators.required,Validators.min(1), Validators.max(100000)])
         ],
-        annee: [2010, Validators.compose([
+        anneeDeCreation: [2010, Validators.compose([
           Validators.required,Validators.min(1900), Validators.minLength(5)])
         ],
-        nomEnterprise: [null, Validators.compose([
+        nomEntreprise: [null, Validators.compose([
           Validators.required])
         ]
       });

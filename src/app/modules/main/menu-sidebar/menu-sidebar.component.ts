@@ -37,7 +37,7 @@ export class MenuSidebarComponent implements OnInit {
 
 export const MENU = [
     {
-        name: 'Acceuil',
+        name: 'Accueil',
         path: ['/'],
         icon: "fa-solid fa-landmark"
     },

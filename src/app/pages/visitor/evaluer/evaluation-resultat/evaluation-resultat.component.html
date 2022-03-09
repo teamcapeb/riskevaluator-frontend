@@ -7,14 +7,14 @@
     </a></li>
 
     <li><a class="nav-link"  [routerLinkActive]="['active']"  [routerLink]="['resultat-list']">
-      <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/score_icon.png">
+      <img class="logo-navbar-score mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/score_icon.png">
       <span class="icon-label"> Préconisations</span>
 
     </a></li>
 
     <li class="nav-item ml-auto">
 
-    <div class="pdfIcon"  (click)="htmlToPdf()">
+    <div class="pdfIcon"  (click)="generatePDF()">
       <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/pdf.png">
     </div>
     </li>
