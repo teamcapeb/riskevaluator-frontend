@@ -27,6 +27,7 @@ import {
   ResultatItemComponent
 } from "@pages/visitor/evaluer/evaluation-resultat/resultat-item/resultat-item.component";
 import { EvaluationResultatComponent } from "@pages/visitor/evaluer/evaluation-resultat/evaluation-resultat.component";
+
 import { EvaluationEntrepriseInfoComponent } from '@pages/visitor/evaluer/evaluation-entreprise-info/evaluation-entreprise-info.component';
 import { ConfirmDeactivateGuard } from "@services/guards/ConfirmDeactivateGuard";
 import {
@@ -34,6 +35,7 @@ import {
 } from "@pages/visitor/evaluer/evaluation-resultat/result-radarchart-item/result-radarchart-item.component";
 import { ResultatListComponent } from '@pages/visitor/evaluer/evaluation-resultat/resultat-list/resultat-list.component';
 import { HomePageComponent } from "@pages/visitor/home-page/home-page.component";
+
 
 
 const administration: Routes = [
@@ -172,7 +174,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {relativeLinkResolution: 'legacy'})],
+    imports: [RouterModule.forRoot(routes, {relativeLinkResolution: 'legacy',scrollPositionRestoration:'enabled'})],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}

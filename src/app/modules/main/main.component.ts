@@ -46,7 +46,7 @@ export class MainComponent implements OnInit {
 
           this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
 
-          if(this.showAdminBoard)  this.toastr.info("you are connected as an admin","Admin Role")
+          if(this.showAdminBoard)  this.toastr.info("Vous êtes connecté en tant qu'administrateur","Rôle Administrateur")
 
           this.username = this.user.username;
         }
