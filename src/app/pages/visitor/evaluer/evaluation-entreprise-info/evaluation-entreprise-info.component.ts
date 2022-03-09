@@ -45,10 +45,9 @@ export class EvaluationEntrepriseInfoComponent implements OnInit {
 
   nextStep() {
     if(this.frmEntreprise.valid ) {
-
       this.route.navigate(['evaluer/questionnaire-evaluation'], { state : {
           entreprise : this.frmEntreprise.value as IEntreprise
-        } });
+        }, });
     }else {
       this.frmEntreprise.markAllAsTouched();
     }

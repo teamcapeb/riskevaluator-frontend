@@ -53,6 +53,7 @@ export class EvaluationFooterComponent implements OnInit {
   }
 
   previousButtonClick() {
+    this.scrollToTop();
     this.evaluationService.onNextCategorieNumber(CategorieNumberAction.DECREASE)
   }
 
@@ -61,7 +62,6 @@ export class EvaluationFooterComponent implements OnInit {
   }
 
    finishButtonClick() {
-
      this.isLoggedIn = !!this.tokenStorageService.getToken();
      let user: IUser = this.tokenStorageService.getUser();
      this.evaluationService.onCalculateScore(this.categoriesQuestions$, this.isLoggedIn ? user : null);
@@ -76,6 +76,14 @@ export class EvaluationFooterComponent implements OnInit {
    }
 
   nextButtonClick() {
+    this.scrollToTop();
     this.evaluationService.onNextCategorieNumber(CategorieNumberAction.INCREASE);
+  }
+  scrollToTop(){
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'auto'
+    });
   }
 }

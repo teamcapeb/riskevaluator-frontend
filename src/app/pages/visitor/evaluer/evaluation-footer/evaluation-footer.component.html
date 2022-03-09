@@ -10,7 +10,7 @@
           [matTooltipDisabled]="!disableNextButton()">
                     <button mat-button [disabled] = "index.isFinished" class="nextButton" (click)="nextButtonClick()" id="nextButton"
                     >Suivant</button>
-                    <button [disabled] = "!index.isFinished" mat-button (click)="finishButtonClick()" id="finishButton" >Terminer</button>
+                    <button mat-button [disabled] = "!index.isFinished"  class="finishButton" (click)="finishButtonClick()" id="finishButton" >Terminer</button>
     </span>
   </div>
   </ng-container>

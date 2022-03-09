@@ -17,7 +17,7 @@
             <p>
                 <span>{{ user.email }}</span>
                 <small>
-                    <span>Member since </span>
+                    <span>Membre depuis le </span>
                     <span>{{ formatDate(user?.createdAt) }}</span>
                 </small>
             </p>
@@ -25,7 +25,7 @@
         <!-- Menu Body -->
         <li class="user-body">
             <div class="row">
-              {{ showAdminBoard?"You are admin": user?.email }}
+              {{ showAdminBoard?"Vous êtes administrateur": user?.email }}
             </div>
             <!-- /.row -->
         </li>
@@ -35,7 +35,7 @@
                 Profile
             </a>
             <a (click)="logout()" class="btn btn-default btn-flat float-right"
-                >Sign out</a
+                >Se déconnecté</a
             >
         </li>
     </ng-container>

@@ -13,6 +13,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import {Alignment, Decoration, Margins} from "pdfmake/interfaces";
 import {IEntreprise} from "@/interfaces/IEntreprise";
 import {bounceInOnEnterAnimation} from "angular-animations";
+import {ChartData, ChartType} from "chart.js";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -34,7 +35,9 @@ export class EvaluationResultatComponent implements OnInit {
   questionnaire:IQuestionnaire;
   listScoreCategories$ : IScoreCategory[];
   tempPreco : IPreconisationGlobale[];
-
+  public radarChartLabels: string[] = [];
+  public radarChartData: ChartData<'radar'> ;
+  public radarChartType: ChartType = 'radar';
 
   oopsMessage: IOopsMessageInput  = {
     buttonText: "aller vers evaluation",
@@ -47,9 +50,18 @@ export class EvaluationResultatComponent implements OnInit {
   ngOnInit(): void {
     this.evaluation$ = this.evalTokenStorageService.getEvaluation();
     this.entreprise$ = this.evalTokenStorageService.getEntreprise();
-
-
     if(this.evaluation$!=null) {
+      this.preparePrecoGlobale();
+      let data : number[] = this.listScoreCategories$.sort().map(item => +item.nbPoints);
+      this.radarChartLabels = this.listScoreCategories$.sort().map(item => item.categorie.libelle);
+
+      this.radarChartData = {
+        labels: this.radarChartLabels,
+        datasets: [
+          { data, label: this.listScoreCategories$?.at(0).categorie?.questionnaire?.thematique},
+        ]
+      };
+
 
 
       const textReducer = (previousValue: string, currentValue: IPreconisationGlobale | IPreconisationCategorieQuestion) => previousValue.concat('\n \n',currentValue.contenu);
@@ -190,5 +202,17 @@ export class EvaluationResultatComponent implements OnInit {
     })
     pdfMake.createPdf(docDefinition).open();
 
+  }
+  preparePrecoGlobale(){
+    this.evaluation$ = this.evalTokenStorageService.getEvaluation();
+
+
+    if(this.evaluation$!=null) {
+      this.listScoreCategories$ = this.evaluation$.scoreCategories.map( cat => {
+        let temp = cat.categorie.preconisationsCategorie;
+        cat.categorie.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
+        return cat;
+      })
+    }
   }
 }
