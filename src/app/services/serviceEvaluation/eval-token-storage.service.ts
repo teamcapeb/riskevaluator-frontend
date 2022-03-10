@@ -17,6 +17,15 @@ export class EvalTokenStorageService {
     window.sessionStorage.clear();
   }
 
+  public saveEvaluationById(evaluation : number) {
+    window.sessionStorage.removeItem(EVAL_KEY);
+    window.sessionStorage.setItem(EVAL_KEY, evaluation.toString());
+  }
+
+  public getEvaluationById() : number {
+    return +sessionStorage.getItem(EVAL_KEY);
+  }
+
   public saveEvaluation(user: IEvaluation) {
     window.sessionStorage.removeItem(EVAL_KEY);
     window.sessionStorage.setItem(EVAL_KEY, JSON.stringify(user));

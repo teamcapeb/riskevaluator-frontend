@@ -65,12 +65,12 @@ export class ResultRadarchartItemComponent implements OnInit {
   ngOnInit(): void {
     this.preparePrecoGlobale();
     let data : number[] = this.scorecategories$.sort().map(item => +item.nbPoints);
-    this.radarChartLabels = this.scorecategories$.sort().map(item => item.categorie.libelle);
+    this.radarChartLabels = this.scorecategories$.sort().map(item => item.categorieQuestion.libelle);
 
     this.radarChartData = {
       labels: this.radarChartLabels,
       datasets: [
-        { data, label: this.scorecategories$?.at(0).categorie?.questionnaire?.thematique},
+        { data, label: this.scorecategories$?.at(0).categorieQuestion?.questionnaire?.thematique},
       ]
     };
 
@@ -82,8 +82,8 @@ export class ResultRadarchartItemComponent implements OnInit {
 
     if(this.evaluation$!=null) {
       this.scorecategories$ = this.evaluation$.scoreCategories.map( cat => {
-        let temp = cat.categorie.preconisationsCategorie;
-        cat.categorie.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
+        let temp = cat.categorieQuestion.preconisationsCategorie;
+        cat.categorieQuestion.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
         return cat;
       })
     }

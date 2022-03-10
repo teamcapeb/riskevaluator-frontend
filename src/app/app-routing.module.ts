@@ -35,6 +35,7 @@ import {
 } from "@pages/visitor/evaluer/evaluation-resultat/result-radarchart-item/result-radarchart-item.component";
 import { ResultatListComponent } from '@pages/visitor/evaluer/evaluation-resultat/resultat-list/resultat-list.component';
 import { HomePageComponent } from "@pages/visitor/home-page/home-page.component";
+import { ConsulterEvaluationComponent } from '@pages/administration/consulter-evaluation/consulter-evaluation.component';
 
 
 
@@ -69,6 +70,11 @@ const administration: Routes = [
     path: 'gestion-compte',
     component: GestionComptesComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'consulter-evaluation',
+    component: ConsulterEvaluationComponent,
+    canActivate: [AuthGuard]
   }
 
 ]
@@ -82,7 +88,7 @@ const visitors: Routes = [
     component: ContactComponent
   },
   {
-    path: 'historiques',
+    path: 'historiques/:id',
     component: EvaluationResultatComponent,
     children : [
       {

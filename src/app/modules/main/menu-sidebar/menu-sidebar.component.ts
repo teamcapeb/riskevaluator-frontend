@@ -69,5 +69,10 @@ export const ADMIN_MENU = [
     name: 'Gestion métiers',
     path: ['/gestion-metiers'],
     icon: "fa-solid fa-atom"
+  },
+  {
+    name: 'Consulter évaluation',
+    path: ['/consulter-evaluation'],
+    icon: "fa-solid fa-list"
   }
 ];

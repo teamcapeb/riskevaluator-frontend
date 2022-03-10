@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 import IEvaluation from "@/interfaces/IEvaluation";
 import IPreconisationGlobale from "@/interfaces/IPreconisationGlobale";
 import IScoreCategory from "@/interfaces/IScoreCategory";
@@ -14,6 +14,13 @@ import {Alignment, Decoration, Margins} from "pdfmake/interfaces";
 import {IEntreprise} from "@/interfaces/IEntreprise";
 import {bounceInOnEnterAnimation} from "angular-animations";
 import {ChartData, ChartType} from "chart.js";
+import { EvaluationService } from "@services/serviceEvaluation/evaluation.service";
+import { EvaluationApiService } from "@services/serviceEvaluation/evaluation-api.service";
+import { catchError, map, startWith } from "rxjs/operators";
+import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
+import { of } from "rxjs";
+import { DataStateEnum } from "@/state/questionnaire.state";
+import { ActivatedRoute } from "@angular/router";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -26,6 +33,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 })
 export class EvaluationResultatComponent implements OnInit {
+
+  @Input() inputEvaluation : IEvaluation = null;
 
 
   evaluation$ : IEvaluation = null;
@@ -45,20 +54,36 @@ export class EvaluationResultatComponent implements OnInit {
     message: "Merci d'aller sur la rubrique évaluer, pour effectuer une évaluation",
     title: "Aucune évaluation n'est trouvée", }
 
-  constructor( private evalTokenStorageService : EvalTokenStorageService) {}
-
-  ngOnInit(): void {
+  constructor( private evalTokenStorageService : EvalTokenStorageService,
+               private evaluationService : EvaluationService,
+               private evaluationApiService : EvaluationApiService,
+               private actRoute: ActivatedRoute
+               ) {
     this.evaluation$ = this.evalTokenStorageService.getEvaluation();
     this.entreprise$ = this.evalTokenStorageService.getEntreprise();
+
+    const evalId = this.actRoute.snapshot.params['id'];
+
+    if(evalId) {
+      this.onGetSignleEvaluation(evalId);
+    }
+  }
+
+  ngOnInit(): void {
+    if(this.inputEvaluation) {
+      this.evaluation$ = this.inputEvaluation;
+      this.entreprise$ = this.inputEvaluation?.entreprise;
+    }
+
     if(this.evaluation$!=null) {
       this.preparePrecoGlobale();
       let data : number[] = this.listScoreCategories$.sort().map(item => +item.nbPoints);
-      this.radarChartLabels = this.listScoreCategories$.sort().map(item => item.categorie.libelle);
+      this.radarChartLabels = this.listScoreCategories$.sort().map(item => item.categorieQuestion.libelle);
 
       this.radarChartData = {
         labels: this.radarChartLabels,
         datasets: [
-          { data, label: this.listScoreCategories$?.at(0).categorie?.questionnaire?.thematique},
+          { data, label: this.listScoreCategories$?.at(0).categorieQuestion?.questionnaire?.thematique},
         ]
       };
 
@@ -67,7 +92,7 @@ export class EvaluationResultatComponent implements OnInit {
       const textReducer = (previousValue: string, currentValue: IPreconisationGlobale | IPreconisationCategorieQuestion) => previousValue.concat('\n \n',currentValue.contenu);
 
       // Take questionnaire from one the scoreCategories
-      this.questionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorie?.questionnaire;
+      this.questionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorieQuestion?.questionnaire;
 
       // filter preconisation with respect the viewIfpercentage
       this.tempPreco  = this.questionnaire?.preconisationGlobales?.filter(p=> p?.viewIfPourcentageScoreLessThan > this.evaluation$?.scoreGeneraleEvaluation);
@@ -80,8 +105,8 @@ export class EvaluationResultatComponent implements OnInit {
         this.precoGlobale$.contenu = this.tempPreco?.reduce(textReducer,"");
 
       this.listScoreCategories$ = this.evaluation$.scoreCategories.map( cat => {
-        let temp = cat.categorie.preconisationsCategorie;
-        cat.categorie.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
+        let temp = cat.categorieQuestion.preconisationsCategorie;
+        cat.categorieQuestion.preconisationsCategorie = temp?.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
         return cat;
       })
     }
@@ -187,7 +212,7 @@ export class EvaluationResultatComponent implements OnInit {
     };
     this.listScoreCategories$.forEach(wScoreCategorie=>{
       docDefinition.content.push({
-        text: wScoreCategorie.categorie.libelle+': '+wScoreCategorie.nbPoints+'%',
+        text: wScoreCategorie.categorieQuestion.libelle+': '+wScoreCategorie.nbPoints+'%',
         style: 'sectionHeader'
       },{
         table:{
@@ -195,7 +220,7 @@ export class EvaluationResultatComponent implements OnInit {
           widths: ['*'],
           body:[
             ['Préconisations'],
-            ...wScoreCategorie.categorie.preconisationsCategorie.map(wPreconisation=>([wPreconisation.contenu])),
+            ...wScoreCategorie.categorieQuestion.preconisationsCategorie.map(wPreconisation=>([wPreconisation.contenu])),
           ]
         }
       })
@@ -209,10 +234,25 @@ export class EvaluationResultatComponent implements OnInit {
 
     if(this.evaluation$!=null) {
       this.listScoreCategories$ = this.evaluation$.scoreCategories.map( cat => {
-        let temp = cat.categorie.preconisationsCategorie;
-        cat.categorie.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
+        let temp = cat.categorieQuestion.preconisationsCategorie;
+        cat.categorieQuestion.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
         return cat;
       })
     }
   }
+
+  onGetSignleEvaluation(id : number) {
+    this.evaluationApiService.get(id).pipe(
+      map((data: IEvaluation)=>{
+        this.evaluation$ = data;
+        this.evaluation$.entreprise = data.entreprise;
+        return ({dataState:DataStateEnum.LOADED,data:data})
+      }),
+      startWith({dataState:DataStateEnum.LOADING}),
+      catchError(err=> {
+        return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
+      })
+    );
+  }
+
 }

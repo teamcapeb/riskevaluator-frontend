@@ -118,7 +118,7 @@ export class EvaluationService {
 
 
       scoreCategories.push({
-        categorie,
+        categorieQuestion: categorie,
         nbPoints : scoreTotalCateorie
       });
 

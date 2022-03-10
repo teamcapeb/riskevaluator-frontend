@@ -1,0 +1,16 @@
+
+<ng-container *ngIf="(evaluations$ | async) as result" [ngSwitch]="result.dataState">
+
+  <ng-container *ngSwitchCase="DataStateEnum.LOADED">
+
+    <div class="container">
+      <div class="row mb-5">
+        <app-consulter-evaluation-item class="col-md-4 mb-5" *ngFor="let eval of result.data"
+                                    [evaluation$]="eval"></app-consulter-evaluation-item>
+      </div>
+    </div>
+
+  </ng-container>
+</ng-container>
+
+

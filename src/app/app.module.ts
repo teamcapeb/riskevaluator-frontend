@@ -100,6 +100,8 @@ import { MatCardModule } from "@angular/material/card";
 import { ResultatListComponent } from './pages/visitor/evaluer/evaluation-resultat/resultat-list/resultat-list.component';
 import { MatTabsModule } from "@angular/material/tabs";
 import { HomePageComponent } from './pages/visitor/home-page/home-page.component';
+import { ConsulterEvaluationComponent } from './pages/administration/consulter-evaluation/consulter-evaluation.component';
+import { ConsulterEvaluationItemComponent } from './pages/administration/consulter-evaluation/consulter-evaluation-item/consulter-evaluation-item.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -165,7 +167,9 @@ registerLocaleData(localeEn, 'en-EN');
         ResultRadarchartItemComponent,
         EvaluationMetierItemComponent,
         ResultatListComponent,
-        HomePageComponent
+        HomePageComponent,
+        ConsulterEvaluationComponent,
+        ConsulterEvaluationItemComponent
     ],
   imports: [
     BrowserModule,

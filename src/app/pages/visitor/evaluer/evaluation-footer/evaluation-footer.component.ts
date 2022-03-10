@@ -67,10 +67,9 @@ export class EvaluationFooterComponent implements OnInit {
      this.evaluationService.onCalculateScore(this.categoriesQuestions$, this.isLoggedIn ? user : null);
      const evaluation = this.evaluationService.evaluation.getValue();
      if(evaluation != null) {
-       this.evalTokenStorageService.saveEvaluation(evaluation);
-       this.router.navigate(['historiques'], { state : {
-           evaluation
-         } });
+       this.evalTokenStorageService.saveEvaluationById(evaluation.idEvaluation);
+       this.SaveEvalution(evaluation);
+       this.router.navigate(['historiques',evaluation.idEvaluation]);
      }
 
    }
@@ -85,5 +84,21 @@ export class EvaluationFooterComponent implements OnInit {
       left: 0,
       behavior: 'auto'
     });
+  }
+
+  SaveEvalution(aEvaluation : IEvaluation) {
+    const wEvaluation: IEvaluation = {
+      idEvaluation : aEvaluation.idEvaluation,
+      scoreGeneraleEvaluation : aEvaluation.scoreGeneraleEvaluation,
+      entreprise : aEvaluation.entreprise,
+      scoreCategories : aEvaluation.scoreCategories?.map(scoreCategory => {
+        scoreCategory.categorieQuestion = { idCategorie : scoreCategory.categorieQuestion.idCategorie}
+        return scoreCategory;
+      })
+    }
+
+    console.log(wEvaluation)
+    this.evaluationApiService.create(wEvaluation).subscribe(ele => console.log(ele))
+
   }
 }

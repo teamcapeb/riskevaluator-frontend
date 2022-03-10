@@ -34,7 +34,7 @@ export class ResultatListComponent implements OnInit {
     if (this.evaluation$ != null) {
 
       // Take questionnaire from one the scoreCategories
-      let questionnaire: IQuestionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorie?.questionnaire;
+      let questionnaire: IQuestionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorieQuestion?.questionnaire;
 
       // filter preconisation with respect the viewIfpercentage
       const tempPreco: IPreconisationGlobale[] = questionnaire?.preconisationGlobales?.filter(p => p?.viewIfPourcentageScoreLessThan > this.evaluation$?.scoreGeneraleEvaluation);
@@ -54,8 +54,8 @@ export class ResultatListComponent implements OnInit {
 
     if(this.evaluation$!=null) {
       this.listScoreCategories$ = this.evaluation$.scoreCategories.map( cat => {
-        let temp = cat.categorie.preconisationsCategorie;
-        cat.categorie.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
+        let temp = cat.categorieQuestion.preconisationsCategorie;
+        cat.categorieQuestion.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
         return cat;
       })
     }
