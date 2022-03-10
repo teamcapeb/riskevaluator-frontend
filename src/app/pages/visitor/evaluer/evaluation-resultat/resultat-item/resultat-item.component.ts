@@ -27,7 +27,7 @@ export class ResultatItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.state = "open";
-    this.text$ = this.text$??this.emptyTxt;
+    this.text$ = this.text$?this.text$:this.emptyTxt;
     this.showMore = this.text$.length <= 300;
     const calculateColor = (percent: number): string[] => {
       if(percent < 25){
