@@ -68,7 +68,7 @@ export class EvaluationResultatComponent implements OnInit {
     const routeEvalId:number = +this.actRoute.snapshot.params['id'];
     const evalIdLocalStorage: number = evalTokenStorageService.getEvaluationId()
     const  evalId =  routeEvalId? routeEvalId:evalIdLocalStorage;
-    
+
     if(evalId)
     this.onGetSignleEvaluation(evalId);
 

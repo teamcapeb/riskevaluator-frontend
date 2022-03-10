@@ -34,7 +34,7 @@ export default class CategorieQuestion {
         this.questionnaire = iQuestionnaire ? Questionnaire.toQuestionnaire(iQuestionnaire) : null;
         if(scoreEvaluations){
             this.scoreEvaluations = scoreEvaluations.map((iScoreCategory: IScoreCategory) => {
-              if(iScoreCategory.categorie&&iScoreCategory.evaluation){
+              if(iScoreCategory.categorieQuestion && iScoreCategory.evaluation){
                 return ScoreCategory.toScoreCategory(iScoreCategory);
               }
                 return null;
