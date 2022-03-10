@@ -51,7 +51,9 @@ export class EvaluationResultatComponent implements OnInit {
   public radarChartLabels: string[] = [];
   public radarChartData: ChartData<'radar'> ;
   public radarChartType: ChartType = 'radar';
-
+  routeEvalId:number;
+  evalIdLocalStorage: number;
+  evalId:number;
   oopsMessage: IOopsMessageInput  = {
     buttonText: "aller vers evaluation",
     goToUrl: "/evaluer",
@@ -65,16 +67,18 @@ export class EvaluationResultatComponent implements OnInit {
                private modalService:ModalService,
                private actRoute: ActivatedRoute
                ) {
-    const routeEvalId:number = +this.actRoute.snapshot.params['id'];
-    const evalIdLocalStorage: number = evalTokenStorageService.getEvaluationId()
-    const  evalId =  routeEvalId? routeEvalId:evalIdLocalStorage;
+    this.routeEvalId = +this.actRoute.snapshot.params['id'];
+    this.evalIdLocalStorage = evalTokenStorageService.getEvaluationId()
+    this.evalId =  this.routeEvalId? this.routeEvalId:this.evalIdLocalStorage;
 
-    if(evalId)
-    this.onGetSignleEvaluation(evalId);
+
 
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(this.evalId)
+      this.onGetSignleEvaluation(this.evalId);
+  }
 
   PreparePreconisationList(){
     if(this.evaluation$!=null) {
@@ -95,6 +99,9 @@ export class EvaluationResultatComponent implements OnInit {
 
       // Take questionnaire from one the scoreCategories
       this.questionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorieQuestion?.questionnaire;
+
+      // Take entreprise from evaluation
+      this.entreprise$=this.evaluation$?.entreprise;
 
       // filter preconisation with respect the viewIfpercentage
       this.tempPreco  = this.questionnaire?.preconisationGlobales?.filter(p=> p?.viewIfPourcentageScoreLessThan > this.evaluation$?.scoreGeneraleEvaluation);
