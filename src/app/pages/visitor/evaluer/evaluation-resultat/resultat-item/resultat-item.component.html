@@ -1,6 +1,7 @@
-<ng-container>
+<div >
 
-    <div class="card bg-c-blue order-card"  >
+    <div class="card  order-card"  [ngClass]="isGlobal$ ?  'globalBackground' :'bg-c-blue'"
+    >
 
     <div class="d-flex flex-row justify-content-center" >
       <h1  class="display-1"> <strong> {{title$}} </strong></h1>
@@ -22,5 +23,5 @@
     </div>
   </div>
 
-  </ng-container>
+  </div>
 

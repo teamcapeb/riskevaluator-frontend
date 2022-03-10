@@ -96,12 +96,6 @@ export class EvaluationService {
            return question?.reponses.filter(reponse => reponse.isChecked);
          });
 
-      if(categorie.idCategorie == 37){
-        console.log("[DEBUG]");
-        console.log(categoriesQuestions$);
-        console.log(filteredReponses);
-        _evaluation.filterResponses = filteredReponses;
-      }
 
         const reponseReducer = (previousValue: number, currentValue: IReponse) => previousValue + currentValue.nbPoints;
         const questionReducer = (previousValue: number, currentValue: IQuestion) => previousValue + currentValue.scoreMaxPossibleQuestion;
