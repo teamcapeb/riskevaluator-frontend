@@ -66,10 +66,8 @@ export class EvaluationFooterComponent implements OnInit {
      let user: IUser = this.tokenStorageService.getUser();
      this.evaluationService.onCalculateScore(this.categoriesQuestions$, this.isLoggedIn ? user : null);
      const evaluation = this.evaluationService.evaluation.getValue();
-     if(evaluation != null) {
-       this.evalTokenStorageService.saveEvaluationById(evaluation.idEvaluation);
+     if(evaluation !== null) {
        this.SaveEvalution(evaluation);
-       this.router.navigate(['historiques',evaluation.idEvaluation]);
      }
 
    }
@@ -97,8 +95,13 @@ export class EvaluationFooterComponent implements OnInit {
       })
     }
 
-    console.log(wEvaluation)
-    this.evaluationApiService.create(wEvaluation).subscribe(ele => console.log(ele))
+    this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
+      if(evaluation) {
+        this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
+        this.router.navigate(['historiques',evaluation?.idEvaluation]);
+      }
+      }
+    )
 
   }
 }

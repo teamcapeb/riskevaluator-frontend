@@ -38,7 +38,6 @@ export class MetierFormComponent implements OnInit {
     }
     this.modalService.open(content, {animation: true, centered: true}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      console.log(result)
       if(result === 'Valider'){
         this.onConfirmation.emit({data: this.metier, action: action});
       }

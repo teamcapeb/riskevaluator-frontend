@@ -17,12 +17,12 @@ export class EvalTokenStorageService {
     window.sessionStorage.clear();
   }
 
-  public saveEvaluationById(evaluation : number) {
+  public saveEvaluationId(evaluation : number) {
     window.sessionStorage.removeItem(EVAL_KEY);
-    window.sessionStorage.setItem(EVAL_KEY, evaluation.toString());
+    window.sessionStorage.setItem(EVAL_KEY, evaluation?.toString());
   }
 
-  public getEvaluationById() : number {
+  public getEvaluationId() : number {
     return +sessionStorage.getItem(EVAL_KEY);
   }
 

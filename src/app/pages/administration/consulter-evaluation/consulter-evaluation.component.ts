@@ -10,6 +10,7 @@ import IQuestionnaire from "@/interfaces/IQuestionnaire";
 import { QuestionnaireService } from "@services/serviceQuestionnaire/questionnaire.service";
 import IEvaluation from "@/interfaces/IEvaluation";
 import { EvaluationApiService } from "@services/serviceEvaluation/evaluation-api.service";
+import { ModalService } from "@services/serviceModal/modal.service";
 
 @Component({
   selector: 'app-consulter-evaluation',
@@ -23,7 +24,8 @@ export class ConsulterEvaluationComponent implements OnInit {
   evaluations$ : Observable<AppDataState<IEvaluation[]>> |null=null;
   cardColor: any;
 
-  constructor(private evaluationService : EvaluationApiService ) {
+  constructor(private evaluationService : EvaluationApiService,
+              private modalService: ModalService) {
   }
 
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class ConsulterEvaluationComponent implements OnInit {
       }),
       startWith({dataState:DataStateEnum.LOADING}),
       catchError(err=> {
-        this.errorModal.open(JSON.stringify(err.error));
+        this.modalService.error(JSON.stringify(err.error));
         return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
       })
     );

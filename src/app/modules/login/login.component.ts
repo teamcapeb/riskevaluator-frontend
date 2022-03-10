@@ -64,11 +64,8 @@ export class LoginComponent implements OnInit {
       }),
       startWith({dataState:DataStateEnum.LOADING}),
       catchError(err=> {
-        console.log(err?.status)
-
         if(err?.status === 500)
         {
-          console.log(err?.status)
           return of({dataState:DataStateEnum.ERROR, errorMessage:"L'utilisateur est introuvable, merci de créer un compte"})
         }else {
           this.modalService.error(JSON.stringify(err.message));

@@ -89,21 +89,11 @@ const visitors: Routes = [
   },
   {
     path: 'historiques/:id',
-    component: EvaluationResultatComponent,
-    children : [
-      {
-        path: '',
-        component: ResultRadarchartItemComponent
-      },
-      {
-        path : "resultat-chart",
-        component: ResultRadarchartItemComponent
-      },
-      {
-        path :"resultat-list",
-        component : ResultatListComponent
-      }
-    ]
+    component: EvaluationResultatComponent
+  },
+  {
+    path: 'historiques',
+    component: EvaluationResultatComponent
   },
   {
     path: 'evaluer',

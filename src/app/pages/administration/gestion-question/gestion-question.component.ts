@@ -60,7 +60,6 @@ export class GestionQuestionComponent implements OnInit {
     let cq = new CategorieQuestion(this._idCategorie, '');
     let iCq = cq.toJSON();
     this.actualPreconisationCategorieQuestion = new PreconisationCategorieQuestion(0, '', 1, cq.toJSON());
-    console.log(this.actualPreconisationCategorieQuestion)
     this.preconisationCategorieQuestionForm.open('add');
   }
 
@@ -115,7 +114,6 @@ export class GestionQuestionComponent implements OnInit {
       }else if (event.action === 'add'){
         res = await this.preconisationCategoriesQuestionService.create(event.data);
       }else if(event.action === 'delete'){
-        console.log(event.data);
         res = await this.preconisationCategoriesQuestionService.delete(event.data);
       }
     }catch(error){

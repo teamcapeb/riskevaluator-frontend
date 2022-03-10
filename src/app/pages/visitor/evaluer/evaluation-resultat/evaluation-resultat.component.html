@@ -1,29 +1,35 @@
-<div class="container"  *ngIf="evaluation$ as eval">
-  <ul class="nav nav-tabs ml-auto">
-    <h2 class="mr-0">Télecharger</h2>
-    <li class="nav-item ">
+<ng-container   *ngIf="(evaluationObs | async) as result"
+                [ngSwitch]="result.dataState">
 
-      <div class="pdfIcon ml-auto"  (click)="generatePDF()">
-        <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/pdf.png">
-      </div>
-    </li>
-    <li class="nav-item">
-      <div class="pdfIcon"  (click)="htmlToPng()">
-        <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/img_icon.png">
-      </div>
-    </li>
-  </ul>
+  <div class="container" *ngSwitchCase="DataStateEnum.LOADED" >
+    <ul class="nav nav-tabs ml-auto">
+      <h2 class="mr-0">Télecharger</h2>
+      <li class="nav-item ">
 
-  <div id="wrapper">
-    <div id="graphWithTitle">
-    <h1 class="text-primary" style="text-align: center;font-weight: bold;font-size:3em">{{this.listScoreCategories$?.at(0).categorie?.questionnaire?.thematique}}</h1>
-    <app-result-radarchart-item></app-result-radarchart-item>
+        <div class="pdfIcon ml-auto"  (click)="generatePDF()">
+          <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/pdf.png">
+        </div>
+      </li>
+      <li class="nav-item">
+        <div class="pdfIcon"  (click)="htmlToPng()">
+          <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/img_icon.png">
+        </div>
+      </li>
+    </ul>
+
+    <div id="wrapper">
+      <div id="graphWithTitle">
+        <h1 class="text-primary" style="text-align: center;font-weight: bold;font-size:3em">{{this.listScoreCategories$?.at(0)?.categorieQuestion?.questionnaire?.thematique}}</h1>
+        <app-result-radarchart-item [evaluation$]="result.data"></app-result-radarchart-item>
+      </div>
+      <app-resultat-list [evaluation$]="result.data" ></app-resultat-list>
     </div>
-  <app-resultat-list></app-resultat-list>
   </div>
-</div>
 
 
+  <app-oops-message [oopsInput$] = oopsMessage *ngIf="evaluation$ == null" ></app-oops-message>
 
-<app-oops-message [oopsInput$] = oopsMessage *ngIf="evaluation$ == null" ></app-oops-message>
+</ng-container>
+
+
 

@@ -12,7 +12,7 @@ import { EvalTokenStorageService } from "@services/serviceEvaluation/eval-token-
 })
 export class ResultRadarchartItemComponent implements OnInit {
 
-  evaluation$ : IEvaluation = null;
+  @Input() evaluation$ : IEvaluation = null;
   scorecategories$ : IScoreCategory[];
 
 
@@ -25,37 +25,32 @@ export class ResultRadarchartItemComponent implements OnInit {
 
   // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
   }
 
   public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
   }
 
-  constructor(private evalTokenStorageService : EvalTokenStorageService) {
-    this.evaluation$ = this.evalTokenStorageService.getEvaluation();
-  }
+  constructor(private evalTokenStorageService : EvalTokenStorageService) {}
   ngOnInit(): void {
     this.preparePrecoGlobale();
-    let data : number[] = this.scorecategories$.sort().map(item => +item.nbPoints);
-    this.radarChartLabels = this.scorecategories$.sort().map(item => item.categorieQuestion.libelle);
+    let data : number[] = this.scorecategories$?.sort().map(item => +item.nbPoints);
+    this.radarChartLabels = this.scorecategories$?.sort().map(item => item.categorieQuestion.libelle);
 
     this.radarChartData = {
       labels: this.radarChartLabels,
 
       datasets: [
-        { data,label: this.scorecategories$?.at(0).categorie?.questionnaire?.thematique,hitRadius:15,radius:4,hoverRadius:5},
+        { data,label: this.scorecategories$?.at(0).categorieQuestion?.questionnaire?.thematique,hitRadius:15,radius:4,hoverRadius:5},
       ]
     };
 
   }
 
   preparePrecoGlobale(){
-    this.evaluation$ = this.evalTokenStorageService.getEvaluation();
 
 
     if(this.evaluation$!=null) {
-      this.scorecategories$ = this.evaluation$.scoreCategories.map( cat => {
+      this.scorecategories$ = this.evaluation$?.scoreCategories?.map( cat => {
         let temp = cat.categorieQuestion.preconisationsCategorie;
         cat.categorieQuestion.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
         return cat;
