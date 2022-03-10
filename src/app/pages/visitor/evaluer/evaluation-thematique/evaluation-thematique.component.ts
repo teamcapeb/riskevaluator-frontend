@@ -73,5 +73,9 @@ export class EvaluationThematiqueComponent implements OnInit {
     let colors: string[] = environment.evaluerIHM.gradientColors;
     return colors[id%colors.length];
   }
+  public back(){
+    this.router.navigate(['/evaluer']);
+
+  }
 
 }

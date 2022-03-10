@@ -130,4 +130,9 @@ export class GestionQuestionComponent implements OnInit {
     return this._categorieQuestion;
   }
 
+  public back(){
+    this.router.navigate(['/gestion-questionnaires', this._idQuestionnaire, 'gestion-categories-questions']);
+
+  }
+
 }

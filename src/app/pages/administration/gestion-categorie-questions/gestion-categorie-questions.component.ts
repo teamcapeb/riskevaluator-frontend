@@ -135,6 +135,10 @@ export class GestionCategorieQuestionsComponent implements OnInit {
   get questionnaire(): Observable<Questionnaire> {
     return this._questionnaire;
   }
+  public back(){
+    this.router.navigate(['/gestion-questionnaires']);
+
+  }
 /*
   get preconisationGlobales(): Observable<PreconisationGlobale[]> {
     return this._preconisationGlobale;

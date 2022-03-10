@@ -13,7 +13,7 @@ export default class CategorieQuestion {
     public idCategorie: number;
     public libelle: string;
     public questionnaire: Questionnaire;
-    public scoreEvaluations: ScoreCategory[];
+    public scoreEvaluations?: ScoreCategory[];
     public questions: Question[];
     public preconisationsCategorie: PreconisationCategorieQuestion[];
 
@@ -34,7 +34,10 @@ export default class CategorieQuestion {
         this.questionnaire = iQuestionnaire ? Questionnaire.toQuestionnaire(iQuestionnaire) : null;
         if(scoreEvaluations){
             this.scoreEvaluations = scoreEvaluations.map((iScoreCategory: IScoreCategory) => {
+              if(iScoreCategory.categorie&&iScoreCategory.evaluation){
                 return ScoreCategory.toScoreCategory(iScoreCategory);
+              }
+                return null;
             });
         }
         if(iQuestions){
@@ -54,7 +57,7 @@ export default class CategorieQuestion {
             iCategorie.idCategorie,
             iCategorie.libelle,
             iCategorie.questionnaire,
-            iCategorie.scoreEvaluations,
+            iCategorie.scoreEvaluations?iCategorie.scoreEvaluations:undefined,
             iCategorie.questions,
             iCategorie.preconisationsCategorie
         );
