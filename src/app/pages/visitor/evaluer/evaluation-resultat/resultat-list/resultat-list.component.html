@@ -4,7 +4,7 @@
                     [title$]="'Score Global'"  > </app-resultat-item>
 
 
-<ng-container *ngFor="let item of listScoreCategories$">
+<ng-container  *ngFor="let item of listScoreCategories$">
   <app-resultat-item
     [text$]="concatPreconisations(item?.categorieQuestion?.preconisationsCategorie)"
     [percentage$]="item?.nbPoints"

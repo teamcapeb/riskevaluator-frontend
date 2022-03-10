@@ -13,14 +13,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import {Alignment, Decoration, Margins} from "pdfmake/interfaces";
 import {IEntreprise} from "@/interfaces/IEntreprise";
 import {bounceInOnEnterAnimation} from "angular-animations";
-import {ChartData, ChartType} from "chart.js";
-import { EvaluationService } from "@services/serviceEvaluation/evaluation.service";
-import { EvaluationApiService } from "@services/serviceEvaluation/evaluation-api.service";
-import { catchError, map, startWith } from "rxjs/operators";
-import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
-import { of } from "rxjs";
-import { DataStateEnum } from "@/state/questionnaire.state";
-import { ActivatedRoute } from "@angular/router";
+import {ChartConfiguration, ChartData, ChartType} from "chart.js";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -120,7 +113,7 @@ export class EvaluationResultatComponent implements OnInit {
   }
 
   htmlToPng() {
-    const input = document.getElementById("wrapper");
+    const input = document.getElementById("graphWithTitle");
     html2canvas(input).then(canvas => {
       var link = document.createElement('a');
       link.href = canvas.toDataURL();
@@ -132,7 +125,7 @@ export class EvaluationResultatComponent implements OnInit {
   }
   getImageGraphe() {
 
-    const input = document.getElementById("wrapper");
+    const input = document.getElementById("graph");
     return html2canvas(input).then(canvas => {
 
       return canvas.toDataURL();
@@ -186,7 +179,6 @@ export class EvaluationResultatComponent implements OnInit {
         {
           image: await this.getImageGraphe() ,
           width:600,
-          height:500,
           alignment : 'center' as Alignment
         },{
           text: 'Resultat globale: '+this.evaluation$.scoreGeneraleEvaluation+'%',
@@ -219,8 +211,8 @@ export class EvaluationResultatComponent implements OnInit {
           headerRows:1,
           widths: ['*'],
           body:[
-            ['Préconisations'],
-            ...wScoreCategorie.categorieQuestion.preconisationsCategorie.map(wPreconisation=>([wPreconisation.contenu])),
+            ['Préconisations ('+wScoreCategorie.categorie.libelle+')'],
+            ...wScoreCategorie.categorie.preconisationsCategorie.map(wPreconisation=>([wPreconisation.contenu])),
           ]
         }
       })

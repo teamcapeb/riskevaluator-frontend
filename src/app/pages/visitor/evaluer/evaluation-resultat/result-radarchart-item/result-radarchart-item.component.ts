@@ -16,35 +16,8 @@ export class ResultRadarchartItemComponent implements OnInit {
   scorecategories$ : IScoreCategory[];
 
 
-   notations = {
-    0: "",
-    0.5: "",
-    1: "no",
-    1.5: "",
-    2: "basic",
-    2.5: "",
-    3: "proficient",
-    3.5: "",
-    4: "great",
-    4.5: "",
-    5: "outstanding",
-  }
 
-  public radarChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    scales: {
-      r: {
-        suggestedMin: 0,
-        suggestedMax: 100,
-        ticks: {
-          // Include a dollar sign in the ticks
-          callback: function(value, index, ticks) {
-            return   value + ' %';
-          }
-        }
-      }
-    }
-  };
+
   public radarChartLabels: string[] = [];
 
   public radarChartData: ChartData<'radar'> ;
@@ -69,8 +42,9 @@ export class ResultRadarchartItemComponent implements OnInit {
 
     this.radarChartData = {
       labels: this.radarChartLabels,
+
       datasets: [
-        { data, label: this.scorecategories$?.at(0).categorieQuestion?.questionnaire?.thematique},
+        { data,label: this.scorecategories$?.at(0).categorie?.questionnaire?.thematique,hitRadius:15,radius:4,hoverRadius:5},
       ]
     };
 
@@ -88,5 +62,33 @@ export class ResultRadarchartItemComponent implements OnInit {
       })
     }
   }
+  public radarChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    plugins:{
+      legend: {
+        display: false,
+        position:"chartArea",
+
+      },
+    },
+    scales: {
+      r: {
+        pointLabels: {
+          font: {
+          },
+        },
+
+        suggestedMin: 0,
+        suggestedMax: 100,
+        ticks: {
+          // Include a dollar sign in the ticks
+          callback: function(value, index, ticks) {
+            return   value + ' %';
+          }
+
+        }
+      }
+    }
+  };
 
 }
