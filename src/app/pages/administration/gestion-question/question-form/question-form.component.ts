@@ -66,7 +66,7 @@ export class QuestionFormComponent implements OnInit {
     let idCategorie = this.activatedRoute.snapshot.paramMap.get('idCategorie');
     let idQuestion = this.activatedRoute.snapshot.paramMap.get('idQuestion');
     if(idCategorie && idQuestion && idQuestionnaire){
-      this._idQuestionnaire = parseInt(idCategorie);
+      this._idQuestionnaire = parseInt(idQuestionnaire);
       this._idQuestion = idQuestion === 'new' ? -1 : parseInt(idQuestion);
       this._idCategorie = parseInt(idCategorie);
     }else{
