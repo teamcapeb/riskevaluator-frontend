@@ -3,6 +3,6 @@ import IEvaluation from "./IEvaluation";
 
 export default interface IScoreCategory{
     evaluation?: IEvaluation;
-    categorie?: ICategorieQuestion;
+    categorieQuestion?: ICategorieQuestion;
     nbPoints?: number;
 }

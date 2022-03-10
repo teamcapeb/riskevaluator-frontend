@@ -9,7 +9,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class QuestionModalComponent implements OnInit {
 
-  
+
 
   closeResult = '';
   public title: string;
@@ -30,7 +30,6 @@ export class QuestionModalComponent implements OnInit {
     }
     this.modalService.open(content, {animation: true, centered: true}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      console.log(result)
       if(result === 'Valider'){
         this.onConfirmation.emit({data: this.question, action: action});
       }

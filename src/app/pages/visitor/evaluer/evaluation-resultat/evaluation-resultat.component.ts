@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 import IEvaluation from "@/interfaces/IEvaluation";
 import IPreconisationGlobale from "@/interfaces/IPreconisationGlobale";
 import IScoreCategory from "@/interfaces/IScoreCategory";
@@ -14,6 +14,15 @@ import {Alignment, Decoration, Margins} from "pdfmake/interfaces";
 import {IEntreprise} from "@/interfaces/IEntreprise";
 import {bounceInOnEnterAnimation} from "angular-animations";
 import {ChartConfiguration, ChartData, ChartType} from "chart.js";
+import { ActivatedRoute } from "@angular/router";
+import { EvaluationService } from "@services/serviceEvaluation/evaluation.service";
+import { EvaluationApiService } from "@services/serviceEvaluation/evaluation-api.service";
+import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
+import Immutable from "immutable";
+import of = Immutable.List.of;
+import { catchError, map, startWith } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { ModalService } from "@services/serviceModal/modal.service";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -27,6 +36,10 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class EvaluationResultatComponent implements OnInit {
 
+  @Input() inputEvaluation : IEvaluation = null;
+
+
+  evaluationObs:Observable<AppDataState<IEvaluation |null>> = null;
 
   evaluation$ : IEvaluation = null;
   entreprise$ : IEntreprise =null;
@@ -44,21 +57,35 @@ export class EvaluationResultatComponent implements OnInit {
     goToUrl: "/evaluer",
     message: "Merci d'aller sur la rubrique évaluer, pour effectuer une évaluation",
     title: "Aucune évaluation n'est trouvée", }
+    DataStateEnum = DataStateEnum;
 
-  constructor( private evalTokenStorageService : EvalTokenStorageService) {}
+  constructor( private evalTokenStorageService : EvalTokenStorageService,
+               private evaluationService : EvaluationService,
+               private evaluationApiService : EvaluationApiService,
+               private modalService:ModalService,
+               private actRoute: ActivatedRoute
+               ) {
+    const routeEvalId:number = +this.actRoute.snapshot.params['id'];
+    const evalIdLocalStorage: number = evalTokenStorageService.getEvaluationId()
+    const  evalId =  routeEvalId? routeEvalId:evalIdLocalStorage;
 
-  ngOnInit(): void {
-    this.evaluation$ = this.evalTokenStorageService.getEvaluation();
-    this.entreprise$ = this.evalTokenStorageService.getEntreprise();
+    if(evalId)
+    this.onGetSignleEvaluation(evalId);
+
+  }
+
+  ngOnInit(): void {}
+
+  PreparePreconisationList(){
     if(this.evaluation$!=null) {
       this.preparePrecoGlobale();
-      let data : number[] = this.listScoreCategories$.sort().map(item => +item.nbPoints);
-      this.radarChartLabels = this.listScoreCategories$.sort().map(item => item.categorie.libelle);
+      let data : number[] = this.listScoreCategories$?.sort().map(item => +item?.nbPoints);
+      this.radarChartLabels = this.listScoreCategories$?.sort().map(item => item?.categorieQuestion?.libelle);
 
       this.radarChartData = {
         labels: this.radarChartLabels,
         datasets: [
-          { data, label: this.listScoreCategories$?.at(0).categorie?.questionnaire?.thematique},
+          { data, label: this.listScoreCategories$?.at(0)?.categorieQuestion?.questionnaire?.thematique},
         ]
       };
 
@@ -67,7 +94,7 @@ export class EvaluationResultatComponent implements OnInit {
       const textReducer = (previousValue: string, currentValue: IPreconisationGlobale | IPreconisationCategorieQuestion) => previousValue.concat('\n \n',currentValue.contenu);
 
       // Take questionnaire from one the scoreCategories
-      this.questionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorie?.questionnaire;
+      this.questionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorieQuestion?.questionnaire;
 
       // filter preconisation with respect the viewIfpercentage
       this.tempPreco  = this.questionnaire?.preconisationGlobales?.filter(p=> p?.viewIfPourcentageScoreLessThan > this.evaluation$?.scoreGeneraleEvaluation);
@@ -79,15 +106,13 @@ export class EvaluationResultatComponent implements OnInit {
       if( this.precoGlobale$ != null && this.precoGlobale$?.contenu !==null)
         this.precoGlobale$.contenu = this.tempPreco?.reduce(textReducer,"");
 
-      this.listScoreCategories$ = this.evaluation$.scoreCategories.map( cat => {
-        let temp = cat.categorie.preconisationsCategorie;
-        cat.categorie.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
+      this.listScoreCategories$ = this.evaluation$?.scoreCategories?.map( cat => {
+        let temp = cat?.categorieQuestion?.preconisationsCategorie;
+        cat.categorieQuestion.preconisationsCategorie = temp?.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
         return cat;
       })
     }
-
   }
-
 
   concatPreconisations(preconisation :any) : string {
     const textReducer = (previousValue: string, currentValue: IPreconisationGlobale | IPreconisationCategorieQuestion) => previousValue.concat('\n \n',currentValue.contenu);
@@ -105,6 +130,7 @@ export class EvaluationResultatComponent implements OnInit {
     });
 
   }
+
   getImageGraphe() {
 
     const input = document.getElementById("graph");
@@ -114,9 +140,9 @@ export class EvaluationResultatComponent implements OnInit {
     });
 
   }
+
   async generatePDF() {
     let wEntreprise=this.entreprise$
-    console.log(wEntreprise)
 
     let docDefinition = {
       header:'Diagnostique en ligne effectué par CAPEB',
@@ -184,17 +210,17 @@ export class EvaluationResultatComponent implements OnInit {
         }
       }
     };
-    this.listScoreCategories$.forEach(wScoreCategorie=>{
+    this.listScoreCategories$?.forEach(wScoreCategorie=>{
       docDefinition.content.push({
-        text: wScoreCategorie.categorie.libelle+': '+wScoreCategorie.nbPoints+'%',
+        text: wScoreCategorie.categorieQuestion.libelle+': '+wScoreCategorie.nbPoints+'%',
         style: 'sectionHeader'
       },{
         table:{
           headerRows:1,
           widths: ['*'],
           body:[
-            ['Préconisations ('+wScoreCategorie.categorie.libelle+')'],
-            ...wScoreCategorie.categorie.preconisationsCategorie.map(wPreconisation=>([wPreconisation.contenu])),
+            ['Préconisations ('+wScoreCategorie.categorieQuestion.libelle+')'],
+            ...wScoreCategorie.categorieQuestion.preconisationsCategorie.map(wPreconisation=>([wPreconisation.contenu])),
           ]
         }
       })
@@ -202,16 +228,31 @@ export class EvaluationResultatComponent implements OnInit {
     pdfMake.createPdf(docDefinition).open();
 
   }
+
   preparePrecoGlobale(){
-    this.evaluation$ = this.evalTokenStorageService.getEvaluation();
-
-
     if(this.evaluation$!=null) {
-      this.listScoreCategories$ = this.evaluation$.scoreCategories.map( cat => {
-        let temp = cat.categorie.preconisationsCategorie;
-        cat.categorie.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
+      this.listScoreCategories$ = this.evaluation$?.scoreCategories.map( cat => {
+        let temp = cat.categorieQuestion.preconisationsCategorie;
+        cat.categorieQuestion.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
         return cat;
       })
     }
   }
+
+  onGetSignleEvaluation(id : number) {
+    this.evaluationObs = this.evaluationApiService.get(id).pipe(
+      map((data: IEvaluation)=>{
+        this.evaluation$ = data;
+        this.evaluation$.entreprise = data.entreprise;
+        this.PreparePreconisationList();
+        return ({dataState:DataStateEnum.LOADED,data:data})
+      }),
+      startWith({dataState:DataStateEnum.LOADING}),
+      catchError(err=> {
+        this.modalService.error(JSON.stringify(err.message));
+        return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
+      })
+    );
+  }
+
 }

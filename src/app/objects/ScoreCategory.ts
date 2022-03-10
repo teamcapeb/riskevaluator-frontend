@@ -22,7 +22,7 @@ export default class ScoreCategory{
     public static toScoreCategory(iScoreCategory: IScoreCategory): ScoreCategory{
         return new ScoreCategory(
             iScoreCategory.evaluation,
-            iScoreCategory.categorie,
+            iScoreCategory.categorieQuestion,
             iScoreCategory.nbPoints
         );
     }
@@ -30,7 +30,7 @@ export default class ScoreCategory{
     public toJSON(): IScoreCategory {
         return {
             "evaluation": this.evaluation.toJSON(),
-            "categorie": this.categorie.toJSON(),
+            "categorieQuestion": this.categorie.toJSON(),
             "nbPoints": this.nbPoints
         }
     }

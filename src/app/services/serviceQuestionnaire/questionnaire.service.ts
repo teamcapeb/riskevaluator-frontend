@@ -24,7 +24,7 @@ export class QuestionnaireService {
         });
     })).pipe(
       catchError((err:any) => {
-        this.modalService.error(err.message);
+        this.modalService.error(JSON.stringify(err.message));
         return throwError(err);
       })
     );

@@ -18,8 +18,12 @@ export class EvaluationApiService {
 
   constructor(private http: HttpClient) { }
 
-  get(evaluationId: string): Observable<IEvaluation> {
+  get(evaluationId: number): Observable<IEvaluation> {
     return this.http.get<IEvaluation>(`${API_URL}/${evaluationId}`);
+  }
+
+  getAll(): Observable<IEvaluation[]> {
+    return this.http.get<IEvaluation[]>(`${API_URL}/`);
   }
 
    create(reponse: IEvaluation): Observable<IEvaluation>{

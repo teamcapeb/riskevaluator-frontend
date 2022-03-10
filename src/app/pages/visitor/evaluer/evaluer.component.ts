@@ -10,6 +10,7 @@ import { catchError, map, startWith, takeUntil } from "rxjs/operators";
 import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
 import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
 import { EvaluationHelper } from "@services/_helpers/EvaluationHelper";
+import { ModalService } from "@services/serviceModal/modal.service";
 
 
 @Component({
@@ -27,6 +28,7 @@ export class EvaluerComponent implements OnInit {
   constructor(    private http: HttpClient,
                   private route: ActivatedRoute,
                   private router: Router,
+                  private modalService: ModalService,
                   private metierService :MetierService) {}
 
   ngOnInit(): void {
@@ -41,7 +43,7 @@ export class EvaluerComponent implements OnInit {
       }),
       startWith({dataState:DataStateEnum.LOADING}),
       catchError(err=> {
-        this.errorModal.open(JSON.stringify(err.error));
+        this.modalService.error(JSON.stringify(err.message));
         return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
       })
     );

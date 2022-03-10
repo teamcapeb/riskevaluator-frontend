@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 import IEvaluation from "@/interfaces/IEvaluation";
 import { EvalTokenStorageService } from "@services/serviceEvaluation/eval-token-storage.service";
 import IPreconisationGlobale from "@/interfaces/IPreconisationGlobale";
@@ -16,14 +16,11 @@ import { bounceInOnEnterAnimation } from "angular-animations";
   ]
 })
 export class ResultatListComponent implements OnInit {
-  evaluation$ : IEvaluation = null;
+  @Input() evaluation$ : IEvaluation = null;
   precoGlobale$ : IPreconisationGlobale = { idPreconisationG: 0, viewIfPourcentageScoreLessThan: 0, contenu: ""};
   listScoreCategories$ : IScoreCategory[];
 
-  constructor(private evalTokenStorageService : EvalTokenStorageService) {
-    this.evaluation$ = this.evalTokenStorageService.getEvaluation();
-
-  }
+  constructor(private evalTokenStorageService : EvalTokenStorageService) {}
 
   ngOnInit(): void {
     this.preparePrecoGlobale();
@@ -34,7 +31,7 @@ export class ResultatListComponent implements OnInit {
     if (this.evaluation$ != null) {
 
       // Take questionnaire from one the scoreCategories
-      let questionnaire: IQuestionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorie?.questionnaire;
+      let questionnaire: IQuestionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorieQuestion?.questionnaire;
 
       // filter preconisation with respect the viewIfpercentage
       const tempPreco: IPreconisationGlobale[] = questionnaire?.preconisationGlobales?.filter(p => p?.viewIfPourcentageScoreLessThan > this.evaluation$?.scoreGeneraleEvaluation);
@@ -49,13 +46,10 @@ export class ResultatListComponent implements OnInit {
   }
 
   preparePrecoGlobale(){
-    this.evaluation$ = this.evalTokenStorageService.getEvaluation();
-
-
     if(this.evaluation$!=null) {
-      this.listScoreCategories$ = this.evaluation$.scoreCategories.map( cat => {
-        let temp = cat.categorie.preconisationsCategorie;
-        cat.categorie.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
+      this.listScoreCategories$ = this.evaluation$?.scoreCategories?.map( cat => {
+        let temp = cat.categorieQuestion.preconisationsCategorie;
+        cat.categorieQuestion.preconisationsCategorie = temp.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
         return cat;
       })
     }
