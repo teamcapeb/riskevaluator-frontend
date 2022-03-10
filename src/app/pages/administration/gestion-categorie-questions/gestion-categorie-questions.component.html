@@ -1,7 +1,9 @@
 
 
-<div class="header text-center p-4">
-  <h1>{{(questionnaire | async)?.thematique}}</h1>
+<div >
+
+  <button class="btn btn-dark btn-lg  " type="button" (click)="back()">&laquo; Retour</button>
+  <h1 class="header text-center p-4">{{(questionnaire | async)?.thematique}}</h1>
 </div>
 <app-list title="Liste des catégories de questions" (onAdd)="addC()" >
   <ng-template [ngIf]="questionnaire | async" [ngIfElse]="loading">

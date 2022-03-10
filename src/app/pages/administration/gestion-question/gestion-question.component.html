@@ -1,5 +1,7 @@
-<div class="header text-center p-4">
-  <h1>{{(categorieQuestion | async)?.libelle}}</h1>
+<div >
+  <button class="btn btn-dark btn-lg  " type="button" (click)="back()">&laquo; Retour</button>
+
+  <h1 class="header text-center p-4">{{(categorieQuestion | async)?.libelle}}</h1>
 </div>
 
 <app-list title="Liste des questions" (onAdd)="add()">

@@ -18,10 +18,11 @@
         </div>
     </div>
     <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Annuler')">Annuler</button>
       <button  [disabled]="thematique.errors?.['required']" type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
     </div>
   </ng-template>
-  
+
   <ng-template #modalDelete let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">{{title}} Questionnaire</h4>
@@ -33,8 +34,7 @@
       Voulez-vous vraiment supprimer ce questionnaire ?
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Annuler')">Annuler</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
     </div>
   </ng-template>
-  
