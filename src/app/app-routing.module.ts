@@ -130,6 +130,11 @@ const visitors: Routes = [
     component: HomePageComponent
   },
   {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent,
+    canActivate: [NonAuthGuard]
+  },
+  {
     path: '',
     component: HomePageComponent
   }
@@ -159,11 +164,6 @@ const routes: Routes = [
     {
         path: 'recover-password',
         component: RecoverPasswordComponent,
-        canActivate: [NonAuthGuard]
-    },
-    {
-        path: 'privacy-policy',
-        component: PrivacyPolicyComponent,
         canActivate: [NonAuthGuard]
     },
     {path: '**', redirectTo: ''}

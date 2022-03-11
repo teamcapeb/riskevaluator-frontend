@@ -55,6 +55,11 @@ export const MENU = [
         name: 'Contact',
         path: ['/contact'],
         icon: "fa-solid fa-address-card"
+    },
+    {
+      name: 'À propos',
+      path: ['/privacy-policy'],
+      icon: "fa-solid fa-circle-info"
     }
     ];
 
