@@ -62,6 +62,7 @@ export class EvaluationFooterComponent implements OnInit {
   }
 
    finishButtonClick() {
+     this.scrollToTop();
      this.isLoggedIn = !!this.tokenStorageService.getToken();
      let user: IUser = this.tokenStorageService.getUser();
      this.evaluationService.onCalculateScore(this.categoriesQuestions$, this.isLoggedIn ? user : null);
