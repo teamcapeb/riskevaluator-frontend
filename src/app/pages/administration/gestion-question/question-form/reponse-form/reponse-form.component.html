@@ -18,7 +18,6 @@
       </form>
     </div>
     <div class="modal-footer d-flex justify-content-center">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Annuler')">Annuler</button>
       <button [disabled]="name.errors?.['required'] || points.errors?.['required']" type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
     </div>
   </ng-template>
@@ -34,7 +33,6 @@
       Voulez-vous vraiment supprimer cette réponse ?
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Annuler')">Annuler</button>
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
 
     </div>
