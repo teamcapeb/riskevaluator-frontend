@@ -10,17 +10,12 @@
 
 
     <ul class="navbar-nav ml-auto">
-        <app-user></app-user>
-        <!-- <li class="nav-item">
-      <a
-        class="nav-link"
-        data-widget="control-sidebar"
-        data-slide="true"
-        href="#"
-        role="button"
-      >
-        <i class="fas fa-th-large"></i>
-      </a>
-    </li> -->
+        <li class="nav-link">
+          <app-user *ngIf="isLoggedIn"></app-user>
+        </li>
+
+        <li class="nav-link">
+          <app-signup-login *ngIf="!isLoggedIn"></app-signup-login>
+        </li>
     </ul>
 </nav>

@@ -4,19 +4,13 @@
 @import url('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.3.0/css/flag-icon.min.css');
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700');
-
+@import url('../node_modules/@fortawesome/fontawesome-free/css/all.css');
 @import '../node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css';
 @import '../node_modules/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css';
 @import '../node_modules/admin-lte/dist/css/adminlte.min.css';
-
+@import '../node_modules/ngx-toastr/toastr.css';
 @import '../node_modules/ngx-toastr/toastr.css';
 
-
-
-html, body {
-    width: 100vw;
-    height: 100vh;
-}
 
 ::-webkit-scrollbar {
     width: 0px;
@@ -94,6 +88,12 @@ html, body {
 }
 
 
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+  background-color: #e33b1a;
+  color: #fff;
+}
+
+
 .user-menu > .dropdown-menu > .user-footer {
     background-color: #f8f9fa;
     padding: 10px;
@@ -140,5 +140,11 @@ html, body {
     margin-left: -8px;
 }
 
+
+
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

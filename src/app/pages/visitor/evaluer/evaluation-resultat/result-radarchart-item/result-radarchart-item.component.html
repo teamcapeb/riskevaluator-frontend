@@ -1,0 +1,12 @@
+<div *ngIf="scorecategories$?.length >= 3">
+  <div>
+    <div  id="graph">
+      <canvas [data]="radarChartData" [options]="radarChartOptions"
+              [type]="radarChartType"
+              baseChart
+
+              style="max-height: 70ex">
+      </canvas>
+    </div>
+  </div>
+</div>

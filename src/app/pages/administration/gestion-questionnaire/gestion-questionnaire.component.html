@@ -6,6 +6,7 @@
                 [data]="questionnaire" 
                 (onUpdate)="update($event)"
                 (onDelete)="delete($event)"
+                (onRowClick)="questionnaireDetails($event)"
             >
                 <app-list-item-col>{{questionnaire.thematique}}</app-list-item-col>
             </app-list-item>
@@ -21,6 +22,5 @@
 </ng-template>
 
 <app-questionnaire-form [questionnaire]="actualQuestionnaire" (onConfirmation)="createOrUpdateOrDeleteQuestionnaire($event)" #QuestionnaireForm></app-questionnaire-form>
-<app-error-modal #errorModal></app-error-modal>
 
 

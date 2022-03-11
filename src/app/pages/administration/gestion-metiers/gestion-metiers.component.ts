@@ -4,8 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { MetierService } from '../../../services/serviceMetier/metier.service';
 import { takeUntil } from 'rxjs/operators';
 import IListEvent from '@/interfaces/IListEvent';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ErrorModalComponent } from '@components/error-modal/error-modal.component';
+import { ModalService } from "@services/serviceModal/modal.service";
 
 @Component({
   selector: 'app-gestion-metiers',
@@ -21,34 +20,17 @@ export class GestionMetiersComponent implements OnInit {
 
   public actualMetier: Metier;
 
-  constructor(private metierService: MetierService) { }
+  constructor(private metierService: MetierService,
+              private modalService: ModalService
+            ) { }
 
   ngOnInit(): void {
-    
-  }
+    this._metiers = this.metierService.getAll();
 
-  ngAfterViewInit(){
-    let finalise = new Subject();
-    this._metiers = this.getAll();
-  }
-
-  getAll(): Observable<Metier[]>{
-    let finalise = new Subject();
-    let obs = this.metierService.getAll();
-    obs.pipe(takeUntil(finalise)).subscribe(() =>{
-      finalise.next();
-      finalise.complete();
-    },
-    (err) => {
-      this.errorModal.open(JSON.stringify(err.error));
-      finalise.next();
-      finalise.complete();
-    });
-    return obs; 
   }
 
   add(): void{
-    this.actualMetier = new Metier('', '');
+    this.actualMetier = new Metier(0, '', []);
     this.metierForm.open('add');
   }
 
@@ -62,27 +44,23 @@ export class GestionMetiersComponent implements OnInit {
     this.metierForm.open('delete');
   }
 
-  createOrUpdateOrDeleteMetier(event: IListEvent){
+  public async createOrUpdateOrDeleteMetier(event: IListEvent){
     this._metiers = null;
-    let finalise = new Subject();
-    let obs = null;
-    if(event.action === 'update'){
-      obs = this.metierService.update(event.data);
-    }else if (event.action === 'add'){
-      obs = this.metierService.create(event.data);
-    }else if(event.action === 'delete'){
-      obs = this.metierService.delete(event.data);
+    let res = null;
+    try{
+      if(event.action === 'update'){
+        res = await this.metierService.update(event.data);
+      }else if (event.action === 'add'){
+        res = await this.metierService.create(event.data);
+      }else if(event.action === 'delete'){
+        res = await this.metierService.delete(event.data);
+      }
+    }catch(error){
+      if( error.status === 409 ){
+        this.modalService.error('Ce metier existe déjà !');
+      }
     }
-    obs.pipe(takeUntil(finalise)).subscribe((res) =>{
-      this._metiers = this.metierService.getAll();
-      finalise.next();
-      finalise.complete();
-    },
-    (err) => {
-      this.errorModal.open(JSON.stringify(err.error));
-      finalise.next();
-      finalise.complete();
-    });
+    this._metiers = this.metierService.getAll();
   }
 
   get metiers(): Observable<Metier[]> {

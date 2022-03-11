@@ -8,13 +8,14 @@ import {
     Router
 } from '@angular/router';
 import {Observable} from 'rxjs';
-import {AppService} from '@services/app.service';
+import {AppService} from '@services/serviceUser/app.service';
+import { TokenStorageService } from '../services/serviceUser/token-storage.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-    constructor(private router: Router, private appService: AppService) {}
+    constructor(private router: Router, private appService: AppService, private tokenStorageService: TokenStorageService) {}
 
     canActivate(
         next: ActivatedRouteSnapshot,
@@ -40,15 +41,18 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
 
     async getProfile() {
-        if (this.appService.user) {
+        if (this.tokenStorageService.getUser()) {
             return true;
         }
-
+        this.router.navigate(['/']);
+        return false;
+/*
         try {
             await this.appService.getProfile();
             return true;
         } catch (error) {
             return false;
         }
+*/
     }
 }

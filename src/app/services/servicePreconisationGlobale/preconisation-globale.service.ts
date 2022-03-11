@@ -12,43 +12,22 @@ import PreconisationGlobale from '@/objects/PreconisationGlobale';
 })
 export class PreconisationGlobaleService {
 
-  private baseUrl: string = environment.apiUrl + '/PreconisationGlobales';
+  private baseUrl: string = environment.apiUrl + '/preconisationglobale/';
 
   constructor(private http: HttpClient) {}
 
-
-  getAll(): Observable<PreconisationGlobale[]> {
-    return this.http.get<IPreconisationGlobale[]>(`${this.baseUrl}`).pipe(map((receivedData: IPreconisationGlobale[]) => {
-        return receivedData.map<PreconisationGlobale>((value: IPreconisationGlobale, index:number, array:IPreconisationGlobale[]) => {
-          return new PreconisationGlobale(
-          value.idPreconisationGlobale,
-          value.viewIfPourcentageScoreLessThan,
-          value.Contenue
-        )
-        });
-    }));
+  create(preconisation: PreconisationGlobale): Promise<PreconisationGlobale | string>{
+    return this.http.post<PreconisationGlobale>(`${this.baseUrl}`, preconisation.toJSON()).toPromise();
   }
 
-  create(preconisationGlobale: PreconisationGlobale): Observable<IPreconisationGlobale | string>{
-    return this.http.post<IPreconisationGlobale>(`${this.baseUrl}`, preconisationGlobale.toJSON());
+  update(preconisationGlobale: PreconisationGlobale): Promise<IPreconisationGlobale | string> {
+    return this.http.put<IPreconisationGlobale>(`${this.baseUrl}`, preconisationGlobale.toJSON()).toPromise();
   }
 
-
-  get(preconisationGlobaleId: string): Observable<PreconisationGlobale> {
-    return this.http.get<IPreconisationGlobale>(`${this.baseUrl}/${preconisationGlobaleId}`).pipe(map((receivedData: IPreconisationGlobale) => {
-            return new PreconisationGlobale(
-                receivedData.idPreconisationGlobale,
-                receivedData.viewIfPourcentageScoreLessThan,
-                receivedData.Contenue
-            )
-    }));
+  delete(preconisationGlobale: IPreconisationGlobale): Promise<string> {
+    return this.http.delete<string>(`${this.baseUrl}${preconisationGlobale.idPreconisationG}`).toPromise();
   }
-
-  update(preconisationGlobale: IPreconisationGlobale): Observable<IPreconisationGlobale | string> {
-    return this.http.put<IPreconisationGlobale>(`${this.baseUrl}/${preconisationGlobale.idPreconisationGlobale}`, preconisationGlobale);
-  }
-
-  delete(preconisationGlobale: IPreconisationGlobale): Observable<string> {
-    return this.http.delete<string>(`${this.baseUrl}/${preconisationGlobale.idPreconisationGlobale}`);
+  get(pourcentage : number) : Observable<IPreconisationGlobale> {
+    return this.http.get<IPreconisationGlobale>(`${this.baseUrl}pourcentage/${pourcentage}`)
   }
 }

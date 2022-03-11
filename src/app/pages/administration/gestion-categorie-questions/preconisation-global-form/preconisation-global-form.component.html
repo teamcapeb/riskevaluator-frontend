@@ -1,37 +1,49 @@
 <ng-template #modalContentCreateOrUpdate let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{title}} Suggestion</h4>
+    <h4 class="modal-title" id="modal-basic-title">{{title}} préconisation globale </h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
       <div class="form-group">
-        <label for="exampleInputEmail1">Reponses</label>
-        <input
-          type="text"
+        <label for="exampleInputEmail1">Préconisation</label>
+        <textarea
+          required
           class="form-control"
-          id="Contenue"
-          [(ngModel)]="preconisationGlobale.Contenue">
+          id="contenu"
+          rows="5"
+          [(ngModel)] = "preconisationGlobale.contenu"
+          #name="ngModel"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Afficher la Préconisation si le score est inférieur à (%) </label>
+        <input
+        required
+        type="number"
+        class="form-control"
+        id="Pourcentages"
+        (input)="checkInputRange($event)"
+        [(ngModel)] = "preconisationGlobale.viewIfPourcentageScoreLessThan"
+        #pourcentages="ngModel">
       </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
+    <button [disabled]="pourcentages.errors?.['required'] || name.errors?.['required']" type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
   </div>
 </ng-template>
 
 <ng-template #modalDelete let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{title}} Suggestion</h4>
+    <h4 class="modal-title" id="modal-basic-title">Préconisation</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    Voulez-vous vraiment supprimer cette suggestion ?
+    Voulez-vous vraiment supprimer cette Préconisation ?
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Annuler')">Annuler</button>
   </div>
 </ng-template>

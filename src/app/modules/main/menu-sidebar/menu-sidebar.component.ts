@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {AppService} from '@services/app.service';
-import { TokenStorageService } from "@services/token-storage.service";
+import {AppService} from '@services/serviceUser/app.service';
+import { TokenStorageService } from "@services/serviceUser/token-storage.service";
 
 @Component({
     selector: 'app-menu-sidebar',
@@ -37,34 +37,42 @@ export class MenuSidebarComponent implements OnInit {
 
 export const MENU = [
     {
-        name: 'Acceuil',
-        path: ['/']
+        name: 'Accueil',
+        path: ['/'],
+        icon: "fa-solid fa-landmark"
     },
     {
         name: 'Evaluer',
-        path: ['/evaluer']
+        path: ['/evaluer'],
+        icon: "fa-solid fa-list-check"
     },
     {
-        name: 'Historiques',
-        path: ['/historiques']
+        name: 'Evaluation précédente',
+        path: ['/historiques'],
+        icon: "fa-solid fa-chart-pie"
     },
     {
         name: 'Contact',
-        path: ['/contact']
+        path: ['/contact'],
+        icon: "fa-solid fa-address-card"
     }
     ];
 
 export const ADMIN_MENU = [
   {
     name: 'Gestion questionnaire',
-    path: ['/gestion-questionnaire']
+    path: ['/gestion-questionnaires'],
+    icon: "fa-solid fa-atom"
+
   },
   {
     name: 'Gestion métiers',
-    path: ['/gestion-metiers']
+    path: ['/gestion-metiers'],
+    icon: "fa-solid fa-atom"
   },
   {
-    name: 'Gestion Comptes',
-    path: ['/gestion-compte']
+    name: 'Consulter évaluation',
+    path: ['/consulter-evaluation'],
+    icon: "fa-solid fa-list"
   }
 ];

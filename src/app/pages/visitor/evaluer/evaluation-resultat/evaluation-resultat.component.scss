@@ -1,0 +1,54 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width:60%;
+  white-space: pre-line;
+}
+
+
+
+@media (max-width: 767px) {
+
+  .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width:100%;
+    height:100%;
+  }
+}
+.nav-link {
+  background: #ffffff;
+  color: #000000;
+  border-bottom: 1px solid grey !important;
+}
+
+.active {
+  border-bottom: 2px solid #e33b1a !important;
+  color: #e33b1a !important;
+}
+
+img.logo-navbar {
+  width: 3rem !important;
+  height: 3rem !important;
+}
+
+img.logo-navbar-score {
+  width: 6rem !important;
+  height: 3rem !important;
+}
+
+span {
+  display: table;
+  margin: 0 auto;
+}
+
+.pdfIcon {
+  display:block;
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+}
+
+

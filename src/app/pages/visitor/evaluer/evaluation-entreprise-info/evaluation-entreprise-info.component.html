@@ -1,0 +1,36 @@
+<div class="row justify-content-center" >
+
+  <div class="col-md-7 formulaire">
+    <form [formGroup]="frmEntreprise">
+      <mat-form-field appearance="outline" class="questionOuverte">
+        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['nomEntreprise'].hasError('required')&&frmEntreprise.controls['nomEntreprise']?.touched">Le nom de votre entreprise est obligatoire.</mat-label>
+        <mat-label  *ngIf="!frmEntreprise.controls['nomEntreprise'].invalid||!frmEntreprise.controls['nomEntreprise']?.touched">{{evaluerIHM.nomEntreprise}}</mat-label>
+        <input matInput required placeholder="{{evaluerIHM.nomEntreprisePlaceHolder}}" id="nomEntreprise"
+               formControlName="nomEntreprise" [ngClass]="frmEntreprise.controls['nomEntreprise'].invalid&&frmEntreprise.controls['nomEntreprise']?.touched ? 'is-invalid' : ''">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="questionOuverte">
+        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['noSiret'].hasError('required')&&frmEntreprise.controls['noSiret']?.touched">Votre numero SIRET est obligatoire.</mat-label>
+        <mat-label *ngIf="!frmEntreprise.controls['noSiret'].invalid||!frmEntreprise.controls['noSiret']?.touched">{{evaluerIHM.noSiret}}</mat-label>
+        <input matInput required placeholder="{{evaluerIHM.noSiret}}" id="noSiret"
+               formControlName="noSiret" [ngClass]="frmEntreprise.controls['noSiret'].invalid&&frmEntreprise.controls['noSiret']?.touched ? 'is-invalid' : ''">
+
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="questionOuverte">
+        <mat-label  *ngIf="!frmEntreprise.controls['anneeDeCreation'].invalid||!frmEntreprise.controls['anneeDeCreation']?.touched">{{evaluerIHM.annee}}</mat-label>
+        <input matInput required placeholder="{{evaluerIHM.annee}}" id="anneeDeCreation" formControlName="anneeDeCreation">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="questionOuverte">
+        <mat-label  *ngIf="!frmEntreprise.controls['effectif'].invalid||!frmEntreprise.controls['effectif']?.touched">{{evaluerIHM.effectif}}</mat-label>
+        <input matInput required placeholder="{{evaluerIHM.effectif}}" id="effectif" formControlName="effectif">
+      </mat-form-field>
+
+    </form>
+
+    <div class="col-md-7 sendButtonSection">
+      <button mat-button class="sendButton" (click)="nextStep()" id="sendButton">{{evaluerIHM.startEvalButton}}
+      </button>
+    </div>
+  </div>
+
+</div>

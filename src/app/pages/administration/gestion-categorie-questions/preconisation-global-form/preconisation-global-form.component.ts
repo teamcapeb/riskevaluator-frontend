@@ -27,6 +27,15 @@ export class PreconisationGlobalFormComponent implements OnInit {
     });
   }
 
+  checkInputRange($event: any){
+    if($event.target.value < 1){
+      $event.target.value = 1;
+    }
+    if($event.target.value > 101){
+      $event.target.value = 101;
+    }
+  }
+
   public open(action: string) {
     let content = null;
     if(action === 'add' || action === 'update'){
@@ -38,7 +47,6 @@ export class PreconisationGlobalFormComponent implements OnInit {
     }
     this.modalService.open(content, {animation: true, centered: true}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      console.log(result)
       if(result === 'Valider'){
         this.onConfirmation.emit({data: this.preconisationGlobale, action: action});
       }

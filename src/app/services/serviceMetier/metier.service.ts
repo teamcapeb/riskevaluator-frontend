@@ -5,45 +5,39 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import IMetier from '../../interfaces/IMetier';
 import Metier from '../../objects/Metier';
+import IQuestionnaire from "@/interfaces/IQuestionnaire";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MetierService {
 
-  private baseUrl: string = environment.apiUrl + '/Metiers';
+  private baseUrl: string = environment.apiUrl + '/metiers/';
 
   constructor(private http: HttpClient) {}
 
+
   getAll(): Observable<Metier[]> {
     return this.http.get<IMetier[]>(`${this.baseUrl}`).pipe(map((receivedData: IMetier[]) => {
-        return receivedData.map<Metier>((value: IMetier, index:number, array:IMetier[]) => {
-          return new Metier(
-          value.idMetier, 
-          value.nomMetier
-        )
-        });
+      return receivedData.map<Metier>((iMetier: IMetier) => {
+        return Metier.toMetier(iMetier);
+      });
     }));
   }
 
-  create(metier: Metier): Observable<IMetier | string>{
-    return this.http.post<IMetier>(`${this.baseUrl}`, metier.toJSON());
+  getAllMetiers(): Observable<IMetier[]> {
+    return this.http.get<IMetier[]>(`${this.baseUrl}`);
   }
 
-  get(metierId: string): Observable<Metier> {
-    return this.http.get<IMetier>(`${this.baseUrl}/${metierId}`).pipe(map((receivedData: IMetier) => {
-            return new Metier(
-                receivedData.idMetier, 
-                receivedData.nomMetier
-            )
-    }));
+  create(metier: Metier): Promise<IMetier | string>{
+    return this.http.post<IMetier>(`${this.baseUrl}`, metier.toJSON()).toPromise();
   }
 
-  update(metier: IMetier): Observable<IMetier | string> {
-    return this.http.put<IMetier>(`${this.baseUrl}/${metier.idMetier}`, metier);
+  update(metier: Metier): Promise<IMetier | string> {
+    return this.http.put<IMetier>(`${this.baseUrl}`, metier.toJSON()).toPromise();
   }
 
-  delete(metier: IMetier): Observable<string> {
-    return this.http.delete<string>(`${this.baseUrl}/${metier.idMetier}`);
+  delete(metier: Metier): Promise<string> {
+    return this.http.delete<string>(`${this.baseUrl}${metier.idMetier}`).toPromise();
   }
 }

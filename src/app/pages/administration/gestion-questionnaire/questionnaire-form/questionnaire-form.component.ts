@@ -32,13 +32,15 @@ export class QuestionnaireFormComponent implements OnInit {
     if(action === 'add' ){
       content = this.modalContentCreateOrUpdate;
       this.title =  'Ajouter' ;
+    }else if(action === 'update'){
+      content = this.modalContentCreateOrUpdate;
+      this.title =  'Modifier' ;
     }else if(action === 'delete'){
       content = this.modalDelete;
       this.title = 'Supprimer';
     }
     this.modalService.open(content, {animation: true, centered: true}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      console.log(result)
       if(result === 'Valider'){
         this.onConfirmation.emit({data: this.questionnaire, action: action});
       }

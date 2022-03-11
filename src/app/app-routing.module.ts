@@ -20,33 +20,61 @@ import { GestionComptesComponent } from '@pages/administration/gestion-comptes/g
 import { GestionQuestionComponent } from './pages/administration/gestion-question/gestion-question.component';
 import { GestionCategorieQuestionsComponent } from '@pages/administration/gestion-categorie-questions/gestion-categorie-questions.component';
 import { QuestionFormComponent } from './pages/administration/gestion-question/question-form/question-form.component';
+import { EvaluationWelcomeComponent } from "@pages/visitor/evaluer/evaluation-welcome/evaluation-welcome.component";
+import { EvaluationQuestionnaireComponent } from '@pages/visitor/evaluer/evaluation-questionnaire/evaluation-questionnaire.component';
+import { EvaluationThematiqueComponent } from '@pages/visitor/evaluer/evaluation-thematique/evaluation-thematique.component';
+import {
+  ResultatItemComponent
+} from "@pages/visitor/evaluer/evaluation-resultat/resultat-item/resultat-item.component";
+import { EvaluationResultatComponent } from "@pages/visitor/evaluer/evaluation-resultat/evaluation-resultat.component";
+
+import { EvaluationEntrepriseInfoComponent } from '@pages/visitor/evaluer/evaluation-entreprise-info/evaluation-entreprise-info.component';
+import { ConfirmDeactivateGuard } from "@services/guards/ConfirmDeactivateGuard";
+import {
+  ResultRadarchartItemComponent
+} from "@pages/visitor/evaluer/evaluation-resultat/result-radarchart-item/result-radarchart-item.component";
+import { ResultatListComponent } from '@pages/visitor/evaluer/evaluation-resultat/resultat-list/resultat-list.component';
+import { HomePageComponent } from "@pages/visitor/home-page/home-page.component";
+import { ConsulterEvaluationComponent } from '@pages/administration/consulter-evaluation/consulter-evaluation.component';
+
 
 
 const administration: Routes = [
   {
     path: 'gestion-metiers',
-    component: GestionMetiersComponent
+    component: GestionMetiersComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'gestion-categories-questions',
-    component: GestionCategorieQuestionsComponent
+    path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions',
+    component: GestionCategorieQuestionsComponent,
+    canActivate: [AuthGuard]
   },
 
   {
-    path: 'gestion-questionnaire',
-    component: GestionQuestionnaireComponent
+    path: 'gestion-questionnaires',
+    component: GestionQuestionnaireComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'gestion-question',
-    component: GestionQuestionComponent
+    path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions/:idCategorie/gestion-questions',
+    component: GestionQuestionComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'gestion-question/question',
-    component: QuestionFormComponent
+    path: 'gestion-questionnaires/:idQuestionnaire/gestion-categories-questions/:idCategorie/gestion-questions/:idQuestion/question',
+    component: QuestionFormComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'gestion-compte',
-    component: GestionComptesComponent
+    component: GestionComptesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'consulter-evaluation',
+    component: ConsulterEvaluationComponent,
+    canActivate: [AuthGuard]
   }
 
 ]
@@ -60,20 +88,50 @@ const visitors: Routes = [
     component: ContactComponent
   },
   {
+    path: 'historiques/:id',
+    component: EvaluationResultatComponent
+  },
+  {
     path: 'historiques',
-    component: HistoriqueComponent
+    component: EvaluationResultatComponent
   },
   {
     path: 'evaluer',
-    component: EvaluerComponent
+    children : [
+      {
+        path: '',
+        pathMatch:'full',
+        component: EvaluerComponent
+      },
+      {
+        path: 'evaluation-thematique/:metiers',
+        component: EvaluationThematiqueComponent
+      }
+    ]
+  },
+  {
+    path: 'evaluer/questionnaire-evaluation',
+    component: EvaluationQuestionnaireComponent
+  },
+  {
+    path: 'evaluer/welcome-evaluation',
+    component: EvaluationWelcomeComponent
+  },
+  {
+    path: 'evaluer/evaluation-resultat',
+    component: EvaluationResultatComponent
+  },
+  {
+    path: 'evaluer/evaluation-entreprise-info',
+    component: EvaluationEntrepriseInfoComponent
   },
   {
     path: 'Acceuil',
-    component: DashboardComponent
+    component: HomePageComponent
   },
   {
     path: '',
-    component: DashboardComponent
+    component: HomePageComponent
   }
 ]
 
@@ -112,7 +170,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {relativeLinkResolution: 'legacy'})],
+    imports: [RouterModule.forRoot(routes, {relativeLinkResolution: 'legacy',scrollPositionRestoration:'enabled'})],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}

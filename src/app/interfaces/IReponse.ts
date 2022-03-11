@@ -1,5 +1,10 @@
+import IQuestion from "./IQuestion";
+
 export default interface IReponse {
-  idReponse: string;
-  nbPoints: number;
-  contenu: string;
+  idReponse?: number;
+  question?: IQuestion;
+  nbPoints?: number;
+  contenu?: string;
+  isChecked?: boolean;
+
 }

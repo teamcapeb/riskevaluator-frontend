@@ -6,13 +6,13 @@
         class="brand-image img-circle elevation-3"
         style="opacity: 0.8"
     />
-    <span class="brand-text font-weight-light">Risk Evaluator</span>
+    <span class="brand-text font-weight-light">Capeb Evaluator</span>
 </a>
 
 <!-- Sidebar -->
 <div class="sidebar">
     <!-- Sidebar user (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div *ngIf="isLoggedIn" class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
             <img
                 [src]="user?.picture || 'assets/img/default-profile.png'"
@@ -51,7 +51,7 @@
 
   <ng-container *ngIf="isLoggedIn && showAdminBoard">
 
-    <li class="nav-header">ADMINISTRATION </li>
+    <div class="nav-header"> &nbsp; &nbsp; ADMINISTRATION </div>
 
     <nav class="mt-2" style="overflow-y: hidden">
       <ul

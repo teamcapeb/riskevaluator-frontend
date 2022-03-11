@@ -1,9 +1,16 @@
+<div >
+  <button class="btn btn-dark btn-lg  " type="button" (click)="back()">&laquo; Retour</button>
+
+  <h1 class="header text-center p-4">{{(categorieQuestion | async)?.libelle}}</h1>
+</div>
+
 <app-list title="Liste des questions" (onAdd)="add()">
-    <ng-template [ngIf]="questions | async" [ngIfElse]="loading">
-        <ng-container *ngFor="let question of questions | async">
+    <ng-template [ngIf]="categorieQuestion | async" [ngIfElse]="loading">
+        <ng-container *ngFor="let question of (categorieQuestion | async)?.questions">
             <app-list-item
                 id="{{question.idQuestion}}"
                 [data]="question"
+                (onRowClick)="update($event)"
                 (onUpdate)="update($event)"
                 (onDelete)="delete($event)"
             >
@@ -13,16 +20,22 @@
     </ng-template>
 </app-list>
 
-<app-list title="Liste des suggestions" (onAdd)="addSuggestion()">
-  <ng-template [ngIf]="preconisationCategorieQuestion | async" [ngIfElse]="loading">
-    <ng-container *ngFor="let suggestions of preconisationCategorieQuestion | async">
+<app-list title="Liste des préconisations de categorie" (onAdd)="addSuggestion()">
+  <app-list-item [header]="true">
+    <app-list-item-col>Libellé</app-list-item-col>
+    <app-list-item-col>Inférieur à</app-list-item-col>
+  </app-list-item>
+  <ng-template [ngIf]="categorieQuestion | async" [ngIfElse]="loading">
+    <ng-container *ngFor="let suggestions of (categorieQuestion | async)?.preconisationsCategorie">
       <app-list-item
-        id="{{suggestions.idPreconisationCategoriesQuestion}}"
+        id="{{suggestions.idPreconisation}}"
         [data]="suggestions"
+        (onRowClick)="updateSuggestion($event)"
         (onUpdate)="updateSuggestion($event)"
         (onDelete)="deleteSuggestion($event)"
       >
-        <app-list-item-col>{{suggestions.Contenue}}</app-list-item-col>
+        <app-list-item-col>{{suggestions.contenu}}</app-list-item-col>
+        <app-list-item-col>{{suggestions.viewIfPourcentageScoreLessThan}}</app-list-item-col>
       </app-list-item>
     </ng-container>
   </ng-template>
@@ -39,4 +52,3 @@
 <app-preconisation-categorie-question-form [preconisationCategorieQuestion]="actualPreconisationCategorieQuestion" (onConfirmation)="createOrUpdateOrDeletePreconisationCategorieQuestion($event)" #preconisationCategorieQuestionForm></app-preconisation-categorie-question-form>
 
 <app-question-modal [question]="actualQuestion" (onConfirmation)="createOrUpdateOrDeleteQuestion($event)" #questionModal></app-question-modal>
-<app-error-modal #errorModal></app-error-modal>

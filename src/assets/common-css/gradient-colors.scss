@@ -1,0 +1,220 @@
+/* Backgrounds */
+
+.bg-primary {
+  color: #FFFFFF;
+  background-color: #07a7e3 !important;
+}
+
+.bg-secondary {
+  color: #FFFFFF;
+  background-color: #4f5b60 !important;
+}
+
+.bg-success {
+  color: #FFFFFF;
+  background-color: #0ad251 !important;
+}
+
+.bg-info {
+  color: #FFFFFF;
+  background-color: #55d3f5 !important;
+}
+
+.bg-warning {
+  color: #ac9a02 !important;
+  background-color: #fce418 !important;
+}
+
+.bg-danger {
+  color: #FFFFFF;
+  background-color: #f43a59 !important;
+}
+
+.bg-dark {
+  background-color: #122f3b !important;
+}
+
+.bg-light {
+  background-color: #F7F7FA !important;
+}
+
+.bg-tranparent {
+  background-color: transparent !important;
+}
+
+.bg-dark *,
+.bg-danger *,
+.bg-warning *,
+.bg-info *,
+.bg-success *,
+.bg-secondary *,
+.bg-primary *,
+.bg-dark .batch-icon,
+.bg-danger .batch-icon,
+.bg-warning .batch-icon,
+.bg-info .batch-icon,
+.bg-success .batch-icon,
+.bg-secondary .batch-icon,
+.bg-primary .batch-icon {
+  color: #FFFFFF;
+}
+
+.bg-gradient [class^="card-"],
+.bg-gradient [class^="card-"] * {
+  color: #FFFFFF !important;
+}
+
+
+/* Highlight Colors - Bottom Border */
+
+.highlight-color-blue {
+  color: #FFFFFF !important;
+  background-color: #07a7e3 !important;
+}
+
+.highlight-color-green {
+  color: #FFFFFF !important;
+  background-color: #0ad251 !important;
+}
+
+.highlight-color-orange {
+  color: #FFFFFF !important;
+  background-color: #FC9131 !important;
+}
+
+.highlight-color-yellow {
+  color: #FFFFFF !important;
+  background-color: #F8D800 !important;
+}
+
+.highlight-color-red {
+  color: #FFFFFF !important;
+  background-color: #EA5455 !important;
+}
+
+.highlight-color-purple {
+  color: #FFFFFF !important;
+  background-color: #973999 !important;
+}
+
+.bg-gradient {
+  color: #FFFFFF !important;
+  background: #07a7e3;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #07a7e3 0%, #32dac3 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #07a7e3 0%, #32dac3 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #07a7e3 0%, #32dac3 100%);
+  /* IE6-9 fallback on horizontal gradient */
+  -webkit-transition: opacity 0.2s ease-out;
+  -moz-transition: opacity 0.2s ease-out;
+  -o-transition: opacity 0.2s ease-out;
+  transition: opacity 0.2s ease-out;
+}
+
+.bg-gradient [class^="card-"],
+.bg-gradient [class^="card-"] * {
+  color: #FFFFFF !important;
+}
+
+.bg-secondary.bg-gradient {
+  color: #FFFFFF !important;
+  background: #4f5b60;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #4f5b60 0%, #97a9b2 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #4f5b60 0%, #97a9b2 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #4f5b60 0%, #97a9b2 100%);
+  /* IE6-9 fallback on horizontal gradient */
+  -webkit-transition: opacity 0.2s ease-out;
+  -moz-transition: opacity 0.2s ease-out;
+  -o-transition: opacity 0.2s ease-out;
+  transition: opacity 0.2s ease-out;
+  -webkit-transition: width 0.3s ease-in-out;
+  -moz-transition: width 0.3s ease-in-out;
+  -o-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+}
+
+.bg-success.bg-gradient {
+  color: #FFFFFF !important;
+  background: #28C76F;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #28C76F 0%, #81FBB8 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #28C76F 0%, #81FBB8 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #28C76F 0%, #81FBB8 100%);
+  /* IE6-9 fallback on horizontal gradient */
+  -webkit-transition: opacity 0.2s ease-out;
+  -moz-transition: opacity 0.2s ease-out;
+  -o-transition: opacity 0.2s ease-out;
+  transition: opacity 0.2s ease-out;
+  -webkit-transition: width 0.3s ease-in-out;
+  -moz-transition: width 0.3s ease-in-out;
+  -o-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+}
+
+.bg-info.bg-gradient {
+  color: #FFFFFF !important;
+  background: #3677FF;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #3677FF 0%, #FFD26F 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #3677FF 0%, #FFD26F 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #3677FF 0%, #FFD26F 100%);
+  /* IE6-9 fallback on horizontal gradient */
+  -webkit-transition: opacity 0.2s ease-out;
+  -moz-transition: opacity 0.2s ease-out;
+  -o-transition: opacity 0.2s ease-out;
+  transition: opacity 0.2s ease-out;
+  -webkit-transition: width 0.3s ease-in-out;
+  -moz-transition: width 0.3s ease-in-out;
+  -o-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+}
+
+.bg-warning.bg-gradient {
+  color: #4f5b60 !important;
+  background: #FC9131;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #FC9131 0%, #FCCF31 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #FC9131 0%, #FCCF31 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #FC9131 0%, #FCCF31 100%);
+  /* IE6-9 fallback on horizontal gradient */
+  -webkit-transition: opacity 0.2s ease-out;
+  -moz-transition: opacity 0.2s ease-out;
+  -o-transition: opacity 0.2s ease-out;
+  transition: opacity 0.2s ease-out;
+  -webkit-transition: width 0.3s ease-in-out;
+  -moz-transition: width 0.3s ease-in-out;
+  -o-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+}
+
+.bg-danger.bg-gradient {
+  color: #FFFFFF !important;
+  background: #EA5455;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #EA5455 0%, #FC9131 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #EA5455 0%, #FC9131 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #EA5455 0%, #FC9131 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  /* IE6-9 fallback on horizontal gradient */
+  -webkit-transition: opacity 0.2s ease-out;
+  -moz-transition: opacity 0.2s ease-out;
+  -o-transition: opacity 0.2s ease-out;
+  transition: opacity 0.2s ease-out;
+  -webkit-transition: width 0.3s ease-in-out;
+  -moz-transition: width 0.3s ease-in-out;
+  -o-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+}

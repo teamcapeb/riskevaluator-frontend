@@ -1,15 +1,18 @@
 <div class="container-fluid h-100 pb-4">
   <div class="row bg-dark pb-2 pt-2">
-    <div class="col-12 d-flex justify-content-center align-items-center"> 
+    <div class="col-12 d-flex justify-content-center align-items-center">
       <h1>Libellé catégorie de question</h1>
     </div>
     <div class="col-9">
-      <h2 class="text-white">{{action === 'update' ? 'Modifier' : 'Créer'}} Question</h2>
+      <h2 class="text-white">{{idQuestion !== -1 ? 'Modifier' : 'Créer'}} Question</h2>
     </div>
     <div class="col-3">
       <div class="row h-100">
         <div class="col-6 d-flex justify-content-end align-items-center">
-          <button type="button" class="btn btn-light btn-sm" (click)="save()">
+          <button
+          type="button"
+          class="btn btn-light btn-sm"
+          (click)="save()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
               <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
             </svg>
@@ -33,37 +36,41 @@
       <form class="w-75 p-2">
         <div class="form-group">
           <label for="exampleInputEmail1">Intitulé exact de la question</label>
-          <input [value]="question.libelleQuestion" type="text" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Aide pour la question</label>
-          <input type="text" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="">
+          <input required name="question-libelle" [(ngModel)]="question.libelleQuestion" type="text" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="" #name="ngModel">
         </div>
         <div class="form-group">
           <label for="inputGroupSelect01">Type de la question</label>
-          <select class="form-select form-control-sm" id="inputGroupSelect01">
-            <option>{{question.type}}</option>
+          <select required name="question-type" class="form-select form-control-sm" id="inputGroupSelect01" [(ngModel)]="question.typeQuestion" #type="ngModel">
+            <option value="QUESTION_CHOIX_UNIQUE">Question à choix unique</option>
+            <option value="QUESTION_CHOIX_MULTIPLE">Question à choix multiple</option>
           </select>
         </div>
         <div class="form-group">
           <label for="inputGroupSelect02">Métier concerné par la question</label>
-          <select class="form-select form-control-sm" id="inputGroupSelect02">
-            <option *ngFor="let metier of question.metiers"> {{metier.nomMetier}}</option>
-          </select>
+          <ng-multiselect-dropdown
+          name="metiers"
+          [placeholder]="'Sélectionner Metier(s)...'"
+          [settings]="dropdownSettings"
+          [data]="dropdownList"
+          [(ngModel)]="selectedItems"
+          (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+        >
+        </ng-multiselect-dropdown>
         </div>
       </form>
     </div>
     <div class="col-12 d-flex justify-content-center align-items-center mt-1">
       <div class="w-75 p-2">
-        <app-list title="Liste des reponses" (onAdd)="add()" [header]="false">
+        <app-list title="Liste des réponses" (onAdd)="add()" [header]="false">
           <app-list-item [header]="true">
-            <app-list-item-col>Reponses</app-list-item-col>
+            <app-list-item-col>Réponses</app-list-item-col>
             <app-list-item-col>Points</app-list-item-col>
           </app-list-item>
-          <ng-container *ngFor="let reponse of reponses">
-            <app-list-item 
+          <ng-container *ngFor="let reponse of question.reponses">
+            <app-list-item
                 id="{{reponse.idReponse}}"
-                [data]="reponse" 
+                [data]="reponse"
                 (onUpdate)="update($event)"
                 (onDelete)="delete($event)"
             >
@@ -73,9 +80,9 @@
         </ng-container>
 
         <ng-container *ngFor="let addedReponse of addedReponses">
-          <app-list-item 
+          <app-list-item
           id="{{addedReponse.idReponse}}"
-          [data]="addedReponse" 
+          [data]="addedReponse"
           (onUpdate)="update($event)"
           (onDelete)="delete($event)"
           >
@@ -98,3 +105,4 @@
       </div>
   </div>
 </ng-template>
+<app-toasts-container></app-toasts-container>

@@ -1,1 +1,41 @@
-<p>contact works!</p>
+  <div class="container">
+    <div class="content">
+      <div class="left-side">
+        <div class="address details">
+          <i class="fa fa-map-marker-alt"></i>
+          <div class="topic">{{contactIHM.infosContact.contactAdresseName}}</div>
+          <div class="text-one">{{contactIHM.infosContact.contactDebutAdresseValue}}</div>
+          <div class="text-two">{{contactIHM.infosContact.contacFinAdresseValue}}</div>
+        </div>
+        <div class="phone details">
+          <i class="fa fa-phone-alt"></i>
+          <div class="topic">{{contactIHM.infosContact.contactTelephoneName}}</div>
+          <div class="text-one">{{contactIHM.infosContact.contactTelephoneValue}}</div>
+        </div>
+        <div class="email details">
+          <i class="fa fa-envelope"></i>
+          <div class="topic">{{contactIHM.infosContact.contactEmailName}}</div>
+          <div class="text-one">{{contactIHM.infosContact.contactEmailValue}}</div>
+          <div class="text-two">{{contactIHM.infosContact.contactEmailValue2}}</div>
+        </div>
+      </div>
+      <div class="right-side">
+        <div class="topic-text">{{contactIHM.infosContact.contactPageTitle}}</div>
+        <p>{{contactIHM.infosContact.contactValue}}.</p>
+      <form action="#">
+        <div class="input-box">
+          <input type="text" placeholder="Entrer votre nom">
+        </div>
+        <div class="input-box">
+          <input type="text" placeholder="Entrer votre email">
+        </div>
+        <div class="input-box message-box">
+
+        </div>
+        <div class="button">
+          <input type="button" value="Envoyer maintenant" >
+        </div>
+      </form>
+    </div>
+    </div>
+  </div>

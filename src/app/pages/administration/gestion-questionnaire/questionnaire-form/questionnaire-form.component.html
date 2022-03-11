@@ -9,17 +9,19 @@
         <div class="form-group">
           <label for="exampleInputEmail1">Nom de la thematique </label>
           <input
+            required
             type="text"
             class="form-control"
             id="thematique"
-            [(ngModel)]="questionnaire.thematique">
+            [(ngModel)]="questionnaire.thematique"
+            #thematique="ngModel">
         </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
+      <button  [disabled]="thematique.errors?.['required']" type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
     </div>
   </ng-template>
-  
+
   <ng-template #modalDelete let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">{{title}} Questionnaire</h4>
@@ -32,7 +34,5 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Valider')">Valider</button>
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Annuler')">Annuler</button>
     </div>
   </ng-template>
-  

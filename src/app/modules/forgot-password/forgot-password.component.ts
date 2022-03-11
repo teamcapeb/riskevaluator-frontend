@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
-import {AppService} from '@services/app.service';
+import {AppService} from '@services/serviceUser/app.service';
 
 @Component({
     selector: 'app-forgot-password',

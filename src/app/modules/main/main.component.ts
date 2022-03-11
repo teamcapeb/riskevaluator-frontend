@@ -1,8 +1,9 @@
 import {Component, HostBinding, OnInit, Renderer2} from '@angular/core';
-import {AppService} from '@services/app.service';
+import {AppService} from '@services/serviceUser/app.service';
 import { ADMIN_MENU, MENU } from "@modules/main/menu-sidebar/menu-sidebar.component";
-import { TokenStorageService } from "@services/token-storage.service";
+import { TokenStorageService } from "@services/serviceUser/token-storage.service";
 import { ToastrService } from "ngx-toastr";
+import { IUser } from "@/interfaces/IUser";
 
 @Component({
     selector: 'app-main',
@@ -19,7 +20,7 @@ export class MainComponent implements OnInit {
   isLoggedIn = false;
   showAdminBoard = false;
   username: string;
-  user:any;
+  user:IUser;
 
   constructor(private renderer: Renderer2,
               private tokenStorageService: TokenStorageService,
@@ -45,7 +46,7 @@ export class MainComponent implements OnInit {
 
           this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
 
-          if(this.showAdminBoard)  this.toastr.info("you are connected as an admin","Admin Role")
+          if(this.showAdminBoard)  this.toastr.info("Vous êtes connecté en tant qu'administrateur","Rôle Administrateur")
 
           this.username = this.user.username;
         }
