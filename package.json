@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "start": "ng serve",
-    "build": "ng build --configuration development",
-    "build_prod": "ng build --configuration production",
+    "startprod": "ng serve --configuration=production",
+    "build": "ng build --configuration=development",
+    "build_prod": "ng build --configuration=production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
