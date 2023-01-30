@@ -13,7 +13,7 @@ import { EvaluationHelper } from "@services/_helpers/EvaluationHelper";
   providedIn: 'root'
 })
 export class QuestionnaireService {
-  private baseUrl: string = environment.apiUrl + 'questionnaires/';
+  private baseUrl: string = environment.apiUrl + '/questionnaires/';
   constructor(private http: HttpClient,
     private modalService: ModalService) {}
 

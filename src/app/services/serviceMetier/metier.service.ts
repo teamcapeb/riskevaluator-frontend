@@ -12,7 +12,7 @@ import IQuestionnaire from "@/interfaces/IQuestionnaire";
 })
 export class MetierService {
 
-  private baseUrl: string = environment.apiUrl + 'metiers/';
+  private baseUrl: string = environment.apiUrl + '/metiers/';
 
   constructor(private http: HttpClient) {}
 
