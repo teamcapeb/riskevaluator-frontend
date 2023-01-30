@@ -1,5 +1,9 @@
 @import '/src/assets/common-css/gradient-colors.scss';
 
+button:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 .card {
   border-radius: 5px;

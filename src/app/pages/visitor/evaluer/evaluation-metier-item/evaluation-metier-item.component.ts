@@ -19,9 +19,4 @@ export class EvaluationMetierItemComponent implements OnInit {
   ngOnInit(): void {
     this.metier$.isChecked =false;
   }
-  calculateColor = (id : number) => {
-    let colors: string[] = environment.evaluerIHM.gradientColors;
-    return colors[id%colors.length];
-  }
-
 }

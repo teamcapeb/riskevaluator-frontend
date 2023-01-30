@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from "../../../environments/environment";
 import { IUser } from "@/interfaces/IUser";
 
-const AUTH_API = environment.apiUrl + '/auth/';
+const AUTH_API = environment.apiUrl + 'auth/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
