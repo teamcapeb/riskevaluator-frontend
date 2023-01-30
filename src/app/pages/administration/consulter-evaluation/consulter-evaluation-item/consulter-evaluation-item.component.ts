@@ -22,4 +22,8 @@ export class ConsulterEvaluationItemComponent implements OnInit {
     let colors: string[] = environment.evaluerIHM.gradientColors;
     return colors[id%colors.length];
   }
+
+  onSelectCard() {
+    this.router.navigate(["historiques",this.evaluation$.idEvaluation]);
+  }
 }

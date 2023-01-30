@@ -95,5 +95,14 @@ export class EvaluationFooterComponent implements OnInit {
         return scoreCategory;
       })
     }
+
+    this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
+      if(evaluation) {
+        this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
+        this.router.navigate(['historiques',evaluation?.idEvaluation]);
+      }
+      }
+    )
+
   }
 }

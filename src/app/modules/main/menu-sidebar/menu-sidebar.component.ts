@@ -47,6 +47,11 @@ export const MENU = [
         icon: "fa-solid fa-list-check"
     },
     {
+        name: 'Evaluation précédente',
+        path: ['/historiques'],
+        icon: "fa-solid fa-chart-pie"
+    },
+    {
         name: 'Contact',
         path: ['/contact'],
         icon: "fa-solid fa-address-card"
