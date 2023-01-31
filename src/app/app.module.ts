@@ -109,7 +109,7 @@ import { HomePageComponent } from './pages/visitor/home-page/home-page.component
 import { ConsulterEvaluationComponent } from './pages/administration/consulter-evaluation/consulter-evaluation.component';
 import { ConsulterEvaluationItemComponent } from './pages/administration/consulter-evaluation/consulter-evaluation-item/consulter-evaluation-item.component';
 import { DetailsEntrepriseComponent } from './pages/administration/details-entreprise/details-entreprise.component';
-
+import {MatTableModule} from '@angular/material/table';
 registerLocaleData(localeEn, 'en-EN');
 
 @NgModule({
@@ -233,7 +233,8 @@ registerLocaleData(localeEn, 'en-EN');
     NgProgressHttpModule,
     NgChartsModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTableModule
   ],
     providers: [authInterceptorProviders],
     bootstrap: [AppComponent]
