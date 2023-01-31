@@ -1,8 +1,8 @@
 <div *ngIf="entreprise">
   <div class="card-block" style="margin: 12px 0px;" (click)="onSelectCard()">
-    <h2 class="m-b-20 text-center">{{entreprise?.nomEntreprise}}</h2>
-    <p class="m-b-0">Nombre d'évaluations effectuées<span class="f-right">{{entreprise?.evaluations?.length }}</span></p>
-    <p class="m-b-0">Numéro SIRET<span class="f-right">{{entreprise?.noSiret }} </span></p>
-    <p class="m-b-0">Métiers<span class="f-right">{{entreprise?.metiers }} </span></p>
+    <h2 class="m-b-20 text-center" style="font-weight: bolder;">{{entreprise?.nomEntreprise.toUpperCase()}}</h2>
+    <p class="m-b-0"><span style="font-weight: bolder;">Nombre d'évaluations effectuées</span><span class="f-right">{{entreprise?.evaluations?.length }}</span></p>
+    <p class="m-b-0"><span style="font-weight: bolder;">Numéro SIRET</span><span class="f-right">{{entreprise?.noSiret }} </span></p>
+    <p class="m-b-0"><span style="font-weight: bolder;">Métiers</span><span class="f-right">{{entreprise?.metiers }} </span></p>
   </div>
 </div>
