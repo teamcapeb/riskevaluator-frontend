@@ -1,4 +1,4 @@
-import IMetier from "@/interfaces/IMetier";
+import {IMetier} from "@/interfaces/IMetier";
 import { Component, Input, OnInit } from "@angular/core";
 import { environment } from "../../../../../environments/environment";
 
@@ -19,9 +19,4 @@ export class EvaluationMetierItemComponent implements OnInit {
   ngOnInit(): void {
     this.metier$.isChecked =false;
   }
-  calculateColor = (id : number) => {
-    let colors: string[] = environment.evaluerIHM.gradientColors;
-    return colors[id%colors.length];
-  }
-
 }

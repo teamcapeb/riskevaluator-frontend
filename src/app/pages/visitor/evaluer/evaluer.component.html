@@ -1,37 +1,20 @@
-
 <ng-container *ngIf="(metiers$ | async) as result" [ngSwitch]="result.dataState">
-
   <ng-container *ngSwitchCase="DataStateEnum.LOADED">
-
-
-    <nav  class="navbar navbar-light bg-light">
-      <div *ngIf="alertMetier === true"
-           class="alert alert-danger"
-           role="alert">
-        Vous devez choisir au moins un metier
-      </div>
-
-      <div *ngIf = "onCountChecked(result.data) as nbChecked"
-        class="alert alert-success"
-        role="alert">
-        Vous avez choisi {{nbChecked}} métier{{nbChecked==1?"":"s"}}
-      </div>
-
-      <form class="form-inline ms-auto">
-        <button class="btn btn-outline-success btn-lg " (click)="onValidateMetiers(result.data)"> Valider</button>
-
-      </form>
-    </nav>
     <div class="d-flex justify-content-center">
-      <h1 class="pt-2">Veuillez sélectionner un ou plusieurs métiers</h1>
-    </div>
-    <div class="container">
-      <div class="row mb-5">
-        <app-evaluation-metier-item class="col-md-4 mb-5" *ngFor="let metier of result.data"
-                                    [metier$]="metier"></app-evaluation-metier-item>
-      </div>
+      <h1 style="margin-top: 4px;" class="pt-2">Veuillez sélectionner un ou plusieurs métiers</h1>
     </div>
 
+    <div style="display: flex; flex-wrap: wrap; flex-direction: row;
+                justify-content: space-between;">
+      <app-evaluation-metier-item style="display: flex; height: 220px; width: calc(25%); justify-content: center;" *ngFor="let metier of result.data"
+                                  [metier$]="metier"></app-evaluation-metier-item>
+    </div>
+
+    <form class="form-inline ms-auto" style="justify-content: center;">
+      <button (click)="onValidateMetiers(result.data)">
+        VALIDER
+      </button>
+    </form>
   </ng-container>
 
   <ng-container *ngSwitchCase="DataStateEnum.LOADING">

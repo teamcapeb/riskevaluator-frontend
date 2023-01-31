@@ -1,13 +1,13 @@
-<div *ngIf="metier$">
-  <div   class="card {{calculateColor(metier$?.idMetier)}}  order-card" role= "button" (click)="onSelectCard()">
-  <span *ngIf="metier$.isChecked" class="selection">
-         <mat-icon>check_circle</mat-icon>
-      </span>
-
+<div *ngIf="metier$" style="margin: 0px 16px; display: flex; justify-content: center;">
+  <div class="card order-card" role="button"
+       (click)="onSelectCard()">
+    <span *ngIf="metier$.isChecked" class="selection">
+        <mat-icon>check_circle</mat-icon>
+    </span>
     <div class="card-block" [ngClass]="{'card-selected mat-elevation-z4': metier$.isChecked} ">
-
-      <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/metier.png">
-      <h2 class="m-b-20 text-center">{{metier$.nomMetier}}</h2>
+      <img class="logo-navbar mx-auto d-block" alt="questionnaire"
+           src="../../../../../assets/img/metier.png">
+      <h2 class="text-center">{{metier$.nomMetier}}</h2>
     </div>
   </div>
 </div>

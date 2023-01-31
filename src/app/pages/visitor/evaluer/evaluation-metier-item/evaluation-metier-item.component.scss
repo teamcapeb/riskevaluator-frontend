@@ -16,20 +16,36 @@
 
 @import '../../../../../assets/common-css/gradient-colors';
 
-
 .card {
   border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
-  box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
-  border: none;
-  margin-bottom: 30px;
-  -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  width: 300px;
+  box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+  -webkit-transition: all 0.3s ease-in-out;
+  -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+
+  h2 {
+    color: black;
+  }
 }
 
 .card .card-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 220px;
+  height: 220px;
+  background-color: #B0BEC5;
+  border: 2px solid black;
+  border-radius: 5px;
   padding: 25px;
+  margin-bottom: 32px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.order-card {
+  background-color: #F4F6F9;
+  box-shadow: none;
+  border: none;
 }
 
 .order-card i {
@@ -56,7 +72,6 @@ img.logo-navbar {
     -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
     box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
     border: none;
-    margin-bottom: 30px;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
     width: 100%;
@@ -64,30 +79,9 @@ img.logo-navbar {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Backgrounds */
-
-
-
-
-.card:not([class*=card-outline-]) {
-  border: 0;
-}
 .card {
   height: 100%;
-  box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;
   -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
   -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
   -o-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
@@ -108,20 +102,17 @@ blockquote {
   font-size: 1.25rem;
   border-left: .25rem solid #eceeef;
 }
+
 blockquote {
   margin: 0 0 1rem;
 }
+
 .blockquote p {
   font-size: 1.1rem;
 }
+
 .card .card-body p {
   margin-bottom: 1rem;
-}
-
-
-
-.order-card {
-  color: #fff;
 }
 
 .bg-c-blue {

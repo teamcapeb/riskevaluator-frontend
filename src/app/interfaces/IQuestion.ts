@@ -1,4 +1,4 @@
-import IMetier from "./IMetier";
+import {IMetier} from "./IMetier";
 import IReponse from './IReponse';
 import ICategorieQuestion from './ICategorieQuestion';
 

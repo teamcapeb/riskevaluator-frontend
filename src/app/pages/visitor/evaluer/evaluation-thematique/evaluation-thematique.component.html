@@ -1,4 +1,7 @@
-<button class="btn btn-outline-danger btn-lg  " type="button" (click)="back()">&laquo; Retour</button>
+<button style="border: none; background-color: transparent; padding: 0.5rem 1rem; font-size: 1.25rem; border-radius: 0.3rem; color: #dc3545;" type="button" (click)="back()">
+  &laquo; Retour
+</button>
+
 <div class="container" *ngIf="(questionnaires$ | async) as result" [ngSwitch]="result.dataState">
 
 
