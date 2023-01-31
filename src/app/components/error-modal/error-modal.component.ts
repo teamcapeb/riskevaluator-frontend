@@ -20,7 +20,6 @@ export class ErrorModalComponent implements OnInit {
   dismiss(){
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }
