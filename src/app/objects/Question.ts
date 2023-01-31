@@ -1,4 +1,4 @@
-import IMetier from "@/interfaces/IMetier";
+import {IMetier} from "@/interfaces/IMetier";
 import IQuestion from "@/interfaces/IQuestion";
 import Metier from './Metier';
 import Reponse from './Reponse';

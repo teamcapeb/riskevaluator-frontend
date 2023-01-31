@@ -1,4 +1,4 @@
-import IMetier from '@/interfaces/IMetier';
+import {IMetier} from '@/interfaces/IMetier';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MetierService } from '@services/serviceMetier/metier.service';

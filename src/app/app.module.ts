@@ -102,6 +102,7 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { HomePageComponent } from './pages/visitor/home-page/home-page.component';
 import { ConsulterEvaluationComponent } from './pages/administration/consulter-evaluation/consulter-evaluation.component';
 import { ConsulterEvaluationItemComponent } from './pages/administration/consulter-evaluation/consulter-evaluation-item/consulter-evaluation-item.component';
+import { DetailsEntrepriseComponent } from './pages/administration/details-entreprise/details-entreprise.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -169,7 +170,8 @@ registerLocaleData(localeEn, 'en-EN');
         ResultatListComponent,
         HomePageComponent,
         ConsulterEvaluationComponent,
-        ConsulterEvaluationItemComponent
+        ConsulterEvaluationItemComponent,
+        DetailsEntrepriseComponent
     ],
   imports: [
     BrowserModule,

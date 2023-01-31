@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { EvaluationService } from "@services/serviceEvaluation/evaluation.service";
 import IQuestionnaire from "@/interfaces/IQuestionnaire";
 import { IEntreprise } from "@/interfaces/IEntreprise";
-import IMetier from "@/interfaces/IMetier";
+import {IMetier} from "@/interfaces/IMetier";
 import { Observable } from "rxjs";
 import { EvalTokenStorageService } from "@services/serviceEvaluation/eval-token-storage.service";
 

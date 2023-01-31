@@ -1,3 +1,4 @@
+import { DetailsEntrepriseComponent } from './pages/administration/details-entreprise/details-entreprise.component';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {MainComponent} from '@modules/main/main.component';
@@ -86,6 +87,10 @@ const visitors: Routes = [
   {
     path: 'contact',
     component: ContactComponent
+  },
+  {
+    path: 'entreprise/:noSiret',
+    component: DetailsEntrepriseComponent
   },
   {
     path: 'historiques/:id',

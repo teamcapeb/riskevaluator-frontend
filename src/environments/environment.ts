@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8080',
-  // apiUrl: 'https://riskevaluator-backend-dev.herokuapp.com/',
+  // apiUrl: 'https://riskevaluator-backend-dev.herokuapp.com',
 
   evaluerIHM: {
     introDisplay: {

@@ -1,4 +1,4 @@
-import IMetier from "@/interfaces/IMetier";
+import {IMetier} from "@/interfaces/IMetier";
 import { Component, Input, OnInit } from "@angular/core";
 import { environment } from "../../../../../environments/environment";
 
