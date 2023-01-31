@@ -96,10 +96,10 @@ const visitors: Routes = [
     path: 'historiques/:id',
     component: EvaluationResultatComponent
   },
-  {
-    path: 'historiques',
-    component: EvaluationResultatComponent
-  },
+  // {
+  //   path: 'historiques',
+  //   component: EvaluationResultatComponent
+  // },
   {
     path: 'evaluer',
     children : [
