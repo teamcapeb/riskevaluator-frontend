@@ -5,9 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "heroku-postbuild": "ng build --prod",
-    "startprod": "ng serve --configuration=production",
-    "build": "ng build --configuration=development",
-    "build_prod": "ng build --configuration=production",
+    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
