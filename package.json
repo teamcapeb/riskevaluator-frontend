@@ -50,7 +50,7 @@
     "jquery": "^3.6.0",
     "jspdf": "^2.5.1",
     "luxon": "2.3.0",
-    "ng-circle-progress": "@1.6.0",
+    "ng-circle-progress": "1.6.0",
     "ng-multiselect-dropdown": "^0.3.8",
     "ng2-charts": "^3.0.8",
     "ngx-progressbar": "^8.0.0",
