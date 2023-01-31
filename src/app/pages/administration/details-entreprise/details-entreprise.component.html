@@ -29,8 +29,8 @@
   <!-- colonne Action -->
   <ng-container matColumnDef="action">
     <th mat-header-cell  *matHeaderCellDef ></th>
-    <td *matCellDef="let row" >
-         <button class = 'grey' mat-raised-button >AFFICHER DETAIL</button>
+    <td *matCellDef="let element" >
+         <button class = 'grey' mat-raised-button (click)="goToResult(element.idEvaluation)">AFFICHER DETAIL</button>
     </td>
   </ng-container>
 

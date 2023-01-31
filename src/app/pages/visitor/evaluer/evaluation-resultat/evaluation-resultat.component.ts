@@ -43,6 +43,8 @@ export class EvaluationResultatComponent implements OnInit {
 
   evaluation$ : IEvaluation = null;
   entreprise$ : IEntreprise =null;
+  // MOCK date évaluation, à modifier une fois recuperer BDD
+  dateEvaluation : String = "01/01/2022";
 
   precoGlobale$ : IPreconisationGlobale = { idPreconisationG: 0, viewIfPourcentageScoreLessThan: 0, contenu: ""};
   questionnaire:IQuestionnaire;
@@ -262,4 +264,10 @@ export class EvaluationResultatComponent implements OnInit {
     );
   }
 
+  /**
+   * TODO : Méthode pour supprimer evaluation BDD
+   */
+  deleteResult(){
+    console.log("j'ai cliqué pour supprimer");
+  }
 }
