@@ -27,11 +27,9 @@ export class ConsulterEvaluationComponent implements OnInit {
   cardColor: any;
   // evaluations$ : Observable<AppDataState<IEvaluation[]>> |null=null;
   entreprises$ : IEntreprise[];
-  nomEntreprises: string[];
-  filteredEntreprise: IEntreprise;
+  filteredEntreprises: IEntreprise[];
   entrepriseControl = new FormControl('');
   metiers$ : IMetier[];
-  nomMetiers: string[];
   filteredMetiers: string[];
   metierControl = new FormControl('');
 
@@ -45,18 +43,30 @@ export class ConsulterEvaluationComponent implements OnInit {
     // this.onGetAllEvaluation();
     this.entrepriseService.getAll().subscribe((res) => {
       this.entreprises$ = res;
-      this.nomEntreprises = res.map((entreprise) => {
-        return entreprise.nomEntreprise.toUpperCase();
-      })
+      this.filteredEntreprises = res;
     });
     this.metierService.getAllMetiers().subscribe((res) => {
       this.metiers$ = res;
-      this.nomMetiers = res.map((metier) => {
-        return metier.nomMetier;
-      })
     });
   }
 
+  filter(event: IEntreprise) {
+      this.filteredEntreprises = [];
+      this.filteredEntreprises.push(event);
+      console.log(this.filteredEntreprises);
+  }
+
+  filtreEntreprise(event: any){
+    if (event.length == 0) {
+      this.filteredEntreprises = this.entreprises$;
+    } else {
+      this.filteredEntreprises = [];
+      this.entreprises$.forEach((entreprise)=>{
+      if (entreprise.nomEntreprise==event){
+        this.filteredEntreprises.push(entreprise);
+      }})
+    }
+  }
   // onGetAllEvaluation() {
   //   this.evaluations$= this.evaluationService.getAll().pipe(
   //     map((data: IEvaluation[])=>{

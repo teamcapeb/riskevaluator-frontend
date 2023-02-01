@@ -104,6 +104,7 @@ import { HomePageComponent } from './pages/visitor/home-page/home-page.component
 import { ConsulterEvaluationComponent } from './pages/administration/consulter-evaluation/consulter-evaluation.component';
 import { ConsulterEvaluationItemComponent } from './pages/administration/consulter-evaluation/consulter-evaluation-item/consulter-evaluation-item.component';
 import { DetailsEntrepriseComponent } from './pages/administration/details-entreprise/details-entreprise.component';
+import { StatisticsComponent } from './pages/administration/statistics/statistics.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -172,7 +173,8 @@ registerLocaleData(localeEn, 'en-EN');
         HomePageComponent,
         ConsulterEvaluationComponent,
         ConsulterEvaluationItemComponent,
-        DetailsEntrepriseComponent
+        DetailsEntrepriseComponent,
+        StatisticsComponent
     ],
   imports: [
     BrowserModule,

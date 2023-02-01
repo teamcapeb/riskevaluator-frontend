@@ -17,6 +17,7 @@ export class ConsulterEvaluationItemComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    console.log(this.entreprise);
   }
 
   calculateColor = (id : number) => {

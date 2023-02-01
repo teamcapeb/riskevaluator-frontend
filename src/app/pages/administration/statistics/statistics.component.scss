@@ -1,0 +1,44 @@
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: white !important;
+}
+
+.dashboard {
+  display: flex;
+}
+
+.dashboard-left {
+  padding: 16px;
+  // flex-grow: 1;
+  width: 50%;
+}
+
+.dashboard-right {
+  padding: 16px;
+  // flex-grow: 1;
+  width: 50%;
+}
+
+.dashboard-filters {
+  display: flex;
+}
+
+.entreprise-filtre {
+  // flex: 1;
+  // width: 30%;
+}
+
+.questionnaire-filtre {
+  // flex: 1;
+  // width: 30%;
+}
+
+.metier-filtre {
+  // flex: 1;
+  // width: 30%;
+}
+
+.title-card {
+  font-size: 24px;
+  color: #e33b1a;
+  padding: 22px;
+}

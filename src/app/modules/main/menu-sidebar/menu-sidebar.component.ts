@@ -79,5 +79,10 @@ export const ADMIN_MENU = [
     name: 'Consulter évaluation',
     path: ['/consulter-evaluation'],
     icon: "fa-solid fa-list"
+  },
+  {
+    name: 'Statistiques',
+    path: ['/statistiques'],
+    icon: "fa-solid fa-chart-line"
   }
 ];

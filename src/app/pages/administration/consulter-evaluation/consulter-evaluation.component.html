@@ -5,10 +5,11 @@
         <mat-form-field style="width: 260px; margin-right: 12px;" appearance="fill">
           <mat-label>Entreprise</mat-label>
           <input type="text" placeholder="Choisir une entreprise" aria-label="Entreprise" matInput
-                 [formControl]="entrepriseControl" [matAutocomplete]="entrepriseAuto">
+                 [formControl]="entrepriseControl" [matAutocomplete]="entrepriseAuto"
+                 (ngModelChange)="filtreEntreprise($event)">
           <mat-autocomplete #entrepriseAuto="matAutocomplete">
-            <mat-option *ngFor="let entreprise of nomEntreprises" [value]="entreprise">
-              {{entreprise}}
+            <mat-option *ngFor="let entreprise of filteredEntreprises" [value]="entreprise.nomEntreprise">
+              {{entreprise?.nomEntreprise}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
@@ -21,7 +22,7 @@
                 (+{{(metierControl.value?.length || 0) - 1}} {{metierControl.value?.length === 2 ? 'autre' : 'autres'}})
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let metier of nomMetiers" [value]="metier">{{metier}}</mat-option>
+            <mat-option *ngFor="let metier of metiers$" [value]="metier">{{metier?.nomMetier}}</mat-option>
           </mat-select>
         </mat-form-field>
       </form>
@@ -29,7 +30,7 @@
     </div>
   </div>
   <div class="row mb-5">
-    <app-consulter-evaluation-item class="col-md-6" *ngFor="let etp of entreprises$"
+    <app-consulter-evaluation-item class="col-md-6" *ngFor="let etp of filteredEntreprises"
                                 [entreprise]="etp"></app-consulter-evaluation-item>
   </div>
 </div>
