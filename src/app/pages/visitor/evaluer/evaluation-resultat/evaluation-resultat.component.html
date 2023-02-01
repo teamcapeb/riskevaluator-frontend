@@ -1,24 +1,24 @@
 <ng-container   *ngIf="(evaluationObs | async) as result"
                 [ngSwitch]="result.dataState">
 
-  <div class="row">
+  <div class="row" style="height:80px">
     <div class="col text ">
       Entreprise: {{this.entreprise$.nomEntreprise}} <br/>
       Numéro de SIRET: {{this.entreprise$.noSiret}} <br/>
       Date de l'évaluation: {{this.dateEvaluation}} <br/>
     </div>
     <div class="col col-lg-2" (click)="generatePDF()">
-      <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/pdf-export.png">
+      <img class="logo-navbar mx-auto d-block" style="float: right" alt="questionnaire" src="../../../../../assets/img/pdf-export.png">
     </div>
     <div class="col col-lg-2 " (click)="htmlToPng()">
-      <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/png-export.png">
+      <img class="logo-navbar mx-auto d-block" style="float: left" alt="questionnaire" src="../../../../../assets/img/png-export.png">
     </div>
   </div>
 
   <div class="container" *ngSwitchCase="DataStateEnum.LOADED" >
     <div id="wrapper">
       <div id="graphWithTitle">
-        <h1 class="text-primary" style="text-align: center;font-weight: bold;font-size:3em">{{this.listScoreCategories$?.at(0)?.categorieQuestion?.questionnaire?.thematique}}</h1>
+        <h1 class="text-primary" style="text-align: center;font-weight: bold;font-size:2em">{{this.listScoreCategories$?.at(0)?.categorieQuestion?.questionnaire?.thematique}}</h1>
         <app-result-radarchart-item [evaluation$]="result.data"></app-result-radarchart-item>
       </div>
       <app-resultat-list [evaluation$]="result.data" ></app-resultat-list>
