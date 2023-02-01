@@ -13,6 +13,7 @@ import IEvaluation from "@/interfaces/IEvaluation";
 import { EvaluationApiService } from "@services/serviceEvaluation/evaluation-api.service";
 import { ModalService } from "@services/serviceModal/modal.service";
 import { EntrepriseService } from '@services/serviceEntreprise/entreprise.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-consulter-evaluation',
@@ -23,34 +24,49 @@ export class ConsulterEvaluationComponent implements OnInit {
   @ViewChild('errorModal') errorModal: any;
   private listMetier: number[] = [];
   DataStateEnum = DataStateEnum;
-  evaluations$ : Observable<AppDataState<IEvaluation[]>> |null=null;
-  entreprises$ : IEntreprise[];
   cardColor: any;
+  // evaluations$ : Observable<AppDataState<IEvaluation[]>> |null=null;
+  entreprises$ : IEntreprise[];
+  nomEntreprises: string[];
+  filteredEntreprise: IEntreprise;
+  entrepriseControl = new FormControl('');
+  metiers$ : IMetier[];
+  nomMetiers: string[];
+  filteredMetiers: string[];
+  metierControl = new FormControl('');
 
   constructor(private evaluationService : EvaluationApiService,
               private entrepriseService: EntrepriseService,
+              private metierService: MetierService,
               private modalService: ModalService) {
   }
 
   ngOnInit(): void {
-    this.onGetAllEvaluation();
+    // this.onGetAllEvaluation();
     this.entrepriseService.getAll().subscribe((res) => {
       this.entreprises$ = res;
-      console.log(res);
+      this.nomEntreprises = res.map((entreprise) => {
+        return entreprise.nomEntreprise.toUpperCase();
+      })
+    });
+    this.metierService.getAllMetiers().subscribe((res) => {
+      this.metiers$ = res;
+      this.nomMetiers = res.map((metier) => {
+        return metier.nomMetier;
+      })
     });
   }
 
-
-  onGetAllEvaluation() {
-    this.evaluations$= this.evaluationService.getAll().pipe(
-      map((data: IEvaluation[])=>{
-        return ({dataState:DataStateEnum.LOADED,data:data})
-      }),
-      startWith({dataState:DataStateEnum.LOADING}),
-      catchError(err=> {
-        this.modalService.error(JSON.stringify(err.error));
-        return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
-      })
-    );
-  }
+  // onGetAllEvaluation() {
+  //   this.evaluations$= this.evaluationService.getAll().pipe(
+  //     map((data: IEvaluation[])=>{
+  //       return ({dataState:DataStateEnum.LOADED,data:data})
+  //     }),
+  //     startWith({dataState:DataStateEnum.LOADING}),
+  //     catchError(err=> {
+  //       this.modalService.error(JSON.stringify(err.error));
+  //       return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
+  //     })
+  //   );
+  // }
 }

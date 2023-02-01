@@ -68,6 +68,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { CategorieQuestionFormComponent } from './pages/administration/gestion-categorie-questions/categorie-question-form/categorie-question-form.component';
 
@@ -207,6 +208,7 @@ registerLocaleData(localeEn, 'en-EN');
     MatMenuModule,
     MatDatepickerModule,
     MatSnackBarModule,
+    MatAutocompleteModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       radius: 100,
