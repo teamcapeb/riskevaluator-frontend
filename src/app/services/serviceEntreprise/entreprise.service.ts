@@ -15,6 +15,13 @@ export class EntrepriseService {
 
   constructor(private http: HttpClient) {}
 
+  getById(siret: number) {
+    return this.http.get<IEntreprise[]>(`${this.baseUrl}${siret}`)
+  }
+
+  exists(siret: string) {
+    return this.http.get(`${this.baseUrl}${siret}/exists`);
+  }
 
   getAll(): Observable<IEntreprise[]> {
     return this.http.get<IEntreprise[]>(`${this.baseUrl}`);

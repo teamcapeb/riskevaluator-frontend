@@ -1,7 +1,7 @@
 <ng-container *ngIf="(metiers$ | async) as result" [ngSwitch]="result.dataState">
   <ng-container *ngSwitchCase="DataStateEnum.LOADED">
     <div class="d-flex justify-content-center">
-      <h1 style="margin-top: 4px;" class="pt-2">Veuillez sélectionner un ou plusieurs métiers</h1>
+      <h1 style="margin-top: 4px; font-weight: bolder;" class="pt-2">Veuillez sélectionner un ou plusieurs métiers</h1>
     </div>
 
     <div style="display: flex; flex-wrap: wrap; flex-direction: row;

@@ -8,5 +8,6 @@ export default interface IEvaluation{
     compte?: ICompte;
     scoreGeneraleEvaluation? : number
     scoreCategories?: IScoreCategory[],
-    entreprise : IEntreprise
+    entreprise : IEntreprise,
+    date?: string
 }

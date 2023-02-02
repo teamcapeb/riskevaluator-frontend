@@ -1,3 +1,15 @@
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: white !important;
+}
+
+.filters {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
+  padding-right: 12px;
+  padding-left: 12px;
+}
+
 body{
   margin-top:20px;
   background:#FAFAFA;
