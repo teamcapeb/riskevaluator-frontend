@@ -16,7 +16,7 @@ import { ModalService } from "@services/serviceModal/modal.service";
 export class EvaluerComponent implements OnInit {
   @ViewChild('errorModal') errorModal: any;
   DataStateEnum = DataStateEnum;
-  metiers$:Observable<AppDataState<IMetier[]>> |null=null;
+  metiers$: IMetier[];
 
   alertMetier : boolean = false;
 
@@ -30,16 +30,29 @@ export class EvaluerComponent implements OnInit {
 
 
   onGetAllMetiers() {
-    this.metiers$= this.metierService.getAllMetiers().pipe(
-      map((data: IMetier[])=>{
-        return ({dataState:DataStateEnum.LOADED,data:data})
-      }),
-      startWith({dataState:DataStateEnum.LOADING}),
-      catchError(err=> {
-        this.modalService.error(JSON.stringify(err.message));
-        return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
-      })
-    );
+    // this.metiers$= this.metierService.getAllMetiers().pipe(
+    //   map((data: IMetier[])=>{
+    //     return ({dataState:DataStateEnum.LOADED,data:data})
+    //   }),
+    //   startWith({dataState:DataStateEnum.LOADING}),
+    //   catchError(err=> {
+    //     this.modalService.error(JSON.stringify(err.message));
+    //     return of({dataState:DataStateEnum.ERROR, errorMessage:err.message})
+    //   })
+    // );
+    this.metierService.getAllMetiers().subscribe((res) => {
+      this.metiers$ = res.sort(
+        (a, b) => {
+          if (a.nomMetier < b.nomMetier) {
+            return -1;
+          }
+          if (a.nomMetier > b.nomMetier) {
+            return 1;
+          }
+          return 0;
+        }
+      );
+    });
   }
 
 
