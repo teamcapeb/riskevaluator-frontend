@@ -9,7 +9,7 @@ import { environment } from "../../../../../environments/environment";
 })
 export class EvaluationMetierItemComponent implements OnInit {
   @Input() metier$ : IMetier = null;
-  imageMetier: string = "../../../../../assets/img/metiers/";
+  imageMetier: string = "";
 
   onSelectCard() {
     this.metier$.isChecked = !this.metier$.isChecked;
@@ -23,29 +23,29 @@ export class EvaluationMetierItemComponent implements OnInit {
   getImg(nomMetier: string): string {
     switch(nomMetier) {
       case "Maçon":
-        return this.imageMetier += "macon.png";
-      case "Serrieur / métallier":
-        return this.imageMetier += "serrurier-metallier.png";
+        return this.imageMetier = "../../../../../assets/img/metiers/macon.png";
+      case "Serrurier / métallier":
+        return this.imageMetier = "../../../../../assets/img/metiers/serrurier-metallier.png";
       case "Electricien":
-        return this.imageMetier += "electricien.png";
+        return this.imageMetier = "../../../../../assets/img/metiers/electricien.png";
       case "Couvreur Zingueur":
-        return this.imageMetier += "couvreur-zingueur.png";
+        return this.imageMetier = "../../../../../assets/img/metiers/couvreur-zingueur.png";
       case "Chauffagiste":
-        return this.imageMetier += "chauffagiste.png";
+        return this.imageMetier = "../../../../../assets/img/metiers/chauffagiste.png";
       case "Peintre en bâtiment":
-        return this.imageMetier += "peintre-en-batiment.png";
+        return this.imageMetier = "../../../../../assets/img/metiers/peintre-en-batiment.png";
       case "Tailleur de pierre":
-        return this.imageMetier += "tailleur-de-pierre.png";
+        return this.imageMetier = "../../../../../assets/img/metiers/tailleur-de-pierre.png";
       case "Menuisier":
-        return this.imageMetier += "charpentier-menuisier.png";
+        return this.imageMetier = "../../../../../assets/img/metiers/charpentier-menuisier.png";
       case "Charpentier":
-        return this.imageMetier += "charpentier-menuisier.png";
+        return this.imageMetier = "../../../../../assets/img/metiers/charpentier-menuisier.png";
       case "Plombier":
-        return this.imageMetier += "plombier.png";
+        return this.imageMetier = "../../../../../assets/img/metiers/plombier.png";
       case "Plaquiste / Plâtrier":
-        return this.imageMetier += "plaquiste.png";
+        return this.imageMetier = "../../../../../assets/img/metiers/plaquiste.png";
       case "Carreleur":
-        return this.imageMetier += "carreleur.png";
+        return this.imageMetier = "../../../../../assets/img/metiers/carreleur.png";
       default:
         return "";
     }

@@ -2,6 +2,18 @@
   border: 2px solid #323744;
 }
 
+img {
+  border: 2px solid black;
+  // border-radius: 50%;
+  background-color: white;
+}
+
+img.logo-navbar {
+  width: 5rem !important;
+  height: 5rem !important;
+  padding: 8px;
+}
+
 .selection {
   cursor: pointer;
   color: #323744;
@@ -32,8 +44,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 220px;
-  height: 220px;
+  width: 200px;
+  height: 200px;
   background-color: #B0BEC5;
   border: 2px solid black;
   border-radius: 5px;
@@ -58,10 +70,6 @@
 
 .f-right {
   float: right;
-}
-img.logo-navbar {
-  width: 3rem !important;
-  height: 3rem !important;
 }
 
 
