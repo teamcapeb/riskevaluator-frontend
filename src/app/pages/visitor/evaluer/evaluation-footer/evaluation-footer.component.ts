@@ -92,7 +92,12 @@ export class EvaluationFooterComponent implements OnInit {
       idEvaluation :aEvaluation.idEvaluation,
       scoreGeneraleEvaluation : aEvaluation.scoreGeneraleEvaluation,
       entreprise : aEvaluation.entreprise,
-      scoreCategories : aEvaluation.scoreCategories
+      scoreCategories : aEvaluation.scoreCategories,
+      date: new Date().toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      }).split('/').join('/')
     }
 
     this.entrepriseService.exists(aEvaluation.entreprise.noSiret.toString()).subscribe((res)=>{

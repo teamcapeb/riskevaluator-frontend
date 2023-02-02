@@ -37,7 +37,12 @@ export class EvaluationService {
   readonly actualCategorieNumberObs=this.actualCategorieIndex.asObservable();
 
 
-  evaluation:BehaviorSubject<IEvaluation>=new BehaviorSubject<IEvaluation>({ entreprise:null, scoreGeneraleEvaluation:0, scoreCategories: null  });
+  evaluation:BehaviorSubject<IEvaluation>=new BehaviorSubject<IEvaluation>({
+    entreprise:null,
+    scoreGeneraleEvaluation:0,
+    scoreCategories: null,
+    date: ""
+  });
   readonly evaluationObs=this.evaluation.asObservable();
 
 
@@ -131,7 +136,7 @@ export class EvaluationService {
 
     _evaluation.scoreCategories = scoreCategories;
 
-    
+
     this.evaluation.next(_evaluation);
   }
 
