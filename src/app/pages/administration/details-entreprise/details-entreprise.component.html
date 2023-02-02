@@ -1,5 +1,5 @@
 <div class="d-flex margin-5">
-  <h1 class="pt-2">Détails des évaluations de l'entreprise {{entreprise}}</h1>
+  <h1 class="pt-2">Détails des évaluations de l'entreprise {{this.entreprise?.nomEntreprise}}</h1>
 </div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <!-- colonne Métier -->
@@ -30,7 +30,7 @@
   <ng-container matColumnDef="action">
     <th mat-header-cell  *matHeaderCellDef ></th>
     <td *matCellDef="let element" >
-         <button class = 'grey' mat-raised-button (click)="goToResult(element.idEvaluation)">AFFICHER DETAIL</button>
+         <button class = 'grey' mat-raised-button (click)="goToResult(element.idEvaluation)">AFFICHER RESULTAT</button>
     </td>
   </ng-container>
 
