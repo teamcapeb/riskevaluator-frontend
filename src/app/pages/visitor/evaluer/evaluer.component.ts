@@ -1,3 +1,4 @@
+
 import {IMetier} from '@/interfaces/IMetier';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -6,6 +7,9 @@ import { Observable, of, Subject } from "rxjs";
 import { catchError, map, startWith, takeUntil } from "rxjs/operators";
 import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
 import { ModalService } from "@services/serviceModal/modal.service";
+import Metier from '@/objects/Metier';
+import Question from '@/objects/Question';
+import IQuestion from '@/interfaces/IQuestion';
 
 
 @Component({
@@ -57,6 +61,7 @@ export class EvaluerComponent implements OnInit {
 
 
   onValidateMetiers(metiers : IMetier[]) : void {
+    this.metierService.metiers = metiers.filter(m => m.isChecked === true);
     let idMetierChecked: number[] =  metiers.filter(m => m.isChecked === true).map(e=> e.idMetier);
     if(idMetierChecked.length > 0) {
       this.router.navigate(['evaluer/evaluation-thematique',idMetierChecked.join(",")]);

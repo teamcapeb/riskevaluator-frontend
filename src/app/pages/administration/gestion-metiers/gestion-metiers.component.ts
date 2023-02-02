@@ -76,7 +76,7 @@ export class GestionMetiersComponent implements OnInit {
         this.modalService.error('Ce metier existe déjà !');
       }
     }
-    this.metierService.getAll().subscribe((res) => {
+    this.metierService.getAllMetiers().subscribe((res) => {
       this.metiers = this.sortMetiers(res);
     });
   }

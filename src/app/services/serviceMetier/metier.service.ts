@@ -12,6 +12,8 @@ import IQuestionnaire from "@/interfaces/IQuestionnaire";
 })
 export class MetierService {
 
+  metiers : IMetier[];
+
   private baseUrl: string = environment.apiUrl + '/metiers/';
 
   constructor(private http: HttpClient) {}

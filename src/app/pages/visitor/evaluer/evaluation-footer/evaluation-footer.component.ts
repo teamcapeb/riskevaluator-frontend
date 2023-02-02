@@ -1,3 +1,4 @@
+import { MetierService } from '@services/serviceMetier/metier.service';
 import { EntrepriseService } from '@services/serviceEntreprise/entreprise.service';
 import { Component, Input, OnInit } from "@angular/core";
 import {
@@ -37,7 +38,8 @@ export class EvaluationFooterComponent implements OnInit {
               private location: Location,
               private tokenStorageService: TokenStorageService,
               private evalTokenStorageService : EvalTokenStorageService,
-              private entrepriseService: EntrepriseService) {
+              private entrepriseService: EntrepriseService,
+              private metierService: MetierService) {
 
 
     // Observers subscriptions ;
@@ -88,6 +90,7 @@ export class EvaluationFooterComponent implements OnInit {
   }
 
   SaveEvalution(aEvaluation : IEvaluation) {
+    aEvaluation.entreprise.metiers = this.metierService.metiers;
     const wEvaluation: IEvaluation = {
       idEvaluation :aEvaluation.idEvaluation,
       scoreGeneraleEvaluation : aEvaluation.scoreGeneraleEvaluation,
