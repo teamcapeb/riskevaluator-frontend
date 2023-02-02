@@ -32,10 +32,13 @@ export class ConsulterEvaluationComponent implements OnInit {
   metiers$ : IMetier[];
   filteredMetiers: string[];
   metierControl = new FormControl('');
+  filteredQuestionnaires: IQuestionnaire[];
+  questionnaireControl = new FormControl('');
 
   constructor(private evaluationService : EvaluationApiService,
               private entrepriseService: EntrepriseService,
               private metierService: MetierService,
+              private questionnaireService: QuestionnaireService,
               private modalService: ModalService) {
   }
 
@@ -47,6 +50,9 @@ export class ConsulterEvaluationComponent implements OnInit {
     });
     this.metierService.getAllMetiers().subscribe((res) => {
       this.metiers$ = res;
+    });
+    this.questionnaireService.getAllQuestionnaires().subscribe((res) => {
+      this.filteredQuestionnaires = res;
     });
   }
 
@@ -62,7 +68,7 @@ export class ConsulterEvaluationComponent implements OnInit {
     } else {
       this.filteredEntreprises = [];
       this.entreprises$.forEach((entreprise)=>{
-      if (entreprise.nomEntreprise==event){
+      if (entreprise.nomEntreprise.includes(event)){
         this.filteredEntreprises.push(entreprise);
       }})
     }

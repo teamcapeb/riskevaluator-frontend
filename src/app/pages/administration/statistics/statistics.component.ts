@@ -31,9 +31,9 @@ export class StatisticsComponent implements OnInit {
     this.metierService.getAllMetiers().subscribe((res) => {
       this.filteredMetiers = res;
     });
-    this.questionnaireService.getAll().subscribe((res) => {
-      this.filteredQuestionnaires = res;
-    });
+    // this.questionnaireService.getAll().subscribe((res) => {
+    //   this.filteredQuestionnaires = res;
+    // });
   }
 
 }

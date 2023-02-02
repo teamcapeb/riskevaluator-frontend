@@ -131,6 +131,7 @@ export class EvaluationService {
 
     _evaluation.scoreCategories = scoreCategories;
 
+    
     this.evaluation.next(_evaluation);
   }
 
