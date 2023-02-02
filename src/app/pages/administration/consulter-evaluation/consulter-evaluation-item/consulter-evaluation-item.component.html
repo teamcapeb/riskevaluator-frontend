@@ -1,12 +1,8 @@
-<div *ngIf="evaluation$">
-  <div   class="card {{calculateColor(evaluation$.idEvaluation)}}  order-card" role= "button" (click)="onSelectCard()">
-    <div class="card-block">
-    <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="../../../../../assets/img/satisfaction.png">
-      <h2 class="m-b-20 text-center">{{evaluation$?.entreprise?.nomEntreprise}}</h2>
-      <p class="m-b-0">Score global<span class="f-right">{{evaluation$.scoreGeneraleEvaluation }} %</span></p>
-      <p class="m-b-0">Nom questionnaire<span class="f-right">{{evaluation$.scoreCategories?.at(0)?.categorieQuestion?.questionnaire?.thematique }} </span></p>
-      <p class="m-b-0">Numéro évaluation<span class="f-right">{{evaluation$.idEvaluation }} </span></p>
-      <p class="m-b-0">Numéro siret<span class="f-right">{{evaluation$.entreprise.noSiret }} </span></p>
-    </div>
-    </div>
-</div>
+<div *ngIf="entreprise">
+  <div class="card-block" style="margin: 12px 0px;" (click)="onSelectCard()">
+    <h2 class="m-b-20 text-center" style="font-weight: bolder; margin: 0px;">{{entreprise?.nomEntreprise?.toUpperCase()}}</h2>
+    <p class="m-b-0 text-center" style="font-size: 12px; margin-bottom: 18px;">SIRET : {{entreprise?.noSiret }}</p>
+    <p class="m-b-0"><span style="font-weight: bolder;">Nombre d'évaluations</span><span class="f-right">{{entreprise?.evaluations?.length }}</span></p>
+    <p class="m-b-0"><span style="font-weight: bolder;">Métiers</span><span class="f-right">{{entreprise?.metiers }} </span></p>
+  </div>
+</div>`

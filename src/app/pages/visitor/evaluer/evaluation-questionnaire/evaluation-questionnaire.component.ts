@@ -10,7 +10,7 @@ import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnai
 import { IEntreprise } from '@/interfaces/IEntreprise';
 import { ActivatedRoute, Navigation, NavigationExtras, Router } from "@angular/router";
 import IQuestionnaire from "@/interfaces/IQuestionnaire";
-import IMetier from '@/interfaces/IMetier';
+import {IMetier} from '@/interfaces/IMetier';
 import { EvalTokenStorageService } from "@services/serviceEvaluation/eval-token-storage.service";
 import { environment } from "../../../../../environments/environment";
 

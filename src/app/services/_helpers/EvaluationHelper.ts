@@ -1,4 +1,4 @@
-import IMetier from "@/interfaces/IMetier";
+import {IMetier} from "@/interfaces/IMetier";
 
 export abstract class EvaluationHelper {
 

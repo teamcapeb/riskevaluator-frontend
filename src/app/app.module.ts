@@ -70,6 +70,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
 
 import {
   CategorieQuestionFormComponent
@@ -105,80 +106,84 @@ import { EvaluationMetierItemComponent } from "./pages/visitor/evaluer/evaluatio
 import { MatCardModule } from "@angular/material/card";
 import { ResultatListComponent } from "./pages/visitor/evaluer/evaluation-resultat/resultat-list/resultat-list.component";
 import { MatTabsModule } from "@angular/material/tabs";
-import { HomePageComponent } from "@pages/visitor/home-page/home-page.component";
-import { ConsulterEvaluationComponent } from "@pages/administration/consulter-evaluation/consulter-evaluation.component";
+import { DetailsEntrepriseComponent } from "./pages/administration/details-entreprise/details-entreprise.component";
+import { StatisticsComponent } from "./pages/administration/statistics/statistics.component";
 import {
   ConsulterEvaluationItemComponent
 } from "@pages/administration/consulter-evaluation/consulter-evaluation-item/consulter-evaluation-item.component";
+import { ConsulterEvaluationComponent } from "@pages/administration/consulter-evaluation/consulter-evaluation.component";
+import { HomePageComponent } from "@pages/visitor/home-page/home-page.component";
 
-registerLocaleData(localeEn, 'en-EN');
+registerLocaleData(localeEn, "en-EN");
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        MainComponent,
-        LoginComponent,
-        HeaderComponent,
-        FooterComponent,
-        MenuSidebarComponent,
-        BlankComponent,
-        ProfileComponent,
-        RegisterComponent,
-        DashboardComponent,
-        MessagesComponent,
-        NotificationsComponent,
-        ButtonComponent,
-        UserComponent,
-        ForgotPasswordComponent,
-        RecoverPasswordComponent,
-        PrivacyPolicyComponent,
-        MenuItemComponent,
-        DropdownComponent,
-        DropdownMenuComponent,
-        GestionComptesComponent,
-        GestionMetiersComponent,
-        GestionQuestionnaireComponent,
-        EvaluerComponent,
-        HistoriqueComponent,
-        ContactComponent,
-        GestionQuestionComponent,
-        ListComponent,
-        ListItemComponent,
-        MetierFormComponent,
-        ErrorModalComponent,
+  declarations: [
+    AppComponent,
+    MainComponent,
+    LoginComponent,
+    HeaderComponent,
+    FooterComponent,
+    MenuSidebarComponent,
+    BlankComponent,
+    ProfileComponent,
+    RegisterComponent,
+    DashboardComponent,
+    MessagesComponent,
+    NotificationsComponent,
+    ButtonComponent,
+    UserComponent,
+    ForgotPasswordComponent,
+    RecoverPasswordComponent,
+    PrivacyPolicyComponent,
+    MenuItemComponent,
+    DropdownComponent,
+    DropdownMenuComponent,
+    GestionComptesComponent,
+    GestionMetiersComponent,
+    GestionQuestionnaireComponent,
+    EvaluerComponent,
+    HistoriqueComponent,
+    ContactComponent,
+    GestionQuestionComponent,
+    ListComponent,
+    ListItemComponent,
+    MetierFormComponent,
+    ErrorModalComponent,
 
-        GestionCategorieQuestionsComponent,
-        PreconisationGlobalFormComponent,
-        EvaluationQuestionComponent,
-        EvaluationHeadComponent,
-        EvaluationQuestionnaireComponent,
-        EvaluationWelcomeComponent,
-        EvaluationBodyComponent,
-        QuestionFormComponent,
-        QuestionModalComponent,
-        ListItemColComponent,
-        ReponseFormComponent,
+    GestionCategorieQuestionsComponent,
+    PreconisationGlobalFormComponent,
+    EvaluationQuestionComponent,
+    EvaluationHeadComponent,
+    EvaluationQuestionnaireComponent,
+    EvaluationWelcomeComponent,
+    EvaluationBodyComponent,
+    QuestionFormComponent,
+    QuestionModalComponent,
+    ListItemColComponent,
+    ReponseFormComponent,
 
-        CategorieQuestionFormComponent,
+    CategorieQuestionFormComponent,
 
-        QuestionnaireFormComponent,
-        PreconisationCategorieQuestionFormComponent,
-        ToastsContainerComponent,
-        EvaluationLoadingComponent,
-        EvaluationFooterComponent,
-        EvaluationThematiqueComponent,
-        EvaluationResultatComponent,
-        ResultatItemComponent,
-        EvaluationEntrepriseInfoComponent,
-        OopsMessageComponent,
-        SignupLoginComponent,
-        ResultRadarchartItemComponent,
-        EvaluationMetierItemComponent,
-        ResultatListComponent,
-        HomePageComponent,
-        ConsulterEvaluationComponent,
-        ConsulterEvaluationItemComponent
-    ],
+    QuestionnaireFormComponent,
+    PreconisationCategorieQuestionFormComponent,
+    ToastsContainerComponent,
+    EvaluationLoadingComponent,
+    EvaluationFooterComponent,
+    EvaluationThematiqueComponent,
+    EvaluationResultatComponent,
+    ResultatItemComponent,
+    EvaluationEntrepriseInfoComponent,
+    OopsMessageComponent,
+    SignupLoginComponent,
+    ResultRadarchartItemComponent,
+    EvaluationMetierItemComponent,
+    ResultatListComponent,
+    HomePageComponent,
+    ConsulterEvaluationComponent,
+    ConsulterEvaluationItemComponent,
+    DetailsEntrepriseComponent,
+    StatisticsComponent
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -213,13 +218,14 @@ registerLocaleData(localeEn, 'en-EN');
     MatMenuModule,
     MatDatepickerModule,
     MatSnackBarModule,
+    MatAutocompleteModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       radius: 100,
       outerStrokeWidth: 16,
       innerStrokeWidth: 8,
-      outerStrokeColor: "#78C000",
-      innerStrokeColor: "#C7E596",
+      outerStrokeColor: "#78c000",
+      innerStrokeColor: "#c7e596",
       unitsColor: "#ffffff",
       titleColor: "#ffffff",
       subtitleColor: "#ffffff",
@@ -235,7 +241,8 @@ registerLocaleData(localeEn, 'en-EN');
     MatCardModule,
     MatTabsModule
   ],
-    providers: [authInterceptorProviders],
-    bootstrap: [AppComponent]
+  providers: [authInterceptorProviders],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}
