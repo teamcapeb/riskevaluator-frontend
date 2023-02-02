@@ -114,7 +114,7 @@ export class EvaluationFooterComponent implements OnInit {
       }else{
         this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
           if(evaluation) {
-            this.entrepriseService.update(aEvaluation.entreprise).subscribe();
+            this.entrepriseService.update(aEvaluation.entreprise.noSiret, aEvaluation.entreprise).subscribe();
             this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
             this.router.navigate(['historiques',evaluation?.idEvaluation]);
           }

@@ -1,10 +1,8 @@
-import { IMetier } from '@/interfaces/IMetier';
-import Metier from '@/objects/Metier';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { MetierService } from '../../../services/serviceMetier/metier.service';
-import { takeUntil } from 'rxjs/operators';
-import IListEvent from '@/interfaces/IListEvent';
+import { IMetier } from "@/interfaces/IMetier";
+import Metier from "@/objects/Metier";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { MetierService } from "../../../services/serviceMetier/metier.service";
+import IListEvent from "@/interfaces/IListEvent";
 import { ModalService } from "@services/serviceModal/modal.service";
 
 @Component({
