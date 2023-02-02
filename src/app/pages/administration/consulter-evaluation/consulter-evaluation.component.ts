@@ -45,8 +45,8 @@ export class ConsulterEvaluationComponent implements OnInit {
   ngOnInit(): void {
     // this.onGetAllEvaluation();
     this.entrepriseService.getAll().subscribe((res) => {
-      this.entreprises$ = res;
-      this.filteredEntreprises = res;
+      this.entreprises$ = this.sortEntreprises(res);
+      this.filteredEntreprises = this.sortEntreprises(res);
     });
     this.metierService.getAllMetiers().subscribe((res) => {
       this.metiers$ = res;
@@ -56,15 +56,28 @@ export class ConsulterEvaluationComponent implements OnInit {
     });
   }
 
+  sortEntreprises(entreprises: IEntreprise[]) {
+    return entreprises.sort(
+      (a, b) => {
+        if (a.nomEntreprise.toUpperCase() < b.nomEntreprise.toUpperCase()) {
+          return -1;
+        }
+        if (a.nomEntreprise.toUpperCase() > b.nomEntreprise.toUpperCase()) {
+          return 1;
+        }
+        return 0;
+      }
+    );
+  }
+
   filter(event: IEntreprise) {
-      this.filteredEntreprises = [];
-      this.filteredEntreprises.push(event);
-      console.log(this.filteredEntreprises);
+    this.filteredEntreprises = [];
+    this.filteredEntreprises.push(event);
   }
 
   filtreEntreprise(event: any){
     if (event.length == 0) {
-      this.filteredEntreprises = this.entreprises$;
+      this.filteredEntreprises = this.sortEntreprises(this.entreprises$);
     } else {
       this.filteredEntreprises = [];
       this.entreprises$.forEach((entreprise)=>{
