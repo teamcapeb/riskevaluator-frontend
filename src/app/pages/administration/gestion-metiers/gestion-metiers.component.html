@@ -1,24 +1,14 @@
 
 <app-list title="Liste des metiers" (onAdd)="add()">
-    <ng-template [ngIf]="metiers | async" [ngIfElse]="loading">
-        <ng-container *ngFor="let metier of metiers | async">
-            <app-list-item
-                id="{{metier.idMetier}}"
-                [data]="metier"
-                (onUpdate)="update($event)"
-                (onDelete)="delete($event)"
-            >
-                <app-list-item-col>{{metier.nomMetier}}</app-list-item-col>
-            </app-list-item>
-        </ng-container>
-    </ng-template>
+    <div *ngFor="let metier of metiers">
+        <app-list-item
+            id="{{metier.idMetier}}"
+            [data]="metier"
+            (onUpdate)="update($event)"
+            (onDelete)="delete($event)">
+            <app-list-item-col>{{metier.nomMetier}}</app-list-item-col>
+        </app-list-item>
+      </div>
 </app-list>
-<ng-template #loading>
-    <div class="loader">
-        <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-</ng-template>
 
 <app-metier-form [metier]="actualMetier" (onConfirmation)="createOrUpdateOrDeleteMetier($event)" #metierForm></app-metier-form>
