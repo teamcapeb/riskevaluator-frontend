@@ -31,8 +31,9 @@ export class EntrepriseService {
     return this.http.post<IEntreprise>(`${this.baseUrl}`, entreprise);
   }
 
-  update(entreprise: IEntreprise) {
-    return this.http.put<IEntreprise>(`${this.baseUrl}`, entreprise);
+  update(id: number, entreprise: IEntreprise) {
+    console.log(entreprise)
+    return this.http.put<IEntreprise>(`${this.baseUrl}${id}`, entreprise);
   }
 
   get(noSiret: number): Observable<IEntreprise> {

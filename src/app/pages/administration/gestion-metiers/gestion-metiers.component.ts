@@ -1,9 +1,8 @@
-import Metier from '@/objects/Metier';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { MetierService } from '../../../services/serviceMetier/metier.service';
-import { takeUntil } from 'rxjs/operators';
-import IListEvent from '@/interfaces/IListEvent';
+import { IMetier } from "@/interfaces/IMetier";
+import Metier from "@/objects/Metier";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { MetierService } from "../../../services/serviceMetier/metier.service";
+import IListEvent from "@/interfaces/IListEvent";
 import { ModalService } from "@services/serviceModal/modal.service";
 
 @Component({
@@ -13,7 +12,7 @@ import { ModalService } from "@services/serviceModal/modal.service";
 })
 export class GestionMetiersComponent implements OnInit {
 
-  private _metiers: Observable<Metier[]>;
+  metiers: IMetier[];
 
   @ViewChild('metierForm') metierForm: any;
   @ViewChild('errorModal') errorModal: any;
@@ -25,8 +24,23 @@ export class GestionMetiersComponent implements OnInit {
             ) { }
 
   ngOnInit(): void {
-    this._metiers = this.metierService.getAll();
+    this.metierService.getAllMetiers().subscribe((res) => {
+      this.metiers = this.sortMetiers(res);
+    });
+  }
 
+  sortMetiers(metiers: IMetier[]): IMetier[] {
+    return metiers.sort(
+      (a, b) => {
+        if (a.nomMetier.toUpperCase() < b.nomMetier.toUpperCase()) {
+          return -1;
+        }
+        if (a.nomMetier.toUpperCase() > b.nomMetier.toUpperCase()) {
+          return 1;
+        }
+        return 0;
+      }
+    );
   }
 
   add(): void{
@@ -45,7 +59,7 @@ export class GestionMetiersComponent implements OnInit {
   }
 
   public async createOrUpdateOrDeleteMetier(event: IListEvent){
-    this._metiers = null;
+    this.metiers = null;
     let res = null;
     try{
       if(event.action === 'update'){
@@ -60,11 +74,8 @@ export class GestionMetiersComponent implements OnInit {
         this.modalService.error('Ce metier existe déjà !');
       }
     }
-    this._metiers = this.metierService.getAll();
+    this.metierService.getAllMetiers().subscribe((res) => {
+      this.metiers = this.sortMetiers(res);
+    });
   }
-
-  get metiers(): Observable<Metier[]> {
-    return this._metiers;
-  }
-
 }

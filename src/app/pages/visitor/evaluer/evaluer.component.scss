@@ -3,6 +3,17 @@ body{
   background:#FAFAFA;
 }
 
+form {
+  justify-content: center;
+  // background: linear-gradient(to top, white, transparent);
+  margin-right: 62px;
+  // margin-bottom: 40px;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  z-index: 9999;
+}
+
 button {
   border: none;
   border-radius: 20px;

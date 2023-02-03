@@ -1,3 +1,4 @@
+import { MetierService } from '@services/serviceMetier/metier.service';
 import { EntrepriseService } from '@services/serviceEntreprise/entreprise.service';
 import { Component, Input, OnInit } from "@angular/core";
 import {
@@ -37,7 +38,8 @@ export class EvaluationFooterComponent implements OnInit {
               private location: Location,
               private tokenStorageService: TokenStorageService,
               private evalTokenStorageService : EvalTokenStorageService,
-              private entrepriseService: EntrepriseService) {
+              private entrepriseService: EntrepriseService,
+              private metierService: MetierService) {
 
 
     // Observers subscriptions ;
@@ -88,6 +90,7 @@ export class EvaluationFooterComponent implements OnInit {
   }
 
   SaveEvalution(aEvaluation : IEvaluation) {
+    aEvaluation.entreprise.metiers = this.metierService.metiers;
     const wEvaluation: IEvaluation = {
       idEvaluation :aEvaluation.idEvaluation,
       scoreGeneraleEvaluation : aEvaluation.scoreGeneraleEvaluation,
@@ -101,7 +104,6 @@ export class EvaluationFooterComponent implements OnInit {
     }
 
     this.entrepriseService.exists(aEvaluation.entreprise.noSiret.toString()).subscribe((res)=>{
-      console.log(aEvaluation.entreprise)
       if(!res){
         this.entrepriseService.create(aEvaluation.entreprise).subscribe(()=>{
           this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
@@ -115,6 +117,7 @@ export class EvaluationFooterComponent implements OnInit {
       }else{
         this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
           if(evaluation) {
+            this.entrepriseService.update(aEvaluation.entreprise.noSiret, aEvaluation.entreprise).subscribe();
             this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
             this.router.navigate(['historiques',evaluation?.idEvaluation]);
           }
