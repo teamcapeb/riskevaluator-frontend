@@ -18,6 +18,9 @@ import IPreconisationCategorieQuestion from '@/interfaces/IPreconisationCategori
 })
 export class QuestionService {
 
+  numberChecked = 0;
+  numberOfQuestions = 0;
+
   private baseUrl: string = environment.apiUrl + '/questions/';
 
   constructor(private http: HttpClient) {}

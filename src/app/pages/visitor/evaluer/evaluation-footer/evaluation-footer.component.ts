@@ -1,3 +1,4 @@
+import { QuestionService } from '@services/serviceQuestion/question.service';
 import { MetierService } from '@services/serviceMetier/metier.service';
 import { EntrepriseService } from '@services/serviceEntreprise/entreprise.service';
 import { Component, Input, OnInit } from "@angular/core";
@@ -39,7 +40,8 @@ export class EvaluationFooterComponent implements OnInit {
               private tokenStorageService: TokenStorageService,
               private evalTokenStorageService : EvalTokenStorageService,
               private entrepriseService: EntrepriseService,
-              private metierService: MetierService) {
+              private metierService: MetierService,
+              public questionService: QuestionService) {
 
 
     // Observers subscriptions ;
@@ -49,9 +51,7 @@ export class EvaluationFooterComponent implements OnInit {
         this.location.back();
       }
     });
-
   }
-
 
   ngOnInit(): void {
   }
@@ -59,6 +59,12 @@ export class EvaluationFooterComponent implements OnInit {
   previousButtonClick() {
     this.scrollToTop();
     this.evaluationService.onNextCategorieNumber(CategorieNumberAction.DECREASE)
+  }
+
+  nextButtonClick() {
+    this.scrollToTop();
+    this.questionService.numberChecked = 0;
+    this.evaluationService.onNextCategorieNumber(CategorieNumberAction.INCREASE);
   }
 
   disableNextButton() {
@@ -74,13 +80,8 @@ export class EvaluationFooterComponent implements OnInit {
      if(evaluation !== null) {
        this.SaveEvalution(evaluation);
      }
-
    }
 
-  nextButtonClick() {
-    this.scrollToTop();
-    this.evaluationService.onNextCategorieNumber(CategorieNumberAction.INCREASE);
-  }
   scrollToTop(){
     window.scrollTo({
       top: 0,
@@ -104,7 +105,6 @@ export class EvaluationFooterComponent implements OnInit {
     }
 
     this.entrepriseService.exists(aEvaluation.entreprise.noSiret.toString()).subscribe((res)=>{
-      console.log(aEvaluation.entreprise)
       if(!res){
         this.entrepriseService.create(aEvaluation.entreprise).subscribe(()=>{
           this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
@@ -127,6 +127,4 @@ export class EvaluationFooterComponent implements OnInit {
 
      })
   }
-
-
 }

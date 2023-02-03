@@ -56,7 +56,6 @@ export class EvaluationThematiqueComponent implements OnInit {
   }
 
   myFunction(idQuestionnaire : number) : void {
-    //console.log(this.state);
     this.router.navigate(['evaluer/welcome-evaluation', {idQuestionnaire, metierIds: this.listMetier.join(",") }]);
 
   }
