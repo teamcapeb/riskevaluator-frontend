@@ -14,8 +14,7 @@ import { EvaluationHelper } from "@services/_helpers/EvaluationHelper";
 })
 export class QuestionnaireService {
   private baseUrl: string = environment.apiUrl + '/questionnaires/';
-  constructor(private http: HttpClient,
-    private modalService: ModalService) {}
+  constructor(private http: HttpClient, private modalService: ModalService) {}
 
   getAll(): Observable<Questionnaire[]> {
     return this.http.get<IQuestionnaire[]>(`${this.baseUrl}`).pipe(map((iQuestionnaires: IQuestionnaire[]) => {
@@ -28,6 +27,10 @@ export class QuestionnaireService {
         return throwError(err);
       })
     );
+  }
+
+  getAllQuestionnaires(): Observable<IQuestionnaire[]> {
+    return this.http.get<IQuestionnaire[]>(`${this.baseUrl}`);
   }
 
   get(questionnaireId: number): Observable<Questionnaire> {
@@ -51,14 +54,11 @@ export class QuestionnaireService {
   }
 
   getCategoriesQuestions(questionnaireId: number, metiers : number[]) : Observable<ICategorieQuestion[]> {
-
     let joindMetiers:string = "?metierId=" + metiers.join("&metierId=");
-
     return this.http.get<ICategorieQuestion[]>(`${this.baseUrl}${questionnaireId}/questions${joindMetiers}`)
   }
 
   getQuestionnairesByMetiers(metiers : number[]) : Observable<IQuestionnaire[]> {
-
     let joindMetiers:string = EvaluationHelper.joinMetiers(metiers);
     return this.http.get<IQuestionnaire[]>(`${this.baseUrl}bymetierids${joindMetiers}`)
   }

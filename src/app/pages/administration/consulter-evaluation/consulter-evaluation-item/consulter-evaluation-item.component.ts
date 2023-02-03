@@ -1,6 +1,6 @@
+import { IEntreprise } from '@/interfaces/IEntreprise';
 import { Component, Input, OnInit } from "@angular/core";
 import { environment } from "../../../../../environments/environment";
-import IMetier from "@/interfaces/IMetier";
 import IEvaluation from "@/interfaces/IEvaluation";
 import { Router } from "@angular/router";
 
@@ -12,10 +12,12 @@ import { Router } from "@angular/router";
 export class ConsulterEvaluationItemComponent implements OnInit {
 
   @Input() evaluation$ : IEvaluation = null;
+  @Input() entreprise: IEntreprise;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    console.log(this.entreprise);
   }
 
   calculateColor = (id : number) => {
@@ -24,6 +26,9 @@ export class ConsulterEvaluationItemComponent implements OnInit {
   }
 
   onSelectCard() {
-    this.router.navigate(["historiques",this.evaluation$.idEvaluation]);
+    // this.router.navigate(["historiques", this.evaluation$.idEvaluation]);
+    this.router.navigate(["entreprise", this.entreprise.noSiret]);
   }
+
+
 }

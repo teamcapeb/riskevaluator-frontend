@@ -1,5 +1,5 @@
 import IQuestion from '@/interfaces/IQuestion';
-import IMetier from '../interfaces/IMetier';
+import {IMetier} from '../interfaces/IMetier';
 import Question from './Question';
 export default class Metier {
     public idMetier: number;

@@ -5,7 +5,7 @@ import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnai
 import { Observable, of, Subject } from "rxjs";
 import { catchError, map, startWith, takeUntil } from "rxjs/operators";
 import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
-import IMetier from "@/interfaces/IMetier";
+import {IMetier} from "@/interfaces/IMetier";
 import IQuestionnaire from "@/interfaces/IQuestionnaire";
 import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
 import IReponse from "@/interfaces/IReponse";

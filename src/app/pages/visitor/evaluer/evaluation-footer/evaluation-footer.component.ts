@@ -1,3 +1,5 @@
+import { MetierService } from '@services/serviceMetier/metier.service';
+import { EntrepriseService } from '@services/serviceEntreprise/entreprise.service';
 import { Component, Input, OnInit } from "@angular/core";
 import {
   CategorieNumberAction,
@@ -35,7 +37,9 @@ export class EvaluationFooterComponent implements OnInit {
               private router: Router,
               private location: Location,
               private tokenStorageService: TokenStorageService,
-              private evalTokenStorageService : EvalTokenStorageService) {
+              private evalTokenStorageService : EvalTokenStorageService,
+              private entrepriseService: EntrepriseService,
+              private metierService: MetierService) {
 
 
     // Observers subscriptions ;
@@ -86,23 +90,43 @@ export class EvaluationFooterComponent implements OnInit {
   }
 
   SaveEvalution(aEvaluation : IEvaluation) {
+    aEvaluation.entreprise.metiers = this.metierService.metiers;
     const wEvaluation: IEvaluation = {
-      idEvaluation : aEvaluation.idEvaluation,
+      idEvaluation :aEvaluation.idEvaluation,
       scoreGeneraleEvaluation : aEvaluation.scoreGeneraleEvaluation,
       entreprise : aEvaluation.entreprise,
-      scoreCategories : aEvaluation.scoreCategories?.map(scoreCategory => {
-        scoreCategory.categorieQuestion = { idCategorie : scoreCategory.categorieQuestion.idCategorie}
-        return scoreCategory;
-      })
+      scoreCategories : aEvaluation.scoreCategories,
+      date: new Date().toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      }).split('/').join('/')
     }
 
-    this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
-      if(evaluation) {
-        this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
-        this.router.navigate(['historiques',evaluation?.idEvaluation]);
+    this.entrepriseService.exists(aEvaluation.entreprise.noSiret.toString()).subscribe((res)=>{
+      console.log(aEvaluation.entreprise)
+      if(!res){
+        this.entrepriseService.create(aEvaluation.entreprise).subscribe(()=>{
+          this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
+            if(evaluation) {
+              this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
+              this.router.navigate(['historiques',evaluation?.idEvaluation]);
+            }
+            }
+          )
+        })
+      }else{
+        this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
+          if(evaluation) {
+            this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
+            this.router.navigate(['historiques',evaluation?.idEvaluation]);
+          }
+          }
+        )
       }
-      }
-    )
 
+     })
   }
+
+
 }

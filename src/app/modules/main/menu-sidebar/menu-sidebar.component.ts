@@ -46,11 +46,11 @@ export const MENU = [
         path: ['/evaluer'],
         icon: "fa-solid fa-list-check"
     },
-    {
-        name: 'Evaluation précédente',
-        path: ['/historiques'],
-        icon: "fa-solid fa-chart-pie"
-    },
+    // {
+    //     name: 'Evaluation précédente',
+    //     path: ['/historiques'],
+    //     icon: "fa-solid fa-chart-pie"
+    // },
     {
         name: 'Contact',
         path: ['/contact'],
@@ -79,5 +79,10 @@ export const ADMIN_MENU = [
     name: 'Consulter évaluation',
     path: ['/consulter-evaluation'],
     icon: "fa-solid fa-list"
+  },
+  {
+    name: 'Statistiques',
+    path: ['/statistiques'],
+    icon: "fa-solid fa-chart-line"
   }
 ];

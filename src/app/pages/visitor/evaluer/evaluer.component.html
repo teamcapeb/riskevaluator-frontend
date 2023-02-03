@@ -1,46 +1,29 @@
-
-<ng-container *ngIf="(metiers$ | async) as result" [ngSwitch]="result.dataState">
-
-  <ng-container *ngSwitchCase="DataStateEnum.LOADED">
-
-
-    <nav  class="navbar navbar-light bg-light">
-      <div *ngIf="alertMetier === true"
-           class="alert alert-danger"
-           role="alert">
-        Vous devez choisir au moins un metier
-      </div>
-
-      <div *ngIf = "onCountChecked(result.data) as nbChecked"
-        class="alert alert-success"
-        role="alert">
-        Vous avez choisi {{nbChecked}} métier{{nbChecked==1?"":"s"}}
-      </div>
-
-      <form class="form-inline ms-auto">
-        <button class="btn btn-outline-success btn-lg " (click)="onValidateMetiers(result.data)"> Valider</button>
-
-      </form>
-    </nav>
+<ng-container *ngIf="metiers$">
+  <ng-container>
     <div class="d-flex justify-content-center">
-      <h1 class="pt-2">Veuillez sélectionner un ou plusieurs métiers</h1>
-    </div>
-    <div class="container">
-      <div class="row mb-5">
-        <app-evaluation-metier-item class="col-md-4 mb-5" *ngFor="let metier of result.data"
-                                    [metier$]="metier"></app-evaluation-metier-item>
-      </div>
+      <h1 style="margin-top: 4px; font-weight: bolder;" class="pt-2">Veuillez sélectionner un ou plusieurs métiers</h1>
     </div>
 
+    <div style="display: flex; flex-wrap: wrap; flex-direction: row;
+                justify-content: space-between; margin: 0px 32px;">
+      <app-evaluation-metier-item style="display: flex; height: 220px; width: calc(25%); justify-content: center;"
+      *ngFor="let metier of metiers$" [metier$]="metier"></app-evaluation-metier-item>
+    </div>
+
+    <form class="form-inline ms-auto" style="justify-content: center;">
+      <button (click)="onValidateMetiers(metiers$)">
+        VALIDER
+      </button>
+    </form>
   </ng-container>
 
-  <ng-container *ngSwitchCase="DataStateEnum.LOADING">
+  <!-- <ng-container *ngSwitchCase="DataStateEnum.LOADING">
     <div class="loader">
       <div class="spinner-border spinner-border-lg text-secondary" style="width: 3rem; height: 3rem;" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
-  </ng-container>
+  </ng-container> -->
 </ng-container>
 
 

@@ -68,6 +68,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { CategorieQuestionFormComponent } from './pages/administration/gestion-categorie-questions/categorie-question-form/categorie-question-form.component';
 
@@ -102,6 +103,8 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { HomePageComponent } from './pages/visitor/home-page/home-page.component';
 import { ConsulterEvaluationComponent } from './pages/administration/consulter-evaluation/consulter-evaluation.component';
 import { ConsulterEvaluationItemComponent } from './pages/administration/consulter-evaluation/consulter-evaluation-item/consulter-evaluation-item.component';
+import { DetailsEntrepriseComponent } from './pages/administration/details-entreprise/details-entreprise.component';
+import { StatisticsComponent } from './pages/administration/statistics/statistics.component';
 
 registerLocaleData(localeEn, 'en-EN');
 
@@ -169,7 +172,9 @@ registerLocaleData(localeEn, 'en-EN');
         ResultatListComponent,
         HomePageComponent,
         ConsulterEvaluationComponent,
-        ConsulterEvaluationItemComponent
+        ConsulterEvaluationItemComponent,
+        DetailsEntrepriseComponent,
+        StatisticsComponent
     ],
   imports: [
     BrowserModule,
@@ -205,6 +210,7 @@ registerLocaleData(localeEn, 'en-EN');
     MatMenuModule,
     MatDatepickerModule,
     MatSnackBarModule,
+    MatAutocompleteModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       radius: 100,

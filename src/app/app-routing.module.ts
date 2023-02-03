@@ -1,3 +1,4 @@
+import { DetailsEntrepriseComponent } from './pages/administration/details-entreprise/details-entreprise.component';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {MainComponent} from '@modules/main/main.component';
@@ -36,6 +37,7 @@ import {
 import { ResultatListComponent } from '@pages/visitor/evaluer/evaluation-resultat/resultat-list/resultat-list.component';
 import { HomePageComponent } from "@pages/visitor/home-page/home-page.component";
 import { ConsulterEvaluationComponent } from '@pages/administration/consulter-evaluation/consulter-evaluation.component';
+import { StatisticsComponent } from '@pages/administration/statistics/statistics.component';
 
 
 
@@ -75,6 +77,11 @@ const administration: Routes = [
     path: 'consulter-evaluation',
     component: ConsulterEvaluationComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'statistiques',
+    component: StatisticsComponent,
+    canActivate: [AuthGuard]
   }
 
 ]
@@ -88,13 +95,17 @@ const visitors: Routes = [
     component: ContactComponent
   },
   {
+    path: 'entreprise/:noSiret',
+    component: DetailsEntrepriseComponent
+  },
+  {
     path: 'historiques/:id',
     component: EvaluationResultatComponent
   },
-  {
-    path: 'historiques',
-    component: EvaluationResultatComponent
-  },
+  // {
+  //   path: 'historiques',
+  //   component: EvaluationResultatComponent
+  // },
   {
     path: 'evaluer',
     children : [

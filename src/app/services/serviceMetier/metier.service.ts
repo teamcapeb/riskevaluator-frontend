@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import IMetier from '../../interfaces/IMetier';
+import {IMetier} from '../../interfaces/IMetier';
 import Metier from '../../objects/Metier';
 import IQuestionnaire from "@/interfaces/IQuestionnaire";
 
@@ -11,6 +11,8 @@ import IQuestionnaire from "@/interfaces/IQuestionnaire";
   providedIn: 'root'
 })
 export class MetierService {
+
+  metiers : IMetier[];
 
   private baseUrl: string = environment.apiUrl + '/metiers/';
 

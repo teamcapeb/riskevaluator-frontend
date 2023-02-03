@@ -1,16 +1,51 @@
-
-<ng-container *ngIf="(evaluations$ | async) as result" [ngSwitch]="result.dataState">
-
-  <ng-container *ngSwitchCase="DataStateEnum.LOADED">
-
-    <div class="container">
-      <div class="row mb-5">
-        <app-consulter-evaluation-item class="col-md-6" *ngFor="let eval of result.data"
-                                    [evaluation$]="eval"></app-consulter-evaluation-item>
-      </div>
+<div class="container" *ngIf="entreprises$">
+  <div class="filters">
+    <div style="display: flex;">
+      <form class="filters-form">
+        <mat-form-field style="width: 260px; margin-right: 12px;" appearance="fill">
+          <mat-label>Entreprise</mat-label>
+          <input type="text" placeholder="Choisir une entreprise" aria-label="Entreprise" matInput
+                 [formControl]="entrepriseControl" [matAutocomplete]="entrepriseAuto"
+                 (ngModelChange)="filtreEntreprise($event)">
+          <mat-autocomplete #entrepriseAuto="matAutocomplete">
+            <mat-option *ngFor="let entreprise of filteredEntreprises" [value]="entreprise.nomEntreprise">
+              {{entreprise?.nomEntreprise}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field style="width: 300px; margin-right: 12px;" appearance="fill">
+          <mat-label>Questionnaires</mat-label>
+          <mat-select [formControl]="questionnaireControl" multiple>
+            <mat-select-trigger>
+              {{questionnaireControl.value?.[0] || ''}}
+              <span *ngIf="(questionnaireControl.value?.length || 0) > 1" class="example-additional-selection">
+                (+{{(questionnaireControl.value?.length || 0) - 1}} {{questionnaireControl.value?.length === 2 ? 'autre' : 'autres'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let quest of filteredQuestionnaires" [value]="quest">{{quest?.thematique}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="width: 220px;" appearance="fill">
+          <mat-label>Métiers</mat-label>
+          <mat-select [formControl]="metierControl" multiple>
+            <mat-select-trigger>
+              {{metierControl.value?.[0] || ''}}
+              <span *ngIf="(metierControl.value?.length || 0) > 1" class="example-additional-selection">
+                (+{{(metierControl.value?.length || 0) - 1}} {{metierControl.value?.length === 2 ? 'autre' : 'autres'}})
+              </span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let metier of metiers$" [value]="metier">{{metier?.nomMetier}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <!-- <button>Recherche</button> -->
     </div>
-
-  </ng-container>
-</ng-container>
+  </div>
+  <div style="margin-left: 12px;">{{ filteredEntreprises.length }} résultats</div>
+  <div class="row mb-5" style="margin: 0px !important;">
+    <app-consulter-evaluation-item class="col-md-4" *ngFor="let etp of filteredEntreprises"
+                                [entreprise]="etp"></app-consulter-evaluation-item>
+  </div>
+</div>
 
 
