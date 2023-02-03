@@ -23,7 +23,15 @@ import of = Immutable.List.of;
 import { catchError, map, startWith } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { ModalService } from "@services/serviceModal/modal.service";
+import { EvaluationResultatSuppressionComponent } from "./evaluation-resultat-suppression/evaluation-resultat-suppression.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+export interface DialogData {
+  entreprise : IEntreprise,
+  thematique : string,
+  evaluationID: number
+}
 
 @Component({
   selector: 'app-evaluation-resultat',
@@ -68,7 +76,8 @@ export class EvaluationResultatComponent implements OnInit {
                private evaluationService : EvaluationService,
                private evaluationApiService : EvaluationApiService,
                private modalService:ModalService,
-               private actRoute: ActivatedRoute
+               private actRoute: ActivatedRoute,
+               public dialog: MatDialog
                ) {
     this.routeEvalId = +this.actRoute.snapshot.params['id'];
     this.evalIdLocalStorage = evalTokenStorageService.getEvaluationId()
@@ -265,10 +274,16 @@ export class EvaluationResultatComponent implements OnInit {
     );
   }
 
-  /**
-   * TODO : Méthode pour supprimer evaluation BDD
-   */
-  deleteResult(){
-    console.log("j'ai cliqué pour supprimer");
+  /** Affiche la pop-up de validation de la suppression */
+  deleteResult(): void {
+    this.dialog.open(EvaluationResultatSuppressionComponent, {
+      width: '500px',
+      height: '180px',
+      data: {
+        entreprise: this.entreprise$,
+        thematique: this.listScoreCategories$?.at(0)?.categorieQuestion?.questionnaire?.thematique,
+        evaluationID : this.evaluation$.idEvaluation
+      },
+    });
   }
 }

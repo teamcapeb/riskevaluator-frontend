@@ -1,6 +1,6 @@
 export interface IDetailsEvaluations {
   idEvaluation: number;
-  metier: string;
+  metiers: string;
   questionnaire: string;
   score: number;
   date: string;

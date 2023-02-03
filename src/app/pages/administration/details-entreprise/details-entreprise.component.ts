@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IEntreprise } from '@/interfaces/IEntreprise';
 import { EntrepriseService } from '@services/serviceEntreprise/entreprise.service';
 import { EvaluationApiService } from '@services/serviceEvaluation/evaluation-api.service';
+import { IMetier } from '@/interfaces/IMetier';
 
 @Component({
   selector: 'app-details-entreprise',
@@ -16,12 +17,11 @@ export class DetailsEntrepriseComponent implements OnInit {
 
   // décalaration des variables
 
-  dataSource: IDetailsEvaluations[] = [];
+  dataSource: IDetailsEvaluations[];
   displayedColumns: string[] = [];
   entreprise: IEntreprise;
   numSiret: number;
   defaultDateEvaluation = "01/01/2000";
-
 
   constructor(
     private router: Router,
@@ -88,7 +88,7 @@ export class DetailsEntrepriseComponent implements OnInit {
       evaluation.sort((a, b) => {
         return a.dateFormat.getTime() - b.dateFormat.getTime();
       });
-      this.dataSource=evaluation;
+      this.dataSource = evaluation;
     });
   }
 
@@ -98,7 +98,7 @@ export class DetailsEntrepriseComponent implements OnInit {
   createDetailsEvalution(evaluation: IEvaluation): IDetailsEvaluations {
     let detailsEvaluation : IDetailsEvaluations = {
       idEvaluation: null,
-      metier: '',
+      metiers: '',
       questionnaire: '',
       score: null,
       date: '',
@@ -108,10 +108,16 @@ export class DetailsEntrepriseComponent implements OnInit {
     detailsEvaluation.idEvaluation = evaluation.idEvaluation;
     detailsEvaluation.date = evaluation.date?evaluation.date:this.defaultDateEvaluation;
     detailsEvaluation.dateFormat = new Date (evaluation.date?evaluation.date:this.defaultDateEvaluation);
-    detailsEvaluation.metier = "To define";
+    detailsEvaluation.metiers = this.createListMetiersforDetailsMetiers(evaluation.metiers);
     detailsEvaluation.questionnaire = evaluation.scoreCategories.at(0).categorieQuestion?.questionnaire?.thematique;
     detailsEvaluation.score = evaluation.scoreGeneraleEvaluation;
     return detailsEvaluation;
+  }
+
+  createListMetiersforDetailsMetiers(listeMetiers: IMetier[]): string {
+    let listeMetiertmp = listeMetiers.map(metier => metier.nomMetier);
+    let chaineDeCaracteres = listeMetiertmp.length > 0 ? listeMetiertmp.join(', ') : 'Métiers non définis';
+    return chaineDeCaracteres;
   }
 
   /**

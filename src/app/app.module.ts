@@ -114,6 +114,7 @@ import {
 import { DetailsEntrepriseComponent } from "./pages/administration/details-entreprise/details-entreprise.component";
 import {MatTableModule} from "@angular/material/table";
 import { StatisticsComponent } from "./pages/administration/statistics/statistics.component";
+import { EvaluationResultatSuppressionComponent } from './pages/visitor/evaluer/evaluation-resultat/evaluation-resultat-suppression/evaluation-resultat-suppression.component';
 
 registerLocaleData(localeEn, "en-EN");
 
@@ -183,7 +184,8 @@ registerLocaleData(localeEn, "en-EN");
     ConsulterEvaluationComponent,
     ConsulterEvaluationItemComponent,
     DetailsEntrepriseComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    EvaluationResultatSuppressionComponent
   ],
   imports: [
     BrowserModule,
