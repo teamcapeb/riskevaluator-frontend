@@ -1,0 +1,38 @@
+.grey {
+  background: rgb(221, 221, 221);
+}
+
+table, td, th {
+  border: 1px solid;
+  text-align: center;
+}
+
+table {
+  width: 90%;
+  margin: 0 auto;
+}
+
+th.mat-header-cell {
+  text-align: center;
+  color: black;
+  font-size:1.5em;
+}
+
+h1 {
+  margin-top: 4px;
+  clear: left;
+}
+
+.margin-5 {
+  margin-left : 5%;
+}
+
+button:hover {
+  background-color: rgb(106, 102, 102);
+}
+
+.title{
+  color : rgb(72, 72, 245);
+  font-size: 2em;
+  font-weight: bolder;
+}

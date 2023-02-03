@@ -1,5 +1,6 @@
 import ICompte from "./ICompte";
 import { IEntreprise } from "./IEntreprise";
+import { IMetier } from "./IMetier";
 import IScoreCategory from "./IScoreCategory";
 
 export default interface IEvaluation{
@@ -9,5 +10,6 @@ export default interface IEvaluation{
     scoreGeneraleEvaluation? : number
     scoreCategories?: IScoreCategory[],
     entreprise : IEntreprise,
-    date?: string
+    date?: string,
+    metiers?: IMetier[]
 }

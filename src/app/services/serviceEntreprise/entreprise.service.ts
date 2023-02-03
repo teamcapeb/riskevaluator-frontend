@@ -35,4 +35,8 @@ export class EntrepriseService {
     console.log(entreprise)
     return this.http.put<IEntreprise>(`${this.baseUrl}${id}`, entreprise);
   }
+
+  get(noSiret: number): Observable<IEntreprise> {
+    return this.http.get<IEntreprise>(`${this.baseUrl}${noSiret}`);
+  }
  }

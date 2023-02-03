@@ -106,13 +106,15 @@ import { EvaluationMetierItemComponent } from "./pages/visitor/evaluer/evaluatio
 import { MatCardModule } from "@angular/material/card";
 import { ResultatListComponent } from "./pages/visitor/evaluer/evaluation-resultat/resultat-list/resultat-list.component";
 import { MatTabsModule } from "@angular/material/tabs";
-import { DetailsEntrepriseComponent } from "./pages/administration/details-entreprise/details-entreprise.component";
-import { StatisticsComponent } from "./pages/administration/statistics/statistics.component";
+import { HomePageComponent } from "@pages/visitor/home-page/home-page.component";
+import { ConsulterEvaluationComponent } from "@pages/administration/consulter-evaluation/consulter-evaluation.component";
 import {
   ConsulterEvaluationItemComponent
 } from "@pages/administration/consulter-evaluation/consulter-evaluation-item/consulter-evaluation-item.component";
-import { ConsulterEvaluationComponent } from "@pages/administration/consulter-evaluation/consulter-evaluation.component";
-import { HomePageComponent } from "@pages/visitor/home-page/home-page.component";
+import { DetailsEntrepriseComponent } from "./pages/administration/details-entreprise/details-entreprise.component";
+import {MatTableModule} from "@angular/material/table";
+import { StatisticsComponent } from "./pages/administration/statistics/statistics.component";
+import { EvaluationResultatSuppressionComponent } from './pages/visitor/evaluer/evaluation-resultat/evaluation-resultat-suppression/evaluation-resultat-suppression.component';
 
 registerLocaleData(localeEn, "en-EN");
 
@@ -182,7 +184,8 @@ registerLocaleData(localeEn, "en-EN");
     ConsulterEvaluationComponent,
     ConsulterEvaluationItemComponent,
     DetailsEntrepriseComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    EvaluationResultatSuppressionComponent
   ],
   imports: [
     BrowserModule,
@@ -239,7 +242,8 @@ registerLocaleData(localeEn, "en-EN");
     NgProgressHttpModule,
     NgChartsModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTableModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

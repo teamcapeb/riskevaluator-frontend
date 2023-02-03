@@ -26,7 +26,7 @@ export class EvaluationApiService {
     return this.http.get<IEvaluation[]>(`${API_URL}/`);
   }
 
-   create(reponse: IEvaluation): Observable<IEvaluation>{
+  create(reponse: IEvaluation): Observable<IEvaluation>{
     return this.http.post<IEvaluation>(`${API_URL}/`, reponse);
   }
 
@@ -34,7 +34,7 @@ export class EvaluationApiService {
     return this.http.put<IEvaluation>(`${API_URL}/`, evaluation);
   }
 
-  delete(evaluationId: string): Observable<any> {
+  delete(evaluationId: number): Observable<any> {
     return this.http.delete(`${API_URL}/${evaluationId}`);
   }
 }
