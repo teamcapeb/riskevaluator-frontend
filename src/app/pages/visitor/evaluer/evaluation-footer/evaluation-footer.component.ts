@@ -104,7 +104,6 @@ export class EvaluationFooterComponent implements OnInit {
     }
 
     this.entrepriseService.exists(aEvaluation.entreprise.noSiret.toString()).subscribe((res)=>{
-      console.log(aEvaluation.entreprise)
       if(!res){
         this.entrepriseService.create(aEvaluation.entreprise).subscribe(()=>{
           this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
@@ -118,6 +117,7 @@ export class EvaluationFooterComponent implements OnInit {
       }else{
         this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
           if(evaluation) {
+            this.entrepriseService.update(aEvaluation.entreprise.noSiret, aEvaluation.entreprise).subscribe();
             this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
             this.router.navigate(['historiques',evaluation?.idEvaluation]);
           }
