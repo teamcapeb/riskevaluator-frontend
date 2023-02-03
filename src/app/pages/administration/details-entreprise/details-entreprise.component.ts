@@ -1,12 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IDetailsEvaluations } from '@/interfaces/IDetailsEvaluations';
-import { DataSource } from '@angular/cdk/table';
 import IEvaluation from '@/interfaces/IEvaluation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IEntreprise } from '@/interfaces/IEntreprise';
 import { EntrepriseService } from '@services/serviceEntreprise/entreprise.service';
 import { EvaluationApiService } from '@services/serviceEvaluation/evaluation-api.service';
-import { concatMap, forkJoin, from, Observable, switchMap, toArray } from 'rxjs';
 
 @Component({
   selector: 'app-details-entreprise',
@@ -16,18 +14,14 @@ import { concatMap, forkJoin, from, Observable, switchMap, toArray } from 'rxjs'
 export class DetailsEntrepriseComponent implements OnInit {
   @Input() evaluation: IEvaluation;
 
+  // décalaration des variables
+
   dataSource: IDetailsEvaluations[] = [];
   displayedColumns: string[] = [];
   entreprise: IEntreprise;
   numSiret: number;
-  allEvaluation: IDetailsEvaluations[] = [];
-  detailsEvaluation: IDetailsEvaluations = {
-    idEvaluation: null,
-    metier: '',
-    questionnaire: '',
-    score: null,
-    date: '',
-  };
+  defaultDateEvaluation = "01/01/2000";
+
 
   constructor(
     private router: Router,
@@ -44,13 +38,13 @@ export class DetailsEntrepriseComponent implements OnInit {
       'date',
       'action',
     ];
-    this.getEntreprise();
+    this.getData();
   }
 
   /**
-   * Méthode pour récuperer l'entreprise dont on consulte les détails
+   * Méthode pour récupérer les données nécessaires à l'affichage
    */
-  getEntreprise() {
+  getData() {
     this.getNoSiret();
     this.entrepriseService.get(this.numSiret).subscribe((res) => {
       this.entreprise = res;
@@ -59,7 +53,9 @@ export class DetailsEntrepriseComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Méthode pour récupérer le numéro de siret de l'entreprise
+   */
   getNoSiret() {
     let noSiretTemp = this.route.snapshot.paramMap.get('noSiret');
     this.numSiret = parseInt(noSiretTemp);
@@ -80,26 +76,42 @@ export class DetailsEntrepriseComponent implements OnInit {
     let listIdEvaluations = listEvaluations.map(
       (evaluation) => evaluation.idEvaluation
     );
-    const longueur = listIdEvaluations.length;
-    for (let i = 0; i < longueur; i++) {
-      this.evaluationService.get(listIdEvaluations[i]).subscribe((res) => {
-        this.allEvaluation.push(this.createDetailsEvalution(res));
-        this.dataSource = this.allEvaluation;
+    let evaluation : IDetailsEvaluations[] = [];
+    this.evaluationService.getAll().subscribe((res) => {
+      let listEvaluationstemp = res;
+      let filteredlistEvaluationstemp = listEvaluationstemp.filter(
+        (evaluation) => listIdEvaluations.includes(evaluation.idEvaluation)
+      );
+      filteredlistEvaluationstemp.forEach(element => {
+        evaluation.push(this.createDetailsEvalution(element));
       });
-    }
+      evaluation.sort((a, b) => {
+        return a.dateFormat.getTime() - b.dateFormat.getTime();
+      });
+      this.dataSource=evaluation;
+    });
   }
-
 
   /**
    * Création des détails évaluations dans le format du type détails évaluations
    */
   createDetailsEvalution(evaluation: IEvaluation): IDetailsEvaluations {
-    this.detailsEvaluation.idEvaluation = evaluation.idEvaluation;
-    this.detailsEvaluation.date = '01/01/01';
-    this.detailsEvaluation.metier = 'to define';
-    this.detailsEvaluation.questionnaire = evaluation.scoreCategories.at(0).categorieQuestion?.questionnaire?.thematique;
-    this.detailsEvaluation.score = evaluation.scoreGeneraleEvaluation;
-    return this.detailsEvaluation;
+    let detailsEvaluation : IDetailsEvaluations = {
+      idEvaluation: null,
+      metier: '',
+      questionnaire: '',
+      score: null,
+      date: '',
+      dateFormat: null
+    };
+
+    detailsEvaluation.idEvaluation = evaluation.idEvaluation;
+    detailsEvaluation.date = evaluation.date?evaluation.date:this.defaultDateEvaluation;
+    detailsEvaluation.dateFormat = new Date (evaluation.date?evaluation.date:this.defaultDateEvaluation);
+    detailsEvaluation.metier = "To define";
+    detailsEvaluation.questionnaire = evaluation.scoreCategories.at(0).categorieQuestion?.questionnaire?.thematique;
+    detailsEvaluation.score = evaluation.scoreGeneraleEvaluation;
+    return detailsEvaluation;
   }
 
   /**

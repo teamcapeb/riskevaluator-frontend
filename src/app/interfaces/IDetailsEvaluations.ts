@@ -4,4 +4,5 @@ export interface IDetailsEvaluations {
   questionnaire: string;
   score: number;
   date: string;
+  dateFormat: Date;
 }

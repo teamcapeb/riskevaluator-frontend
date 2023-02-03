@@ -3,9 +3,9 @@
 
   <div class="row" style="height:80px">
     <div class="col text ">
-      Entreprise: {{this.entreprise$.nomEntreprise}} <br/>
-      Numéro de SIRET: {{this.entreprise$.noSiret}} <br/>
-      Date de l'évaluation: {{this.dateEvaluation}} <br/>
+      Entreprise: {{this.entreprise$?.nomEntreprise}} <br/>
+      Numéro de SIRET: {{this.entreprise$?.noSiret}} <br/>
+      Date de l'évaluation: {{this.evaluation$?.date?this.evaluation$?.date : this.defaultDate}} <br/>
     </div>
     <div class="col col-lg-2" (click)="generatePDF()">
       <img class="logo-navbar mx-auto d-block" style="float: right" alt="questionnaire" src="../../../../../assets/img/pdf-export.png">

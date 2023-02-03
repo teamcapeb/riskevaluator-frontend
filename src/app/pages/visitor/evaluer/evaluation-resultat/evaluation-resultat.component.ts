@@ -43,8 +43,6 @@ export class EvaluationResultatComponent implements OnInit {
 
   evaluation$ : IEvaluation = null;
   entreprise$ : IEntreprise =null;
-  // MOCK date évaluation, à modifier une fois recuperer BDD
-  dateEvaluation : String = "01/01/2022";
 
   precoGlobale$ : IPreconisationGlobale = { idPreconisationG: 0, viewIfPourcentageScoreLessThan: 0, contenu: ""};
   questionnaire:IQuestionnaire;
@@ -62,6 +60,9 @@ export class EvaluationResultatComponent implements OnInit {
     message: "Merci d'aller sur la rubrique évaluer, pour effectuer une évaluation",
     title: "Aucune évaluation n'est trouvée", }
     DataStateEnum = DataStateEnum;
+
+  // MOCK  de la date d'évaluation dans le cas des évalautions précedentes sans date
+  defaultDate = "01/01/2000";
 
   constructor( private evalTokenStorageService : EvalTokenStorageService,
                private evaluationService : EvaluationService,
