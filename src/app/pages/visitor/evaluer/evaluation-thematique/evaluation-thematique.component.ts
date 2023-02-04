@@ -67,11 +67,6 @@ export class EvaluationThematiqueComponent implements OnInit {
     const total = questionnaire?.categorieQuestions.reduce(reducer,0);
     return total;
   }
-
-  calculateColor = (id : number) => {
-    let colors: string[] = environment.evaluerIHM.gradientColors;
-    return colors[id%colors.length];
-  }
   public back(){
     this.router.navigate(['/evaluer']);
 

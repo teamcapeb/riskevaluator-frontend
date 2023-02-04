@@ -16,7 +16,7 @@ export class EntrepriseService {
   constructor(private http: HttpClient) {}
 
   getById(siret: number) {
-    return this.http.get<IEntreprise[]>(`${this.baseUrl}${siret}`)
+    return this.http.get<IEntreprise>(`${this.baseUrl}${siret}`)
   }
 
   exists(siret: string) {
@@ -31,7 +31,7 @@ export class EntrepriseService {
     return this.http.post<IEntreprise>(`${this.baseUrl}`, entreprise);
   }
 
-  update(entreprise: IEntreprise) {
-    return this.http.put<IEntreprise>(`${this.baseUrl}`, entreprise);
+  update(id: number, entreprise: IEntreprise) {
+    return this.http.put<IEntreprise>(`${this.baseUrl}${id}`, entreprise);
   }
  }

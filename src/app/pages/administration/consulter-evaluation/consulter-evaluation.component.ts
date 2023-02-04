@@ -30,10 +30,12 @@ export class ConsulterEvaluationComponent implements OnInit {
   filteredEntreprises: IEntreprise[];
   entrepriseControl = new FormControl('');
   metiers$ : IMetier[];
-  filteredMetiers: string[];
+  filteredMetiers: IMetier[];
   metierControl = new FormControl('');
   filteredQuestionnaires: IQuestionnaire[];
   questionnaireControl = new FormControl('');
+
+  selectedThematiques: string[];
 
   constructor(private evaluationService : EvaluationApiService,
               private entrepriseService: EntrepriseService,
@@ -42,18 +44,36 @@ export class ConsulterEvaluationComponent implements OnInit {
               private modalService: ModalService) {
   }
 
+
+  thematiques: any[][] = [];
+
+
   ngOnInit(): void {
     // this.onGetAllEvaluation();
+
     this.entrepriseService.getAll().subscribe((res) => {
       this.entreprises$ = this.sortEntreprises(res);
       this.filteredEntreprises = this.sortEntreprises(res);
+      this.entreprises$.forEach((res,index)=>{
+        this.thematiques[index] = [];
+        res.evaluations.forEach(evaluation=>{
+          this.evaluationService.get(evaluation.idEvaluation).subscribe(res => {
+            if(!this.includeThematique(this.thematiques[index],res.scoreCategories[0].categorieQuestion.questionnaire.thematique))
+              this.thematiques[index].push(res.scoreCategories[0].categorieQuestion.questionnaire.thematique);
+            })
+        })
+      })
+
+
     });
     this.metierService.getAllMetiers().subscribe((res) => {
       this.metiers$ = res;
+      this.filteredMetiers = this.sortMetiers(res);
     });
     this.questionnaireService.getAllQuestionnaires().subscribe((res) => {
       this.filteredQuestionnaires = res;
     });
+    // this.questionnaireControl.value = this.filteredQuestionnaires
   }
 
   sortEntreprises(entreprises: IEntreprise[]) {
@@ -63,6 +83,24 @@ export class ConsulterEvaluationComponent implements OnInit {
           return -1;
         }
         if (a.nomEntreprise.toUpperCase() > b.nomEntreprise.toUpperCase()) {
+          return 1;
+        }
+        return 0;
+      }
+    );
+  }
+
+  setThematique(event:IQuestionnaire){
+    console.log(event.thematique)
+  }
+
+  sortMetiers(metiers: IMetier[]) {
+    return metiers.sort(
+      (a, b) => {
+        if (a.nomMetier.toUpperCase() < b.nomMetier.toUpperCase()) {
+          return -1;
+        }
+        if (a.nomMetier.toUpperCase() > b.nomMetier.toUpperCase()) {
           return 1;
         }
         return 0;
@@ -86,6 +124,33 @@ export class ConsulterEvaluationComponent implements OnInit {
       }})
     }
   }
+
+  filtreThematique(event:any){
+    this.filteredEntreprises=[];
+    this.entreprises$.forEach((entre,index)=>{
+      this.thematiques[index].forEach((theme:any) => {
+        // console.log(this.includeThematique(this.questionnaireControl.value,theme))
+        if(this.includeThematique(this.questionnaireControl.value,theme)){
+          this.filteredEntreprises.push(entre);
+        }
+      });
+    })
+
+
+  }
+
+  includeThematique(themes:string[],theme:string){
+    var resultat = false;
+    themes.forEach(th=>{
+      if(theme==th){
+        resultat = true
+      }
+    })
+    return resultat;
+  }
+
+
+
   // onGetAllEvaluation() {
   //   this.evaluations$= this.evaluationService.getAll().pipe(
   //     map((data: IEvaluation[])=>{

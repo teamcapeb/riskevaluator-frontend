@@ -1,3 +1,4 @@
+import { EvaluationApiService } from '@services/serviceEvaluation/evaluation-api.service';
 import { IMetier } from '@/interfaces/IMetier';
 import { IEntreprise } from '@/interfaces/IEntreprise';
 import { Component, Input, OnInit } from "@angular/core";
@@ -15,17 +16,34 @@ export class ConsulterEvaluationItemComponent implements OnInit {
   @Input() evaluation$ : IEvaluation = null;
   @Input() entreprise: IEntreprise;
 
+  thematiques: string[] = [];
+
   joinedMetiers: string = ''
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private evaluationService: EvaluationApiService) { }
 
   ngOnInit(): void {
     this.joinedMetiers = this.joinMetiers(this.entreprise.metiers)
+    this.entreprise.evaluations.forEach(evalaluation=>{
+      this.evaluationService.get(evalaluation.idEvaluation).subscribe(res => {
+        if(!this.includeThematique(this.thematiques,res.scoreCategories[0].categorieQuestion.questionnaire.thematique))
+          this.thematiques.push(res.scoreCategories[0].categorieQuestion.questionnaire.thematique);
+      })
+    })
   }
 
-  calculateColor = (id : number) => {
-    let colors: string[] = environment.evaluerIHM.gradientColors;
-    return colors[id%colors.length];
+  includeThematique(themes:string[],theme:string){
+    var resultat = false;
+    themes.forEach(th=>{
+      if(theme==th){
+        resultat = true
+      }
+    })
+    return resultat;
+  }
+
+  getEvaluation(id: number) {
+
   }
 
   onSelectCard() {
