@@ -1,0 +1,9 @@
+<h1>Suppression évaluation</h1>
+<div>
+   Êtes-vous sûr de vouloir supprimer l'évaluation de l'entreprise {{data.entreprise?.nomEntreprise}}
+    sur la thématique <i>{{data.thematique}}</i> ?
+</div>
+<div style="text-align: right">
+  <button mat-raised-button class ="cancelButton" (click)="onCancel()">Non</button>
+  <button mat-raised-button class ="validateButton" (click)="onDelete()">Oui</button>
+</div>

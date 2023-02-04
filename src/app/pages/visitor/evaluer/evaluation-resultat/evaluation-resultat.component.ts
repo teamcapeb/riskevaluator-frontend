@@ -23,7 +23,15 @@ import of = Immutable.List.of;
 import { catchError, map, startWith } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { ModalService } from "@services/serviceModal/modal.service";
+import { EvaluationResultatSuppressionComponent } from "./evaluation-resultat-suppression/evaluation-resultat-suppression.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+export interface DialogData {
+  entreprise : IEntreprise,
+  thematique : string,
+  evaluationID: number
+}
 
 @Component({
   selector: 'app-evaluation-resultat',
@@ -61,11 +69,15 @@ export class EvaluationResultatComponent implements OnInit {
     title: "Aucune évaluation n'est trouvée", }
     DataStateEnum = DataStateEnum;
 
+  // MOCK  de la date d'évaluation dans le cas des évalautions précedentes sans date
+  defaultDate = "01/01/2000";
+
   constructor( private evalTokenStorageService : EvalTokenStorageService,
                private evaluationService : EvaluationService,
                private evaluationApiService : EvaluationApiService,
                private modalService:ModalService,
-               private actRoute: ActivatedRoute
+               private actRoute: ActivatedRoute,
+               public dialog: MatDialog
                ) {
     this.routeEvalId = +this.actRoute.snapshot.params['id'];
     this.evalIdLocalStorage = evalTokenStorageService.getEvaluationId()
@@ -262,4 +274,16 @@ export class EvaluationResultatComponent implements OnInit {
     );
   }
 
+  /** Affiche la pop-up de validation de la suppression */
+  deleteResult(): void {
+    this.dialog.open(EvaluationResultatSuppressionComponent, {
+      width: '500px',
+      height: '180px',
+      data: {
+        entreprise: this.entreprise$,
+        thematique: this.listScoreCategories$?.at(0)?.categorieQuestion?.questionnaire?.thematique,
+        evaluationID : this.evaluation$.idEvaluation
+      },
+    });
+  }
 }

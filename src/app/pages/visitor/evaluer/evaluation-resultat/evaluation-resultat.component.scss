@@ -30,8 +30,8 @@
 }
 
 img.logo-navbar {
-  width: 3rem !important;
-  height: 3rem !important;
+  width: 5rem !important;
+  height: 5rem !important;
 }
 
 img.logo-navbar-score {
@@ -48,7 +48,18 @@ span {
   display:block;
   cursor: pointer;
   height: 50px;
-  width: 50px;
+  //width: 50px;
 }
 
+.text {
+  margin-left: 5%;
+  margin-top: 0.5em;
+  font-weight: bolder;
+  font-size: initial;
+}
+
+.suppressButton {
+  background-color: rgb(239, 52, 52);
+  color: white;
+}
 
