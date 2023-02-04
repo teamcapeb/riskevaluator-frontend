@@ -2,7 +2,7 @@ import { QuestionnaireService } from '@services/serviceQuestionnaire/questionnai
 import { IEntreprise } from '@/interfaces/IEntreprise';
 import { IMetier } from '@/interfaces/IMetier';
 import IQuestionnaire from '@/interfaces/IQuestionnaire';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MetierService } from '@services/serviceMetier/metier.service';
 import { EntrepriseService } from '@services/serviceEntreprise/entreprise.service';
@@ -10,7 +10,8 @@ import { EntrepriseService } from '@services/serviceEntreprise/entreprise.servic
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.scss']
+  styleUrls: ['./statistics.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatisticsComponent implements OnInit {
   entrepriseControl = new FormControl('');
@@ -19,6 +20,8 @@ export class StatisticsComponent implements OnInit {
   filteredEntreprises : IEntreprise[];
   filteredMetiers : IMetier[];
   filteredQuestionnaires : IQuestionnaire[];
+
+  readonly value = [40, 30, 20, 10];
 
   constructor(private entrepriseService: EntrepriseService,
               private metierService: MetierService,

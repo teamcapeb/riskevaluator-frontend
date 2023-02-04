@@ -71,6 +71,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import {TuiPieChartModule} from '@taiga-ui/addon-charts';
 
 import {
   CategorieQuestionFormComponent
@@ -222,6 +223,7 @@ registerLocaleData(localeEn, "en-EN");
     MatDatepickerModule,
     MatSnackBarModule,
     MatAutocompleteModule,
+    TuiPieChartModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       radius: 100,
