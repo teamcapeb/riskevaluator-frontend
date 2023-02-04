@@ -12,20 +12,20 @@ import PreconisationGlobale from '@/objects/PreconisationGlobale';
 })
 export class PreconisationGlobaleService {
 
-  private baseUrl: string = environment.apiUrl + '/preconisationglobale/';
+  private baseUrl: string = environment.apiUrl + '/preconisationGlobales/';
 
   constructor(private http: HttpClient) {}
 
-  create(preconisation: PreconisationGlobale): Promise<PreconisationGlobale | string>{
-    return this.http.post<PreconisationGlobale>(`${this.baseUrl}`, preconisation.toJSON()).toPromise();
+  create(preconisation: PreconisationGlobale) {
+    return this.http.post<PreconisationGlobale>(`${this.baseUrl}`, preconisation.toJSON());
   }
 
-  update(preconisationGlobale: PreconisationGlobale): Promise<IPreconisationGlobale | string> {
-    return this.http.put<IPreconisationGlobale>(`${this.baseUrl}`, preconisationGlobale.toJSON()).toPromise();
+  update(preconisationGlobale: PreconisationGlobale) {
+    return this.http.put<IPreconisationGlobale>(`${this.baseUrl}${preconisationGlobale.idPreconisationG}`, preconisationGlobale.toJSON());
   }
 
-  delete(preconisationGlobale: IPreconisationGlobale): Promise<string> {
-    return this.http.delete<string>(`${this.baseUrl}${preconisationGlobale.idPreconisationG}`).toPromise();
+  delete(preconisationGlobale: IPreconisationGlobale) {
+    return this.http.delete<string>(`${this.baseUrl}${preconisationGlobale.idPreconisationG}`);
   }
   get(pourcentage : number) : Observable<IPreconisationGlobale> {
     return this.http.get<IPreconisationGlobale>(`${this.baseUrl}pourcentage/${pourcentage}`)

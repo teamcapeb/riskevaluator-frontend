@@ -57,11 +57,11 @@ export class GestionQuestionnaireComponent implements OnInit {
     let res = null;
     try{
       if(event.action === 'update'){
-        res =  await this.questionnaireService.update(event.data);
+        res =  await this.questionnaireService.update(event.data).subscribe();
       }else if (event.action === 'add'){
-        res = await this.questionnaireService.create(event.data);
+        res = await this.questionnaireService.create(event.data).subscribe();
       }else if(event.action === 'delete'){
-        res = await this.questionnaireService.delete(event.data);
+        res = await this.questionnaireService.delete(event.data).subscribe();
       }
     }catch(error){
       if( error.status === 409 ){

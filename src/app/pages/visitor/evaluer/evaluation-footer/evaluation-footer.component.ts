@@ -1,3 +1,4 @@
+import { QuestionService } from '@services/serviceQuestion/question.service';
 import { MetierService } from '@services/serviceMetier/metier.service';
 import { EntrepriseService } from '@services/serviceEntreprise/entreprise.service';
 import { Component, Input, OnInit } from "@angular/core";
@@ -16,6 +17,7 @@ import IEvaluation from "@/interfaces/IEvaluation";
 import { IEntreprise } from "@/interfaces/IEntreprise";
 import { EvalTokenStorageService } from "@services/serviceEvaluation/eval-token-storage.service";
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { IMetier } from '@/interfaces/IMetier';
 
 @Component({
   selector: 'app-evaluation-footer',
@@ -39,7 +41,8 @@ export class EvaluationFooterComponent implements OnInit {
               private tokenStorageService: TokenStorageService,
               private evalTokenStorageService : EvalTokenStorageService,
               private entrepriseService: EntrepriseService,
-              private metierService: MetierService) {
+              private metierService: MetierService,
+              public questionService: QuestionService) {
 
 
     // Observers subscriptions ;
@@ -49,9 +52,7 @@ export class EvaluationFooterComponent implements OnInit {
         this.location.back();
       }
     });
-
   }
-
 
   ngOnInit(): void {
   }
@@ -59,6 +60,12 @@ export class EvaluationFooterComponent implements OnInit {
   previousButtonClick() {
     this.scrollToTop();
     this.evaluationService.onNextCategorieNumber(CategorieNumberAction.DECREASE)
+  }
+
+  nextButtonClick() {
+    this.scrollToTop();
+    this.questionService.numberChecked = 0;
+    this.evaluationService.onNextCategorieNumber(CategorieNumberAction.INCREASE);
   }
 
   disableNextButton() {
@@ -74,13 +81,8 @@ export class EvaluationFooterComponent implements OnInit {
      if(evaluation !== null) {
        this.SaveEvalution(evaluation);
      }
-
    }
 
-  nextButtonClick() {
-    this.scrollToTop();
-    this.evaluationService.onNextCategorieNumber(CategorieNumberAction.INCREASE);
-  }
   scrollToTop(){
     window.scrollTo({
       top: 0,
@@ -90,9 +92,9 @@ export class EvaluationFooterComponent implements OnInit {
   }
 
   SaveEvalution(aEvaluation : IEvaluation) {
-    aEvaluation.entreprise.metiers = this.metierService.metiers;
     const wEvaluation: IEvaluation = {
       idEvaluation :aEvaluation.idEvaluation,
+      metiers:this.metierService.metiers,
       scoreGeneraleEvaluation : aEvaluation.scoreGeneraleEvaluation,
       entreprise : aEvaluation.entreprise,
       scoreCategories : aEvaluation.scoreCategories,
@@ -103,8 +105,9 @@ export class EvaluationFooterComponent implements OnInit {
       }).split('/').join('/')
     }
 
-    this.entrepriseService.exists(aEvaluation.entreprise.noSiret.toString()).subscribe((res)=>{
-      if(!res){
+    this.entrepriseService.getById(aEvaluation.entreprise.noSiret).subscribe((entreprise)=>{
+      if(!entreprise){
+        aEvaluation.entreprise.metiers = this.metierService.metiers;
         this.entrepriseService.create(aEvaluation.entreprise).subscribe(()=>{
           this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
             if(evaluation) {
@@ -115,18 +118,35 @@ export class EvaluationFooterComponent implements OnInit {
           )
         })
       }else{
-        this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
-          if(evaluation) {
-            this.entrepriseService.update(aEvaluation.entreprise.noSiret, aEvaluation.entreprise).subscribe();
-            this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
-            this.router.navigate(['historiques',evaluation?.idEvaluation]);
+        aEvaluation.entreprise.metiers = entreprise.metiers;
+        this.metierService.metiers.forEach((met)=>{
+          if(!this.includeMetier(entreprise.metiers,met)){
+            aEvaluation.entreprise.metiers.push(met)
           }
-          }
-        )
-      }
+        })
 
+        this.entrepriseService.update(aEvaluation.entreprise.noSiret,aEvaluation.entreprise).subscribe(()=>{
+          this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
+            if(evaluation) {
+              this.entrepriseService.update(aEvaluation.entreprise.noSiret, aEvaluation.entreprise).subscribe();
+              this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
+              this.router.navigate(['historiques',evaluation?.idEvaluation]);
+            }
+            }
+          )
+        })
+
+      }
      })
   }
 
-
+  includeMetier(metiers: IMetier[], metier: IMetier){
+    var resultat = false
+    metiers.forEach(met=>{
+      if(met.nomMetier == metier.nomMetier){
+        resultat = true
+      }
+    })
+    return resultat
+  }
 }
