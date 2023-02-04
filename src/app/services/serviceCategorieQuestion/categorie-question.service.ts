@@ -16,7 +16,7 @@ import IQuestion from '../../interfaces/IQuestion';
 })
 export class CategorieQuestionService {
 
-  private baseUrl: string = environment.apiUrl + '/categoriesQuestion/';
+  private baseUrl: string = environment.apiUrl + '/categorieQuestions/';
 
   constructor(private http: HttpClient) {}
 
@@ -29,13 +29,14 @@ export class CategorieQuestionService {
       return CategorieQuestion.toCategorieQuestion(receivedData);
     }));
   }
-  create(categorieQuestion: CategorieQuestion): Promise<ICategorieQuestion | string>{
-    return this.http.post<ICategorieQuestion>(`${this.baseUrl}`, categorieQuestion.toJSON()).toPromise();
+  create(categorieQuestion: CategorieQuestion) {
+    return this.http.post<ICategorieQuestion>(`${this.baseUrl}`, categorieQuestion.toJSON());
   }
-  update(categorieQuestion: CategorieQuestion): Promise<ICategorieQuestion | string> {
-    return this.http.put<ICategorieQuestion>(`${this.baseUrl}`, categorieQuestion.toJSON()).toPromise();
+  update(categorieQuestion: CategorieQuestion) {
+    console.log(`${this.baseUrl}${categorieQuestion.idCategorie}`);
+    return this.http.put<ICategorieQuestion>(`${this.baseUrl}${categorieQuestion.idCategorie}`, categorieQuestion.toJSON());
   }
-  delete(categorieQuestion: ICategorieQuestion): Promise<string> {
-    return this.http.delete<string>(`${this.baseUrl}${categorieQuestion.idCategorie}`).toPromise();
+  delete(categorieQuestion: ICategorieQuestion) {
+    return this.http.delete<string>(`${this.baseUrl}${categorieQuestion.idCategorie}`);
   }
 }

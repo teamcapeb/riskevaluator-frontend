@@ -98,11 +98,11 @@ export class GestionCategorieQuestionsComponent implements OnInit {
     let res = null;
     try{
       if(event.action === 'update'){
-        res = await this.categorieQuestionService.update(event.data);
+        res = await this.categorieQuestionService.update(event.data).subscribe();
       }else if (event.action === 'add'){
-        res = await this.categorieQuestionService.create(event.data);
+        res = await this.categorieQuestionService.create(event.data).subscribe();
       }else if(event.action === 'delete'){
-        res = await this.categorieQuestionService.delete(event.data);
+        res = await this.categorieQuestionService.delete(event.data).subscribe();
       }
     }catch(error){
       if( error.status === 409 ){
@@ -118,11 +118,11 @@ export class GestionCategorieQuestionsComponent implements OnInit {
     let res = null;
     try{
       if(event.action === 'update'){
-        res = await this.preconisationGlobaleService.update(event.data);
+        res = await this.preconisationGlobaleService.update(event.data).subscribe();
       }else if (event.action === 'add'){
-        res = await this.preconisationGlobaleService.create(event.data);
+        res = await this.preconisationGlobaleService.create(event.data).subscribe();
       }else if(event.action === 'delete'){
-        res = await this.preconisationGlobaleService.delete(event.data);
+        res = await this.preconisationGlobaleService.delete(event.data).subscribe();
       }
     }catch(error){
       if( error.status === 409 ){

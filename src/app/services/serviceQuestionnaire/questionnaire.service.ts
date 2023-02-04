@@ -39,18 +39,19 @@ export class QuestionnaireService {
     }));
   }
 
-  create(questionnaire: Questionnaire): Promise<IQuestionnaire | string>{
+  create(questionnaire: Questionnaire) {
     let liteQuestionnaire: IQuestionnaire = {idQuestionnaire : questionnaire.idQuestionnaire, thematique : questionnaire.thematique}
-    return this.http.post<IQuestionnaire>(`${this.baseUrl}`,liteQuestionnaire ).toPromise();
+    return this.http.post<IQuestionnaire>(`${this.baseUrl}`,liteQuestionnaire );
   }
 
-  update(questionnaire: Questionnaire): Promise<IQuestionnaire | string> {
+  update(questionnaire: Questionnaire) {
     let liteQuestionnaire: IQuestionnaire = {idQuestionnaire : questionnaire.idQuestionnaire, thematique : questionnaire.thematique}
-    return this.http.put<IQuestionnaire>(`${this.baseUrl}`, liteQuestionnaire).toPromise();
+    console.log(`${this.baseUrl}`,liteQuestionnaire);
+    return this.http.put<IQuestionnaire>(`${this.baseUrl}${questionnaire.idQuestionnaire}`, liteQuestionnaire);
   }
 
-  delete(questionnaire: Questionnaire): Promise<IQuestionnaire | string> {
-    return this.http.delete<IQuestionnaire>(`${this.baseUrl}${questionnaire.idQuestionnaire}`).toPromise();
+  delete(questionnaire: Questionnaire) {
+    return this.http.delete<IQuestionnaire>(`${this.baseUrl}${questionnaire.idQuestionnaire}`);
   }
 
   getCategoriesQuestions(questionnaireId: number, metiers : number[]) : Observable<ICategorieQuestion[]> {
