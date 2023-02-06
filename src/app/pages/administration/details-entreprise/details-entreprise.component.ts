@@ -86,7 +86,7 @@ export class DetailsEntrepriseComponent implements OnInit {
         evaluation.push(this.createDetailsEvalution(element));
       });
       evaluation.sort((a, b) => {
-        return a.dateFormat.getTime() - b.dateFormat.getTime();
+        return b.dateFormat.getTime() - a.dateFormat.getTime();
       });
       this.dataSource = evaluation;
     });

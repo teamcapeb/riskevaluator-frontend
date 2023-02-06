@@ -26,6 +26,8 @@ import { ModalService } from "@services/serviceModal/modal.service";
 import { EvaluationResultatSuppressionComponent } from "./evaluation-resultat-suppression/evaluation-resultat-suppression.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import {MatDialog} from '@angular/material/dialog';
+import { QuestionnaireService } from "@services/serviceQuestionnaire/questionnaire.service";
+import Questionnaire from "@/objects/Questionnaire";
 
 export interface DialogData {
   entreprise : IEntreprise,
@@ -73,15 +75,15 @@ export class EvaluationResultatComponent implements OnInit {
   defaultDate = "01/01/2000";
 
   constructor( private evalTokenStorageService : EvalTokenStorageService,
-               private evaluationService : EvaluationService,
                private evaluationApiService : EvaluationApiService,
                private modalService:ModalService,
                private actRoute: ActivatedRoute,
                public dialog: MatDialog,
-               public route: Router
+               private route: Router,
+               private questionnaireService: QuestionnaireService
                ) {
     this.routeEvalId = +this.actRoute.snapshot.params['id'];
-    this.evalIdLocalStorage = evalTokenStorageService.getEvaluationId()
+    this.evalIdLocalStorage = this.evalTokenStorageService.getEvaluationId()
     this.evalId =  this.routeEvalId? this.routeEvalId:this.evalIdLocalStorage;
 
 
@@ -111,7 +113,8 @@ export class EvaluationResultatComponent implements OnInit {
       const textReducer = (previousValue: string, currentValue: IPreconisationGlobale | IPreconisationCategorieQuestion) => previousValue.concat('\n \n',currentValue.contenu);
 
       // Take questionnaire from one the scoreCategories
-      this.questionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorieQuestion?.questionnaire;
+      this.questionnaireService.get(this.evaluation$?.scoreCategories?.at(0)?.categorieQuestion?.questionnaire.idQuestionnaire).subscribe(res =>{
+        this.questionnaire = res.toJSON();
 
       // Take entreprise from evaluation
       this.entreprise$=this.evaluation$?.entreprise;
@@ -131,7 +134,8 @@ export class EvaluationResultatComponent implements OnInit {
         cat.categorieQuestion.preconisationsCategorie = temp?.filter(item => item.viewIfPourcentageScoreLessThan > cat.nbPoints );
         return cat;
       })
-    }
+    });}
+
   }
 
   concatPreconisations(preconisation :any) : string {
@@ -193,7 +197,7 @@ export class EvaluationResultatComponent implements OnInit {
                 bold: true
               },
               { text: 'Siret: '+wEntreprise?.noSiret },
-              { text: 'Date de creation: '+wEntreprise?.anneeDeCreation },
+              { text: 'Date de création: '+wEntreprise?.anneeDeCreation },
             ],
             [
               {
