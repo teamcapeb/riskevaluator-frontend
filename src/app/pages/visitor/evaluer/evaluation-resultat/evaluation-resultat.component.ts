@@ -14,7 +14,7 @@ import {Alignment, Decoration, Margins} from "pdfmake/interfaces";
 import {IEntreprise} from "@/interfaces/IEntreprise";
 import {bounceInOnEnterAnimation} from "angular-animations";
 import {ChartConfiguration, ChartData, ChartType} from "chart.js";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { EvaluationService } from "@services/serviceEvaluation/evaluation.service";
 import { EvaluationApiService } from "@services/serviceEvaluation/evaluation-api.service";
 import { AppDataState, DataStateEnum } from "@/state/questionnaire.state";
@@ -25,7 +25,7 @@ import { Observable } from "rxjs";
 import { ModalService } from "@services/serviceModal/modal.service";
 import { EvaluationResultatSuppressionComponent } from "./evaluation-resultat-suppression/evaluation-resultat-suppression.component";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 export interface DialogData {
   entreprise : IEntreprise,
@@ -77,7 +77,8 @@ export class EvaluationResultatComponent implements OnInit {
                private evaluationApiService : EvaluationApiService,
                private modalService:ModalService,
                private actRoute: ActivatedRoute,
-               public dialog: MatDialog
+               public dialog: MatDialog,
+               public route: Router
                ) {
     this.routeEvalId = +this.actRoute.snapshot.params['id'];
     this.evalIdLocalStorage = evalTokenStorageService.getEvaluationId()
@@ -285,5 +286,9 @@ export class EvaluationResultatComponent implements OnInit {
         evaluationID : this.evaluation$.idEvaluation
       },
     });
+  }
+
+  back(){
+    this.route.navigate(["entreprise", this.entreprise$.noSiret]);
   }
 }
