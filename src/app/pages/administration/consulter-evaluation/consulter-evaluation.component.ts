@@ -77,7 +77,7 @@ export class ConsulterEvaluationComponent implements OnInit {
     // this.questionnaireControl.value = this.filteredQuestionnaires
   }
 
-  sortEntreprises(entreprises: IEntreprise[]) {
+  sortEntreprises(entreprises: IEntreprise[]): IEntreprise[] {
     return entreprises.sort(
       (a, b) => {
         if (a.nomEntreprise.toUpperCase() < b.nomEntreprise.toUpperCase()) {

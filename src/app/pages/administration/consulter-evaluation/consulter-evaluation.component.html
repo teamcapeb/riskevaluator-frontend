@@ -9,7 +9,7 @@
                  (ngModelChange)="filtreEntreprise($event)">
           <mat-autocomplete #entrepriseAuto="matAutocomplete">
             <mat-option *ngFor="let entreprise of filteredEntreprises" [value]="entreprise.nomEntreprise">
-              {{entreprise?.nomEntreprise}}
+              {{ entreprise?.nomEntreprise }}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>

@@ -3,52 +3,79 @@
 }
 
 .dashboard {
+  height: 100%;
   display: flex;
+  padding: 8px;
 }
 
-.dashboard-left {
-  padding: 16px;
-  // flex-grow: 1;
-  width: 50%;
+.dashboard-sidebar {
+  height: 100%;
+  padding: 8px;
+  min-height: 100%
 }
 
-.dashboard-right {
-  padding: 16px;
-  // flex-grow: 1;
-  width: 50%;
+.sidebar-card {
+  height: 78vh;
 }
 
-.dashboard-filters {
-  // display: flex;
+.dashboard-content {
+  padding: 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.entreprise-filtre {
-  // flex: 1;
-  // width: 30%;
+.numeric-card {
+  flex: 1;
+  text-align: center;
+  font-weight: bolder;
 }
 
-.questionnaire-filtre {
-  // flex: 1;
-  // width: 30%;
+.header-card {
+  display: flex;
+  gap: 48px;
 }
 
-.metier-filtre {
-  // flex: 1;
-  // width: 30%;
+.number {
+  font-size: large;
 }
 
-.title-card {
-  font-size: 24px;
-  color: #e33b1a;
-  padding: 22px;
+.graphs-card {
+  display: flex;
+  gap: 16px;
+}
+
+.graph-card {
+  flex: 1;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.graph-div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dashboard-header {
+  flex: 1;
+}
+
+.dashboard-graphs {
+  flex: 4;
+}
+
+.graphs {
+  height: 100%;
+
+  mat-card {
+    height: 100%;
+  }
 }
 
 .wrapper {
-  display: flex;
   align-items: center;
-}
-
-.score-card {
-  text-align: center;
-  font-size: 14px;
 }
