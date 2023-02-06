@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { QuestionService } from '@services/serviceQuestion/question.service';
+import { Component, Input, OnInit, SimpleChanges } from "@angular/core";
 import { IQuestionType } from "@/interfaces/IQuestionType";
 import IQuestion from "@/interfaces/IQuestion";
 import IReponse from "@/interfaces/IReponse";
@@ -13,16 +14,16 @@ export class EvaluationQuestionComponent implements OnInit {
 
   aide:string = "Here should be aide tip"
   readonly QuestionType=IQuestionType;
-  questionTypeEnum : IQuestionType
+  questionTypeEnum : IQuestionType;
+  isSelected : boolean = false;
 
   selectedReponse : IReponse = {isChecked : false}
 
-  constructor() {
+  constructor(private questionService : QuestionService) {
   }
 
   ngOnInit(): void {
     this.questionTypeEnum = this.question$?.typeQuestion as IQuestionType;
-
   }
 
   radioChange(event: any) {
@@ -32,7 +33,10 @@ export class EvaluationQuestionComponent implements OnInit {
       }else {
         item.isChecked = false;
       }
-    } )
+    })
+    if(this.isSelected == false){
+      this.questionService.numberChecked++;
+      this.isSelected = true;
+    }
   }
-
 }

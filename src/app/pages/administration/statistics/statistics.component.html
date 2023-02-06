@@ -5,16 +5,58 @@
         <b>Dashboard RiskEvaluator</b>
       </mat-card>
     </div>
-    <div class="dashboard-left-middle">
-
+    <div class="dashboard-left-middle" style="display: flex; margin-top: 16px;
+      gap: 16px;">
+      <div style="flex: 1;">
+        <mat-card class="score-card" style="margin-bottom: 16px;">
+          <b>Nombre d'entreprises ayant répondu</b>
+        </mat-card>
+        <mat-card class="score-card">
+          <b>Score moyen des entreprises ayant répondu</b>
+        </mat-card>
+      </div>
+      <div style="flex: 1;">
+        <mat-card class="score-card" style="margin-bottom: 16px;">
+          <b>Nombre de métiers ayant répondu</b>
+        </mat-card>
+        <mat-card class="score-card">
+          <b>Taux de réponse au questionnaire</b>
+        </mat-card>
+      </div>
     </div>
     <div class="dashboard-left-bottom">
-
+      <div class="wrapper">
+        <tui-pie-chart
+            size="xs"
+            class="tui-space_right-4"
+            [value]="value"
+        ></tui-pie-chart>
+        <tui-pie-chart
+            size="s"
+            class="tui-space_right-4"
+            [value]="value"
+        ></tui-pie-chart>
+        <tui-pie-chart
+            size="m"
+            class="tui-space_right-4"
+            [value]="value"
+        ></tui-pie-chart>
+        <tui-pie-chart
+            size="l"
+            class="tui-space_right-4"
+            [value]="value"
+        ></tui-pie-chart>
+        <tui-pie-chart
+            size="xl"
+            class="tui-space_right-4"
+            [value]="value"
+        ></tui-pie-chart>
+      </div>
     </div>
   </div>
   <div class="dashboard-right">
     <div class="dashboard-filters">
-      <!-- <div class="entreprise-filtre">
+      <div class="entreprise-filtre">
         <mat-form-field style="width: 220px;" appearance="fill">
           <mat-label>Entreprises</mat-label>
           <mat-select [formControl]="entrepriseControl" multiple>
@@ -55,7 +97,7 @@
             <mat-option *ngFor="let metier of filteredMetiers" [value]="metier">{{metier?.nomMetier}}</mat-option>
           </mat-select>
         </mat-form-field>
-      </div> -->
+      </div>
     </div>
     <div>
 

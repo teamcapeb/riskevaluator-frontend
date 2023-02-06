@@ -6,10 +6,10 @@ import IScoreCategory from "./IScoreCategory";
 export default interface IEvaluation{
     filterResponses?: any;
     idEvaluation?: number;
+    metiers?: IMetier[];
     compte?: ICompte;
     scoreGeneraleEvaluation? : number
     scoreCategories?: IScoreCategory[],
     entreprise : IEntreprise,
-    date?: string,
-    metiers?: IMetier[]
+    date?: string
 }

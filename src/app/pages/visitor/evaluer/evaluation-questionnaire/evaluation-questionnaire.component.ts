@@ -52,7 +52,6 @@ export class EvaluationQuestionnaireComponent implements OnInit {
   onGetAllCategoriesQuestion() {
     this.categoriesQuestion$= this.questionnaireService.getCategoriesQuestions(this.questionnaireId,this.metierIds).pipe(
       map((data: ICategorieQuestion[])=>{
-        //console.log(data);
         this.evaluationService.onUpdateCategorieMax(data.length);
         return ({dataState:DataStateEnum.LOADED,data:data})
       }),

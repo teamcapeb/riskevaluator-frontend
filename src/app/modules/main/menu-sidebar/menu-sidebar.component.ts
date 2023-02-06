@@ -42,7 +42,7 @@ export const MENU = [
         icon: "fa-solid fa-landmark"
     },
     {
-        name: 'Evaluer',
+        name: 'Évaluer',
         path: ['/evaluer'],
         icon: "fa-solid fa-list-check"
     },
@@ -76,7 +76,7 @@ export const ADMIN_MENU = [
     icon: "fa-solid fa-atom"
   },
   {
-    name: 'Consulter évaluation',
+    name: 'Consulter évaluations',
     path: ['/consulter-evaluation'],
     icon: "fa-solid fa-list"
   },

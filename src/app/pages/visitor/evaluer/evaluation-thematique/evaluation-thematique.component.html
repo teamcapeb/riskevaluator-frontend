@@ -14,9 +14,9 @@
 
     <div  class="row mb-5">
     <div *ngFor="let questionnaire of result.data"  class="col-md-4 mb-5">
-      <div  class="card {{calculateColor(questionnaire?.idQuestionnaire)}} order-card" role= "button"(click)="myFunction(questionnaire.idQuestionnaire)">
+      <div  class="card order-card" role= "button"(click)="myFunction(questionnaire.idQuestionnaire)">
         <div class="card-block">
-          <img class="logo-navbar mx-auto d-block" alt="questionnaire" src="./assets/img/survey.png">
+          <img class="logo-navbar mx-auto d-block" style="margin-bottom: 16px;" alt="questionnaire" src="./assets/img/survey.png">
           <h2 class="m-b-20 text-center">{{questionnaire.thematique}}</h2>
           <p class="m-b-0">Nombre questions<span class="f-right">{{calculateNbTotalQuestions(questionnaire)}}</span></p>
           <p class="m-b-0">Nombre categories<span class="f-right">{{questionnaire?.categorieQuestions?.length}}</span></p>

@@ -22,7 +22,9 @@
                 (+{{(questionnaireControl.value?.length || 0) - 1}} {{questionnaireControl.value?.length === 2 ? 'autre' : 'autres'}})
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let quest of filteredQuestionnaires" [value]="quest">{{quest?.thematique}}</mat-option>
+            <mat-option *ngFor="let quest of filteredQuestionnaires" [value]="quest?.thematique" (click)="filtreThematique($event)">
+              {{quest?.thematique}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field style="width: 220px;" appearance="fill">
@@ -34,7 +36,7 @@
                 (+{{(metierControl.value?.length || 0) - 1}} {{metierControl.value?.length === 2 ? 'autre' : 'autres'}})
               </span>
             </mat-select-trigger>
-            <mat-option *ngFor="let metier of metiers$" [value]="metier">{{metier?.nomMetier}}</mat-option>
+            <mat-option *ngFor="let metier of metiers$" [value]="metier.nomMetier" (click)="filtreMetier($event)">{{metier?.nomMetier}}</mat-option>
           </mat-select>
         </mat-form-field>
       </form>

@@ -1,9 +1,9 @@
 <app-list title="Liste des Questionnaires" (onAdd)="add()">
-    <ng-template [ngIf]="questionnaires | async" [ngIfElse]="loading">
-        <ng-container *ngFor="let questionnaire of questionnaires | async">
-            <app-list-item 
+    <ng-template [ngIf]="questionnaires" [ngIfElse]="loading">
+        <ng-container *ngFor="let questionnaire of questionnaires">
+            <app-list-item
                 id="{{questionnaire.idQuestionnaire}}"
-                [data]="questionnaire" 
+                [data]="questionnaire"
                 (onUpdate)="update($event)"
                 (onDelete)="delete($event)"
                 (onRowClick)="questionnaireDetails($event)"

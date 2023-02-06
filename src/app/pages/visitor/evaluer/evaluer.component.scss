@@ -4,14 +4,13 @@ body{
 }
 
 form {
-  justify-content: center;
-  // background: linear-gradient(to top, white, transparent);
-  margin-right: 62px;
-  // margin-bottom: 40px;
   position: fixed;
   bottom: 0px;
-  right: 0px;
+  display: flex;
+  width: 80%;
   z-index: 9999;
+  justify-content: flex-end;
+  background: linear-gradient(to top, white, transparent);
 }
 
 button {
@@ -23,7 +22,8 @@ button {
   font-size: larger;
   font-family: Roboto;
   padding: 10px 32px;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
+  margin-right: 40px;
 }
 
 .order-card {

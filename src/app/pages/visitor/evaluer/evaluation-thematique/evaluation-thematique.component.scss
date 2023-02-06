@@ -20,6 +20,14 @@ button:hover {
   padding: 25px;
 }
 
+.order-card {
+  border: 2px solid black !important;
+  background: #B0BEC5;
+  color: black !important;
+  display: flex;
+  justify-content: center;
+}
+
 .order-card i {
   font-size: 26px;
 }
