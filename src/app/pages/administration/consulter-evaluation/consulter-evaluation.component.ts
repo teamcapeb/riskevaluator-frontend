@@ -36,6 +36,7 @@ export class ConsulterEvaluationComponent implements OnInit {
   questionnaireControl = new FormControl('');
 
   selectedThematiques: string[];
+  metierLabels : string[];
 
   constructor(private evaluationService : EvaluationApiService,
               private entrepriseService: EntrepriseService,
@@ -126,18 +127,21 @@ export class ConsulterEvaluationComponent implements OnInit {
   }
 
   filtreThematique(event:any){
-    this.filteredEntreprises=[];
-    this.entreprises$.forEach((entre,index)=>{
-      this.thematiques[index].forEach((theme:any) => {
-        // console.log(this.includeThematique(this.questionnaireControl.value,theme))
-        if(this.includeThematique(this.questionnaireControl.value,theme)){
-          this.filteredEntreprises.push(entre);
-        }
-      });
-    })
-
-
+    if(this.questionnaireControl.value.length != 0){
+      this.filteredEntreprises=[];
+      this.entreprises$.forEach((entre,index)=>{
+        this.thematiques[index].forEach((theme:any) => {
+          // console.log(this.includeThematique(this.questionnaireControl.value,theme))
+          if(this.includeThematique(this.questionnaireControl.value,theme)){
+            this.filteredEntreprises.push(entre);
+          }
+        });
+      })
+    }else{
+      this.filteredEntreprises = this.entreprises$;
+    }
   }
+
 
   includeThematique(themes:string[],theme:string){
     var resultat = false;
@@ -147,6 +151,34 @@ export class ConsulterEvaluationComponent implements OnInit {
       }
     })
     return resultat;
+  }
+
+
+  filtreMetier(event:any){
+    if(this.metierControl.value.length != 0){
+      this.filteredEntreprises=[];
+      this.entreprises$.forEach((entre)=>{
+        entre.metiers.forEach((met)=>{
+          if(this.includeMetier(this.metierControl.value,met.nomMetier)&& !this.filteredEntreprises.includes(entre)){
+              this.filteredEntreprises.push(entre);
+          }
+        })
+      })
+
+    }else{
+      this.filteredEntreprises = this.entreprises$;
+    }
+
+  }
+
+  includeMetier(metiers : string[],metier : string){
+    var res = false;
+    metiers.forEach((met)=>{
+      if(met==metier){
+        res = true;
+      }
+    })
+    return res
   }
 
 

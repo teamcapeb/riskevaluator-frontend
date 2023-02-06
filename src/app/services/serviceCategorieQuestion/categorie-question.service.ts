@@ -14,7 +14,7 @@ import IQuestion from '../../interfaces/IQuestion';
 @Injectable({
   providedIn: 'root'
 })
-export class CategorieQuestionService {
+export class  CategorieQuestionService {
 
   private baseUrl: string = environment.apiUrl + '/categorieQuestions/';
 

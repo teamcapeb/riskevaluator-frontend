@@ -19,7 +19,7 @@
 }
 
 .dashboard-filters {
-  display: flex;
+  // display: flex;
 }
 
 .entreprise-filtre {
@@ -46,4 +46,9 @@
 .wrapper {
   display: flex;
   align-items: center;
+}
+
+.score-card {
+  text-align: center;
+  font-size: 14px;
 }

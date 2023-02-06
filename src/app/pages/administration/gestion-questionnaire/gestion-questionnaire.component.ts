@@ -1,4 +1,5 @@
 import IListEvent from '@/interfaces/IListEvent';
+import IQuestionnaire from '@/interfaces/IQuestionnaire';
 import Questionnaire from '@/objects/Questionnaire';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -12,19 +13,19 @@ import { Observable } from 'rxjs';
   styleUrls: ['./gestion-questionnaire.component.scss']
 })
 export class GestionQuestionnaireComponent implements OnInit {
-
-  private _questionnaires: Observable<Questionnaire[]>;
-
   @ViewChild('QuestionnaireForm') QuestionnaireForm : any;
 
   public actualQuestionnaire: Questionnaire;
+  _questionnaires: IQuestionnaire[];
 
   constructor(private router: Router,
               private modalService: ModalService,
               private questionnaireService: QuestionnaireService) { }
 
   ngOnInit(): void {
-      this._questionnaires = this.questionnaireService.getAll();
+      this.questionnaireService.getAllQuestionnaires().subscribe((res) => {
+        this._questionnaires = res;
+      });
   }
 
   ngAfterViewInit(){
@@ -68,10 +69,12 @@ export class GestionQuestionnaireComponent implements OnInit {
         this.modalService.error('Ce questionnaire existe déjà !');
       }
     }
-    this._questionnaires = this.questionnaireService.getAll();
+    this.questionnaireService.getAllQuestionnaires().subscribe((res) => {
+      this._questionnaires = res;
+    });
   }
 
-  get questionnaires(): Observable<Questionnaire[]> {
+  get questionnaires() {
     return this._questionnaires;
   }
 
