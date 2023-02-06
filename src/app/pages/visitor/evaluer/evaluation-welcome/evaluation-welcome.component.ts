@@ -76,6 +76,7 @@ export class EvaluationWelcomeComponent implements OnInit {
   }
 
   getEntrepriseBySiret(){
+    let oldsiret = this.frmEntreprise.controls['noSiret'].value;
     if (this.frmEntreprise.controls['noSiret'].valid){
       this.entrepriseService.get(this.frmEntreprise.controls['noSiret'].value).subscribe(res => {
         this.entreprise = res;
@@ -83,6 +84,9 @@ export class EvaluationWelcomeComponent implements OnInit {
         this.frmEntreprise.controls['anneeDeCreation'].setValue(this.entreprise.anneeDeCreation);
         this.frmEntreprise.controls['nomEntreprise'].setValue(this.entreprise.nomEntreprise);
       });
+    }else {
+      this.frmEntreprise = this.initForm();
+      this.frmEntreprise.controls['noSiret'].setValue(oldsiret);
     }
   }
 

@@ -21,12 +21,12 @@ export const environment = {
       introButton: "Commencer l'évaluation"
     },
     formulaireContact: {
-      noSiret: "NOSIRET",
+      noSiret: "N° SIRET",
       noSiretPlaceHolder: "Le numéro siret de votre entreprise",
       effectif: "Effectif",
       effectifPlaceHolder: "L'effectif de votre entreprise",
-      annee: "année de creation",
-      anneePlaceHolder: "L'année de creation de l'entreprise",
+      annee: "Année de création",
+      anneePlaceHolder: "L'année de création de l'entreprise",
       nomEntreprise: "Nom Entreprise",
       nomEntreprisePlaceHolder: "Le nom de votre entreprise",
       startEvalButton: "Etape suivante",
