@@ -107,7 +107,7 @@ export class DetailsEntrepriseComponent implements OnInit {
 
     detailsEvaluation.idEvaluation = evaluation.idEvaluation;
     detailsEvaluation.date = evaluation.date?evaluation.date:this.defaultDateEvaluation;
-    detailsEvaluation.dateFormat = new Date (evaluation.date?evaluation.date:this.defaultDateEvaluation);
+    detailsEvaluation.dateFormat = this.convertToDate(evaluation.date?evaluation.date:this.defaultDateEvaluation);
     detailsEvaluation.metiers = this.createListMetiersforDetailsMetiers(evaluation.metiers);
     detailsEvaluation.questionnaire = evaluation.scoreCategories.at(0).categorieQuestion?.questionnaire?.thematique;
     detailsEvaluation.score = evaluation.scoreGeneraleEvaluation;
@@ -127,4 +127,11 @@ export class DetailsEntrepriseComponent implements OnInit {
   goToResult(idEvaluation: number) {
     this.router.navigate(['historiques', idEvaluation]);
   }
+
+  convertToDate(dateString: string) {
+    // convertir un "jour/mois/année" en un objet date
+    let d = dateString.split("/");
+    let dat = new Date(d[2] + '/' + d[1] + '/' + d[0]);
+    return dat;
+}
 }
