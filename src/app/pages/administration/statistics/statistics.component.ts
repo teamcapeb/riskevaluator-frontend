@@ -86,6 +86,7 @@ export class StatisticsComponent implements OnInit {
     this.entrepriseService.getAll().subscribe((res) => {
       this.allEntreprises = this.sortEntreprises(res);
       this.filteredEntreprises = [...this.allEntreprises];
+      this.separateEntreprisesEffectif(this.filteredEntreprises);
       this.cdr.detectChanges();
     });
     this.metierService.getAllMetiers().subscribe((res) => {
@@ -107,18 +108,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   sortEntreprises(entreprises: IEntreprise[]): IEntreprise[] {
-    entreprises.forEach((etp) => {
-      if (etp.effectif <= 5) {
-        this.petitesEntreprises.push(etp);
-      }
-      else if (etp.effectif >= 6 && etp.effectif <= 10) {
-        this.moyennesEntreprises.push(etp);
-      }
-      else if (etp.effectif > 10) {
-        this.grandesEntreprises.push(etp);
-      }
-    });
-    this.scoresMoyensTailleEntreprises();
     return entreprises.sort(
       (a, b) => {
         if (a.nomEntreprise.toUpperCase() < b.nomEntreprise.toUpperCase()) {
@@ -189,6 +178,7 @@ export class StatisticsComponent implements OnInit {
         this.filteredMetiers = [...this.allMetiers];
       }
     }
+    this.separateEntreprisesEffectif(this.filteredEntreprises);
   }
 
   selectMetier() {
@@ -203,6 +193,25 @@ export class StatisticsComponent implements OnInit {
     if (this.metierControl.value.length == 0) {
       this.filteredMetiers = this.allMetiers;
     }
+  }
+
+  separateEntreprisesEffectif(entreprises: IEntreprise[]) {
+    this.petitesEntreprises = [];
+    this.moyennesEntreprises = [];
+    this.grandesEntreprises = [];
+    entreprises.forEach((etp) => {
+      if (etp.effectif <= 5) {
+        this.petitesEntreprises.push(etp);
+      }
+      else if (etp.effectif >= 6 && etp.effectif <= 10) {
+        this.moyennesEntreprises.push(etp);
+      }
+      else if (etp.effectif > 10) {
+        this.grandesEntreprises.push(etp);
+      }
+    });
+    console.log(this.petitesEntreprises.length + " " + this.moyennesEntreprises.length + " " + this.grandesEntreprises.length);
+    this.scoresMoyensTailleEntreprises();
   }
 
   scoresMoyensTailleEntreprises() {
@@ -228,13 +237,26 @@ export class StatisticsComponent implements OnInit {
 
     if (this.petitesEntreprises.length > 0) {
       this.scoreMoyenPetitesEntreprises = sumScorePetites / this.petitesEntreprises.length;
+    } else if (this.petitesEntreprises.length == 0) {
+      this.scoreMoyenPetitesEntreprises = 0;
     }
     if (this.moyennesEntreprises.length > 0) {
       this.scoreMoyenMoyennesEntreprises = sumScoreMoyennes / this.moyennesEntreprises.length;
+    } else if (this.moyennesEntreprises.length == 0) {
+      this.scoreMoyenMoyennesEntreprises = 0;
     }
     if (this.grandesEntreprises.length > 0) {
       this.scoreMoyenGrandesEntreprises = sumScoreGrandes / this.grandesEntreprises.length;
+    } else if (this.grandesEntreprises.length == 0) {
+      this.scoreMoyenGrandesEntreprises = 0;
     }
+    console.log(this.scoreMoyenPetitesEntreprises);
+    console.log(this.scoreMoyenMoyennesEntreprises);
+    console.log(this.scoreMoyenGrandesEntreprises);
+    this.setValueGraph1();
+  }
+
+  setValueGraph1() {
     this.value = [[this.scoreMoyenPetitesEntreprises,
       this.scoreMoyenMoyennesEntreprises,
       this.scoreMoyenGrandesEntreprises],
