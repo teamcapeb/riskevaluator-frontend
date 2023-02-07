@@ -110,7 +110,18 @@
           </div>
           <div class="graph-div" *ngIf="!hide3 || !hide4">
             <mat-card *ngIf="!hide3" class="graph-card" (click)="expand3()">
-              a
+              <tui-axes *ngIf="scoresMetiers.length > 0"
+                class="axes"
+                [axisXLabels]="metierNames"
+                [axisYLabels]="graph1LabelsY"
+              >
+                <tui-bar-chart
+                  [max]="100"
+                  [value]="scoresMetiers"
+                  [tuiHintAppearance]="appearance"
+                  [tuiHintContent]="hint"
+                ></tui-bar-chart>
+              </tui-axes>
             </mat-card>
             <mat-card *ngIf="!hide4" class="graph-card" (click)="expand4()">
               b
