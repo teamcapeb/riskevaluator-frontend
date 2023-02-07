@@ -8,6 +8,7 @@ import { IEntreprise } from "@/interfaces/IEntreprise";
 import {IMetier} from "@/interfaces/IMetier";
 import { Observable } from "rxjs";
 import { EvalTokenStorageService } from "@services/serviceEvaluation/eval-token-storage.service";
+import { EntrepriseService } from "@services/serviceEntreprise/entreprise.service";
 
 @Component({
   selector: 'app-evaluation-welcome',
@@ -19,6 +20,7 @@ export class EvaluationWelcomeComponent implements OnInit {
   introDisplay = environment.evaluerIHM.introDisplay;
   frmEntreprise : FormGroup;
   evaluerIHM = environment.evaluerIHM.formulaireContact;
+  entreprise : IEntreprise;
 
 
   private data : {idQuestionnaire : number, metierList : number[]} = {idQuestionnaire : 0, metierList: []};
@@ -28,7 +30,8 @@ export class EvaluationWelcomeComponent implements OnInit {
               private evaluationService: EvaluationService,
               private evalTokenStorageService : EvalTokenStorageService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private entrepriseService: EntrepriseService) {
     this.data.idQuestionnaire = +this.route.snapshot.paramMap.get('idQuestionnaire');
     this.data.metierList = this.route.snapshot.paramMap.get('metierIds').split(",").map(Number);
 
@@ -43,7 +46,7 @@ export class EvaluationWelcomeComponent implements OnInit {
       {
         // email is required and must be a valid email email
         noSiret: ["", Validators.compose([
-          Validators.required, Validators.min(1000)])
+          Validators.required, Validators.pattern("[0-9]{14}")])
         ],
         effectif: [1, Validators.compose([
           Validators.required,Validators.min(1), Validators.max(100000)])
@@ -69,6 +72,21 @@ export class EvaluationWelcomeComponent implements OnInit {
       }]);
     }else {
       this.frmEntreprise.markAllAsTouched();
+    }
+  }
+
+  getEntrepriseBySiret(){
+    let oldsiret = this.frmEntreprise.controls['noSiret'].value;
+    if (this.frmEntreprise.controls['noSiret'].valid){
+      this.entrepriseService.get(this.frmEntreprise.controls['noSiret'].value).subscribe(res => {
+        this.entreprise = res;
+        this.frmEntreprise.controls['effectif'].setValue(this.entreprise.effectif);
+        this.frmEntreprise.controls['anneeDeCreation'].setValue(this.entreprise.anneeDeCreation);
+        this.frmEntreprise.controls['nomEntreprise'].setValue(this.entreprise.nomEntreprise);
+      });
+    }else {
+      this.frmEntreprise = this.initForm();
+      this.frmEntreprise.controls['noSiret'].setValue(oldsiret);
     }
   }
 
