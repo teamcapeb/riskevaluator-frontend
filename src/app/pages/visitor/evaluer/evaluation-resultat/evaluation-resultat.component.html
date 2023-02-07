@@ -1,3 +1,6 @@
+<button style="border: none; background-color: transparent; padding: 0.5rem 1rem; font-size: 1.25rem; border-radius: 0.3rem; color: #dc3545;" type="button" (click)="back()">
+  &laquo; Retour
+</button>
 <ng-container   *ngIf="(evaluationObs | async) as result"
                 [ngSwitch]="result.dataState">
 
@@ -7,10 +10,10 @@
       Numéro de SIRET: {{this.entreprise$?.noSiret}} <br/>
       Date de l'évaluation: {{this.evaluation$?.date?this.evaluation$?.date : this.defaultDate}} <br/>
     </div>
-    <div class="col col-lg-2" (click)="generatePDF()">
+    <div class="col col-lg-2 pdfIcon" (click)="generatePDF()">
       <img class="logo-navbar mx-auto d-block" style="float: right" alt="questionnaire" src="../../../../../assets/img/pdf-export.png">
     </div>
-    <div class="col col-lg-2 " (click)="htmlToPng()">
+    <div class="col col-lg-2 pdfIcon " (click)="htmlToPng()">
       <img class="logo-navbar mx-auto d-block" style="float: left" alt="questionnaire" src="../../../../../assets/img/png-export.png">
     </div>
   </div>

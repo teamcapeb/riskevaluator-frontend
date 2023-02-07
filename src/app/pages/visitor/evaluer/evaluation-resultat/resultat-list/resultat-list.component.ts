@@ -6,6 +6,7 @@ import IPreconisationCategorieQuestion from "@/interfaces/IPreconisationCategori
 import IQuestionnaire from "@/interfaces/IQuestionnaire";
 import IScoreCategory from "@/interfaces/IScoreCategory";
 import { bounceInOnEnterAnimation } from "angular-animations";
+import { QuestionnaireService } from "@services/serviceQuestionnaire/questionnaire.service";
 
 @Component({
   selector: 'app-resultat-list',
@@ -20,7 +21,8 @@ export class ResultatListComponent implements OnInit {
   precoGlobale$ : IPreconisationGlobale = { idPreconisationG: 0, viewIfPourcentageScoreLessThan: 0, contenu: ""};
   listScoreCategories$ : IScoreCategory[];
 
-  constructor(private evalTokenStorageService : EvalTokenStorageService) {}
+  constructor(private evalTokenStorageService : EvalTokenStorageService,
+              private questionnaireService : QuestionnaireService) {}
 
   ngOnInit(): void {
     this.preparePrecoGlobale();
@@ -31,7 +33,9 @@ export class ResultatListComponent implements OnInit {
     if (this.evaluation$ != null) {
 
       // Take questionnaire from one the scoreCategories
-      let questionnaire: IQuestionnaire = this.evaluation$?.scoreCategories?.at(0)?.categorieQuestion?.questionnaire;
+      let questionnaire: IQuestionnaire;
+      this.questionnaireService.get(this.evaluation$?.scoreCategories?.at(0)?.categorieQuestion?.questionnaire.idQuestionnaire).subscribe(res =>{
+        questionnaire = res.toJSON();
 
       // filter preconisation with respect the viewIfpercentage
       const tempPreco: IPreconisationGlobale[] = questionnaire?.preconisationGlobales?.filter(p => p?.viewIfPourcentageScoreLessThan > this.evaluation$?.scoreGeneraleEvaluation);
@@ -42,8 +46,9 @@ export class ResultatListComponent implements OnInit {
       // concatenate contenu of all global preconisation to one
       if (this.precoGlobale$ != null && this.precoGlobale$?.contenu !== null)
         this.precoGlobale$.contenu = this.concatPreconisations(tempPreco);
-    }
+    });
   }
+}
 
   preparePrecoGlobale(){
     if(this.evaluation$!=null) {
