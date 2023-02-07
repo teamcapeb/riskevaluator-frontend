@@ -1,4 +1,4 @@
-<app-list title="Liste des Questionnaires" (onAdd)="add()">
+<app-list title="Liste des questionnaires" (onAdd)="add()">
     <ng-template [ngIf]="questionnaires" [ngIfElse]="loading">
         <ng-container *ngFor="let questionnaire of questionnaires">
             <app-list-item
