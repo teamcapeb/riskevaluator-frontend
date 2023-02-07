@@ -246,8 +246,8 @@ export class StatisticsComponent implements OnInit {
 
         this.evaluationService.get(evl.idEvaluation).subscribe((ev) => {
           evalsEntreprise.push(ev);
+          console.log(evalsEntreprise);
         });
-
 
         return evl.scoreGeneraleEvaluation
       }).reduce((total, num) => total + num, 0);

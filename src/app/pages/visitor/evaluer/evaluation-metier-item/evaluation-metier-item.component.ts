@@ -47,7 +47,7 @@ export class EvaluationMetierItemComponent implements OnInit {
       case "Carreleur":
         return this.imageMetier = "../../../../../assets/img/metiers/carreleur.png";
       default:
-        return "";
+        return this.imageMetier = "../../../../../assets/img/metier.png"
     }
   }
 }
