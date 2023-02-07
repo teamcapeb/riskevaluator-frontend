@@ -49,8 +49,8 @@
                   (+{{(metierControl.value?.length || 0) - 1}} {{metierControl.value?.length === 2 ? 'autre' : 'autres'}})
                 </span>
               </mat-select-trigger>
-              <mat-option *ngFor="let metier of allMetiers" [value]="metier.nomMetier"
-                (click)="selectMetier()">{{metier?.nomMetier}}</mat-option>
+              <mat-option #matOption *ngFor="let metier of allMetiers" [value]="metier.nomMetier"
+                (click)="selectMetier(metier, matOption.selected)">{{metier?.nomMetier}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -91,16 +91,10 @@
         <mat-card class="graphs-card">
           <div class="graph-div">
             <mat-card class="graph-card">
-              <!-- PETITES: {{ petitesEntreprises.length }} --
-                AVG SCORE EVALS: {{ scoreMoyenPetitesEntreprises }} <br>
-              MOYENNES: {{ moyennesEntreprises.length }} --
-                AVG SCORE EVALS: {{ scoreMoyenMoyennesEntreprises }} <br>
-              GRANDES: {{ grandesEntreprises.length }} --
-                AVG SCORE EVALS: {{ scoreMoyenGrandesEntreprises }} <br> -->
               <tui-axes
                 class="axes"
-                [axisXLabels]="labelsX"
-                [axisYLabels]="labelsY"
+                [axisXLabels]="graph1LabelsX"
+                [axisYLabels]="graph1LabelsY"
                 >
                 <tui-bar-chart
                     [max]="100"

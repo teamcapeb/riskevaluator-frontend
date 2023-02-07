@@ -164,7 +164,7 @@ export class EvaluationResultatComponent implements OnInit {
     let wEntreprise=this.entreprise$
 
     let docDefinition = {
-      header:'Diagnostique en ligne effectué par CAPEB',
+      header:'   CAPEB Evaluator',
       content: [
         {
           text:'Resultat de l\'évaluation',
