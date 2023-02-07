@@ -21,6 +21,7 @@ export class EvaluationWelcomeComponent implements OnInit {
   frmEntreprise : FormGroup;
   evaluerIHM = environment.evaluerIHM.formulaireContact;
   entreprise : IEntreprise;
+  onceValid = false;
 
 
   private data : {idQuestionnaire : number, metierList : number[]} = {idQuestionnaire : 0, metierList: []};
@@ -76,17 +77,21 @@ export class EvaluationWelcomeComponent implements OnInit {
   }
 
   getEntrepriseBySiret(){
-    let oldsiret = this.frmEntreprise.controls['noSiret'].value;
+    let oldSiret = this.frmEntreprise.controls['noSiret'].value;
     if (this.frmEntreprise.controls['noSiret'].valid){
       this.entrepriseService.get(this.frmEntreprise.controls['noSiret'].value).subscribe(res => {
-        this.entreprise = res;
-        this.frmEntreprise.controls['effectif'].setValue(this.entreprise.effectif);
-        this.frmEntreprise.controls['anneeDeCreation'].setValue(this.entreprise.anneeDeCreation);
-        this.frmEntreprise.controls['nomEntreprise'].setValue(this.entreprise.nomEntreprise);
+        if (res!=null){
+          this.onceValid= true;
+          this.entreprise = res;
+          this.frmEntreprise.controls['effectif'].setValue(this.entreprise.effectif);
+          this.frmEntreprise.controls['anneeDeCreation'].setValue(this.entreprise.anneeDeCreation);
+          this.frmEntreprise.controls['nomEntreprise'].setValue(this.entreprise.nomEntreprise);
+        }
       });
-    }else {
+    }else if (this.frmEntreprise.invalid && this.onceValid){
+      this.onceValid = false;
       this.frmEntreprise = this.initForm();
-      this.frmEntreprise.controls['noSiret'].setValue(oldsiret);
+      this.frmEntreprise.controls['noSiret'].setValue(oldSiret);
     }
   }
 

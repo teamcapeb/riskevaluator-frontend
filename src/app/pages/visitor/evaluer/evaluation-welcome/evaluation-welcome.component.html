@@ -17,7 +17,8 @@
         <mat-label *ngIf="!frmEntreprise.controls['noSiret'].invalid||!frmEntreprise.controls['noSiret']?.touched">{{evaluerIHM.noSiret}}</mat-label>
         <input type="number" matInput required placeholder="{{evaluerIHM.noSiret}}" id="noSiret"
                formControlName="noSiret" [ngClass]="frmEntreprise.controls['noSiret'].invalid&&frmEntreprise.controls['noSiret']?.touched ? 'is-invalid' : ''"
-               (ngModelChange)="getEntrepriseBySiret()">
+               (ngModelChange)="getEntrepriseBySiret()"
+               oninput="this.value=this.value.slice(0,14)">
 
       </mat-form-field>
       <mat-form-field appearance="outline" class="questionOuverte">
