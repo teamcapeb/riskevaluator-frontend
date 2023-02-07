@@ -36,7 +36,7 @@ export class MetierService {
   }
 
   update(metier: Metier): Promise<IMetier | string> {
-    return this.http.put<IMetier>(`${this.baseUrl}`, metier.toJSON()).toPromise();
+    return this.http.put<IMetier>(`${this.baseUrl}${metier.idMetier}`, metier).toPromise();
   }
 
   delete(metier: Metier): Promise<string> {
