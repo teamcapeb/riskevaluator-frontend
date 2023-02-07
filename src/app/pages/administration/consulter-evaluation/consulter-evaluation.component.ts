@@ -120,7 +120,7 @@ export class ConsulterEvaluationComponent implements OnInit {
     } else {
       this.filteredEntreprises = [];
       this.entreprises$.forEach((entreprise)=>{
-      if (entreprise.nomEntreprise.includes(event)){
+      if (entreprise.nomEntreprise.toLowerCase().includes(event.toLowerCase())){
         this.filteredEntreprises.push(entreprise);
       }})
     }
