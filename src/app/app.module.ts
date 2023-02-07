@@ -62,6 +62,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from "@angular/material/core";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
@@ -73,6 +74,8 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import {TuiPieChartModule} from '@taiga-ui/addon-charts';
 import {TuiRingChartModule} from '@taiga-ui/addon-charts';
+import {TuiBarChartModule} from '@taiga-ui/addon-charts'
+import {TuiAxesModule} from '@taiga-ui/addon-charts';
 
 import {
   CategorieQuestionFormComponent
@@ -117,6 +120,7 @@ import { DetailsEntrepriseComponent } from "./pages/administration/details-entre
 import {MatTableModule} from "@angular/material/table";
 import { StatisticsComponent } from "./pages/administration/statistics/statistics.component";
 import { EvaluationResultatSuppressionComponent } from './pages/visitor/evaluer/evaluation-resultat/evaluation-resultat-suppression/evaluation-resultat-suppression.component';
+import { TuiHintModule } from "@taiga-ui/core";
 
 registerLocaleData(localeEn, "en-EN");
 
@@ -222,10 +226,14 @@ registerLocaleData(localeEn, "en-EN");
     MatTooltipModule,
     MatMenuModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatSnackBarModule,
     MatAutocompleteModule,
     TuiPieChartModule,
     TuiRingChartModule,
+    TuiBarChartModule,
+    TuiAxesModule,
+    TuiHintModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       radius: 100,
