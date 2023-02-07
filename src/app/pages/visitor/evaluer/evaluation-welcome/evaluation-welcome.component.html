@@ -10,14 +10,15 @@
         <mat-label class="text-danger" *ngIf="frmEntreprise.controls['nomEntreprise'].hasError('required')&&frmEntreprise.controls['nomEntreprise']?.touched">Le nom de votre entreprise est obligatoire.</mat-label>
         <mat-label  *ngIf="!frmEntreprise.controls['nomEntreprise'].invalid||!frmEntreprise.controls['nomEntreprise']?.touched">{{evaluerIHM.nomEntreprise}}</mat-label>
         <input  matInput required placeholder="{{evaluerIHM.nomEntreprisePlaceHolder}}" id="nomEntreprise"
-               formControlName="nomEntreprise" [ngClass]="frmEntreprise.controls['nomEntreprise'].invalid&&frmEntreprise.controls['nomEntreprise']?.touched ? 'is-invalid' : ''">
+               formControlName="nomEntreprise">
       </mat-form-field>
       <mat-form-field appearance="outline" class="questionOuverte">
+        <mat-label *ngIf="frmEntreprise.controls['noSiret'].valid">Numéro Siret</mat-label>
         <mat-label class="text-danger" *ngIf="frmEntreprise.controls['noSiret'].hasError('required')&&frmEntreprise.controls['noSiret']?.touched">Votre numero SIRET est obligatoire.</mat-label>
-        <mat-label *ngIf="!frmEntreprise.controls['noSiret'].invalid||!frmEntreprise.controls['noSiret']?.touched">{{evaluerIHM.noSiret}}</mat-label>
+        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['noSiret'].hasError('pattern')
+        && (frmEntreprise.controls['noSiret']?.dirty || frmEntreprise.controls['noSiret']?.touched)">Il faut 14 chiffres</mat-label>
         <input type="number" matInput required placeholder="{{evaluerIHM.noSiret}}" id="noSiret"
-               formControlName="noSiret" [ngClass]="frmEntreprise.controls['noSiret'].invalid&&frmEntreprise.controls['noSiret']?.touched ? 'is-invalid' : ''"
-               (ngModelChange)="getEntrepriseBySiret()"
+               formControlName="noSiret" (ngModelChange)="getEntrepriseBySiret()"
                oninput="this.value=this.value.slice(0,14)">
 
       </mat-form-field>
