@@ -18,7 +18,7 @@
         <input type="number" matInput required placeholder="{{evaluerIHM.noSiret}}" id="noSiret"
                formControlName="noSiret" [ngClass]="frmEntreprise.controls['noSiret'].invalid&&frmEntreprise.controls['noSiret']?.touched ? 'is-invalid' : ''"
                (ngModelChange)="getEntrepriseBySiret()"
-               oninput="this.value=this.value.slice(0,14)">
+               onKeyPress="if(this.value.length==14) return false;">
 
       </mat-form-field>
       <mat-form-field appearance="outline" class="questionOuverte">
