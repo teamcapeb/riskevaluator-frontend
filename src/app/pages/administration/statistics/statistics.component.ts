@@ -20,6 +20,19 @@ import { tuiFormatNumber } from '@taiga-ui/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatisticsComponent implements OnInit {
+  public isExpanded1 = false;
+  public isExpanded2 = false;
+  public isExpanded3 = false;
+  public isExpanded4 = false;
+  public hide1 = false;
+  public hide2 = false;
+  public hide3 = false;
+  public hide4 = false;
+  public expand1Counter = 0;
+  public expand2Counter = 0;
+  public expand3Counter = 0;
+  public expand4Counter = 0;
+
   entrepriseControl = new FormControl('');
   metierControl = new FormControl('');
   questionnaireControl = new FormControl('');
@@ -156,20 +169,20 @@ export class StatisticsComponent implements OnInit {
           }
         });
       });
-      // SHERIF
       this.updateFilteredMetiersByEntreprises();
+      this.updateFilteredEvaluationsByEntreprises();
     } else {
       this.filteredEntreprises.forEach((element,index) => {
         if (element.noSiret == entreprise.noSiret) {
           this.filteredEntreprises.splice(index, 1);
-          // SHERIF
           this.updateFilteredMetiersByEntreprises();
+          this.updateFilteredEvaluationsByEntreprises();
         }
       });
       if (this.entrepriseControl.value.length == 0) {
         this.filteredEntreprises = [...this.allEntreprises];
-        // SHERIF
         this.filteredMetiers = [...this.allMetiers];
+        this.filteredEvaluations = [...this.allEvaluations];
       }
     }
     this.separateEntreprisesEffectif(this.filteredEntreprises);
@@ -185,17 +198,22 @@ export class StatisticsComponent implements OnInit {
           }
         });
       });
+      this.updateFilteredEntreprisesByMetiers();
     }
     else {
       this.filteredMetiers.forEach((element,index) => {
         if (element.nomMetier == metier.nomMetier) {
           this.filteredMetiers.splice(index, 1);
+          this.updateFilteredEntreprisesByMetiers();
         }
       });
       if (this.metierControl.value.length == 0) {
         this.filteredMetiers = [...this.allMetiers];
+        this.filteredEntreprises = [...this.allEntreprises];
+        this.filteredEvaluations = [...this.allEvaluations];
       }
     }
+    this.separateEntreprisesEffectif(this.filteredEntreprises);
   }
 
   separateEntreprisesEffectif(entreprises: IEntreprise[]) {
@@ -225,9 +243,6 @@ export class StatisticsComponent implements OnInit {
     let evalsEntreprise: IEvaluation[] = [];
 
     let dates : string[] = [];
-    const parsedDates = dates.map(date => new Date(date));
-    const sortedDates = parsedDates.sort((a: any, b: any) => a - b);
-    const mostRecentDate = sortedDates[sortedDates.length - 1];
 
     this.petitesEntreprises.forEach((etp) => {
       sumScorePetites += etp.evaluations.map((evl) => {
@@ -243,10 +258,16 @@ export class StatisticsComponent implements OnInit {
     });
     this.grandesEntreprises.forEach((etp) => {
       sumScoreGrandes += etp.evaluations.map((evl) => {
-
+        // TODO
         this.evaluationService.get(evl.idEvaluation).subscribe((ev) => {
           evalsEntreprise.push(ev);
           console.log(evalsEntreprise);
+          dates.push(ev.date);
+          console.log(dates);
+          const parsedDates = dates.map(date => new Date(date));
+          const sortedDates = parsedDates.sort((a: any, b: any) => a - b);
+          const mostRecentDate = sortedDates[sortedDates.length - 1];
+          console.log(mostRecentDate);
         });
 
         return evl.scoreGeneraleEvaluation
@@ -291,10 +312,127 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  updateFilteredEvaluationsByEntreprises() {
+    this.filteredEvaluations = [];
+    this.filteredEntreprises.forEach((etp) => {
+      this.filteredEvaluations.push(...etp.evaluations);
+    });
+  }
+
+  includeMetier(metiers : string[], metier : string){
+    var res = false;
+    metiers.forEach((met) => {
+      if (met == metier) {
+        res = true;
+      }
+    });
+    return res;
+  }
+
   updateFilteredEntreprisesByMetiers() {
     this.filteredEntreprises = [];
     this.allEntreprises.forEach((etp) => {
-
+      etp.metiers.forEach((mtr) => {
+        if (this.includeMetier(this.metierControl.value, mtr.nomMetier) && !this.filteredEntreprises.includes(etp)) {
+          this.filteredEntreprises.push(etp);
+        }
+      });
     });
+  }
+
+  updateFilteredEvaluationsByMetiers() {
+    // this.filteredEvaluations = [];
+    // this.allEvaluations.forEach((evl) => {
+    //   evl.metiers.forEach((mtr) => {
+
+    //   });
+    // });
+  }
+
+  expand1() {
+    this.expand1Counter++;
+    if (this.expand1Counter % 2 === 1) {
+      this.isExpanded1 = !this.isExpanded1;
+      this.isExpanded2 = false;
+      this.isExpanded3 = false;
+      this.isExpanded4 = false;
+      this.hide1 = false;
+      this.hide2 = true;
+      this.hide3 = true;
+      this.hide4 = true;
+    } else {
+      this.isExpanded1 = !this.isExpanded1;
+      this.isExpanded2 = false;
+      this.isExpanded3 = false;
+      this.isExpanded4 = false;
+      this.resetAllExpands();
+    }
+  }
+
+  expand2() {
+    this.expand2Counter++;
+    if (this.expand2Counter % 2 === 1) {
+      this.isExpanded1 = false;
+      this.isExpanded2 = !this.isExpanded2;
+      this.isExpanded3 = false;
+      this.isExpanded4 = false;
+      this.hide1 = true;
+      this.hide2 = false;
+      this.hide3 = true;
+      this.hide4 = true;
+    } else {
+      this.isExpanded1 = false;
+      this.isExpanded2 = !this.isExpanded2;
+      this.isExpanded3 = false;
+      this.isExpanded4 = false;
+      this.resetAllExpands();
+    }
+  }
+
+  expand3() {
+    this.expand3Counter++;
+    if (this.expand3Counter % 2 === 1) {
+      this.isExpanded1 = false;
+      this.isExpanded2 = false;
+      this.isExpanded3 = !this.isExpanded3;
+      this.isExpanded4 = false;
+      this.hide1 = true;
+      this.hide2 = true;
+      this.hide3 = false;
+      this.hide4 = true;
+    } else {
+      this.isExpanded1 = false;
+      this.isExpanded2 = false;
+      this.isExpanded3 = !this.isExpanded3;
+      this.isExpanded4 = false;
+      this.resetAllExpands();
+    }
+  }
+
+  expand4() {
+    this.expand4Counter++;
+    if (this.expand4Counter % 2 === 1) {
+      this.isExpanded1 = false;
+      this.isExpanded2 = false;
+      this.isExpanded3 = false;
+      this.isExpanded4 = !this.isExpanded4;
+      this.hide1 = true;
+      this.hide2 = true;
+      this.hide3 = true;
+      this.hide4 = false;
+    } else {
+      this.isExpanded1 = false;
+      this.isExpanded2 = false;
+      this.isExpanded3 = false;
+      this.isExpanded4 = !this.isExpanded4;
+      this.resetAllExpands();
+    }
+  }
+
+  resetAllExpands() {
+    this.hide1 = false;
+    this.hide2 = false;
+    this.hide3 = false;
+    this.hide4 = false;
   }
 }

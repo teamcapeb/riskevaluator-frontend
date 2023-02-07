@@ -89,8 +89,8 @@
     <div class="dashboard-graphs">
       <div class="graphs">
         <mat-card class="graphs-card">
-          <div class="graph-div">
-            <mat-card class="graph-card">
+          <div class="graph-div" *ngIf="!hide1 || !hide2">
+            <mat-card *ngIf="!hide1" class="graph-card" (click)="expand1()">
               <tui-axes
                 class="axes"
                 [axisXLabels]="graph1LabelsX"
@@ -104,16 +104,16 @@
                 ></tui-bar-chart>
               </tui-axes>
             </mat-card>
-            <mat-card class="graph-card">
+            <mat-card  *ngIf="!hide2" class="graph-card" (click)="expand2()">
              P {{ petitesEntreprises.length }} -- M {{ moyennesEntreprises.length }} -- G {{ grandesEntreprises.length }}
             </mat-card>
           </div>
-          <div class="graph-div">
-            <mat-card class="graph-card">
-
+          <div class="graph-div" *ngIf="!hide3 || !hide4">
+            <mat-card *ngIf="!hide3" class="graph-card" (click)="expand3()">
+              a
             </mat-card>
-            <mat-card class="graph-card">
-
+            <mat-card *ngIf="!hide4" class="graph-card" (click)="expand4()">
+              b
             </mat-card>
           </div>
         </mat-card>

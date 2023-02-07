@@ -38,7 +38,7 @@ export const environment = {
       infosContact: {
         contactPageTitle: "Vous souhaitez nous contacter?",
         contactValue : "Vous ne trouvez pas la réponse à votre question ?\n" +
-          "Nous restons à votre disposition via ce formulaire de contact ",
+          "Nous restons à votre disposition via ce formulaire de contact",
         contactTelephoneName: "TELEPHONE",
         contactTelephoneValue: "04 74 16 18 38",
         contactAdresseName: "ADRESSE",
