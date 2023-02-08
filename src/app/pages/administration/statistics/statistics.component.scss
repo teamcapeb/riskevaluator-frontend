@@ -3,16 +3,19 @@
 }
 
 ::ng-deep .mat-card-header-text {
-  margin: 0px;
+  margin: 0px !important;
 }
 
-.graph3 {
-  ::ng-deep .t-label-x {
-    transform: rotate(-45deg);
-    padding-top: 8px;
-  }
+::ng-deep .t-label-x {
+  text-align: center;
+  transform: rotate(-45deg);
+  // padding-top: 0;
 }
 
+mat-form-field {
+  width: 200px;
+  font-size: small;
+}
 
 .dashboard {
   height: 100%;
@@ -28,6 +31,11 @@
 
 .sidebar-card {
   height: 78vh;
+}
+
+.dashboard-title {
+  text-align: center;
+  margin-bottom: 42px;
 }
 
 .dashboard-content {
@@ -117,6 +125,6 @@ tui-root {
 }
 
 tui-axes {
-  height: 80%;
+  height: 95%;
   width: 100%;
 }
