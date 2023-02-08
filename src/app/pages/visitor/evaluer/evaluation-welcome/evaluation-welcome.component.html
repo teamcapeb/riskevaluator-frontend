@@ -18,8 +18,9 @@
         <mat-label class="text-danger" *ngIf="frmEntreprise.controls['noSiret'].hasError('pattern')
         && (frmEntreprise.controls['noSiret']?.dirty || frmEntreprise.controls['noSiret']?.touched)">Il faut 14 chiffres</mat-label>
         <input type="number" matInput required placeholder="{{evaluerIHM.noSiret}}" id="noSiret"
-               formControlName="noSiret" (ngModelChange)="getEntrepriseBySiret()"
-               oninput="this.value=this.value.slice(0,14)">
+               formControlName="noSiret" [ngClass]="frmEntreprise.controls['noSiret'].invalid&&frmEntreprise.controls['noSiret']?.touched ? 'is-invalid' : ''"
+               (ngModelChange)="getEntrepriseBySiret()"
+               onKeyPress="if(this.value.length==14) return false;">
 
       </mat-form-field>
       <mat-form-field appearance="outline" class="questionOuverte">
