@@ -2,11 +2,11 @@
   <div class="dashboard-sidebar">
     <mat-card class="sidebar-card">
       <div class="dashboard-title">
-        <h2><b>Dashboard RiskEvaluator</b></h2>
+        <h2><b>Dashboard<br>RiskEvaluator</b></h2>
       </div>
       <div class="filtres">
         <div class="entreprise-filtre">
-          <mat-form-field style="width: 220px;" appearance="fill">
+          <mat-form-field appearance="fill">
             <mat-label>Entreprises</mat-label>
             <mat-select [formControl]="entrepriseControl" multiple>
               <mat-select-trigger>
@@ -26,7 +26,7 @@
           </mat-form-field>
         </div>
         <div class="questionnaire-filtre">
-          <mat-form-field style="width: 220px;" appearance="fill">
+          <mat-form-field appearance="fill">
             <mat-label>Questionnaires</mat-label>
             <mat-select [formControl]="questionnaireControl" multiple>
               <mat-select-trigger>
@@ -41,7 +41,7 @@
           </mat-form-field>
         </div>
         <div class="metier-filtre">
-          <mat-form-field style="width: 220px;" appearance="fill">
+          <mat-form-field appearance="fill">
             <mat-label>Métiers</mat-label>
             <mat-select [formControl]="metierControl" multiple>
               <mat-select-trigger>
@@ -130,7 +130,7 @@
               Nb Categories {{ this.filteredCategorieLibelles.length }}
             </mat-card>
           </div>
-          <div class="graph-div graph3" *ngIf="!hide3 || !hide4">
+          <div class="graph-div" *ngIf="!hide3 || !hide4">
             <mat-card *ngIf="!hide3" class="graph-card" (click)="expand3()">
               <mat-card-header>
                 <mat-card-title style="font-size: 11px;">Score moyen par métier</mat-card-title>
