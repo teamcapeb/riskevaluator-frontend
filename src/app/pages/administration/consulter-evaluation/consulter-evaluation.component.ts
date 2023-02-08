@@ -53,8 +53,8 @@ export class ConsulterEvaluationComponent implements OnInit {
     // this.onGetAllEvaluation();
 
     this.entrepriseService.getAll().subscribe((res) => {
-      this.entreprises$ = this.sortEntreprises(res);
-      this.filteredEntreprises = this.sortEntreprises(res);
+      this.entreprises$ = this.sortEntreprises(res.filter(entreprise => entreprise.evaluations?.length > 0));
+      this.filteredEntreprises = this.sortEntreprises(res.filter(entreprise => entreprise.evaluations?.length > 0));
       this.entreprises$.forEach((res,index)=>{
         this.thematiques[index] = [];
         res.evaluations.forEach(evaluation=>{
