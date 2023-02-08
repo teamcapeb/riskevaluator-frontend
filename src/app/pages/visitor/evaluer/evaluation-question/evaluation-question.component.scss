@@ -1,10 +1,10 @@
 // Taille min et max des entrées
 .choixUniqueQuestionButtons {
   width: 41vw;
-
-  margin-bottom: 1.7%;
+  // margin-top: 1.7%;
+  // margin-bottom: 1.7%;
   border: 1px solid rgba(202, 202, 202, 0.6);
-  border-radius: 2%;
+  border-radius: 3%;
   text-align: left;
   color: #797979;
   font-size: 1vw;
@@ -12,7 +12,8 @@
 }
 
 .choixUniqueQuestionButtons:hover {
-  border: 2px solid rgb(0, 0, 0);
+  border-color: black;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
 

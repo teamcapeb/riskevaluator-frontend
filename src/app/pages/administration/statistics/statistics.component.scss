@@ -2,6 +2,18 @@
   background-color: white !important;
 }
 
+::ng-deep .mat-card-header-text {
+  margin: 0px;
+}
+
+.graph3 {
+  ::ng-deep .t-label-x {
+    transform: rotate(-45deg);
+    padding-top: 8px;
+  }
+}
+
+
 .dashboard {
   height: 100%;
   display: flex;
@@ -27,18 +39,32 @@
 }
 
 .numeric-card {
+  padding: 0;
+  margin: 0;
   flex: 1;
   text-align: center;
   font-weight: bolder;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
 }
 
 .header-card {
   display: flex;
   gap: 48px;
+  height: 14vh;
 }
 
 .number {
-  font-size: large;
+  font-size: 16px;
+  padding-top: 5px;
+  margin: 0;
+}
+
+.title-numberic-card {
+  font-size: 16px;
+  padding-top: 6px;
+  margin: 0;
 }
 
 .graphs-card {
@@ -51,6 +77,7 @@
   align-items: center;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 .graph-div {
@@ -69,7 +96,7 @@
 }
 
 .dashboard-graphs {
-  flex: 4;
+  flex: 5;
 }
 
 .graphs {
@@ -84,7 +111,12 @@
   align-items: center;
 }
 
-tui-axes {
+tui-root {
   height: 100%;
+  width: 100%;
+}
+
+tui-axes {
+  height: 80%;
   width: 100%;
 }

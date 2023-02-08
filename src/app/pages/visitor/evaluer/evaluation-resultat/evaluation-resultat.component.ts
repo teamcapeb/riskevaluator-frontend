@@ -196,7 +196,7 @@ export class EvaluationResultatComponent implements OnInit {
                 text: ''+wEntreprise?.nomEntreprise,
                 bold: true
               },
-              { text: 'Siret: '+wEntreprise?.noSiret },
+              { text: 'SIRET: '+wEntreprise?.noSiret },
               { text: 'Date de création: '+wEntreprise?.anneeDeCreation },
             ],
             [

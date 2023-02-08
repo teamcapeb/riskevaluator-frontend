@@ -35,7 +35,8 @@
                   (+{{(questionnaireControl.value?.length || 0) - 1}} {{questionnaireControl.value?.length === 2 ? 'autre' : 'autres'}})
                 </span>
               </mat-select-trigger>
-              <mat-option *ngFor="let questionnaire of allQuestionnaires" [value]="questionnaire.thematique">{{questionnaire?.thematique}}</mat-option>
+              <mat-option #matOption *ngFor="let questionnaire of allQuestionnaires" [value]="questionnaire.thematique"
+                (click)="selectQuestionnaire(questionnaire, matOption.selected)">{{questionnaire?.thematique}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -73,15 +74,15 @@
     <div class="dashboard-header">
       <mat-card class="header-card">
         <mat-card class="numeric-card">
-          <p>Nombre d'entreprises</p>
+          <p class="title-numberic-card">Nombre d'entreprises</p>
           <p class="number">{{ filteredEntreprises.length }}</p>
         </mat-card>
         <mat-card class="numeric-card">
-          <p>Nombre de métiers</p>
+          <p class="title-numberic-card">Nombre de métiers</p>
           <p class="number">{{ filteredMetiers.length }}</p>
         </mat-card>
         <mat-card class="numeric-card">
-          <p>Nombre d'évaluations</p>
+          <p class="title-numberic-card">Nombre d'évaluations</p>
           <p  class="number">{{ filteredEvaluations.length }}</p>
         </mat-card>
       </mat-card>
@@ -91,29 +92,66 @@
         <mat-card class="graphs-card">
           <div class="graph-div" *ngIf="!hide1 || !hide2">
             <mat-card *ngIf="!hide1" class="graph-card" (click)="expand1()">
-              <tui-axes
+              <mat-card-header>
+                <mat-card-title style="font-size: 11px;">Score moyen par taille d'entreprise</mat-card-title>
+              </mat-card-header>
+              <tui-root>
+                <tui-axes
+                  class="axes"
+                  [axisXLabels]="graph1LabelsX"
+                  [axisYLabels]="graph1LabelsY"
+                >
+                  <tui-bar-chart
+                    [max]="100"
+                    [value]="scoresMoyenGraph1"
+                    [tuiHintAppearance]="appearance"
+                    [tuiHintContent]="hint"
+                  ></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
+            </mat-card>
+            <mat-card  *ngIf="!hide2" class="graph-card" (click)="expand2()">
+              <mat-card-header>
+                <mat-card-title style="font-size: 11px;">Nombre de réponses par questionnaire</mat-card-title>
+              </mat-card-header>
+              <!-- <tui-axes
                 class="axes"
                 [axisXLabels]="graph1LabelsX"
                 [axisYLabels]="graph1LabelsY"
                 >
                 <tui-bar-chart
-                    [max]="100"
-                    [value]="value"
+                    [max]="50"
+                    [value]="scoresMoyenGraph2"
                     [tuiHintAppearance]="appearance"
                     [tuiHintContent]="hint"
                 ></tui-bar-chart>
-              </tui-axes>
-            </mat-card>
-            <mat-card  *ngIf="!hide2" class="graph-card" (click)="expand2()">
-             P {{ petitesEntreprises.length }} -- M {{ moyennesEntreprises.length }} -- G {{ grandesEntreprises.length }}
+              </tui-axes> -->
+              Nb Evals {{ this.filteredEvaluations.length }}<br>
+              Nb Categories {{ this.filteredCategorieLibelles.length }}
             </mat-card>
           </div>
-          <div class="graph-div" *ngIf="!hide3 || !hide4">
+          <div class="graph-div graph3" *ngIf="!hide3 || !hide4">
             <mat-card *ngIf="!hide3" class="graph-card" (click)="expand3()">
-              a
+              <mat-card-header>
+                <mat-card-title style="font-size: 11px;">Score moyen par métier</mat-card-title>
+              </mat-card-header>
+              <tui-root>
+                <tui-axes *ngIf="scoresMetiers.length > 0"
+                          [axisXLabels]="metierNames"
+                          [axisYLabels]="graph1LabelsY">
+                  <tui-bar-chart
+                    [max]="100"
+                    [value]="scoresMetiers"
+                    [tuiHintAppearance]="appearance"
+                    [tuiHintContent]="hint"></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
             </mat-card>
             <mat-card *ngIf="!hide4" class="graph-card" (click)="expand4()">
-              b
+              <mat-card-header>
+                <mat-card-title style="font-size: 11px;">Nombre d'évaluations par catégorie de question</mat-card-title>
+              </mat-card-header>
+              {{ scoresMetiers | json }}
             </mat-card>
           </div>
         </mat-card>
@@ -121,3 +159,5 @@
     </div>
   </div>
 </div>
+
+<!-- <iframe title="Capeb Analytics" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=b7f7017c-5de6-42fd-9760-8c572153c0f1&autoAuth=true&ctid=475a14ea-12e0-4b5a-a42c-10fe6d8d707f" frameborder="0" allowFullScreen="true"></iframe> -->
