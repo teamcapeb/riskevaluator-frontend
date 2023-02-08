@@ -17,7 +17,7 @@ export class DetailsEntrepriseComponent implements OnInit {
 
   // décalaration des variables
 
-  dataSource: IDetailsEvaluations[];
+  dataSource: IDetailsEvaluations[] = [];
   displayedColumns: string[] = [];
   entreprise: IEntreprise;
   numSiret: number;
