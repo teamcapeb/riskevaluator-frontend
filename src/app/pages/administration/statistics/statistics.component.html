@@ -1,4 +1,4 @@
-<div class="dashboard">
+<!-- <div class="dashboard">
   <div class="dashboard-sidebar">
     <mat-card class="sidebar-card">
       <div class="dashboard-title">
@@ -74,15 +74,15 @@
     <div class="dashboard-header">
       <mat-card class="header-card">
         <mat-card class="numeric-card">
-          <p class="title-numberic-card">Nombre d'entreprises</p>
+          <p class="title-numeric-card">Nombre d'entreprises</p>
           <p class="number">{{ filteredEntreprises.length }}</p>
         </mat-card>
         <mat-card class="numeric-card">
-          <p class="title-numberic-card">Nombre de métiers</p>
+          <p class="title-numeric-card">Nombre de métiers</p>
           <p class="number">{{ filteredMetiers.length }}</p>
         </mat-card>
         <mat-card class="numeric-card">
-          <p class="title-numberic-card">Nombre d'évaluations</p>
+          <p class="title-numeric-card">Nombre d'évaluations</p>
           <p  class="number">{{ filteredEvaluations.length }}</p>
         </mat-card>
       </mat-card>
@@ -93,7 +93,7 @@
           <div class="graph-div" *ngIf="!hide1 || !hide2">
             <mat-card *ngIf="!hide1" class="graph-card" (click)="expand1()">
               <mat-card-header>
-                <mat-card-title style="font-size: 11px;">Score moyen par taille d'entreprise</mat-card-title>
+                <mat-card-title>Score moyen par taille d'entreprise</mat-card-title>
               </mat-card-header>
               <tui-root>
                 <tui-axes
@@ -105,27 +105,15 @@
                     [max]="100"
                     [value]="scoresMoyenGraph1"
                     [tuiHintAppearance]="appearance"
-                    [tuiHintContent]="hint"
+                    [tuiHintContent]="hint3"
                   ></tui-bar-chart>
                 </tui-axes>
               </tui-root>
             </mat-card>
             <mat-card  *ngIf="!hide2" class="graph-card" (click)="expand2()">
               <mat-card-header>
-                <mat-card-title style="font-size: 11px;">Nombre de réponses par questionnaire</mat-card-title>
+                <mat-card-title>Nombre de réponses par questionnaire</mat-card-title>
               </mat-card-header>
-              <!-- <tui-axes
-                class="axes"
-                [axisXLabels]="graph1LabelsX"
-                [axisYLabels]="graph1LabelsY"
-                >
-                <tui-bar-chart
-                    [max]="50"
-                    [value]="scoresMoyenGraph2"
-                    [tuiHintAppearance]="appearance"
-                    [tuiHintContent]="hint"
-                ></tui-bar-chart>
-              </tui-axes> -->
               Nb Evals {{ this.filteredEvaluations.length }}<br>
               Nb Categories {{ this.filteredCategorieLibelles.length }}
             </mat-card>
@@ -133,7 +121,7 @@
           <div class="graph-div" *ngIf="!hide3 || !hide4">
             <mat-card *ngIf="!hide3" class="graph-card" (click)="expand3()">
               <mat-card-header>
-                <mat-card-title style="font-size: 11px;">Score moyen par métier</mat-card-title>
+                <mat-card-title>Score moyen par métier</mat-card-title>
               </mat-card-header>
               <tui-root>
                 <tui-axes *ngIf="scoresMetiers.length > 0"
@@ -143,18 +131,197 @@
                     [max]="100"
                     [value]="scoresMetiers"
                     [tuiHintAppearance]="appearance"
-                    [tuiHintContent]="hint"></tui-bar-chart>
+                    [tuiHintContent]="hint3"></tui-bar-chart>
                 </tui-axes>
               </tui-root>
             </mat-card>
             <mat-card *ngIf="!hide4" class="graph-card" (click)="expand4()">
               <mat-card-header>
-                <mat-card-title style="font-size: 11px;">Nombre d'évaluations par catégorie de question</mat-card-title>
+                <mat-card-title>Nombre d'évaluations par catégorie de question</mat-card-title>
               </mat-card-header>
-              {{ scoresMetiers | json }}
+              <tui-root>
+                <tui-axes *ngIf="nbEvalsParLibelle.length > 0"
+                          [axisXLabels]="libelles"
+                          [axisYLabels]="graph4LabelsY">
+                  <tui-bar-chart
+                    [max]="20"
+                    [value]="nbEvalsParLibelle"
+                    [tuiHintAppearance]="appearance"
+                    [tuiHintContent]="hint4"></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
             </mat-card>
           </div>
         </mat-card>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="dashboard">
+  <div class="dashboard-sidebar">
+    <mat-card class="sidebar-card">
+      <div class="dashboard-title">
+        <h2><b>Dashboard<br>RiskEvaluator</b></h2>
+      </div>
+      <div class="filtres">
+        <div class="entreprise-filtre">
+          <mat-form-field appearance="fill">
+            <mat-label>Entreprises</mat-label>
+            <mat-select [formControl]="entrepriseControl" multiple>
+              <mat-select-trigger>
+                {{entrepriseControl.value?.[0] || ''}}
+                <span *ngIf="(entrepriseControl.value?.length || 0) > 1" class="example-additional-selection">
+                  (+{{(entrepriseControl.value?.length || 0) - 1}} {{entrepriseControl.value?.length === 2 ? 'autre' : 'autres'}})
+                </span>
+              </mat-select-trigger>
+              <mat-option #matOption *ngFor="let entreprise of allEntreprises" [value]="entreprise.nomEntreprise"
+                (click)="selectEntreprise(entreprise, matOption.selected)">
+                {{ entreprise?.nomEntreprise }}
+                <span style="font-size: 11px;">
+                  {{ " (SIRET: " + (entreprise?.noSiret) + ")" }}
+                </span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="questionnaire-filtre">
+          <mat-form-field appearance="fill">
+            <mat-label>Questionnaires</mat-label>
+            <mat-select [formControl]="questionnaireControl" multiple>
+              <mat-select-trigger>
+                {{questionnaireControl.value?.[0] || ''}}
+                <span *ngIf="(questionnaireControl.value?.length || 0) > 1" class="example-additional-selection">
+                  (+{{(questionnaireControl.value?.length || 0) - 1}} {{questionnaireControl.value?.length === 2 ? 'autre' : 'autres'}})
+                </span>
+              </mat-select-trigger>
+              <mat-option #matOption *ngFor="let questionnaire of allQuestionnaires" [value]="questionnaire.thematique"
+                (click)="selectQuestionnaire(questionnaire, matOption.selected)">{{questionnaire?.thematique}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="metier-filtre">
+          <mat-form-field appearance="fill">
+            <mat-label>Métiers</mat-label>
+            <mat-select [formControl]="metierControl" multiple>
+              <mat-select-trigger>
+                {{metierControl.value?.[0] || ''}}
+                <span *ngIf="(metierControl.value?.length || 0) > 1" class="example-additional-selection">
+                  (+{{(metierControl.value?.length || 0) - 1}} {{metierControl.value?.length === 2 ? 'autre' : 'autres'}})
+                </span>
+              </mat-select-trigger>
+              <mat-option #matOption *ngFor="let metier of allMetiers" [value]="metier.nomMetier"
+                (click)="selectMetier(metier, matOption.selected)">{{metier?.nomMetier}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Plage de dates</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+              <input matStartDate formControlName="start" placeholder="Start date">
+              <input matEndDate formControlName="end" placeholder="End date">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div class="dashboard-content">
+    <div class="dashboard-header">
+      <div class="header-card">
+        <mat-card class="numeric-card">
+          <p class="title-numeric-card">Nombre d'entreprises</p>
+          <p class="number">{{ filteredEntreprises.length }}</p>
+        </mat-card>
+        <mat-card class="numeric-card">
+          <p class="title-numeric-card">Nombre de métiers</p>
+          <p class="number">{{ filteredMetiers.length }}</p>
+        </mat-card>
+        <mat-card class="numeric-card">
+          <p class="title-numeric-card">Nombre d'évaluations</p>
+          <p  class="number">{{ filteredEvaluations.length }}</p>
+        </mat-card>
+      </div>
+    </div>
+    <div class="dashboard-graphs">
+      <div class="graphs">
+        <div class="graphs-card">
+          <div class="graph-div graph1n2" *ngIf="!hide1 || !hide2">
+            <mat-card *ngIf="!hide1" class="graph-card" [ngClass]="{'expanded': isExpanded1}">
+              <mat-card-header style="display: flex; justify-content: space-between;">
+                <mat-card-title>Score moyen par taille d'entreprise</mat-card-title>
+                <span class="fa-solid fa-expand" (click)="expand1()"></span>
+              </mat-card-header>
+              <tui-root>
+                <tui-axes
+                  class="axes"
+                  [axisXLabels]="graph1LabelsX"
+                  [axisYLabels]="graph1LabelsY"
+                >
+                  <tui-bar-chart
+                    [max]="100"
+                    [value]="scoresMoyenGraph1"
+                    [tuiHintAppearance]="appearance"
+                    [tuiHintContent]="hint3"
+                  ></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
+            </mat-card>
+            <mat-card *ngIf="!hide2" class="graph-card" [ngClass]="{'expanded': isExpanded2}">
+              <mat-card-header style="display: flex; justify-content: space-between;">
+                <mat-card-title>Nombre de réponses par questionnaire</mat-card-title>
+                <span class="fa-solid fa-expand" (click)="expand2()"></span>
+              </mat-card-header>
+              <div class="ring-chart">
+                <tui-ring-chart
+                  [size]="isExpanded2 ? 'xl' : 's'"
+                  class="tui-space_right-4"
+                  [value]="value"
+                ></tui-ring-chart>
+              </div>
+            </mat-card>
+          </div>
+          <div class="graph-div graph3n4" *ngIf="!hide3 || !hide4">
+            <mat-card *ngIf="!hide3" class="graph-card" [ngClass]="{'expanded': isExpanded3}">
+              <mat-card-header style="display: flex; justify-content: space-between;">
+                <mat-card-title>Score moyen par métier</mat-card-title>
+                <span class="fa-solid fa-expand" (click)="expand3()"></span>
+              </mat-card-header>
+              <tui-root>
+                <tui-axes *ngIf="scoresMetiers.length > 0"
+                          [axisXLabels]="metierNames"
+                          [axisYLabels]="graph1LabelsY">
+                  <tui-bar-chart
+                    [max]="100"
+                    [value]="scoresMetiers"
+                    [tuiHintAppearance]="appearance"
+                    [tuiHintContent]="hint3"></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
+            </mat-card>
+            <mat-card *ngIf="!hide4" class="graph-card" [ngClass]="{'expanded': isExpanded4}">
+              <mat-card-header style="display: flex; justify-content: space-between;">
+                <mat-card-title>Nombre d'évaluations par catégorie de question</mat-card-title>
+                <span class="fa-solid fa-expand" (click)="expand4()"></span>
+              </mat-card-header>
+              <tui-root>
+                <tui-axes *ngIf="nbEvalsParLibelle.length > 0"
+                          [axisXLabels]="libelles"
+                          [axisYLabels]="graph4LabelsY">
+                  <tui-bar-chart
+                    [max]="20"
+                    [value]="nbEvalsParLibelle"
+                    [tuiHintAppearance]="appearance"
+                    [tuiHintContent]="hint4"></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
+            </mat-card>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -1,3 +1,4 @@
+import { EvalCategorieProjectionResponse } from './../../../objects/EvalCategorieProjectionResponse';
 import { EvaluationApiService } from "@services/serviceEvaluation/evaluation-api.service";
 import { CategorieQuestionService } from "@services/serviceCategorieQuestion/categorie-question.service";
 import { QuestionnaireService } from "@services/serviceQuestionnaire/questionnaire.service";
@@ -67,26 +68,38 @@ export class StatisticsComponent implements OnInit {
 
   graph1LabelsX: string[] = ["Petites", "Moyennes", "Grandes"];
   graph1LabelsY: string[] = ["0%", "100%"];
-  graph2LabelsX: string[] = [...this.filteredCategorieLibelles];
-  graph2LabelsY: string[] = ["0", this.filteredEvaluations.length.toString()];
+  graph2LabelsX: string[] = [];
+  graph2LabelsY: string[] = ["0", "100"];
   graph3LabelsX: string[] = [];
   graph3LabelsY: string[] = [];
   graph4LabelsX: string[] = [];
-  graph4LabelsY: string[] = [];
+  graph4LabelsY: string[] = ["0", "100"];
 
-  scoresMoyenGraph1: number[][] = [];
+  scoresMoyenGraph1: any;
   scoresMoyenGraph2: number[] = [];
 
   readonly appearances = ["onDark", "error"];
   appearance = "onDark";
 
-  scoresMetiers: number[][] = [];
   metierNames: string[];
+  scoresMetiers: number[][] = [];
 
-  readonly hint = ({ $implicit }: TuiContextWithImplicit<number>): string =>
+  libelles: string[];
+  nbEvalsParLibelle: number[][] = [];
+
+  readonly value = [40, 30, 20, 10];
+
+  readonly hint3 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
   this.scoresMetiers
       .reduce(
         (result, set) => `${result}${tuiFormatNumber(set[$implicit])}%\n`,
+        ''
+      ).trim();
+
+  readonly hint4 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
+  this.nbEvalsParLibelle
+      .reduce(
+        (result, set) => `${result}${tuiFormatNumber(set[$implicit])}\n`,
         ''
       ).trim();
 
@@ -130,14 +143,23 @@ export class StatisticsComponent implements OnInit {
       this.cdr.detectChanges();
     });
     this.metierService.getScoreParMetier()
-        .subscribe((response: MetierScoreProjectionResponse[]) => {
-          this.metierNames = response.map(item => item.nomMetier);
-          this.scoresMetiers.push(
-            response.map(item => parseFloat(item.scoreMoyen.toFixed(2)))
-          );
-          console.log(this.scoresMetiers);
-          this.cdr.detectChanges();
-        });
+      .subscribe((response: MetierScoreProjectionResponse[]) => {
+        // TODO filtrage
+        this.metierNames = response.map(item => item.nomMetier);
+        this.scoresMetiers.push(
+          response.map(item => parseFloat(item.scoreMoyen.toFixed(2)))
+        );
+        this.cdr.detectChanges();
+      });
+    this.evaluationService.getNbEvalsParCategorie()
+      .subscribe((response: EvalCategorieProjectionResponse[]) => {
+        // TODO filtrage
+        this.libelles = response.map(item => item.libelle);
+        this.nbEvalsParLibelle.push(
+          response.map(item => item.count)
+        )
+        this.cdr.detectChanges();
+      });
   }
 
   sortEntreprises(entreprises: IEntreprise[]): IEntreprise[] {
@@ -314,65 +336,66 @@ export class StatisticsComponent implements OnInit {
   }
 
   scoresMoyensTailleEntreprises() {
-    // console.log(this.petitesEntreprises);
-    // console.log(this.moyennesEntreprises);
-    // console.log(this.grandesEntreprises);
-    let sumScorePetites: number = 0;
-    let sumScoreMoyennes: number = 0;
-    let sumScoreGrandes: number = 0;
+    // TODO GERER LES DATES
+    console.log(this.petitesEntreprises);
+    console.log(this.moyennesEntreprises);
+    console.log(this.grandesEntreprises);
 
-    let evalsEntreprise: IEvaluation[] = [];
-    let dates : string[] = [];
+    // let sumScorePetites: number = 0;
+    // let sumScoreMoyennes: number = 0;
+    // let sumScoreGrandes: number = 0;
 
-    this.petitesEntreprises.forEach((etp) => {
-      sumScorePetites += etp.evaluations.map((evl) => {
-        // TODO
-        return evl.scoreGeneraleEvaluation;
-      }).reduce((total, num) => total + num, 0);
-    });
-    this.moyennesEntreprises.forEach((etp) => {
-      sumScoreMoyennes += etp.evaluations.map((evl) => {
-        // TODO
-        return evl.scoreGeneraleEvaluation;
-      }).reduce((total, num) => total + num, 0);
-    });
-    this.grandesEntreprises.forEach((etp) => {
-      sumScoreGrandes += etp.evaluations.map((evl) => {
-        // TODO
-        // this.evaluationService.get(evl.idEvaluation).subscribe((ev) => {
-        //   evalsEntreprise.push(ev);
-        //   console.log(evalsEntreprise);
-        //   dates.push(ev.date);
-        //   console.log(dates);
-        //   const parsedDates = dates.map(date => new Date(date));
-        //   const sortedDates = parsedDates.sort((a: any, b: any) => a - b);
-        //   const mostRecentDate = sortedDates[sortedDates.length - 1];
-        //   console.log(mostRecentDate);
-        // });
+    // let nbQuestionnaires = this.filteredQuestionnaires.length;
+    // let evalsEntreprise: IEvaluation[] = [];
+    // let dates : string[] = [];
 
-        return evl.scoreGeneraleEvaluation;
-      }).reduce((total, num) => total + num, 0);
-    });
+    // this.petitesEntreprises.forEach((etp) => {
+    //   for (let i=0; i<nbQuestionnaires; i++) {
+    //     this.scoresMoyenGraph1;
+    //   }
+    // });
 
-    if (this.petitesEntreprises.length > 0) {
-      this.scoreMoyenPetitesEntreprises = sumScorePetites / this.petitesEntreprises.length;
-    } else if (this.petitesEntreprises.length == 0) {
-      this.scoreMoyenPetitesEntreprises = 0;
-    }
-    if (this.moyennesEntreprises.length > 0) {
-      this.scoreMoyenMoyennesEntreprises = sumScoreMoyennes / this.moyennesEntreprises.length;
-    } else if (this.moyennesEntreprises.length == 0) {
-      this.scoreMoyenMoyennesEntreprises = 0;
-    }
-    if (this.grandesEntreprises.length > 0) {
-      this.scoreMoyenGrandesEntreprises = sumScoreGrandes / this.grandesEntreprises.length;
-    } else if (this.grandesEntreprises.length == 0) {
-      this.scoreMoyenGrandesEntreprises = 0;
-    }
+    // this.moyennesEntreprises.forEach((etp) => {
+    //   sumScoreMoyennes += etp.evaluations.map((evl) => {
+    //     // TODO
+    //     return evl.scoreGeneraleEvaluation;
+    //   }).reduce((total, num) => total + num, 0);
+    // });
+
+
+    // this.grandesEntreprises.forEach((etp) => {
+    //   sumScoreGrandes += etp.evaluations.map((evl) => {
+    //     // TODO
+    //     return evl.scoreGeneraleEvaluation;
+    //   }).reduce((total, num) => total + num, 0);
+    // });
+
+    // if (this.petitesEntreprises.length > 0) {
+    //   this.scoreMoyenPetitesEntreprises = sumScorePetites / this.petitesEntreprises.length;
+    // } else if (this.petitesEntreprises.length == 0) {
+    //   this.scoreMoyenPetitesEntreprises = 0;
+    // }
+    // if (this.moyennesEntreprises.length > 0) {
+    //   this.scoreMoyenMoyennesEntreprises = sumScoreMoyennes / this.moyennesEntreprises.length;
+    // } else if (this.moyennesEntreprises.length == 0) {
+    //   this.scoreMoyenMoyennesEntreprises = 0;
+    // }
+    // if (this.grandesEntreprises.length > 0) {
+    //   this.scoreMoyenGrandesEntreprises = sumScoreGrandes / this.grandesEntreprises.length;
+    // } else if (this.grandesEntreprises.length == 0) {
+    //   this.scoreMoyenGrandesEntreprises = 0;
+    // }
     // console.log(this.scoreMoyenPetitesEntreprises);
     // console.log(this.scoreMoyenMoyennesEntreprises);
     // console.log(this.scoreMoyenGrandesEntreprises);
     this.setValueGraph1();
+  }
+
+  setValueGraph1() {
+    this.scoresMoyenGraph1 = [[this.scoreMoyenPetitesEntreprises,
+      this.scoreMoyenMoyennesEntreprises,
+      this.scoreMoyenGrandesEntreprises]
+    ];
   }
 
   updateFilteredMetiersByEntreprises() {
@@ -468,12 +491,12 @@ export class StatisticsComponent implements OnInit {
     return res;
   }
 
-  setValueGraph1() {
-    this.scoresMoyenGraph1 = [[this.scoreMoyenPetitesEntreprises,
-      this.scoreMoyenMoyennesEntreprises,
-      this.scoreMoyenGrandesEntreprises]
-    ];
-  }
+  // setValueGraph1() {
+  //   this.scoresMoyenGraph1 = [[this.scoreMoyenPetitesEntreprises,
+  //     this.scoreMoyenMoyennesEntreprises,
+  //     this.scoreMoyenGrandesEntreprises]
+  //   ];
+  // }
 
   setValueGraph2() {
     this.scoresMoyenGraph2 = [this.scoreMoyenPetitesEntreprises,

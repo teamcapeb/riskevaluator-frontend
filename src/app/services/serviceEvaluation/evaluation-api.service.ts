@@ -7,6 +7,7 @@ import IQuestion from "@/interfaces/IQuestion";
 import { map } from "rxjs/operators";
 import IReponse from "@/interfaces/IReponse";
 import IEvaluation from '@/interfaces/IEvaluation';
+import { EvalCategorieProjectionResponse } from '@/objects/EvalCategorieProjectionResponse';
 
 
 const API_URL = environment.apiUrl +'/evaluations';
@@ -36,5 +37,9 @@ export class EvaluationApiService {
 
   delete(evaluationId: number): Observable<any> {
     return this.http.delete(`${API_URL}/${evaluationId}`);
+  }
+
+  getNbEvalsParCategorie(): Observable<EvalCategorieProjectionResponse[]> {
+    return this.http.get<EvalCategorieProjectionResponse[]>(`${API_URL}/categories`);
   }
 }
