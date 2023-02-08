@@ -120,7 +120,7 @@ import { DetailsEntrepriseComponent } from "./pages/administration/details-entre
 import {MatTableModule} from "@angular/material/table";
 import { StatisticsComponent } from "./pages/administration/statistics/statistics.component";
 import { EvaluationResultatSuppressionComponent } from './pages/visitor/evaluer/evaluation-resultat/evaluation-resultat-suppression/evaluation-resultat-suppression.component';
-import { TuiHintModule } from "@taiga-ui/core";
+import { TuiHintModule, TuiRootModule } from "@taiga-ui/core";
 
 registerLocaleData(localeEn, "en-EN");
 
@@ -255,7 +255,8 @@ registerLocaleData(localeEn, "en-EN");
     NgChartsModule,
     MatCardModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    TuiRootModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

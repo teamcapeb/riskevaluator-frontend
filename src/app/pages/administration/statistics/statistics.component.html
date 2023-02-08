@@ -93,24 +93,26 @@
           <div class="graph-div" *ngIf="!hide1 || !hide2">
             <mat-card *ngIf="!hide1" class="graph-card" (click)="expand1()">
               <mat-card-header>
-                <mat-card-title style="font-size: 12px;">Score moyen par taille d'entreprise</mat-card-title>
+                <mat-card-title style="font-size: 11px;">Score moyen par taille d'entreprise</mat-card-title>
               </mat-card-header>
-              <tui-axes
-                class="axes"
-                [axisXLabels]="graph1LabelsX"
-                [axisYLabels]="graph1LabelsY"
+              <tui-root>
+                <tui-axes
+                  class="axes"
+                  [axisXLabels]="graph1LabelsX"
+                  [axisYLabels]="graph1LabelsY"
                 >
-                <tui-bar-chart
+                  <tui-bar-chart
                     [max]="100"
                     [value]="scoresMoyenGraph1"
                     [tuiHintAppearance]="appearance"
                     [tuiHintContent]="hint"
-                ></tui-bar-chart>
-              </tui-axes>
+                  ></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
             </mat-card>
             <mat-card  *ngIf="!hide2" class="graph-card" (click)="expand2()">
               <mat-card-header>
-                <mat-card-title style="font-size: 12px;">Nombre d'évaluations par catégorie de question</mat-card-title>
+                <mat-card-title style="font-size: 11px;">Nombre d'évaluations par catégorie de question</mat-card-title>
               </mat-card-header>
               <!-- <tui-axes
                 class="axes"
@@ -131,13 +133,23 @@
           <div class="graph-div" *ngIf="!hide3 || !hide4">
             <mat-card *ngIf="!hide3" class="graph-card" (click)="expand3()">
               <mat-card-header>
-                <mat-card-title style="font-size: 12px;">Score moyen par métier</mat-card-title>
+                <mat-card-title style="font-size: 11px;">Score moyen par métier</mat-card-title>
               </mat-card-header>
-              FQuest {{ (filteredQuestionnaires).length }}
+              <tui-root>
+                <tui-axes *ngIf="scoresMetiers.length > 0"
+                          [axisXLabels]="metierNames"
+                          [axisYLabels]="graph1LabelsY">
+                  <tui-bar-chart
+                    [max]="100"
+                    [value]="scoresMetiers"
+                    [tuiHintAppearance]="appearance"
+                    [tuiHintContent]="hint2"></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
             </mat-card>
             <mat-card *ngIf="!hide4" class="graph-card" (click)="expand4()">
               <mat-card-header>
-                <mat-card-title style="font-size: 12px;">Nombre de réponses par questionnaire</mat-card-title>
+                <mat-card-title style="font-size: 11px;">Nombre de réponses par questionnaire</mat-card-title>
               </mat-card-header>
 
             </mat-card>
