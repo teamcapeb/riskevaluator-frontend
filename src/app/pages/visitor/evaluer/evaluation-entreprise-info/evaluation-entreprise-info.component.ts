@@ -17,8 +17,6 @@ export class EvaluationEntrepriseInfoComponent implements OnInit {
   evaluerIHM = environment.evaluerIHM.formulaireContact;
 
 
-
-
   constructor(private fb: FormBuilder, private evaluationService: EvaluationService, private route: Router) {
 
     this.frmEntreprise = this.initForm();
@@ -30,7 +28,6 @@ export class EvaluationEntrepriseInfoComponent implements OnInit {
   initForm(): FormGroup {
     return  this.fb.group(
       {
-        // email is required and must be a valid email email
         noSiret: [null, Validators.compose([
           Validators.required])
         ],
@@ -41,7 +38,6 @@ export class EvaluationEntrepriseInfoComponent implements OnInit {
         ]
       });
   }
-
 
   nextStep() {
     if(this.frmEntreprise.valid ) {

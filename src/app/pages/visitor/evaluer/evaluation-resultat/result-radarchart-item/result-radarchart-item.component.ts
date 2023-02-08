@@ -33,6 +33,7 @@ export class ResultRadarchartItemComponent implements OnInit {
   constructor(private evalTokenStorageService : EvalTokenStorageService) {}
   ngOnInit(): void {
     this.preparePrecoGlobale();
+    this.scorecategories$ = this.sortCategories(this.scorecategories$);
     let data : number[] = this.scorecategories$?.sort().map(item => +item.nbPoints);
     this.radarChartLabels = this.scorecategories$?.sort().map(item => item.categorieQuestion.libelle);
 
@@ -47,8 +48,6 @@ export class ResultRadarchartItemComponent implements OnInit {
   }
 
   preparePrecoGlobale(){
-
-
     if(this.evaluation$!=null) {
       this.scorecategories$ = this.evaluation$?.scoreCategories?.map( cat => {
         let temp = cat.categorieQuestion.preconisationsCategorie;
@@ -57,6 +56,7 @@ export class ResultRadarchartItemComponent implements OnInit {
       })
     }
   }
+
   public radarChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins:{
@@ -85,5 +85,19 @@ export class ResultRadarchartItemComponent implements OnInit {
       }
     }
   };
+
+  sortCategories(scoreCategories: IScoreCategory[]) {
+    return scoreCategories.sort(
+      (a, b) => {
+        if (a.categorieQuestion?.libelle.toUpperCase() < b.categorieQuestion?.libelle.toUpperCase()) {
+          return -1;
+        }
+        if (a.categorieQuestion?.libelle.toUpperCase() > b.categorieQuestion?.libelle.toUpperCase()) {
+          return 1;
+        }
+        return 0;
+      }
+    );
+  }
 
 }

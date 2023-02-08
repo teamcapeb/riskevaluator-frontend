@@ -8,9 +8,11 @@
     <span matTooltip="Vous devez renseigner tous les champs pour passer à la suite."
           matTooltipPosition="above" matTooltipClass="example-tooltip-red"
           [matTooltipDisabled]="!disableNextButton()">
-      <button mat-button [disabled] = "index.isFinished || (questionService.numberOfQuestions > questionService.numberChecked)" class="nextButton"
-        (click)="nextButtonClick()" id="nextButton">Suivant</button>
-      <button mat-button [disabled] = "!index.isFinished ||  (questionService.numberOfQuestions > questionService.numberChecked)  "  class="finishButton"
+      <button mat-button [disabled] = " (questionService.numberOfQuestions > questionService.numberChecked)"
+                         [hidden] = "index.isFinished "
+                         class="nextButton"
+                         (click)="nextButtonClick()" id="nextButton">Suivant</button>
+      <button mat-button [hidden] = "!index.isFinished ||  (questionService.numberOfQuestions > questionService.numberChecked)  "  class="finishButton"
         (click)="finishButtonClick()" id="finishButton" >Terminer</button>
     </span>
   </div>
