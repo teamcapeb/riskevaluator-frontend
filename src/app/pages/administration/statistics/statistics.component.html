@@ -74,15 +74,15 @@
     <div class="dashboard-header">
       <mat-card class="header-card">
         <mat-card class="numeric-card">
-          <p>Nombre d'entreprises</p>
+          <p class="title-numberic-card">Nombre d'entreprises</p>
           <p class="number">{{ filteredEntreprises.length }}</p>
         </mat-card>
         <mat-card class="numeric-card">
-          <p>Nombre de métiers</p>
+          <p class="title-numberic-card">Nombre de métiers</p>
           <p class="number">{{ filteredMetiers.length }}</p>
         </mat-card>
         <mat-card class="numeric-card">
-          <p>Nombre d'évaluations</p>
+          <p class="title-numberic-card">Nombre d'évaluations</p>
           <p  class="number">{{ filteredEvaluations.length }}</p>
         </mat-card>
       </mat-card>
@@ -112,7 +112,7 @@
             </mat-card>
             <mat-card  *ngIf="!hide2" class="graph-card" (click)="expand2()">
               <mat-card-header>
-                <mat-card-title style="font-size: 11px;">Nombre d'évaluations par catégorie de question</mat-card-title>
+                <mat-card-title style="font-size: 11px;">Nombre de réponses par questionnaire</mat-card-title>
               </mat-card-header>
               <!-- <tui-axes
                 class="axes"
@@ -130,7 +130,7 @@
               Nb Categories {{ this.filteredCategorieLibelles.length }}
             </mat-card>
           </div>
-          <div class="graph-div" *ngIf="!hide3 || !hide4">
+          <div class="graph-div graph3" *ngIf="!hide3 || !hide4">
             <mat-card *ngIf="!hide3" class="graph-card" (click)="expand3()">
               <mat-card-header>
                 <mat-card-title style="font-size: 11px;">Score moyen par métier</mat-card-title>
@@ -143,15 +143,15 @@
                     [max]="100"
                     [value]="scoresMetiers"
                     [tuiHintAppearance]="appearance"
-                    [tuiHintContent]="hint2"></tui-bar-chart>
+                    [tuiHintContent]="hint"></tui-bar-chart>
                 </tui-axes>
               </tui-root>
             </mat-card>
             <mat-card *ngIf="!hide4" class="graph-card" (click)="expand4()">
               <mat-card-header>
-                <mat-card-title style="font-size: 11px;">Nombre de réponses par questionnaire</mat-card-title>
+                <mat-card-title style="font-size: 11px;">Nombre d'évaluations par catégorie de question</mat-card-title>
               </mat-card-header>
-
+              {{ scoresMetiers | json }}
             </mat-card>
           </div>
         </mat-card>

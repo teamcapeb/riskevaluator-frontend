@@ -84,18 +84,12 @@ export class StatisticsComponent implements OnInit {
   metierNames: string[];
 
   readonly hint = ({ $implicit }: TuiContextWithImplicit<number>): string =>
-    this.scoresMoyenGraph1
-        .reduce(
-          (result, set) => `${result}${tuiFormatNumber(set[$implicit])}\n`,
-          ''
-        ).trim();
+  this.scoresMetiers
+      .reduce(
+        (result, set) => `${result}${tuiFormatNumber(set[$implicit])}%\n`,
+        ''
+      ).trim();
 
-  readonly hint2 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
-    this.scoresMetiers
-        .reduce(
-          (result, set) => `${result}${tuiFormatNumber(set[$implicit])}%\n`,
-          ''
-        ).trim();
   constructor(private evaluationService: EvaluationApiService,
               private entrepriseService: EntrepriseService,
               private metierService: MetierService,
@@ -320,9 +314,9 @@ export class StatisticsComponent implements OnInit {
   }
 
   scoresMoyensTailleEntreprises() {
-    console.log(this.petitesEntreprises);
-    console.log(this.moyennesEntreprises);
-    console.log(this.grandesEntreprises);
+    // console.log(this.petitesEntreprises);
+    // console.log(this.moyennesEntreprises);
+    // console.log(this.grandesEntreprises);
     let sumScorePetites: number = 0;
     let sumScoreMoyennes: number = 0;
     let sumScoreGrandes: number = 0;
@@ -375,9 +369,9 @@ export class StatisticsComponent implements OnInit {
     } else if (this.grandesEntreprises.length == 0) {
       this.scoreMoyenGrandesEntreprises = 0;
     }
-    console.log(this.scoreMoyenPetitesEntreprises);
-    console.log(this.scoreMoyenMoyennesEntreprises);
-    console.log(this.scoreMoyenGrandesEntreprises);
+    // console.log(this.scoreMoyenPetitesEntreprises);
+    // console.log(this.scoreMoyenMoyennesEntreprises);
+    // console.log(this.scoreMoyenGrandesEntreprises);
     this.setValueGraph1();
   }
 
@@ -477,13 +471,11 @@ export class StatisticsComponent implements OnInit {
   setValueGraph1() {
     this.scoresMoyenGraph1 = [[this.scoreMoyenPetitesEntreprises,
       this.scoreMoyenMoyennesEntreprises,
-      this.scoreMoyenGrandesEntreprises],
-      [0, 0, 0]
+      this.scoreMoyenGrandesEntreprises]
     ];
   }
 
   setValueGraph2() {
-
     this.scoresMoyenGraph2 = [this.scoreMoyenPetitesEntreprises,
       this.scoreMoyenMoyennesEntreprises,
       this.scoreMoyenGrandesEntreprises];

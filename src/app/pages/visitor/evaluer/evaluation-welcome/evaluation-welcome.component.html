@@ -1,26 +1,25 @@
 <div class="row justify-content-center" >
 
   <div class="col-md-12 introTitle">
-    Saisir les informations de votre Entreprise
+    Saisir les informations de votre entreprise
   </div>
 
   <div class="col-md-7 formulaire">
     <form [formGroup]="frmEntreprise">
       <mat-form-field appearance="outline" class="questionOuverte">
-        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['nomEntreprise'].hasError('required')&&frmEntreprise.controls['nomEntreprise']?.touched">Le nom de votre entreprise est obligatoire.</mat-label>
-        <mat-label  *ngIf="!frmEntreprise.controls['nomEntreprise'].invalid||!frmEntreprise.controls['nomEntreprise']?.touched">{{evaluerIHM.nomEntreprise}}</mat-label>
-        <input  matInput required placeholder="{{evaluerIHM.nomEntreprisePlaceHolder}}" id="nomEntreprise"
-               formControlName="nomEntreprise">
-      </mat-form-field>
-      <mat-form-field appearance="outline" class="questionOuverte">
-        <mat-label *ngIf="frmEntreprise.controls['noSiret'].valid">Numéro Siret</mat-label>
-        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['noSiret'].hasError('required')&&frmEntreprise.controls['noSiret']?.touched">Votre numero SIRET est obligatoire.</mat-label>
+        <mat-label *ngIf="frmEntreprise.controls['noSiret'].valid">Numéro SIRET</mat-label>
+        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['noSiret'].hasError('required')&&frmEntreprise.controls['noSiret']?.touched">Votre numéro SIRET est obligatoire.</mat-label>
         <mat-label class="text-danger" *ngIf="frmEntreprise.controls['noSiret'].hasError('pattern')
         && (frmEntreprise.controls['noSiret']?.dirty || frmEntreprise.controls['noSiret']?.touched)">Il faut 14 chiffres</mat-label>
         <input type="number" matInput required placeholder="{{evaluerIHM.noSiret}}" id="noSiret"
                formControlName="noSiret" (ngModelChange)="getEntrepriseBySiret()"
                oninput="this.value=this.value.slice(0,14)">
-
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="questionOuverte">
+        <mat-label class="text-danger" *ngIf="frmEntreprise.controls['nomEntreprise'].hasError('required')&&frmEntreprise.controls['nomEntreprise']?.touched">Le nom de votre entreprise est obligatoire.</mat-label>
+        <mat-label  *ngIf="!frmEntreprise.controls['nomEntreprise'].invalid||!frmEntreprise.controls['nomEntreprise']?.touched">{{evaluerIHM.nomEntreprise}}</mat-label>
+        <input  matInput required placeholder="{{evaluerIHM.nomEntreprisePlaceHolder}}" id="nomEntreprise"
+               formControlName="nomEntreprise">
       </mat-form-field>
       <mat-form-field appearance="outline" class="questionOuverte">
         <mat-label class="text-danger" *ngIf="frmEntreprise.controls['anneeDeCreation'].hasError('required')&&frmEntreprise.controls['anneeDeCreation']?.touched">Vous devez saisir l'année de création de votre entreprise. </mat-label>

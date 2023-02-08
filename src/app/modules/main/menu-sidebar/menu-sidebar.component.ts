@@ -67,18 +67,18 @@ export const ADMIN_MENU = [
   {
     name: 'Gestion questionnaire',
     path: ['/gestion-questionnaires'],
-    icon: "fa-solid fa-atom"
+    icon: "fa-solid fa-list-alt"
 
   },
   {
     name: 'Gestion métiers',
     path: ['/gestion-metiers'],
-    icon: "fa-solid fa-atom"
+    icon: "fa-solid fa-briefcase"
   },
   {
     name: 'Consulter évaluations',
     path: ['/consulter-evaluation'],
-    icon: "fa-solid fa-list"
+    icon: "fa-solid fa-book-open"
   },
   {
     name: 'Statistiques',
