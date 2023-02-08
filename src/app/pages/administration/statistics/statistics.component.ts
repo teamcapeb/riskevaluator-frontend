@@ -12,6 +12,7 @@ import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
 import IEvaluation from "@/interfaces/IEvaluation";
 import { TuiContextWithImplicit } from "@taiga-ui/cdk";
 import { MetierScoreProjectionResponse } from "@/objects/MetierScoreProjectionResponse";
+import { tuiFormatNumber } from "@taiga-ui/core";
 
 @Component({
   selector: "app-statistics",
@@ -74,16 +75,21 @@ export class StatisticsComponent implements OnInit {
 
   readonly appearances = ["onDark", "error"];
   appearance = "onDark";
-  readonly hint = ({ $implicit }: TuiContextWithImplicit<number>): string => {
-    let result = "";
-    this.value.forEach((set) => {
-      result += set[$implicit] + "\n";
-    });
-    console.log(result);
-    return result.trim();
-  };
 
 
+  readonly hint = ({ $implicit }: TuiContextWithImplicit<number>): string =>
+    this.value
+        .reduce(
+          (result, set) => `${result}${tuiFormatNumber(set[$implicit])}\n`,
+          ''
+        ).trim();
+
+  readonly hint2 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
+    this.scoresMetiers
+        .reduce(
+          (result, set) => `${result}${tuiFormatNumber(set[$implicit])}%\n`,
+          ''
+        ).trim();
   constructor(private evaluationService: EvaluationApiService,
               private entrepriseService: EntrepriseService,
               private metierService: MetierService,
@@ -121,13 +127,15 @@ export class StatisticsComponent implements OnInit {
       }));
     });
 
-    //this.metierService.getScoreParMetier()
-    //    .subscribe((response: MetierScoreProjectionResponse[]) => {
-    //      this.metierNames = response.map(item => item.nomMetier);
-    //      this.scoresMetiers.push(response.map(item => item.scoreMoyen));
-    //      console.log(this.scoresMetiers);
-    //      this.cdr.detectChanges();
-    //    });
+    this.metierService.getScoreParMetier()
+        .subscribe((response: MetierScoreProjectionResponse[]) => {
+          this.metierNames = response.map(item => item.nomMetier);
+          this.scoresMetiers.push(
+            response.map(item => parseFloat(item.scoreMoyen.toFixed(2)))
+          );
+          console.log(this.scoresMetiers);
+          this.cdr.detectChanges();
+        });
 
   }
 

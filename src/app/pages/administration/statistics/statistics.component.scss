@@ -51,6 +51,7 @@
   align-items: center;
   display: flex;
   justify-content: center;
+
 }
 
 .graph-div {
@@ -84,7 +85,8 @@
   align-items: center;
 }
 
-tui-axes {
-  height: 100%;
-  width: 100%;
+.axes {
+  height: 6rem;
+  width: 22rem;
 }
+

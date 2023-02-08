@@ -91,18 +91,20 @@
         <mat-card class="graphs-card">
           <div class="graph-div" *ngIf="!hide1 || !hide2">
             <mat-card *ngIf="!hide1" class="graph-card" (click)="expand1()">
-              <tui-axes
-                class="axes"
-                [axisXLabels]="graph1LabelsX"
-                [axisYLabels]="graph1LabelsY"
+              <tui-root>
+                <tui-axes
+                  class="axes"
+                  [axisXLabels]="graph1LabelsX"
+                  [axisYLabels]="graph1LabelsY"
                 >
-                <tui-bar-chart
+                  <tui-bar-chart
                     [max]="100"
                     [value]="value"
                     [tuiHintAppearance]="appearance"
                     [tuiHintContent]="hint"
-                ></tui-bar-chart>
-              </tui-axes>
+                  ></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
             </mat-card>
             <mat-card  *ngIf="!hide2" class="graph-card" (click)="expand2()">
              P {{ petitesEntreprises.length }} -- M {{ moyennesEntreprises.length }} -- G {{ grandesEntreprises.length }}
@@ -110,18 +112,18 @@
           </div>
           <div class="graph-div" *ngIf="!hide3 || !hide4">
             <mat-card *ngIf="!hide3" class="graph-card" (click)="expand3()">
-              <tui-axes *ngIf="scoresMetiers.length > 0"
-                class="axes"
-                [axisXLabels]="metierNames"
-                [axisYLabels]="graph1LabelsY"
-              >
-                <tui-bar-chart
-                  [max]="100"
-                  [value]="scoresMetiers"
-                  [tuiHintAppearance]="appearance"
-                  [tuiHintContent]="hint"
-                ></tui-bar-chart>
-              </tui-axes>
+              <tui-root>
+                <tui-axes *ngIf="scoresMetiers.length > 0"
+                          class="axes"
+                          [axisXLabels]="metierNames"
+                          [axisYLabels]="graph1LabelsY">
+                  <tui-bar-chart
+                    [max]="100"
+                    [value]="scoresMetiers"
+                    [tuiHintAppearance]="appearance"
+                    [tuiHintContent]="hint2"></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
             </mat-card>
             <mat-card *ngIf="!hide4" class="graph-card" (click)="expand4()">
               b
