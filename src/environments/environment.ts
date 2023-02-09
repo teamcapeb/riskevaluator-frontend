@@ -22,14 +22,14 @@ export const environment = {
     },
     formulaireContact: {
       noSiret: "N° SIRET",
-      noSiretPlaceHolder: "Le numéro siret de votre entreprise",
+      noSiretPlaceHolder: "Le numéro SIRET de votre entreprise",
       effectif: "Effectif",
       effectifPlaceHolder: "L'effectif de votre entreprise",
       annee: "Année de création",
       anneePlaceHolder: "L'année de création de l'entreprise",
       nomEntreprise: "Nom Entreprise",
       nomEntreprisePlaceHolder: "Le nom de votre entreprise",
-      startEvalButton: "Etape suivante",
+      startEvalButton: "Étape suivante",
 
     },
 
@@ -38,12 +38,12 @@ export const environment = {
         contactPageTitle: "Vous souhaitez nous contacter?",
         contactValue : "Vous ne trouvez pas la réponse à votre question ?\n" +
           "Nous restons à votre disposition via ce formulaire de contact",
-        contactTelephoneName: "TELEPHONE",
+        contactTelephoneName: "TÉLÉPHONE",
         contactTelephoneValue: "04 74 16 18 38",
         contactAdresseName: "ADRESSE",
         contactDebutAdresseValue: "3 Cours Jean Jaurès,",
         contacFinAdresseValue: "38130 Échirolles",
-        contactEmailName: "EMAIL",
+        contactEmailName: "E-MAIL",
         contactEmailValue: "capeb38@capeb-isere.fr",
         contactEmailValue2: "team.capeb@gmail.com",
         capebLocalisationLongitude: 45.15707257424074,

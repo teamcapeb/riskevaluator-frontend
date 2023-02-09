@@ -1,23 +1,23 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import {IMetier} from '../../interfaces/IMetier';
-import Metier from '../../objects/Metier';
-import IQuestionnaire from "@/interfaces/IQuestionnaire";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { environment } from "environments/environment";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { IMetier } from "../../interfaces/IMetier";
+import Metier from "../../objects/Metier";
+import { MetierScoreProjectionResponse } from "@/objects/MetierScoreProjectionResponse";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class MetierService {
 
-  metiers : IMetier[];
+  metiers: IMetier[];
 
-  private baseUrl: string = environment.apiUrl + '/metiers/';
+  private baseUrl: string = environment.apiUrl + "/metiers/";
 
-  constructor(private http: HttpClient) {}
-
+  constructor(private http: HttpClient) {
+  }
 
   getAll(): Observable<Metier[]> {
     return this.http.get<IMetier[]>(`${this.baseUrl}`).pipe(map((receivedData: IMetier[]) => {
@@ -31,7 +31,7 @@ export class MetierService {
     return this.http.get<IMetier[]>(`${this.baseUrl}`);
   }
 
-  create(metier: Metier): Promise<IMetier | string>{
+  create(metier: Metier): Promise<IMetier | string> {
     return this.http.post<IMetier>(`${this.baseUrl}`, metier.toJSON()).toPromise();
   }
 
@@ -41,5 +41,9 @@ export class MetierService {
 
   delete(metier: Metier): Promise<string> {
     return this.http.delete<string>(`${this.baseUrl}${metier.idMetier}`).toPromise();
+  }
+
+  getScoreParMetier(): Observable<MetierScoreProjectionResponse[]> {
+    return this.http.get<MetierScoreProjectionResponse[]>(`${this.baseUrl}scores`);
   }
 }

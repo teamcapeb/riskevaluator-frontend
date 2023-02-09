@@ -23,14 +23,14 @@ export const environment = {
     },
     formulaireContact: {
       noSiret: "N° SIRET",
-      noSiretPlaceHolder: "Le numéro siret de votre entreprise",
+      noSiretPlaceHolder: "Le numéro SIRET de votre entreprise",
       effectif: "Effectif",
       effectifPlaceHolder: "L'effectif de votre entreprise",
-      annee: "année de creation",
+      annee: "Année de creation",
       anneePlaceHolder: "L'année de création de l'entreprise",
       nomEntreprise: "Nom Entreprise",
       nomEntreprisePlaceHolder: "Le nom de votre entreprise",
-      startEvalButton: "Etape suivante",
+      startEvalButton: "Étape suivante",
 
     },
 

@@ -1,11 +1,176 @@
+// ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+//   background-color: white !important;
+// }
+
+// ::ng-deep .mat-card-header-text {
+//   margin: 0px !important;
+// }
+
+// ::ng-deep .t-label-x {
+//   text-align: center;
+//   transform: rotate(-45deg);
+//   // padding-top: 0;
+// }
+
+// mat-form-field {
+//   width: 200px;
+//   font-size: small;
+// }
+
+// .dashboard {
+//   height: 100%;
+//   display: flex;
+//   padding: 8px;
+// }
+
+// .dashboard-sidebar {
+//   height: 100%;
+//   padding: 8px;
+//   min-height: 100%
+// }
+
+// .sidebar-card {
+//   height: 78vh;
+// }
+
+// .dashboard-title {
+//   text-align: center;
+//   margin-bottom: 42px;
+// }
+
+// .dashboard-content {
+//   padding: 8px;
+//   flex: 1;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 16px;
+// }
+
+// .numeric-card {
+//   padding: 0;
+//   margin: 0;
+//   flex: 1;
+//   text-align: center;
+//   font-weight: bolder;
+// }
+
+// .header-card {
+//   display: flex;
+//   gap: 48px;
+//   height: 14vh;
+// }
+
+// .number {
+//   font-size: 16px;
+//   padding-top: 5px;
+//   margin: 0;
+// }
+
+// .title-numberic-card {
+//   font-size: 16px;
+//   padding-top: 6px;
+//   margin: 0;
+// }
+
+// .graphs-card {
+//   display: flex;
+//   gap: 16px;
+// }
+
+// .graph-card {
+//   flex: 1;
+//   align-items: center;
+//   display: flex;
+//   justify-content: center;
+//   flex-direction: column;
+// }
+
+// .graph-div {
+//   flex: 1;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 16px;
+
+//   mat-card:hover {
+//     cursor: pointer;
+//   }
+// }
+
+// .dashboard-header {
+//   flex: 1;
+// }
+
+// .dashboard-graphs {
+//   flex: 5;
+// }
+
+// .graphs {
+//   height: 100%;
+
+//   mat-card {
+//     height: 100%;
+//     overflow: scroll;
+//   }
+// }
+
+// .wrapper {
+//   align-items: center;
+// }
+
+// tui-root {
+//   height: 100%;
+//   width: 100%;
+// }
+
+// tui-axes {
+//   height: 95%;
+//   width: 100%;
+// }
+
+
+// DASHBOARD V2
+mat-card {
+  border-radius: 14px;
+  box-shadow: none !important;
+}
+
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
   background-color: white !important;
+}
+
+::ng-deep .mat-card-header-text {
+  margin: 0px !important;
+}
+
+::ng-deep .t-label-x {
+  text-align: center;
+  transform: rotate(-45deg);
+  font-size: 8px;
+}
+
+::ng-deep .mat-option-text {
+  font-family: 'Poppins', 'Roboto';
+}
+
+mat-form-field {
+  width: 200px;
+  font-size: small;
+}
+
+mat-card-title {
+  font-size: 14px !important;
+  font-weight: bolder !important;
+  padding-bottom: 4px !important;
 }
 
 .dashboard {
   height: 100%;
   display: flex;
   padding: 8px;
+
+  mat-card, h2, mat-form-field {
+    font-family: 'Poppins', 'Roboto' !important;
+  }
 }
 
 .dashboard-sidebar {
@@ -18,6 +183,11 @@
   height: 78vh;
 }
 
+.dashboard-title {
+  text-align: center;
+  margin-bottom: 42px;
+}
+
 .dashboard-content {
   padding: 8px;
   flex: 1;
@@ -27,18 +197,30 @@
 }
 
 .numeric-card {
+  padding: 4px;
+  margin: 0;
   flex: 1;
   text-align: center;
   font-weight: bolder;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .header-card {
   display: flex;
   gap: 48px;
+  height: 10vh;
 }
 
 .number {
-  font-size: large;
+  font-size: 16px;
+  margin: 0;
+}
+
+.title-numeric-card {
+  font-size: 14px;
+  margin: 0;
 }
 
 .graphs-card {
@@ -48,9 +230,10 @@
 
 .graph-card {
   flex: 1;
-  align-items: center;
+  // align-items: center;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 .graph-div {
@@ -59,8 +242,59 @@
   flex-direction: column;
   gap: 16px;
 
-  mat-card:hover {
-    cursor: pointer;
+  mat-card-header {
+    span {
+      font-size: 18px;
+    }
+
+    span:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.graph3n4 .expanded {
+  max-width: 100% !important;
+  overflow: scroll;
+}
+
+.graph1n2 .expanded {
+  max-width: 100% !important;
+  ::ng-deep .t-label-x {
+    font-size: 10px;
+  }
+}
+
+.graph1n2 {
+  mat-card {
+    width: 100%;
+  }
+}
+
+.graph3n4 {
+  mat-card {
+    width: 100%;
+    max-width: 484px;
+    overflow: scroll;
+  }
+
+  mat-card-header {
+    span {
+      position: fixed;
+      right: 32px;
+    }
+  }
+}
+
+.ring-chart {
+  display: flex;
+  justify-content: center;
+  height: 6rem;
+}
+
+::ng-deep {
+  tui-pie-chart {
+    height: 100px;
   }
 }
 
@@ -69,7 +303,7 @@
 }
 
 .dashboard-graphs {
-  flex: 4;
+  flex: 8;
 }
 
 .graphs {
@@ -77,6 +311,13 @@
 
   mat-card {
     height: 100%;
+    position: relative;
+  }
+
+  div {
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -84,7 +325,12 @@
   align-items: center;
 }
 
-tui-axes {
+tui-root {
   height: 100%;
+  width: 100%;
+}
+
+tui-axes {
+  height: 95%;
   width: 100%;
 }
