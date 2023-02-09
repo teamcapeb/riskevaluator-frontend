@@ -18,8 +18,7 @@ export class ConsulterEvaluationItemComponent implements OnInit {
 
   thematiques: string[] = [];
 
-  joinedMetiers: string = ''
-
+  joinedMetiers: string = '';
   constructor(private router: Router, private evaluationService: EvaluationApiService) { }
 
   ngOnInit(): void {
@@ -52,7 +51,17 @@ export class ConsulterEvaluationItemComponent implements OnInit {
   }
 
   joinMetiers(metiers: IMetier[] ): string {
-      this.joinedMetiers = metiers.map(metier => metier.nomMetier).join(", ")
-      return this.joinedMetiers
+    let joinedMetierListeTemp : String [] = [];
+    let joinedMetierTemp : String ='';
+    metiers.forEach(element => {
+      joinedMetierTemp = joinedMetierTemp+element.nomMetier;
+      if(joinedMetierTemp.length<42){
+        joinedMetierListeTemp.push(element.nomMetier);
+      }else{
+        joinedMetierListeTemp.push('...');
+      }
+    });
+    this.joinedMetiers = joinedMetierListeTemp.join(", ");
+    return this.joinedMetiers;
   }
 }
