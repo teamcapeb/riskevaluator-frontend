@@ -266,7 +266,7 @@
                     [max]="100"
                     [value]="scoresMoyenGraph1"
                     [tuiHintAppearance]="appearance"
-                    [tuiHintContent]="hint3"
+                    [tuiHintContent]="hintGraphScore"
                   ></tui-bar-chart>
                 </tui-axes>
               </tui-root>
@@ -280,7 +280,7 @@
                 <tui-ring-chart
                   [size]="isExpanded2 ? 'xl' : 'm'"
                   class="tui-space_right-4"
-                  [value]="value"
+                  [value]="nbReponsesParQuestionnaire"
                 ></tui-ring-chart>
                 <!-- {{ this.filteredEntreprises | json}} -->
               </div>
@@ -295,12 +295,12 @@
               <tui-root>
                 <tui-axes *ngIf="scoresMetiers.length > 0"
                           [axisXLabels]="metierNames"
-                          [axisYLabels]="graph1LabelsY">
+                          [axisYLabels]="graph3LabelsY">
                   <tui-bar-chart
                     [max]="100"
                     [value]="scoresMetiers"
                     [tuiHintAppearance]="appearance"
-                    [tuiHintContent]="hint3"></tui-bar-chart>
+                    [tuiHintContent]="hintGraphScore"></tui-bar-chart>
                 </tui-axes>
               </tui-root>
             </mat-card>
@@ -317,7 +317,7 @@
                     [max]="20"
                     [value]="nbEvalsParLibelle"
                     [tuiHintAppearance]="appearance"
-                    [tuiHintContent]="hint4"></tui-bar-chart>
+                    [tuiHintContent]="hintGraphNumber"></tui-bar-chart>
                 </tui-axes>
               </tui-root>
             </mat-card>

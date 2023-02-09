@@ -64,17 +64,14 @@ export class ConsulterEvaluationComponent implements OnInit {
             })
         })
       })
-
-
     });
     this.metierService.getAllMetiers().subscribe((res) => {
       this.metiers$ = res;
       this.filteredMetiers = this.sortMetiers(res);
     });
     this.questionnaireService.getAllQuestionnaires().subscribe((res) => {
-      this.filteredQuestionnaires = res;
+      this.filteredQuestionnaires = this.sortQuestionnaires(res);
     });
-    // this.questionnaireControl.value = this.filteredQuestionnaires
   }
 
   sortEntreprises(entreprises: IEntreprise[]): IEntreprise[] {
@@ -102,6 +99,20 @@ export class ConsulterEvaluationComponent implements OnInit {
           return -1;
         }
         if (a.nomMetier.toUpperCase() > b.nomMetier.toUpperCase()) {
+          return 1;
+        }
+        return 0;
+      }
+    );
+  }
+
+  sortQuestionnaires(questionnaires: IQuestionnaire[]): IQuestionnaire[] {
+    return questionnaires.sort(
+      (a, b) => {
+        if (a.thematique.toUpperCase() < b.thematique.toUpperCase()) {
+          return -1;
+        }
+        if (a.thematique.toUpperCase() > b.thematique.toUpperCase()) {
           return 1;
         }
         return 0;
