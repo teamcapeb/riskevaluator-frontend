@@ -88,7 +88,12 @@ export class DetailsEntrepriseComponent implements OnInit {
       evaluation.sort((a, b) => {
         return b.dateFormat.getTime() - a.dateFormat.getTime();
       });
-      this.dataSource = evaluation;
+
+      if(evaluation.length == 0){
+        this.router.navigate(['/consulter-evaluation']);
+      }else{
+        this.dataSource = evaluation;
+      }
     });
   }
 
