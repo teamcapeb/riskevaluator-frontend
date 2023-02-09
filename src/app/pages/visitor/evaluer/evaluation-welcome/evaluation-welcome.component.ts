@@ -95,5 +95,9 @@ export class EvaluationWelcomeComponent implements OnInit {
     }
   }
 
+  back(){
+    this.router.navigate(['evaluer/evaluation-thematique',this.data.metierList.join(",")]);
+  }
+
 }
 

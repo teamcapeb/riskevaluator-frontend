@@ -51,6 +51,7 @@ export class ConsulterEvaluationItemComponent implements OnInit {
   }
 
   joinMetiers(metiers: IMetier[] ): string {
+    metiers = this.trierMetiers(metiers);
     let joinedMetierListeTemp : String [] = [];
     let joinedMetierTemp : String ='';
     metiers.forEach(element => {
@@ -63,5 +64,19 @@ export class ConsulterEvaluationItemComponent implements OnInit {
     });
     this.joinedMetiers = joinedMetierListeTemp.join(", ");
     return this.joinedMetiers;
+  }
+
+  trierMetiers(metiers: IMetier[]): IMetier[] {
+    return metiers.sort(
+      (a, b) => {
+        if (a.nomMetier.toUpperCase() < b.nomMetier.toUpperCase()) {
+          return -1;
+        }
+        if (a.nomMetier.toUpperCase() > b.nomMetier.toUpperCase()) {
+          return 1;
+        }
+        return 0;
+      }
+    );
   }
 }
