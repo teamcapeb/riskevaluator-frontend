@@ -36,7 +36,7 @@ export const environment = {
 
     contactIHM: {
       infosContact: {
-        contactPageTitle: "Vous souhaitez nous contacter?",
+        contactPageTitle: "Vous souhaitez nous contacter?\n",
         contactValue : "Vous ne trouvez pas la réponse à votre question ?\n" +
           "Nous restons à votre disposition via ce formulaire de contact",
         contactTelephoneName: "TELEPHONE",

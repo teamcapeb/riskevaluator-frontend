@@ -2,13 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
 .container{
+  height: 100%;
   width: 85%;
   background: #fff;
   border-radius: 6px;
-  padding: 20px 60px 30px 40px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  padding-top: 100px;
-
+  padding: 32px;
 }
 .container .content{
   display: flex;
@@ -25,16 +24,16 @@
   margin-top: 15px;
   position: relative;
 }
-.content .left-side::before{
-  content: '';
-  position: absolute;
-  height: 70%;
-  width: 2px;
-  right: -15px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #afafb6;
-}
+// .content .left-side::before{
+//   content: '';
+//   position: absolute;
+//   height: 70%;
+//   width: 2px;
+//   right: -15px;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   background: #afafb6;
+// }
 .content .left-side .details{
   margin: 14px;
   text-align: center;
@@ -55,8 +54,8 @@
 }
 .container .content .right-side{
   width: 75%;
-  margin-left: 75px;
-  white-space: pre-line;
+  margin-left: 65px;
+  // white-space: pre-line;
 }
 .content .right-side .topic-text{
   font-size: 23px;
@@ -80,9 +79,6 @@
   padding: 0 15px;
   resize: none;
 }
-.right-side .message-box{
-  min-height: 110px;
-}
 .right-side .input-box textarea{
   padding-top: 6px;
 }
@@ -103,6 +99,12 @@
 }
 .button input[type="button"]:hover{
   background: #5029bc;
+}
+form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media (max-width: 950px) {

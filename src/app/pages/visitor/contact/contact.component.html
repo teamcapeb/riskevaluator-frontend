@@ -1,5 +1,5 @@
   <div class="container">
-    <div class="content">
+    <div class="content" style="height: 100%;">
       <div class="left-side">
         <div class="address details">
           <i class="fa fa-map-marker-alt"></i>
@@ -19,6 +19,9 @@
           <div class="text-two">{{contactIHM.infosContact.contactEmailValue2}}</div>
         </div>
       </div>
+      <div style="height: 100%;">
+        <div style="border-left: 2px solid grey;"></div>
+      </div>
       <div class="right-side">
         <div class="topic-text">{{contactIHM.infosContact.contactPageTitle}}</div>
         <p>{{contactIHM.infosContact.contactValue}}.</p>
@@ -29,11 +32,8 @@
         <div class="input-box">
           <input type="text" placeholder="Entrer votre email">
         </div>
-        <div class="input-box message-box">
-
-        </div>
         <div class="button">
-          <input type="button" value="Envoyer maintenant" >
+          <input type="button" value="Envoyer" >
         </div>
       </form>
     </div>

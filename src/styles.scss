@@ -146,4 +146,5 @@
 @import '~bootstrap/scss/bootstrap';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: "Poppins", "Roboto", "Helvetica Neue", sans-serif !important; }
+h1, h2, h3, h4 { font-family: "Poppins", "Roboto", "Helvetica Neue", sans-serif !important; font-weight: 700 !important; }
