@@ -26,6 +26,10 @@ button {
   margin-right: 40px;
 }
 
+button:disabled {
+  background: grey;
+}
+
 .order-card {
   color: #fff;
 }
