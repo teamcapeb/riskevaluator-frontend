@@ -130,7 +130,7 @@ export class DetailsEntrepriseComponent implements OnInit {
    * @param idEvaluation :  idEvaluation de l'objet IEvaluation
    */
   goToResult(idEvaluation: number) {
-    this.router.navigate(['historiques', idEvaluation]);
+    this.router.navigate(['historiques', idEvaluation,true]);
   }
 
   convertToDate(dateString: string) {
