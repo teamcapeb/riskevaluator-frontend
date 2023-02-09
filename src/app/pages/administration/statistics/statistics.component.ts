@@ -14,6 +14,7 @@ import IEvaluation from "@/interfaces/IEvaluation";
 import { TuiContextWithImplicit } from "@taiga-ui/cdk";
 import { MetierScoreProjectionResponse } from "@/objects/MetierScoreProjectionResponse";
 import { tuiFormatNumber } from "@taiga-ui/core";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-statistics",
@@ -105,7 +106,8 @@ export class StatisticsComponent implements OnInit {
               private metierService: MetierService,
               private questionnaireService: QuestionnaireService,
               private categorieQuestionService: CategorieQuestionService,
-              private cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -689,5 +691,9 @@ export class StatisticsComponent implements OnInit {
     this.hide2 = false;
     this.hide3 = false;
     this.hide4 = false;
+  }
+
+  navigateToPowerBI() {
+    this.router.navigate(["statistiques/power-bi"]);
   }
 }

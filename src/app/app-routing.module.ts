@@ -38,6 +38,7 @@ import { ResultatListComponent } from '@pages/visitor/evaluer/evaluation-resulta
 import { HomePageComponent } from "@pages/visitor/home-page/home-page.component";
 import { ConsulterEvaluationComponent } from '@pages/administration/consulter-evaluation/consulter-evaluation.component';
 import { StatisticsComponent } from '@pages/administration/statistics/statistics.component';
+import { PowerBiComponent } from '@pages/administration/statistics/power-bi/power-bi.component';
 
 
 
@@ -81,6 +82,11 @@ const administration: Routes = [
   {
     path: 'statistiques',
     component: StatisticsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'statistiques/power-bi',
+    component: PowerBiComponent,
     canActivate: [AuthGuard]
   }
 
