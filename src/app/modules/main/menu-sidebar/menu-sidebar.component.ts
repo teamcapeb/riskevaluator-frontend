@@ -65,7 +65,7 @@ export const MENU = [
 
 export const ADMIN_MENU = [
   {
-    name: 'Gestion questionnaire',
+    name: 'Gestion questionnaires',
     path: ['/gestion-questionnaires'],
     icon: "fa-solid fa-list-alt"
 

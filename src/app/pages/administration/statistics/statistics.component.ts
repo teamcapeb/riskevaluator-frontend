@@ -73,7 +73,7 @@ export class StatisticsComponent implements OnInit {
   graph3LabelsX: string[] = [];
   graph3LabelsY: string[] = [];
   graph4LabelsX: string[] = [];
-  graph4LabelsY: string[] = ["0", "100"];
+  graph4LabelsY: string[] = ["0", "20"];
 
   scoresMoyenGraph1: any;
   scoresMoyenGraph2: number[] = [];
@@ -142,6 +142,11 @@ export class StatisticsComponent implements OnInit {
       this.filteredCategorieLibelles = [...this.allCategoriesLibelles];
       this.cdr.detectChanges();
     });
+    this.getScoreMetiers(this.filteredMetiers);
+    this.getNbEvalsParCategorie();
+  }
+
+  getScoreMetiers(metiers: IMetier[]) {
     this.metierService.getScoreParMetier()
       .subscribe((response: MetierScoreProjectionResponse[]) => {
         // TODO filtrage
@@ -151,15 +156,18 @@ export class StatisticsComponent implements OnInit {
         );
         this.cdr.detectChanges();
       });
+  }
+
+  getNbEvalsParCategorie() {
     this.evaluationService.getNbEvalsParCategorie()
-      .subscribe((response: EvalCategorieProjectionResponse[]) => {
-        // TODO filtrage
-        this.libelles = response.map(item => item.libelle);
-        this.nbEvalsParLibelle.push(
-          response.map(item => item.count)
-        )
-        this.cdr.detectChanges();
-      });
+    .subscribe((response: EvalCategorieProjectionResponse[]) => {
+      // TODO filtrage
+      this.libelles = response.map(item => item.libelle);
+      this.nbEvalsParLibelle.push(
+        response.map(item => item.count)
+      )
+      this.cdr.detectChanges();
+    });
   }
 
   sortEntreprises(entreprises: IEntreprise[]): IEntreprise[] {
@@ -399,9 +407,14 @@ export class StatisticsComponent implements OnInit {
   }
 
   updateFilteredMetiersByEntreprises() {
+    console.log(this.filteredMetiers);
     this.filteredMetiers = [];
     this.filteredEntreprises.forEach((etp) => {
-      this.filteredMetiers.push(...etp.metiers);
+      etp.metiers.forEach((mtr) => {
+        if (!this.estNomMetierExistant(this.filteredMetiers, mtr.nomMetier)) {
+          this.filteredMetiers.push(mtr);
+        }
+      });
     });
   }
 
@@ -485,6 +498,16 @@ export class StatisticsComponent implements OnInit {
     var res = false;
     entreprises.forEach((etp) => {
       if (etp.noSiret === noSiret) {
+        res = true;
+      }
+    });
+    return res;
+  }
+
+  estNomMetierExistant(metiers: IMetier[], nomMetier: string) {
+    var res = false;
+    metiers.forEach((mtr) => {
+      if (mtr.nomMetier === nomMetier) {
         res = true;
       }
     });

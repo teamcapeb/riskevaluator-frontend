@@ -253,12 +253,13 @@ mat-card-title {
   }
 }
 
-.expanded {
+.graph3n4 .expanded {
   max-width: 100% !important;
   overflow: scroll;
 }
 
 .graph1n2 .expanded {
+  max-width: 100% !important;
   ::ng-deep .t-label-x {
     font-size: 10px;
   }
