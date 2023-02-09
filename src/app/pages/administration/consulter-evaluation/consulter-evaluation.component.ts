@@ -91,10 +91,6 @@ export class ConsulterEvaluationComponent implements OnInit {
     );
   }
 
-  setThematique(event:IQuestionnaire){
-    console.log(event.thematique)
-  }
-
   sortMetiers(metiers: IMetier[]) {
     return metiers.sort(
       (a, b) => {
@@ -131,7 +127,6 @@ export class ConsulterEvaluationComponent implements OnInit {
       this.filteredEntreprises=[];
       this.entreprises$.forEach((entre,index)=>{
         this.thematiques[index].forEach((theme:any) => {
-          // console.log(this.includeThematique(this.questionnaireControl.value,theme))
           if(this.includeThematique(this.questionnaireControl.value,theme)){
             this.filteredEntreprises.push(entre);
           }

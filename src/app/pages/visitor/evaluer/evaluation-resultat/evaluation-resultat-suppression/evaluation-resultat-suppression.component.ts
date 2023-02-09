@@ -27,7 +27,6 @@ export class EvaluationResultatSuppressionComponent implements OnInit {
 
   onDelete(): void {
     this.dialogRef.close();
-    console.log("suppression de l'évaluation " + this.data.evaluationID);
     this.evaluationService.delete(this.data.evaluationID).subscribe();
     this.router.navigate(["entreprise", this.data.entreprise?.noSiret]);
   }

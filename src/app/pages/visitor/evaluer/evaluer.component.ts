@@ -86,6 +86,5 @@ export class EvaluerComponent implements OnInit {
 
   onCheck(event : any){
     this.isOneCheck = event;
-    console.log(event);
   }
 }

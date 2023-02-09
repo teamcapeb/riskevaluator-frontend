@@ -327,7 +327,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   separateEntreprisesEffectif(entreprises: IEntreprise[]) {
-    // console.log(entreprises);
     this.petitesEntreprises = [];
     this.moyennesEntreprises = [];
     this.grandesEntreprises = [];
@@ -345,9 +344,6 @@ export class StatisticsComponent implements OnInit {
 
   scoresMoyensTailleEntreprises() {
     // TODO GERER LES DATES
-    console.log(this.petitesEntreprises);
-    console.log(this.moyennesEntreprises);
-    console.log(this.grandesEntreprises);
 
     // let sumScorePetites: number = 0;
     // let sumScoreMoyennes: number = 0;
@@ -393,9 +389,6 @@ export class StatisticsComponent implements OnInit {
     // } else if (this.grandesEntreprises.length == 0) {
     //   this.scoreMoyenGrandesEntreprises = 0;
     // }
-    // console.log(this.scoreMoyenPetitesEntreprises);
-    // console.log(this.scoreMoyenMoyennesEntreprises);
-    // console.log(this.scoreMoyenGrandesEntreprises);
     this.setValueGraph1();
   }
 
@@ -407,7 +400,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   updateFilteredMetiersByEntreprises() {
-    console.log(this.filteredMetiers);
     this.filteredMetiers = [];
     this.filteredEntreprises.forEach((etp) => {
       etp.metiers.forEach((mtr) => {
@@ -460,7 +452,6 @@ export class StatisticsComponent implements OnInit {
   updateFilteredEntreprisesByQuestionnaires() {
     this.filteredEntreprises = [];
     this.allEvaluations.forEach((evl) => {
-      console.log(evl.entreprise);
       if (this.includesObj(this.questionnaireControl.value, evl?.scoreCategories[0].categorieQuestion.questionnaire.thematique) &&
           !this.estNumeroSiretExistant(this.filteredEntreprises, evl.entreprise.noSiret)) {
         // TODO
