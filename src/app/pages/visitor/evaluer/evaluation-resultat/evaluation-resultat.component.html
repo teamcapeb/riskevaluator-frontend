@@ -24,7 +24,7 @@
     <div class="container" *ngSwitchCase="DataStateEnum.LOADED" >
       <div id="wrapper">
         <div id="graphWithTitle">
-          <h1 class="text-primary" style="text-align: center;font-weight: bold;font-size:2em">{{this.listScoreCategories$?.at(0)?.categorieQuestion?.questionnaire?.thematique}}</h1>
+          <h1 class="title pt-2">{{this.listScoreCategories$?.at(0)?.categorieQuestion?.questionnaire?.thematique}}</h1>
           <app-result-radarchart-item [evaluation$]="result.data"></app-result-radarchart-item>
         </div>
         <app-resultat-list [evaluation$]="result.data" ></app-resultat-list>
