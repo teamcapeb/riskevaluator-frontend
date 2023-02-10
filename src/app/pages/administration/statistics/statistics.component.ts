@@ -16,7 +16,6 @@ import { MetierScoreProjectionResponse } from "@/objects/MetierScoreProjectionRe
 import { tuiFormatNumber } from "@taiga-ui/core";
 import { Router } from '@angular/router';
 import { EntrepriseScoreProjectionResponse } from '@/objects/EntrepriseScoreProjectionResponse';
-import console from 'console';
 
 @Component({
   selector: "app-statistics",
@@ -96,6 +95,8 @@ export class StatisticsComponent implements OnInit {
 
   nbReponsesParQuestionnaire: number[] = [];
 
+  scoresMoyensEntreprises: EntrepriseScoreProjectionResponse[];
+
   readonly hintGraph1 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
     this.scoresMoyenGraph1
       .reduce(
@@ -127,6 +128,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("test")
     this.evaluationService.getAll().subscribe((res) => {
       this.allEvaluations = res;
       this.filteredEvaluations = res;
@@ -149,6 +151,7 @@ export class StatisticsComponent implements OnInit {
       this.filteredQuestionnaires = [...this.allQuestionnaires];
       this.nbOfThematiques = res.length;
       this.cdr.detectChanges();
+      this.getScoreEffectifEntreprises(this.filteredEntreprises);
     });
     this.categorieQuestionService.getAll().subscribe((res) => {
       this.allCategories = this.sortCategories(res);
@@ -159,7 +162,7 @@ export class StatisticsComponent implements OnInit {
       this.filteredCategorieLibelles = [...this.allCategoriesLibelles];
       this.cdr.detectChanges();
     });
-    this.getScoreEffectifEntreprises(this.filteredEntreprises);
+
     this.getScoreMetiers(this.filteredMetiers);
     this.getNbEvalsParCategorie(this.filteredQuestionnaires);
   }
@@ -217,18 +220,50 @@ export class StatisticsComponent implements OnInit {
   }
 
   getScoreEffectifEntreprises(entreprises: IEntreprise[]) {
-    // this.nbOfThematiques;
     var nbPetites: number = 0;
     var nbMoyennes: number = 0;
     var nbGrandes: number = 0;
     var sumPetites: number = 0;
     var sumMoyennes: number = 0;
     var sumGrandes: number = 0;
-    // console.log("A");
+    var avgPetites: number = 0;
+    var avgMoyennes: number = 0;
+    var avgGrandes: number = 0;
+    var sumThematique : number[] = []
+    var tmpScoresMoyensGraph1 : number[][] = []
     this.entrepriseService.getScoreEntreprises().subscribe((response: EntrepriseScoreProjectionResponse[]) => {
-
- 
-
+      this.scoresMoyensEntreprises = response;
+      this.allQuestionnaires.forEach((quest) => {
+        sumThematique = []
+        response.forEach(rep => {
+          if (quest.thematique == rep.thematique) {
+            if (rep.taille == "Grande") {
+              sumGrandes += rep.scoreMoyen;
+              nbGrandes++;
+            } else {
+              if (rep.taille == "Petite") {
+                sumPetites += rep.scoreMoyen;
+                nbPetites++;
+              } else {
+                sumMoyennes += rep.scoreMoyen;
+                nbMoyennes++;
+              }
+            }
+          }
+        })
+        if (nbGrandes != 0) {
+          avgGrandes = sumGrandes/nbGrandes;
+        }
+        if (nbPetites !=0) {
+          avgPetites = sumPetites/nbPetites;
+        }
+        if (nbMoyennes !=0) {
+          avgMoyennes = sumMoyennes/nbMoyennes;
+        }
+        sumThematique.push(avgPetites, avgMoyennes, avgGrandes);
+        tmpScoresMoyensGraph1.push(sumThematique);
+      })
+      this.scoresMoyenGraph1 = tmpScoresMoyensGraph1;
       this.cdr.detectChanges();
     });
   }
@@ -326,7 +361,6 @@ export class StatisticsComponent implements OnInit {
         this.entrepriseControl.value.forEach((nom: string) => {
           if (etp.noSiret == entreprise.noSiret && etp.nomEntreprise === nom && !this.filteredEntreprises.includes(etp)) {
             this.filteredEntreprises.push(etp);
-            // this.autoFilteredEntreprises.push(etp);
           }
         });
       });
@@ -336,7 +370,6 @@ export class StatisticsComponent implements OnInit {
       this.filteredEntreprises.forEach((element, index) => {
         if (element.noSiret == entreprise.noSiret) {
           this.filteredEntreprises.splice(index, 1);
-          // this.autoFilteredEvaluations.splice(index, 1);
           this.updateFilteredMetiersByEntreprises();
           this.updateFilteredEvaluationsByEntreprises();
         }
@@ -500,12 +533,22 @@ export class StatisticsComponent implements OnInit {
         }
       });
     });
+    this.getScoreMetiers(this.filteredMetiers);
   }
 
   updateFilteredEvaluationsByEntreprises() {
     this.filteredEvaluations = [];
     this.filteredEntreprises.forEach((etp) => {
       this.filteredEvaluations.push(...etp.evaluations);
+    });
+  }
+
+  updateFilteredQuestionnairesByEntreprises() {
+    this.filteredQuestionnaires = [];
+    this.filteredEntreprises.forEach((etp) => {
+      this.scoresMoyensEntreprises.forEach((rep) => {
+
+      });
     });
   }
 
