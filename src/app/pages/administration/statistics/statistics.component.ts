@@ -16,7 +16,7 @@ import { MetierScoreProjectionResponse } from "@/objects/MetierScoreProjectionRe
 import { tuiFormatNumber } from "@taiga-ui/core";
 import { Router } from '@angular/router';
 import { EntrepriseScoreProjectionResponse } from '@/objects/EntrepriseScoreProjectionResponse';
-import console from 'console';
+
 
 @Component({
   selector: "app-statistics",
@@ -127,6 +127,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("test")
     this.evaluationService.getAll().subscribe((res) => {
       this.allEvaluations = res;
       this.filteredEvaluations = res;
@@ -149,6 +150,7 @@ export class StatisticsComponent implements OnInit {
       this.filteredQuestionnaires = [...this.allQuestionnaires];
       this.nbOfThematiques = res.length;
       this.cdr.detectChanges();
+      this.getScoreEffectifEntreprises(this.filteredEntreprises);
     });
     this.categorieQuestionService.getAll().subscribe((res) => {
       this.allCategories = this.sortCategories(res);
@@ -159,7 +161,7 @@ export class StatisticsComponent implements OnInit {
       this.filteredCategorieLibelles = [...this.allCategoriesLibelles];
       this.cdr.detectChanges();
     });
-    this.getScoreEffectifEntreprises(this.filteredEntreprises);
+
     this.getScoreMetiers(this.filteredMetiers);
     this.getNbEvalsParCategorie(this.filteredQuestionnaires);
   }
@@ -217,18 +219,55 @@ export class StatisticsComponent implements OnInit {
   }
 
   getScoreEffectifEntreprises(entreprises: IEntreprise[]) {
-    // this.nbOfThematiques;
     var nbPetites: number = 0;
     var nbMoyennes: number = 0;
     var nbGrandes: number = 0;
     var sumPetites: number = 0;
     var sumMoyennes: number = 0;
     var sumGrandes: number = 0;
-    // console.log("A");
+
+    var moyPetites: number = 0;
+    var moyMoyennes: number = 0;
+    var moyGrandes: number = 0;
+
+    var sumThematique : number[] = []
+    var test : number[][] = []
+
     this.entrepriseService.getScoreEntreprises().subscribe((response: EntrepriseScoreProjectionResponse[]) => {
+      this.allQuestionnaires.forEach((quest)=>{
+        sumThematique = []
+        response.forEach(rep=>{
+          if(quest.thematique == rep.thematique){
+            if(rep.taille == "Grande"){
+              sumGrandes+=rep.scoreMoyen
+              nbGrandes+=1
+            }else{
+              if(rep.taille == "Petite"){
+                sumPetites+=rep.scoreMoyen
+                nbPetites+=1
+              }else{
+                sumMoyennes+=rep.scoreMoyen
+                nbMoyennes+=1
+              }
+            }
+          }
+        })
 
- 
-
+        if(nbGrandes != 0){
+          moyGrandes = sumGrandes/nbGrandes
+        }
+        if(nbPetites !=0){
+          moyPetites = sumPetites/nbPetites
+        }
+        if(nbMoyennes !=0){
+          moyMoyennes = sumMoyennes/nbMoyennes
+        }
+        sumThematique.push(moyPetites,moyMoyennes,moyGrandes)
+        test.push(sumThematique)
+      })
+      this.scoresMoyenGraph1 = test
+      // this.scoresMoyenGraph1 = [[ 22.5, 18, 20.88888888888889 ], [ 37.666666666666664, 39, 41.38333333333333 ]]
+      console.log(this.scoresMoyenGraph1)
       this.cdr.detectChanges();
     });
   }
@@ -248,17 +287,17 @@ export class StatisticsComponent implements OnInit {
     if (questionnaires.length === 0) {
       questionnaires = this.allQuestionnaires;
     }
-    questionnaires.forEach((questionnaire) => {
-      var evaluations: IEvaluation[] = [];
-      this.allEvaluations.forEach((evaluation) => {
-        evaluation.scoreCategories.forEach(score => {
-          if (questionnaire.thematique == score.categorieQuestion.questionnaire.thematique && !this.includesEval(evaluations, evaluation)) {
-            evaluations.push(evaluation)
-          }
-        })
-      })
-      this.nbReponsesParQuestionnaire.push(evaluations.length)
-    })
+    // questionnaires.forEach((questionnaire) => {
+    //   var evaluations: IEvaluation[] = [];
+    //   this.allEvaluations.forEach((evaluation) => {
+    //     evaluation.scoreCategories.forEach(score => {
+    //       if (questionnaire.thematique == score.categorieQuestion.questionnaire.thematique && !this.includesEval(evaluations, evaluation)) {
+    //         evaluations.push(evaluation)
+    //       }
+    //     })
+    //   })
+    //   this.nbReponsesParQuestionnaire.push(evaluations.length)
+    // })
   }
 
   sortEntreprises(entreprises: IEntreprise[]): IEntreprise[] {
