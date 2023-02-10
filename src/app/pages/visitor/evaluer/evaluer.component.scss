@@ -7,10 +7,11 @@ form {
   position: fixed;
   bottom: 0px;
   display: flex;
-  width: 80%;
   z-index: 9999;
   justify-content: flex-end;
   background: linear-gradient(to top, white, transparent);
+  right: 0px;
+  width: 80.5%;
 }
 
 button {

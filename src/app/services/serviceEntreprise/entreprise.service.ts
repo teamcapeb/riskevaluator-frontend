@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {IEntreprise} from '../../interfaces/IEntreprise';
 import IQuestionnaire from "@/interfaces/IQuestionnaire";
+import { EntrepriseScoreProjectionResponse } from '@/objects/EntrepriseScoreProjectionResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,9 @@ export class EntrepriseService {
 
   get(noSiret: number): Observable<IEntreprise> {
     return this.http.get<IEntreprise>(`${this.baseUrl}${noSiret}`);
+  }
+
+  getScoreEntreprises():Observable<EntrepriseScoreProjectionResponse[]> {
+    return this.http.get<EntrepriseScoreProjectionResponse[]>(`${this.baseUrl}scores/all`);
   }
  }

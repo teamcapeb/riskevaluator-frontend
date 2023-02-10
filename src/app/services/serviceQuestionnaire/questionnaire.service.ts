@@ -46,7 +46,6 @@ export class QuestionnaireService {
 
   update(questionnaire: Questionnaire) {
     let liteQuestionnaire: IQuestionnaire = {idQuestionnaire : questionnaire.idQuestionnaire, thematique : questionnaire.thematique}
-    console.log(`${this.baseUrl}`,liteQuestionnaire);
     return this.http.put<IQuestionnaire>(`${this.baseUrl}${questionnaire.idQuestionnaire}`, liteQuestionnaire);
   }
 
