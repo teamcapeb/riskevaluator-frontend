@@ -281,6 +281,7 @@
                   [size]="isExpanded2 ? 'xl' : 'm'"
                   class="tui-space_right-4"
                   [value]="nbReponsesParQuestionnaire"
+                  [tuiHintContent]="hintGraph2"
                 >
                 <div>{{ graph2Labels }}</div>
               </tui-ring-chart>
@@ -315,7 +316,7 @@
                           [axisXLabels]="libelles"
                           [axisYLabels]="graph4LabelsY">
                   <tui-bar-chart
-                    [max]="20"
+                    [max]="filteredEvaluations.length + 5"
                     [value]="nbEvalsParLibelle"
                     [tuiHintAppearance]="appearance"
                     [tuiHintContent]="hintGraph4"></tui-bar-chart>

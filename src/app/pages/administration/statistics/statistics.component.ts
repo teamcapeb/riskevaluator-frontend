@@ -83,7 +83,7 @@ export class StatisticsComponent implements OnInit {
   graph1LabelsY: string[] = ["0%", "100%"];
   graph2Labels: string[] = ["Toutes les thématiques"];
   graph3LabelsY: string[] = ["0%", "100%"];
-  graph4LabelsY: string[] = ["0", "20"];
+  graph4LabelsY: string[] = ["0", "30"];
 
   scoresMoyenGraph1: number[][] = [];
   scoresMoyenGraph2: number[] = [];
@@ -104,6 +104,8 @@ export class StatisticsComponent implements OnInit {
         (result, set) => `${result}${tuiFormatNumber(set[$implicit])}%\n`,
         ''
       ).trim();
+
+  readonly hintGraph2 = '';
 
   readonly hintGraph3 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
     this.scoresMetiers
@@ -133,6 +135,7 @@ export class StatisticsComponent implements OnInit {
       this.allEvaluations = res;
       this.filteredEvaluations = res;
       this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+      this.getNbEvalsParCategorie(this.filteredQuestionnaires);
       this.cdr.detectChanges();
     });
     this.entrepriseService.getAll().subscribe((res) => {
@@ -162,9 +165,7 @@ export class StatisticsComponent implements OnInit {
       this.filteredCategorieLibelles = [...this.allCategoriesLibelles];
       this.cdr.detectChanges();
     });
-
     this.getScoreMetiers(this.filteredMetiers);
-    this.getNbEvalsParCategorie(this.filteredQuestionnaires);
   }
 
   getScoreMetiers(metiers: IMetier[]) {
@@ -215,6 +216,7 @@ export class StatisticsComponent implements OnInit {
           })
           this.nbEvalsParLibelle.push(nbEvals)
         }
+        this.graph4LabelsY[1] = (Math.ceil((this.filteredEvaluations.length / 10)) * 10).toString();
         this.cdr.detectChanges();
       });
   }
