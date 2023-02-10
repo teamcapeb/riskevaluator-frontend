@@ -64,4 +64,9 @@ export class ResultatListComponent implements OnInit {
     const textReducer = (previousValue: string, currentValue: IPreconisationGlobale | IPreconisationCategorieQuestion) => previousValue.concat('\n \n',currentValue.contenu);
     return preconisation.reduce(textReducer,"");
   }
+
+  concat(preconisation : IPreconisationCategorieQuestion[]) : string{
+    let libelle : string[] =[...new Set( preconisation.map(item => item.contenu))];
+    return libelle.join('\n \n');
+  }
 }
