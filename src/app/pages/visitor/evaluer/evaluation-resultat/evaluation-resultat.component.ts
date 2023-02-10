@@ -169,16 +169,21 @@ export class EvaluationResultatComponent implements OnInit {
 
   async generatePDF() {
     let wEntreprise=this.entreprise$
-    let docTitle = 'CAPEB-Evaluator -'+wEntreprise.nomEntreprise+'-'+this.questionnaire?.thematique+'.pdf';
+    let thematiqueConcat = this.questionnaire?.thematique.replace(/ /g, "_").replace(/'/g,"_");
+    let entrepriseConcat = wEntreprise.nomEntreprise.replace(/ /g, "_").replace(/'/g,"_");
+    let dateEvaluationConcat = this.evaluation$.date.replace(/\//g, "-");
+    let docTitle = 'CAPEB-Evaluator-'+entrepriseConcat+'-'+thematiqueConcat+'-'+dateEvaluationConcat+'.pdf';
 
     let docDefinition = {
-      info: {
-	      title: docTitle,
+      header: {
+        stack: [
+            {text: 'CAPEB Evaluator'}
+        ],
+        margin: [30, 10, 0, 0] as Margins
       },
-      header:'CAPEB Evaluator',
       content: [
         {
-          text:'Resultat de l\'évaluation',
+          text:'Résultat de l\'évaluation du '+this.evaluation$.date,
           alignment: 'center' as Alignment,
           fontSize:20,
           bold: true,
@@ -255,7 +260,7 @@ export class EvaluationResultatComponent implements OnInit {
         }
       })
     })
-    pdfMake.createPdf(docDefinition).open();
+    pdfMake.createPdf(docDefinition).download(docTitle);
 
   }
 
