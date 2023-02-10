@@ -1,4 +1,4 @@
-import {Component, HostBinding, OnInit, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, HostBinding, OnInit, Renderer2} from '@angular/core';
 import {AppService} from '@services/serviceUser/app.service';
 import { ADMIN_MENU, MENU } from "@modules/main/menu-sidebar/menu-sidebar.component";
 import { TokenStorageService } from "@services/serviceUser/token-storage.service";
@@ -50,7 +50,9 @@ export class MainComponent implements OnInit {
 
           this.username = this.user.username;
         }
+        this.toggleMenuSidebar()
       }
+
 
     toggleMenuSidebar() {
         if (this.sidebarMenuOpened) {

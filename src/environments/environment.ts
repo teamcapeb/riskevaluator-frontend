@@ -29,7 +29,7 @@ export const environment = {
       anneePlaceHolder: "L'année de création de l'entreprise",
       nomEntreprise: "Nom Entreprise",
       nomEntreprisePlaceHolder: "Le nom de votre entreprise",
-      startEvalButton: "Étape suivante",
+      startEvalButton: "Suivant",
 
     },
 

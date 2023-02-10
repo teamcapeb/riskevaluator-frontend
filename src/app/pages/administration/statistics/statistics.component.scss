@@ -142,12 +142,6 @@ mat-card {
   margin: 0px !important;
 }
 
-::ng-deep .t-label-x {
-  text-align: center;
-  transform: rotate(-45deg);
-  font-size: 7.5px;
-}
-
 ::ng-deep .mat-option-text {
   font-family: 'Poppins', 'Roboto';
 }
@@ -269,6 +263,11 @@ mat-card-title {
   mat-card {
     width: 100%;
   }
+
+  ::ng-deep .t-label-x {
+    text-align: center;
+  }
+
 }
 
 .graph3n4 {
@@ -283,6 +282,12 @@ mat-card-title {
       position: fixed;
       right: 32px;
     }
+  }
+
+  ::ng-deep .t-label-x {
+    text-align: center;
+    transform: rotate(-45deg);
+    font-size: 7px;
   }
 }
 

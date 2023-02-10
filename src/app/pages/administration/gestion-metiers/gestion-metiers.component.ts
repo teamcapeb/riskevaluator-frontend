@@ -64,7 +64,6 @@ export class GestionMetiersComponent implements OnInit {
     try{
       if(event.action === 'update'){
         res = await this.metierService.update(event.data);
-        console.log("MDRRR = " + res)
       }else if (event.action === 'add'){
         res = await this.metierService.create(event.data);
       }else if(event.action === 'delete'){

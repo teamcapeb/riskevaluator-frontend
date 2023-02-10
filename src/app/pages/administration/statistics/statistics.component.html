@@ -162,7 +162,7 @@
   <div class="dashboard-sidebar">
     <mat-card class="sidebar-card">
       <div class="dashboard-title">
-        <h2><b>Dashboard<br>RiskEvaluator</b></h2>
+        <h2><b>RiskEvaluator<br>Dashboard</b></h2>
       </div>
       <div class="filtres">
         <div class="entreprise-filtre">
@@ -266,7 +266,7 @@
                     [max]="100"
                     [value]="scoresMoyenGraph1"
                     [tuiHintAppearance]="appearance"
-                    [tuiHintContent]="hintGraphScore"
+                    [tuiHintContent]="hintGraph1"
                   ></tui-bar-chart>
                 </tui-axes>
               </tui-root>
@@ -282,7 +282,6 @@
                   class="tui-space_right-4"
                   [value]="nbReponsesParQuestionnaire"
                 ></tui-ring-chart>
-                <!-- {{ this.filteredEntreprises | json}} -->
               </div>
             </mat-card>
           </div>
@@ -300,7 +299,7 @@
                     [max]="100"
                     [value]="scoresMetiers"
                     [tuiHintAppearance]="appearance"
-                    [tuiHintContent]="hintGraphScore"></tui-bar-chart>
+                    [tuiHintContent]="hintGraph3"></tui-bar-chart>
                 </tui-axes>
               </tui-root>
             </mat-card>
@@ -317,7 +316,7 @@
                     [max]="20"
                     [value]="nbEvalsParLibelle"
                     [tuiHintAppearance]="appearance"
-                    [tuiHintContent]="hintGraphNumber"></tui-bar-chart>
+                    [tuiHintContent]="hintGraph4"></tui-bar-chart>
                 </tui-axes>
               </tui-root>
             </mat-card>

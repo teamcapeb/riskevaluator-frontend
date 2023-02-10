@@ -33,7 +33,6 @@ export class  CategorieQuestionService {
     return this.http.post<ICategorieQuestion>(`${this.baseUrl}`, categorieQuestion.toJSON());
   }
   update(categorieQuestion: CategorieQuestion) {
-    console.log(`${this.baseUrl}${categorieQuestion.idCategorie}`);
     return this.http.put<ICategorieQuestion>(`${this.baseUrl}${categorieQuestion.idCategorie}`, categorieQuestion.toJSON());
   }
   delete(categorieQuestion: ICategorieQuestion) {
