@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {IEntreprise} from '../../interfaces/IEntreprise';
 import IQuestionnaire from "@/interfaces/IQuestionnaire";
-import { EntrepriseScoreProjectionResponse } from '@/objects/EntrepriseScoreProjectionResponse';
+import { EntrepriseScoreProjectionResponse } from '../../objects/EntrepriseScoreProjectionResponse';
 
 @Injectable({
   providedIn: 'root'
