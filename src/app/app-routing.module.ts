@@ -87,6 +87,10 @@ const administration: Routes = [
   {
     path: 'statistiques/power-bi',
     component: PowerBiComponent,
+  },
+  {
+    path: 'entreprise/:noSiret',
+    component: DetailsEntrepriseComponent,
     canActivate: [AuthGuard]
   }
 
@@ -101,11 +105,7 @@ const visitors: Routes = [
     component: ContactComponent
   },
   {
-    path: 'entreprise/:noSiret',
-    component: DetailsEntrepriseComponent
-  },
-  {
-    path: 'historiques/:id',
+    path: 'historiques/:id/:isAdmin',
     component: EvaluationResultatComponent
   },
   // {

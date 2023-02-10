@@ -73,6 +73,7 @@ export class EvaluationResultatComponent implements OnInit {
 
   // MOCK  de la date d'évaluation dans le cas des évalautions précedentes sans date
   defaultDate = "01/01/2000";
+  isAdmin : boolean = false;
 
   constructor( private evalTokenStorageService : EvalTokenStorageService,
                private evaluationApiService : EvaluationApiService,
@@ -93,6 +94,7 @@ export class EvaluationResultatComponent implements OnInit {
   ngOnInit(): void {
     if(this.evalId)
       this.onGetSignleEvaluation(this.evalId);
+    this.getLogin()
   }
 
   PreparePreconisationList(){
@@ -167,8 +169,12 @@ export class EvaluationResultatComponent implements OnInit {
 
   async generatePDF() {
     let wEntreprise=this.entreprise$
+    let docTitle = 'CAPEB-Evaluator -'+wEntreprise.nomEntreprise+'-'+this.questionnaire?.thematique+'.pdf';
 
     let docDefinition = {
+      info: {
+	      title: docTitle,
+      },
       header:'CAPEB Evaluator',
       content: [
         {
@@ -295,4 +301,13 @@ export class EvaluationResultatComponent implements OnInit {
   back(){
     this.route.navigate(["entreprise", this.entreprise$.noSiret]);
   }
+
+    /**
+   * Méthode pour récupérer le numéro de siret de l'entreprise
+   */
+    getLogin() {
+      let isAdminTemp = this.actRoute.snapshot.paramMap.get('isAdmin');
+      this.isAdmin = (isAdminTemp === 'true');
+      console.log(this.isAdmin);
+    }
 }

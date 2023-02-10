@@ -23,6 +23,7 @@ export class EvaluerComponent implements OnInit {
   metiers$: IMetier[];
 
   alertMetier : boolean = false;
+  isOneCheck : boolean = false;
 
   constructor(private router: Router,
               private modalService: ModalService,
@@ -81,5 +82,9 @@ export class EvaluerComponent implements OnInit {
 
   onCountChecked(metiers : IMetier[]){
     return metiers.filter(e => e.isChecked == true).length;
+  }
+
+  onCheck(event : any){
+    this.isOneCheck = event;
   }
 }

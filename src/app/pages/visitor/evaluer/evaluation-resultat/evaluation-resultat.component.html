@@ -30,7 +30,7 @@
         <app-resultat-list [evaluation$]="result.data" ></app-resultat-list>
       </div>
     </div>
-    <div style="text-align: center" (click)="deleteResult()">
+    <div style="text-align: center" [hidden]="!isAdmin" (click)="deleteResult()">
       <button class = "suppressButton" mat-raised-button >SUPPRIMER</button>
     </div>
   </div>

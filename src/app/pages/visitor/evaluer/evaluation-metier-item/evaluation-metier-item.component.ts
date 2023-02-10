@@ -1,5 +1,5 @@
 import {IMetier} from "@/interfaces/IMetier";
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { environment } from "../../../../../environments/environment";
 
 @Component({
@@ -9,10 +9,15 @@ import { environment } from "../../../../../environments/environment";
 })
 export class EvaluationMetierItemComponent implements OnInit {
   @Input() metier$ : IMetier = null;
+  @Input() listeMetiers : IMetier[] = [];
+  @Output() newItemEvent = new EventEmitter<boolean>();
   imageMetier: string = "";
+  isOneCheck : boolean = true;
 
   onSelectCard() {
     this.metier$.isChecked = !this.metier$.isChecked;
+    this.isOneCheck = this.listeMetiers.some(item => item.isChecked === true);
+    this.addNewItem(this.isOneCheck);
   }
   constructor() { }
 
@@ -49,5 +54,9 @@ export class EvaluationMetierItemComponent implements OnInit {
       default:
         return this.imageMetier = "../../../../../assets/img/metier.png"
     }
+  }
+
+  addNewItem(value: boolean) {
+    this.newItemEvent.emit(value);
   }
 }

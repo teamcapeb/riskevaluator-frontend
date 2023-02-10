@@ -112,7 +112,7 @@ export class EvaluationFooterComponent implements OnInit {
           this.evaluationApiService.create(wEvaluation).subscribe( evaluation => {
             if(evaluation) {
               this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
-              this.router.navigate(['historiques',evaluation?.idEvaluation]);
+              this.router.navigate(['historiques',evaluation?.idEvaluation,false]);
             }
             }
           )
@@ -130,7 +130,7 @@ export class EvaluationFooterComponent implements OnInit {
             if(evaluation) {
               this.entrepriseService.update(aEvaluation.entreprise.noSiret, aEvaluation.entreprise).subscribe();
               this.evalTokenStorageService.saveEvaluationId(evaluation?.idEvaluation);
-              this.router.navigate(['historiques',evaluation?.idEvaluation]);
+              this.router.navigate(['historiques',evaluation?.idEvaluation,false]);
             }
             }
           )

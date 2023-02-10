@@ -395,7 +395,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   separateEntreprisesEffectif(entreprises: IEntreprise[]) {
-    // console.log(entreprises);
     this.petitesEntreprises = [];
     this.moyennesEntreprises = [];
     this.grandesEntreprises = [];
@@ -461,9 +460,6 @@ export class StatisticsComponent implements OnInit {
     // } else if (this.grandesEntreprises.length == 0) {
     //   this.scoreMoyenGrandesEntreprises = 0;
     // }
-    // console.log(this.scoreMoyenPetitesEntreprises);
-    // console.log(this.scoreMoyenMoyennesEntreprises);
-    // console.log(this.scoreMoyenGrandesEntreprises);
     this.setValueGraph1();
   }
 

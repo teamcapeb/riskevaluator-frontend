@@ -7,11 +7,12 @@
     <div style="display: flex; flex-wrap: wrap; flex-direction: row;
                 justify-content: space-between; margin: 0px 32px;">
       <app-evaluation-metier-item style="display: flex; height: 220px; width: calc(25%); justify-content: center;"
-      *ngFor="let metier of metiers$" [metier$]="metier"></app-evaluation-metier-item>
+      [listeMetiers] = "metiers$"
+      *ngFor="let metier of metiers$" [metier$]="metier" (newItemEvent)="onCheck($event)"></app-evaluation-metier-item>
     </div>
 
     <form class="form-inline ms-auto">
-      <button (click)="onValidateMetiers(metiers$)">
+      <button [disabled]="!isOneCheck" (click)="onValidateMetiers(metiers$)">
         VALIDER
       </button>
     </form>
