@@ -27,6 +27,7 @@ export class EvaluationQuestionComponent implements OnInit {
   }
 
   radioChange(event: any) {
+    console.log(event);
     this.question$?.reponses?.forEach(item => {
       if(item.idReponse === event.value.idReponse) {
         item.isChecked = true;
@@ -37,6 +38,15 @@ export class EvaluationQuestionComponent implements OnInit {
     if(this.isSelected == false){
       this.questionService.numberChecked++;
       this.isSelected = true;
+    }
+  }
+
+  checkBoxChange(event: any) {
+    if (event.checked) {
+      this.questionService.numberChecked++;
+    }
+    else {
+      this.questionService.numberChecked--;
     }
   }
 }

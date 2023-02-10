@@ -5,6 +5,7 @@
       <section class="checkBoxGroup">
         <mat-checkbox *ngFor="let reponse of question$.reponses; let indexReponse = index;"
                       [(ngModel)]="reponse.isChecked"
+                      (change)="checkBoxChange($event)"
                       [value]="reponse.contenu" class="checkBox" [disabled]="false" >{{reponse.contenu}}
         </mat-checkbox>
       </section>
