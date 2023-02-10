@@ -95,6 +95,8 @@ export class StatisticsComponent implements OnInit {
 
   nbReponsesParQuestionnaire: number[] = [];
 
+  scoresMoyensEntreprises: EntrepriseScoreProjectionResponse[];
+
   readonly hintGraph1 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
     this.scoresMoyenGraph1
       .reduce(
@@ -216,7 +218,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   getScoreEffectifEntreprises(entreprises: IEntreprise[]) {
-    // this.nbOfThematiques;
     var nbPetites: number = 0;
     var nbMoyennes: number = 0;
     var nbGrandes: number = 0;
@@ -225,7 +226,7 @@ export class StatisticsComponent implements OnInit {
     var sumGrandes: number = 0;
     // console.log("A");
     this.entrepriseService.getScoreEntreprises().subscribe((response: EntrepriseScoreProjectionResponse[]) => {
-
+      this.scoresMoyensEntreprises = response;
 
 
       this.cdr.detectChanges();
@@ -325,7 +326,6 @@ export class StatisticsComponent implements OnInit {
         this.entrepriseControl.value.forEach((nom: string) => {
           if (etp.noSiret == entreprise.noSiret && etp.nomEntreprise === nom && !this.filteredEntreprises.includes(etp)) {
             this.filteredEntreprises.push(etp);
-            // this.autoFilteredEntreprises.push(etp);
           }
         });
       });
@@ -335,7 +335,6 @@ export class StatisticsComponent implements OnInit {
       this.filteredEntreprises.forEach((element, index) => {
         if (element.noSiret == entreprise.noSiret) {
           this.filteredEntreprises.splice(index, 1);
-          // this.autoFilteredEvaluations.splice(index, 1);
           this.updateFilteredMetiersByEntreprises();
           this.updateFilteredEvaluationsByEntreprises();
         }
@@ -499,12 +498,22 @@ export class StatisticsComponent implements OnInit {
         }
       });
     });
+    this.getScoreMetiers(this.filteredMetiers);
   }
 
   updateFilteredEvaluationsByEntreprises() {
     this.filteredEvaluations = [];
     this.filteredEntreprises.forEach((etp) => {
       this.filteredEvaluations.push(...etp.evaluations);
+    });
+  }
+
+  updateFilteredQuestionnairesByEntreprises() {
+    this.filteredQuestionnaires = [];
+    this.filteredEntreprises.forEach((etp) => {
+      this.scoresMoyensEntreprises.forEach((rep) => {
+        
+      });
     });
   }
 
