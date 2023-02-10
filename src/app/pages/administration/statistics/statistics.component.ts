@@ -17,7 +17,6 @@ import { tuiFormatNumber } from "@taiga-ui/core";
 import { Router } from '@angular/router';
 import { EntrepriseScoreProjectionResponse } from '@/objects/EntrepriseScoreProjectionResponse';
 
-
 @Component({
   selector: "app-statistics",
   templateUrl: "./statistics.component.html",
@@ -287,17 +286,17 @@ export class StatisticsComponent implements OnInit {
     if (questionnaires.length === 0) {
       questionnaires = this.allQuestionnaires;
     }
-    // questionnaires.forEach((questionnaire) => {
-    //   var evaluations: IEvaluation[] = [];
-    //   this.allEvaluations.forEach((evaluation) => {
-    //     evaluation.scoreCategories.forEach(score => {
-    //       if (questionnaire.thematique == score.categorieQuestion.questionnaire.thematique && !this.includesEval(evaluations, evaluation)) {
-    //         evaluations.push(evaluation)
-    //       }
-    //     })
-    //   })
-    //   this.nbReponsesParQuestionnaire.push(evaluations.length)
-    // })
+    questionnaires.forEach((questionnaire) => {
+      var evaluations: IEvaluation[] = [];
+      this.allEvaluations.forEach((evaluation) => {
+        evaluation.scoreCategories.forEach(score => {
+          if (questionnaire.thematique == score.categorieQuestion.questionnaire.thematique && !this.includesEval(evaluations, evaluation)) {
+            evaluations.push(evaluation)
+          }
+        })
+      })
+      this.nbReponsesParQuestionnaire.push(evaluations.length)
+    })
   }
 
   sortEntreprises(entreprises: IEntreprise[]): IEntreprise[] {
