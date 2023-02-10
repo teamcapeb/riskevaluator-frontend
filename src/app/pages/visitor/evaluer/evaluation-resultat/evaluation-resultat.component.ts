@@ -174,6 +174,8 @@ export class EvaluationResultatComponent implements OnInit {
     let dateEvaluationConcat = this.evaluation$.date.replace(/\//g, "-");
     let docTitle = 'CAPEB-Evaluator-'+entrepriseConcat+'-'+thematiqueConcat+'-'+dateEvaluationConcat+'.pdf';
 
+    let tempPrecoNoDoublon = this.nodoublonPrecoG(this.tempPreco);
+
     let docDefinition = {
       header: {
         stack: [
@@ -232,7 +234,7 @@ export class EvaluationResultatComponent implements OnInit {
             widths: ['*'],
             body:[
               ['Préconisations globale'],
-              ...this.tempPreco.map(wPreconisation=>[wPreconisation.contenu]),
+              ...tempPrecoNoDoublon.map(wPreconisation=>[wPreconisation.contenu]),
             ]
           }
         }
@@ -314,5 +316,15 @@ export class EvaluationResultatComponent implements OnInit {
       let isAdminTemp = this.actRoute.snapshot.paramMap.get('isAdmin');
       this.isAdmin = (isAdminTemp === 'true');
       console.log(this.isAdmin);
+    }
+
+    nodoublonPrecoG(preconisation : IPreconisationGlobale[]) : IPreconisationGlobale[]{
+      const contenuPreconisation = preconisation.map(obj => {
+        return { ...obj, contenu: obj.contenu.replace(/\r/g, '') };
+      });
+      const uniqueList = [...new Set(contenuPreconisation.map(obj => obj.contenu))].map(contenu => {
+        return contenuPreconisation.find(obj => obj.contenu === contenu);
+      });
+      return uniqueList.slice(1);
     }
 }

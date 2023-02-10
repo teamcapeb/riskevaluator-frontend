@@ -6,7 +6,7 @@
 
 <ng-container  *ngFor="let item of listScoreCategories$">
   <app-resultat-item
-    [text$]="concat(item?.categorieQuestion?.preconisationsCategorie)"
+    [text$]="concatPrecoQ(item?.categorieQuestion?.preconisationsCategorie)"
     [percentage$]="item?.nbPoints"
     [title$]="item?.categorieQuestion?.libelle"  > </app-resultat-item>
 </ng-container>

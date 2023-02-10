@@ -45,7 +45,7 @@ export class ResultatListComponent implements OnInit {
 
       // concatenate contenu of all global preconisation to one
       if (this.precoGlobale$ != null && this.precoGlobale$?.contenu !== null)
-        this.precoGlobale$.contenu = this.concatPreconisations(tempPreco);
+        this.precoGlobale$.contenu = this.concatPrecoG(tempPreco);
     });
   }
 }
@@ -65,8 +65,20 @@ export class ResultatListComponent implements OnInit {
     return preconisation.reduce(textReducer,"");
   }
 
-  concat(preconisation : IPreconisationCategorieQuestion[]) : string{
-    let libelle : string[] =[...new Set( preconisation.map(item => item.contenu))];
+  concatPrecoQ(preconisation : IPreconisationCategorieQuestion[]) : string{
+    const contenuPreconisation = preconisation.map(obj => {
+      return { ...obj, contenu: obj.contenu.replace(/\r|  /g, '') };
+    });
+    let libelle : string[] =[...new Set( contenuPreconisation.map(item => item.contenu))];
     return libelle.join('\n \n');
   }
+
+  concatPrecoG(preconisation : IPreconisationGlobale[]) : string{
+    const contenuPreconisation = preconisation.map(obj => {
+      return { ...obj, contenu: obj.contenu.replace(/\r|  /g, '') };
+    });
+    let libelle : string[] =[...new Set( contenuPreconisation.map(item => item.contenu))];
+    return libelle.join('\n \n');
+  }
+
 }

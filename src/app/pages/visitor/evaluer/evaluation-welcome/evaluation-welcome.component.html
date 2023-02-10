@@ -16,7 +16,7 @@
         && (frmEntreprise.controls['noSiret']?.dirty || frmEntreprise.controls['noSiret']?.touched)">Il faut 14 chiffres</mat-label>
         <input type="number" matInput required placeholder="{{evaluerIHM.noSiret}}" id="noSiret"
                formControlName="noSiret" (ngModelChange)="getEntrepriseBySiret()"
-               oninput="this.value=this.value.slice(0,14)">
+               oninput="if(this.value.length==14) return false">
       </mat-form-field>
       <mat-form-field appearance="outline" class="questionOuverte">
         <mat-label class="text-danger" *ngIf="frmEntreprise.controls['nomEntreprise'].hasError('required')&&frmEntreprise.controls['nomEntreprise']?.touched">Le nom de votre entreprise est obligatoire.</mat-label>
