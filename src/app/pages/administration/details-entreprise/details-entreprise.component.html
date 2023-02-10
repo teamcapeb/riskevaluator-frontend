@@ -1,10 +1,10 @@
 <app-oops-message *ngIf="dataSource.length == 0" ></app-oops-message>
-<div *ngIf = "dataSource.length > 0">
+<div *ngIf = "dataSource.length > 0" style="padding: 16px;">
   <div class="d-flex justify-content-center">
-    <h1 class="pt-2 title">Détails des évaluations de l'entreprise {{this.entreprise?.nomEntreprise}}</h1>
+    <h1 class="pt-2 title">Détails des évaluations de {{this.entreprise?.nomEntreprise}}</h1>
   </div>
   <div class="d-flex justify-content-center">
-    <h4 class="justify-content-center">SIRET: {{this.entreprise?.noSiret}}</h4>
+    <h4 class="justify-content-center" style="padding: 16px;">SIRET: {{this.entreprise?.noSiret}}</h4>
   </div>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -34,9 +34,9 @@
 
     <!-- colonne Action -->
     <ng-container matColumnDef="action">
-      <th mat-header-cell  *matHeaderCellDef ></th>
+      <th mat-header-cell  *matHeaderCellDef > Résultat </th>
       <td *matCellDef="let element" >
-          <button class = 'grey' mat-raised-button (click)="goToResult(element.idEvaluation)">AFFICHER RESULTAT</button>
+          <button class = 'grey' mat-raised-button (click)="goToResult(element.idEvaluation)">AFFICHER</button>
       </td>
     </ng-container>
 

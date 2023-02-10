@@ -3,23 +3,34 @@
 }
 
 table, td, th {
-  border: 1px solid;
   text-align: center;
 }
 
+td {
+  border: 1px solid #eaeaea;
+}
+
 table {
+  font-family: 'Poppins', 'Roboto';
+  border-radius: 10px;
   width: 90%;
   margin: 0 auto;
+  box-shadow: none;
+  border-collapse: collapse;
+  border-radius: 1em;
+  overflow: hidden;
+  margin-bottom: 16px;
 }
 
 th.mat-header-cell {
   text-align: center;
-  color: black;
-  font-size:1.5em;
+  color: white;
+  font-weight: bolder;
+  font-size: 1.5em;
+  background-color: #6c757d;
 }
 
 h1 {
-  margin-top: 4px;
   clear: left;
 }
 
@@ -32,7 +43,11 @@ button:hover {
 }
 
 .title{
-  color : rgb(72, 72, 245);
+  color : #e33b1a;
   font-size: 2em;
   font-weight: bolder;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding: 18px;
 }
