@@ -16,7 +16,6 @@ import { MetierScoreProjectionResponse } from "@/objects/MetierScoreProjectionRe
 import { tuiFormatNumber } from "@taiga-ui/core";
 import { Router } from '@angular/router';
 import { EntrepriseScoreProjectionResponse } from '@/objects/EntrepriseScoreProjectionResponse';
-import console from 'console';
 
 @Component({
   selector: "app-statistics",
@@ -227,7 +226,7 @@ export class StatisticsComponent implements OnInit {
     // console.log("A");
     this.entrepriseService.getScoreEntreprises().subscribe((response: EntrepriseScoreProjectionResponse[]) => {
 
- 
+
 
       this.cdr.detectChanges();
     });

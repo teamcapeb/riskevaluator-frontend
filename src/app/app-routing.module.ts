@@ -87,6 +87,7 @@ const administration: Routes = [
   {
     path: 'statistiques/power-bi',
     component: PowerBiComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'entreprise/:noSiret',
