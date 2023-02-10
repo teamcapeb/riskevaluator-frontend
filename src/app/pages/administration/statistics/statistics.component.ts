@@ -216,7 +216,7 @@ export class StatisticsComponent implements OnInit {
           })
           this.nbEvalsParLibelle.push(nbEvals);
         }
-        this.graph4LabelsY[1] = (Math.ceil((this.filteredEvaluations.length / 10)) * 10).toString();
+        this.graph4LabelsY[1] = (Math.ceil((this.allEvaluations.length / 10)) * 10).toString();
         this.cdr.detectChanges();
       });
   }
