@@ -174,13 +174,11 @@ export class StatisticsComponent implements OnInit {
     this.metierService.getScoreParMetier()
       .subscribe((response: MetierScoreProjectionResponse[]) => {
         this.filteredQuestionnaires.forEach((qst) => {
-          console.log(qst);
           scoreTMP = [];
           this.scoresMetiers = [];
           this.metierNames = [];
           response.forEach((rep) => {
             if (qst.thematique == rep.thematique) {
-              console.log(rep.scoreMoyen);
               scoreTMP.push(rep.scoreMoyen);
               this.metierNames.push(rep.nomMetier);
             }
@@ -480,71 +478,10 @@ export class StatisticsComponent implements OnInit {
         this.grandesEntreprises.push(etp);
       }
     });
-    this.scoresMoyensTailleEntreprises();
-  }
-
-  scoresMoyensTailleEntreprises() {
-    // TODO GERER LES DATES
-    // console.log(this.petitesEntreprises);
-    // console.log(this.moyennesEntreprises);
-    // console.log(this.grandesEntreprises);
-
-    // let sumScorePetites: number = 0;
-    // let sumScoreMoyennes: number = 0;
-    // let sumScoreGrandes: number = 0;
-
-    // let nbQuestionnaires = this.filteredQuestionnaires.length;
-    // let evalsEntreprise: IEvaluation[] = [];
-    // let dates : string[] = [];
-
-    // this.petitesEntreprises.forEach((etp) => {
-    //   for (let i=0; i<nbQuestionnaires; i++) {
-    //     this.scoresMoyenGraph1;
-    //   }
-    // });
-
-    // this.moyennesEntreprises.forEach((etp) => {
-    //   sumScoreMoyennes += etp.evaluations.map((evl) => {
-    //     // TODO
-    //     return evl.scoreGeneraleEvaluation;
-    //   }).reduce((total, num) => total + num, 0);
-    // });
-
-
-    // this.grandesEntreprises.forEach((etp) => {
-    //   sumScoreGrandes += etp.evaluations.map((evl) => {
-    //     // TODO
-    //     return evl.scoreGeneraleEvaluation;
-    //   }).reduce((total, num) => total + num, 0);
-    // });
-
-    // if (this.petitesEntreprises.length > 0) {
-    //   this.scoreMoyenPetitesEntreprises = sumScorePetites / this.petitesEntreprises.length;
-    // } else if (this.petitesEntreprises.length == 0) {
-    //   this.scoreMoyenPetitesEntreprises = 0;
-    // }
-    // if (this.moyennesEntreprises.length > 0) {
-    //   this.scoreMoyenMoyennesEntreprises = sumScoreMoyennes / this.moyennesEntreprises.length;
-    // } else if (this.moyennesEntreprises.length == 0) {
-    //   this.scoreMoyenMoyennesEntreprises = 0;
-    // }
-    // if (this.grandesEntreprises.length > 0) {
-    //   this.scoreMoyenGrandesEntreprises = sumScoreGrandes / this.grandesEntreprises.length;
-    // } else if (this.grandesEntreprises.length == 0) {
-    //   this.scoreMoyenGrandesEntreprises = 0;
-    // }
-    this.setValueGraph1();
-  }
-
-  setValueGraph1() {
-    // this.scoresMoyenGraph1 = [[this.scoreMoyenPetitesEntreprises,
-    //   this.scoreMoyenMoyennesEntreprises,
-    //   this.scoreMoyenGrandesEntreprises]
-    // ];
+    this.getScoreEffectifEntreprises(this.filteredEntreprises);
   }
 
   updateFilteredMetiersByEntreprises() {
-    // console.log(this.filteredMetiers);
     this.filteredMetiers = [];
     this.filteredEntreprises.forEach((etp) => {
       etp.metiers.forEach((mtr) => {
