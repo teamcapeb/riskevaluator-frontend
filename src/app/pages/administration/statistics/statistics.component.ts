@@ -189,14 +189,14 @@ export class StatisticsComponent implements OnInit {
             response.forEach((rep) => {
               if (qst.thematique === rep.thematique) {
                 this.metierNames.push(rep.nomMetier);
-                scoreTMP.push(rep.scoreMoyen);
+                scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
               }
             });
           } else {
             metiers.forEach((mtr) => {
               response.forEach((rep) => {
                 if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
-                  scoreTMP.push(rep.scoreMoyen);
+                  scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
                   this.metierNames.push(rep.nomMetier);
                 }
               });
