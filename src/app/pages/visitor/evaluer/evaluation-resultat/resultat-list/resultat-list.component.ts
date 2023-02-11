@@ -61,7 +61,7 @@ export class ResultatListComponent implements OnInit {
   }
 
   concatPreconisations(preconisation :any) : string {
-    const textReducer = (previousValue: string, currentValue: IPreconisationGlobale | IPreconisationCategorieQuestion) => previousValue.concat('\n \n',currentValue.contenu);
+    const textReducer = (previousValue: string, currentValue: IPreconisationGlobale | IPreconisationCategorieQuestion) => previousValue.concat(currentValue.contenu, '\n \n');
     return preconisation.reduce(textReducer,"");
   }
 
