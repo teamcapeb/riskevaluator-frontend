@@ -177,18 +177,55 @@ export class StatisticsComponent implements OnInit {
           scoreTMP = [];
           this.scoresMetiers = [];
           this.metierNames = [];
-          response.forEach((rep) => {
-            if (qst.thematique == rep.thematique) {
-              scoreTMP.push(rep.scoreMoyen);
-              this.metierNames.push(rep.nomMetier);
-            }
-          });
+          if (metiers.length === 0) {
+            response.forEach((rep) => {
+              if (qst.thematique === rep.thematique) {
+                this.metierNames.push(rep.nomMetier);
+                scoreTMP.push(rep.scoreMoyen);
+              }
+            });
+          } else {
+            metiers.forEach((mtr) => {
+              response.forEach((rep) => {
+                if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
+                  scoreTMP.push(rep.scoreMoyen);
+                  this.metierNames.push(rep.nomMetier);
+                }
+              });
+            });
+          }
           scoresMetiersTMP.push(scoreTMP);
         });
         this.scoresMetiers = scoresMetiersTMP;
         this.cdr.detectChanges();
       });
   }
+
+  // getScoreMetiers(metiers: IMetier[]) {
+    //   this.metierService.getScoreParMetier()
+    //     .subscribe((response: MetierScoreProjectionResponse[]) => {
+    //       this.scoresMetiers = [];
+    //       this.metierNames = []
+    //       if (metiers.length == 0) {
+    //         this.metierNames = response.map(item => item.nomMetier);
+    //         this.scoresMetiers.push(
+    //           response.map(item => parseFloat(item.scoreMoyen.toFixed(2)))
+    //         );
+    //       } else {
+    //         var scoreTMP: number[] = []
+    //         metiers.forEach((met) => {
+    //           response.forEach((rep) => {
+    //             if (rep.nomMetier == met.nomMetier) {
+    //               this.metierNames.push(rep.nomMetier);
+    //               scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)))
+    //             }
+    //           })
+    //         })
+    //         this.scoresMetiers.push(scoreTMP)
+    //       }
+    //       this.cdr.detectChanges();
+    //     });
+    // }
 
   getNbEvalsParCategorie(questionnaire: IQuestionnaire[]) {
     this.evaluationService.getNbEvalsParCategorie()
