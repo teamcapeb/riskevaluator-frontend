@@ -229,8 +229,9 @@ export class StatisticsComponent implements OnInit {
               }
             });
           })
-          this.nbEvalsParLibelle.push(nbEvals)
+          this.nbEvalsParLibelle.push(nbEvals);
         }
+        this.graph4LabelsY[1] = (Math.ceil((this.allEvaluations.length / 10)) * 10).toString();
         this.cdr.detectChanges();
       });
   }
@@ -245,12 +246,12 @@ export class StatisticsComponent implements OnInit {
     var avgPetites: number = 0;
     var avgMoyennes: number = 0;
     var avgGrandes: number = 0;
-    var sumThematique : number[] = []
-    var tmpScoresMoyensGraph1 : number[][] = []
+    var sumThematique : number[] = [];
+    var tmpScoresMoyensGraph1 : number[][] = [];
     this.entrepriseService.getScoreEntreprises().subscribe((response: EntrepriseScoreProjectionResponse[]) => {
       this.scoresMoyensEntreprises = response;
-      this.allQuestionnaires.forEach((quest) => {
-        sumThematique = []
+      this.filteredQuestionnaires.forEach((quest) => {
+        sumThematique = [];
         response.forEach(rep => {
           if (quest.thematique == rep.thematique) {
             if (rep.taille == "Grande") {
@@ -270,13 +271,15 @@ export class StatisticsComponent implements OnInit {
         if (nbGrandes != 0) {
           avgGrandes = sumGrandes/nbGrandes;
         }
-        if (nbPetites !=0) {
+        if (nbPetites != 0) {
           avgPetites = sumPetites/nbPetites;
         }
-        if (nbMoyennes !=0) {
+        if (nbMoyennes != 0) {
           avgMoyennes = sumMoyennes/nbMoyennes;
         }
-        sumThematique.push(avgPetites, avgMoyennes, avgGrandes);
+        sumThematique.push(parseFloat(avgPetites.toFixed(2)),
+                           parseFloat(avgMoyennes.toFixed(2)),
+                           parseFloat(avgGrandes.toFixed(2)));
         tmpScoresMoyensGraph1.push(sumThematique);
       })
       this.scoresMoyenGraph1 = tmpScoresMoyensGraph1;
@@ -309,6 +312,7 @@ export class StatisticsComponent implements OnInit {
         })
       })
       this.nbReponsesParQuestionnaire.push(evaluations.length)
+      console.log(this.nbReponsesParQuestionnaire);
     })
   }
 
@@ -407,6 +411,9 @@ export class StatisticsComponent implements OnInit {
           this.filteredEntreprises.splice(index, 1);
           this.updateFilteredMetiersByEntreprises();
           this.updateFilteredEvaluationsByEntreprises();
+          this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+          this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+          this.getScoreEffectifEntreprises(this.filteredEntreprises);
         }
       });
       if (this.entrepriseControl.value.length == 0) {
@@ -432,10 +439,7 @@ export class StatisticsComponent implements OnInit {
         }
       })
       })
-
-
     })
-
     this.nbMetier = this.autoFilteredMetiers.length;
   }
 
@@ -477,6 +481,9 @@ export class StatisticsComponent implements OnInit {
           this.updateFilteredEntreprisesByMetiers();
           this.updateFilteredEvaluationsByMetiers();
           this.getScoreMetiers(this.filteredMetiers);
+          this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+          this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+          this.getScoreEffectifEntreprises(this.filteredEntreprises);
         }
       });
       if (this.metierControl.value.length == 0) {
@@ -488,7 +495,6 @@ export class StatisticsComponent implements OnInit {
     this.autoFilteredMetiers = [];
     this.autoFilteredQuestionnaires = [];
     this.separateEntreprisesEffectif(this.filteredEntreprises);
-
 
     console.log(this.filteredEntreprises)
     this.filteredEntreprises.forEach((etp)=>{
@@ -507,12 +513,8 @@ export class StatisticsComponent implements OnInit {
         }
       })
       })
-
-
     })
-
   }
-
 
   includesQuestionnaire(questionnaires : IQuestionnaire[],questionnaire : IQuestionnaire){
     var res = false;
@@ -571,8 +573,8 @@ export class StatisticsComponent implements OnInit {
       // this.updateFilteredEvaluationsByQuestionnaires();
       // this.getNbEvalsParCategorie(this.filteredQuestionnaires);
       // this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+      this.graph2Labels = ["Toutes les thématiques"];
       this.resetAllFilters();
-      this.autoFilteredQuestionnaires = [];
     }
     else {
       // this.filteredQuestionnaires.forEach((element, index) => {
@@ -586,13 +588,15 @@ export class StatisticsComponent implements OnInit {
       //     this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
       //   }
       // });
+      if (this.questionnaireControl.value.length == 0) {
+        this.graph2Labels = ["Toutes les thématiques"];
+          // this.resetAllFilters();
+          // this.autoFilteredQuestionnaires = this.allQuestionnaires;
+      }
       this.resetAllFilters();
-      // if (this.questionnaireControl.value.length == 0) {
-      //   this.resetAllFilters();
-      //   this.autoFilteredQuestionnaires = this.allQuestionnaires;
-      // }
-
+      this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
     }
+
     this.separateEntreprisesEffectif(this.filteredEntreprises);
     this.autoFilteredQuestionnaires = [];
     this.autoFilteredMetiers = [];
@@ -615,6 +619,14 @@ export class StatisticsComponent implements OnInit {
     this.nbMetier = this.autoFilteredMetiers.length;
   }
 
+  getGraph2Labels(): string[] {
+    if (this.graph2Labels?.length === this.allQuestionnaires?.length) {
+      return ["Toutes les thématiques"];
+    } else {
+      return this.graph2Labels;
+    }
+  }
+
   separateEntreprisesEffectif(entreprises: IEntreprise[]) {
     this.petitesEntreprises = [];
     this.moyennesEntreprises = [];
@@ -628,64 +640,7 @@ export class StatisticsComponent implements OnInit {
         this.grandesEntreprises.push(etp);
       }
     });
-    this.scoresMoyensTailleEntreprises();
-  }
-
-  scoresMoyensTailleEntreprises() {
-    // TODO GERER LES DATES
-
-    // let sumScorePetites: number = 0;
-    // let sumScoreMoyennes: number = 0;
-    // let sumScoreGrandes: number = 0;
-
-    // let nbQuestionnaires = this.filteredQuestionnaires.length;
-    // let evalsEntreprise: IEvaluation[] = [];
-    // let dates : string[] = [];
-
-    // this.petitesEntreprises.forEach((etp) => {
-    //   for (let i=0; i<nbQuestionnaires; i++) {
-    //     this.scoresMoyenGraph1;
-    //   }
-    // });
-
-    // this.moyennesEntreprises.forEach((etp) => {
-    //   sumScoreMoyennes += etp.evaluations.map((evl) => {
-    //     // TODO
-    //     return evl.scoreGeneraleEvaluation;
-    //   }).reduce((total, num) => total + num, 0);
-    // });
-
-
-    // this.grandesEntreprises.forEach((etp) => {
-    //   sumScoreGrandes += etp.evaluations.map((evl) => {
-    //     // TODO
-    //     return evl.scoreGeneraleEvaluation;
-    //   }).reduce((total, num) => total + num, 0);
-    // });
-
-    // if (this.petitesEntreprises.length > 0) {
-    //   this.scoreMoyenPetitesEntreprises = sumScorePetites / this.petitesEntreprises.length;
-    // } else if (this.petitesEntreprises.length == 0) {
-    //   this.scoreMoyenPetitesEntreprises = 0;
-    // }
-    // if (this.moyennesEntreprises.length > 0) {
-    //   this.scoreMoyenMoyennesEntreprises = sumScoreMoyennes / this.moyennesEntreprises.length;
-    // } else if (this.moyennesEntreprises.length == 0) {
-    //   this.scoreMoyenMoyennesEntreprises = 0;
-    // }
-    // if (this.grandesEntreprises.length > 0) {
-    //   this.scoreMoyenGrandesEntreprises = sumScoreGrandes / this.grandesEntreprises.length;
-    // } else if (this.grandesEntreprises.length == 0) {
-    //   this.scoreMoyenGrandesEntreprises = 0;
-    // }
-    this.setValueGraph1();
-  }
-
-  setValueGraph1() {
-    // this.scoresMoyenGraph1 = [[this.scoreMoyenPetitesEntreprises,
-    //   this.scoreMoyenMoyennesEntreprises,
-    //   this.scoreMoyenGrandesEntreprises]
-    // ];
+    this.getScoreEffectifEntreprises(this.filteredEntreprises);
   }
 
   updateFilteredMetiersByEntreprises() {
@@ -1040,6 +995,9 @@ export class StatisticsComponent implements OnInit {
       });
     this.updateFilteredMetiersByEntreprises();
     this.updateFilteredEvaluationsByEntreprises();
+    this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+    this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+    this.getScoreEffectifEntreprises(this.filteredEntreprises);
     var tmpMetiers : IMetier[] = [];
     this.filteredMetiers.forEach(mtr => {
       this.metierControl.value.forEach((nom: string) => {
@@ -1052,7 +1010,9 @@ export class StatisticsComponent implements OnInit {
     this.updateFilteredEntreprisesByMetiers();
     this.updateFilteredEvaluationsByMetiers();
     this.getScoreMetiers(this.filteredMetiers);
-
+    this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+    this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+    this.getScoreEffectifEntreprises(this.filteredEntreprises);
 
     var tmpQuestionnaires : IQuestionnaire[] = [];
     this.filteredQuestionnaires.forEach(qst => {
@@ -1071,6 +1031,8 @@ export class StatisticsComponent implements OnInit {
     this.updateFilteredEvaluationsByQuestionnaires();
     this.getNbEvalsParCategorie(this.filteredQuestionnaires);
     this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+    this.getScoreEffectifEntreprises(this.filteredEntreprises);
+    this.getScoreMetiers(this.filteredMetiers);
     }else{
       if(this.entrepriseControl.value.length != 0 && this.metierControl.value.length != 0){
         console.log("2")
@@ -1084,6 +1046,9 @@ export class StatisticsComponent implements OnInit {
         });
       this.updateFilteredMetiersByEntreprises();
       this.updateFilteredEvaluationsByEntreprises();
+      this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+      this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+      this.getScoreEffectifEntreprises(this.filteredEntreprises);
 
       var tmpMetiers : IMetier[] = [];
       this.filteredMetiers.forEach(mtr => {
@@ -1097,6 +1062,9 @@ export class StatisticsComponent implements OnInit {
       this.updateFilteredEntreprisesByMetiers();
       this.updateFilteredEvaluationsByMetiers();
       this.getScoreMetiers(this.filteredMetiers);
+      this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+      this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+      this.getScoreEffectifEntreprises(this.filteredEntreprises);
       console.log("YES",this.filteredEntreprises)
       }
       else{
@@ -1111,8 +1079,10 @@ export class StatisticsComponent implements OnInit {
           });
           this.updateFilteredEntreprisesByMetiers();
           this.updateFilteredEvaluationsByMetiers();
-
           this.getScoreMetiers(this.filteredMetiers);
+          this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+          this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+          this.getScoreEffectifEntreprises(this.filteredEntreprises);
 
           var tmpQuestionnaires : IQuestionnaire[] = [];
           this.filteredQuestionnaires.forEach(qst => {
@@ -1130,7 +1100,8 @@ export class StatisticsComponent implements OnInit {
           this.updateFilteredEvaluationsByQuestionnaires();
           this.getNbEvalsParCategorie(this.filteredQuestionnaires);
           this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
-
+          this.getScoreEffectifEntreprises(this.filteredEntreprises);
+          this.getScoreMetiers(this.filteredMetiers);
         })
       }
         else{
@@ -1146,6 +1117,9 @@ export class StatisticsComponent implements OnInit {
           });
         this.updateFilteredMetiersByEntreprises();
         this.updateFilteredEvaluationsByEntreprises();
+        this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+        this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+        this.getScoreEffectifEntreprises(this.filteredEntreprises);
 
         var tmpQuestionnaires : IQuestionnaire[] = [];
         this.filteredQuestionnaires.forEach(qst => {
@@ -1163,6 +1137,7 @@ export class StatisticsComponent implements OnInit {
         this.updateFilteredEvaluationsByQuestionnaires();
         this.getNbEvalsParCategorie(this.filteredQuestionnaires);
         this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+        this.getScoreMetiers(this.filteredMetiers);
         }
         else{
           console.log("5")
@@ -1177,6 +1152,9 @@ export class StatisticsComponent implements OnInit {
             });
           this.updateFilteredMetiersByEntreprises();
           this.updateFilteredEvaluationsByEntreprises();
+          this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+          this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+          this.getScoreEffectifEntreprises(this.filteredEntreprises);
         }
         else{
           console.log("6")
@@ -1192,14 +1170,19 @@ export class StatisticsComponent implements OnInit {
           this.updateFilteredEntreprisesByMetiers();
           this.updateFilteredEvaluationsByMetiers();
           this.getScoreMetiers(this.filteredMetiers);
+          this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+          this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+          this.getScoreEffectifEntreprises(this.filteredEntreprises);
           }else{
             console.log("7")
              if(this.questionnaireControl.value.length != 0){
               this.filteredQuestionnaires = [];
+              this.graph2Labels = [];
               this.allQuestionnaires.forEach(qst => {
               this.questionnaireControl.value.forEach((nom: string) => {
                 if (qst.thematique === nom && !this.includesQuestionnaire(this.filteredQuestionnaires,qst)) {
                   this.filteredQuestionnaires.push(qst);
+                  this.graph2Labels.push(qst.thematique);
                 }
               });
             });
@@ -1209,6 +1192,8 @@ export class StatisticsComponent implements OnInit {
             this.updateFilteredEvaluationsByQuestionnaires();
             this.getNbEvalsParCategorie(this.filteredQuestionnaires);
             this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+            this.getScoreEffectifEntreprises(this.filteredEntreprises);
+            this.getScoreMetiers(this.filteredMetiers);
             console.log("8")
           }
         }
@@ -1236,8 +1221,6 @@ export class StatisticsComponent implements OnInit {
         }
       })
       })
-
-
     })
   }
 }
