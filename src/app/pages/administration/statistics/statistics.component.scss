@@ -218,3 +218,15 @@ tui-axes {
     }
   }
 }
+
+.graph1n2 {
+  ::ng-deep .t-content {
+    font-size: 10px;
+  }
+}
+
+.graph1n2 .expanded {
+  ::ng-deep .t-content {
+    font-size: 16px;
+  }
+}
