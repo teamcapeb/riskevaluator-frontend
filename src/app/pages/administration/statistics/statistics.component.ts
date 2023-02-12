@@ -1,4 +1,4 @@
-
+/*
 import { EvalCategorieProjectionResponse } from './../../../objects/EvalCategorieProjectionResponse';
 import { EvaluationApiService } from "@services/serviceEvaluation/evaluation-api.service";
 import { CategorieQuestionService } from "@services/serviceCategorieQuestion/categorie-question.service";
@@ -760,110 +760,110 @@ export class StatisticsComponent implements OnInit {
     this.filteredCategorieLibelles = this.filterLibelles();
   }
 }
+*/
 
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
 
-// import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-// import { FormControl, FormGroup } from "@angular/forms";
+interface Animal {
+  name: string;
+  favColor: { color: string }[];
+  bodyParts: { name: string }[];
+}
 
-// interface Animal {
-//   name: string;
-//   favColor: { color: string }[];
-//   bodyParts: { name: string }[];
-// }
+interface Color {
+  color: string;
+}
 
-// interface Color {
-//   color: string;
-// }
+interface BodyPart {
+  name: string;
+}
 
-// interface BodyPart {
-//   name: string;
-// }
+@Component({
+  selector: "app-statistics",
+  templateUrl: "./statistics.component.html",
+  styleUrls: ["./statistics.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class StatisticsComponent {
 
-// @Component({
-//   selector: "app-statistics",
-//   templateUrl: "./statistics.component.html",
-//   styleUrls: ["./statistics.component.scss"],
-//   changeDetection: ChangeDetectionStrategy.OnPush
-// })
-// export class StatisticsComponent {
+  form = new FormGroup({
+    animalControl: new FormControl(),
+    colorControl: new FormControl(),
+    bodyPartControl: new FormControl()
+  });
 
-//   form = new FormGroup({
-//     animalControl: new FormControl(),
-//     colorControl: new FormControl(),
-//     bodyPartControl: new FormControl()
-//   });
+  allAnimals: Animal[] = [
+    {"name": "Lion", "favColor": [{"color": "Red"}], "bodyParts": [{"name": "Leg"}, {"name": "Mouth"}, {"name": "Tongue"}, {"name": "Eyes"}]},
+    {"name": "Cat", "favColor": [{"color": "Red"}], "bodyParts": [{"name": "Leg"}, {"name": "Mouth"}, {"name": "Tongue"}, {"name": "Eyes"}]},
+    {"name": "Dog", "favColor": [{"color": "Blue"}], "bodyParts": [{"name": "Leg"}, {"name": "Mouth"}, {"name": "Tongue"}, {"name": "Eyes"}]},
+    {"name": "Fish", "favColor": [{"color": "Red"}, {"color": "Blue"}], "bodyParts": [{"name": "Fins"}, {"name": "Eyes"}, {"name": "Gills"}, {"name": "Mouth"}]},
+    {"name": "Bird", "favColor": [{"color": "Red"}], "bodyParts": [{"name": "Wings"}, {"name": "Mouth"}, {"name": "Tongue"}, {"name": "Eyes"}]}
+  ];
 
-//   allAnimals: Animal[] = [
-//     {"name": "Lion", "favColor": [{"color": "Red"}], "bodyParts": [{"name": "Leg"}, {"name": "Mouth"}, {"name": "Tongue"}, {"name": "Eyes"}]},
-//     {"name": "Cat", "favColor": [{"color": "Red"}], "bodyParts": [{"name": "Leg"}, {"name": "Mouth"}, {"name": "Tongue"}, {"name": "Eyes"}]},
-//     {"name": "Dog", "favColor": [{"color": "Blue"}], "bodyParts": [{"name": "Leg"}, {"name": "Mouth"}, {"name": "Tongue"}, {"name": "Eyes"}]},
-//     {"name": "Fish", "favColor": [{"color": "Red"}, {"color": "Blue"}], "bodyParts": [{"name": "Fins"}, {"name": "Eyes"}, {"name": "Gills"}, {"name": "Mouth"}]},
-//     {"name": "Bird", "favColor": [{"color": "Red"}], "bodyParts": [{"name": "Wings"}, {"name": "Mouth"}, {"name": "Tongue"}, {"name": "Eyes"}]}
-//   ];
+  allColors: Color[] = [{"color": "Red"}, {"color": "Blue"}];
+  allBodyParts: BodyPart[] = [{"name": "Leg"}, {"name": "Mouth"}, {"name": "Tongue"}, {"name": "Wings"}, {"name": "Gills"}, {"name": "Fins"}, {"name": "Eyes"}];
 
-//   allColors: Color[] = [{"color": "Red"}, {"color": "Blue"}];
-//   allBodyParts: BodyPart[] = [{"name": "Leg"}, {"name": "Mouth"}, {"name": "Tongue"}, {"name": "Wings"}, {"name": "Gills"}, {"name": "Fins"}, {"name": "Eyes"}];
+  filteredAnimals: Animal[] = [];
+  filteredColors: Color[] = [];
+  filteredBodyParts: BodyPart[] = [];
 
-//   filteredAnimals: Animal[] = [];
-//   filteredColors: Color[] = [];
-//   filteredBodyParts: BodyPart[] = [];
+  ngOnInit() {
+    this.form.get("animalControl").valueChanges.subscribe(animal => {
+      if (animal) {
+        this.filteredColors = [];
+        this.filteredBodyParts = [];
+        this.filteredAnimals = this.allAnimals.filter(a => a.name === animal);
+        console.log(this.filteredAnimals);
+        this.filteredColors = this.filteredAnimals.reduce((colors, animal) => {
+        return colors.concat(animal.favColor.map(c => c.color));
+        }, []);
+        this.filteredBodyParts = this.filteredAnimals.reduce((parts, animal) => {
+        return parts.concat(animal.bodyParts.map(p => p.name));
+        }, []);
+      } else {
+        this.filteredAnimals = [];
+        this.filteredColors = [];
+        this.filteredBodyParts = [];
+      }
+    });
 
-//   ngOnInit() {
-//     this.form.get("animalControl").valueChanges.subscribe(animal => {
-//       if (animal) {
-//         this.filteredColors = [];
-//         this.filteredBodyParts = [];
-//         this.filteredAnimals = this.allAnimals.filter(a => a.name === animal);
-//         console.log(this.filteredAnimals);
-//         this.filteredColors = this.filteredAnimals.reduce((colors, animal) => {
-//         return colors.concat(animal.favColor.map(c => c.color));
-//         }, []);
-//         this.filteredBodyParts = this.filteredAnimals.reduce((parts, animal) => {
-//         return parts.concat(animal.bodyParts.map(p => p.name));
-//         }, []);
-//       } else {
-//         this.filteredAnimals = [];
-//         this.filteredColors = [];
-//         this.filteredBodyParts = [];
-//       }
-//     });
+    this.form.get("colorControl").valueChanges.subscribe(color => {
+      if (color) {
+        this.filteredAnimals = [];
+        this.filteredColors = [];
+        this.filteredBodyParts = [];
+        this.filteredAnimals = this.allAnimals.filter(a => a.favColor.find(c => c.color === color));
+        this.filteredColors = this.filteredAnimals.reduce((colors, animal) => {
+          return colors.concat(animal.favColor.map(c => c.color));
+        }, []);
+        this.filteredBodyParts = this.filteredAnimals.reduce((parts, animal) => {
+          return parts.concat(animal.bodyParts.map(p => p.name));
+        }, []);
+      } else {
+        this.filteredAnimals = [];
+        this.filteredColors = [];
+        this.filteredBodyParts = [];
+      }
+    });
 
-//     this.form.get("colorControl").valueChanges.subscribe(color => {
-//       if (color) {
-//         this.filteredAnimals = [];
-//         this.filteredColors = [];
-//         this.filteredBodyParts = [];
-//         this.filteredAnimals = this.allAnimals.filter(a => a.favColor.find(c => c.color === color));
-//         this.filteredColors = this.filteredAnimals.reduce((colors, animal) => {
-//           return colors.concat(animal.favColor.map(c => c.color));
-//         }, []);
-//         this.filteredBodyParts = this.filteredAnimals.reduce((parts, animal) => {
-//           return parts.concat(animal.bodyParts.map(p => p.name));
-//         }, []);
-//       } else {
-//         this.filteredAnimals = [];
-//         this.filteredColors = [];
-//         this.filteredBodyParts = [];
-//       }
-//     });
-
-//     // this.form.get("bodyPartControl").valueChanges.subscribe(color => {
-//     //   if (color) {
-//     //     this.filteredAnimals = [];
-//     //     this.filteredColors = [];
-//     //     this.filteredBodyParts = [];
-//     //     this.filteredAnimals = this.allAnimals.filter(a => a.favColor.find(c => c.color === color));
-//     //     this.filteredColors = this.filteredAnimals.reduce((colors, animal) => {
-//     //       return colors.concat(animal.favColor.map(c => c.color));
-//     //     }, []);
-//     //     this.filteredBodyParts = this.filteredAnimals.reduce((parts, animal) => {
-//     //       return parts.concat(animal.bodyParts.map(p => p.name));
-//     //     }, []);
-//     //   } else {
-//     //     this.filteredAnimals = [];
-//     //     this.filteredColors = [];
-//     //     this.filteredBodyParts = [];
-//     //   }
-//     // });
-//   }
-// }
+    // this.form.get("bodyPartControl").valueChanges.subscribe(color => {
+    //   if (color) {
+    //     this.filteredAnimals = [];
+    //     this.filteredColors = [];
+    //     this.filteredBodyParts = [];
+    //     this.filteredAnimals = this.allAnimals.filter(a => a.favColor.find(c => c.color === color));
+    //     this.filteredColors = this.filteredAnimals.reduce((colors, animal) => {
+    //       return colors.concat(animal.favColor.map(c => c.color));
+    //     }, []);
+    //     this.filteredBodyParts = this.filteredAnimals.reduce((parts, animal) => {
+    //       return parts.concat(animal.bodyParts.map(p => p.name));
+    //     }, []);
+    //   } else {
+    //     this.filteredAnimals = [];
+    //     this.filteredColors = [];
+    //     this.filteredBodyParts = [];
+    //   }
+    // });
+  }
+}
