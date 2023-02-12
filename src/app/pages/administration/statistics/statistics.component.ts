@@ -12,7 +12,7 @@ import { MetierService } from "@services/serviceMetier/metier.service";
 import { EntrepriseService } from "@services/serviceEntreprise/entreprise.service";
 import ICategorieQuestion from "@/interfaces/ICategorieQuestion";
 import IEvaluation from "@/interfaces/IEvaluation";
-import { TuiContextWithImplicit } from "@taiga-ui/cdk";
+import { TuiContextWithImplicit, tuiSum } from "@taiga-ui/cdk";
 import { MetierScoreProjectionResponse } from "@/objects/MetierScoreProjectionResponse";
 import { tuiFormatNumber } from "@taiga-ui/core";
 import { Router } from '@angular/router';
@@ -82,7 +82,7 @@ export class StatisticsComponent implements OnInit {
 
   graph1LabelsX: string[] = ["Petites", "Moyennes", "Grandes"];
   graph1LabelsY: string[] = ["0%", "100%"];
-  graph2Labels: string[] = ["Toutes les thématiques"];
+  graph2Labels: string[] = [];
   graph3LabelsY: string[] = ["0%", "100%"];
   graph4LabelsY: string[] = ["0", "30"];
 
@@ -98,6 +98,24 @@ export class StatisticsComponent implements OnInit {
   nbReponsesParQuestionnaire: number[] = [];
 
   scoresMoyensEntreprises: EntrepriseScoreProjectionResponse[];
+
+  activeItemIndex = NaN;
+
+  readonly value = [13769, 12367, 10172, 3018, 2592];
+  readonly sum = tuiSum(...this.value);
+  readonly labels = ['Food', 'Cafe', 'Open Source', 'Taxi', 'Other'];
+
+  isItemActive(index: number): boolean {
+      return this.activeItemIndex === index;
+  }
+
+  onClick(index: number, hovered: any): void {
+    this.activeItemIndex = hovered ? index : 0;
+  }
+
+  getColor(index: number): string {
+      return `var(--tui-chart-${index})`;
+  }
 
   readonly hintGraph1 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
     this.scoresMoyenGraph1
@@ -153,10 +171,13 @@ export class StatisticsComponent implements OnInit {
     this.questionnaireService.getAllQuestionnaires().subscribe((res) => {
       this.allQuestionnaires = this.sortQuestionnaires(res);
       this.filteredQuestionnaires = [...this.allQuestionnaires];
-      this.nbOfThematiques = res.length;
-      this.cdr.detectChanges();
       this.getScoreEffectifEntreprises(this.filteredEntreprises);
       this.getScoreMetiers(this.filteredMetiers);
+      this.nbOfThematiques = res.length;
+      this.allQuestionnaires.forEach((qst) => {
+        this.graph2Labels.push(qst.thematique);
+      });
+      this.cdr.detectChanges();
     });
     this.categorieQuestionService.getAll().subscribe((res) => {
       this.allCategories = this.sortCategories(res);
@@ -496,7 +517,9 @@ export class StatisticsComponent implements OnInit {
         }
       });
       if (this.questionnaireControl.value.length == 0) {
-        this.graph2Labels = ["Toutes les thématiques"];
+        this.allQuestionnaires.forEach((qst) => {
+          this.graph2Labels.push(qst.thematique);
+        });
         this.resetAllFilters();
       }
     }

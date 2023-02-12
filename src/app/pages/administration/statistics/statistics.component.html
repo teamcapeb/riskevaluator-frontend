@@ -110,9 +110,22 @@
                   class="tui-space_right-4"
                   [value]="nbReponsesParQuestionnaire"
                   [tuiHintContent]="hintGraph2"
+                  [(activeItemIndex)]="activeItemIndex"
                 >
-                <div>{{ graph2Labels }}</div>
-              </tui-ring-chart>
+                  <div>Thématiques des questionnaires</div>
+                </tui-ring-chart>
+                <div class="legend" style="display: flex; flex-direction: column; gap: 16px; justify-content: space-evenly;">
+                    <tui-legend-item
+                        *ngFor="let label of graph2Labels; let index = index"
+                        size="s"
+                        class="item"
+                        [color]="getColor(index)"
+                        [text]="label"
+                        [active]="isItemActive(index)"
+                        (click)="onClick(index, $event)"
+                    >
+                    </tui-legend-item>
+                </div>
               </div>
             </mat-card>
           </div>
