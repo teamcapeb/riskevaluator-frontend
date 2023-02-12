@@ -1,133 +1,3 @@
-// ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
-//   background-color: white !important;
-// }
-
-// ::ng-deep .mat-card-header-text {
-//   margin: 0px !important;
-// }
-
-// ::ng-deep .t-label-x {
-//   text-align: center;
-//   transform: rotate(-45deg);
-//   // padding-top: 0;
-// }
-
-// mat-form-field {
-//   width: 200px;
-//   font-size: small;
-// }
-
-// .dashboard {
-//   height: 100%;
-//   display: flex;
-//   padding: 8px;
-// }
-
-// .dashboard-sidebar {
-//   height: 100%;
-//   padding: 8px;
-//   min-height: 100%
-// }
-
-// .sidebar-card {
-//   height: 78vh;
-// }
-
-// .dashboard-title {
-//   text-align: center;
-//   margin-bottom: 42px;
-// }
-
-// .dashboard-content {
-//   padding: 8px;
-//   flex: 1;
-//   display: flex;
-//   flex-direction: column;
-//   gap: 16px;
-// }
-
-// .numeric-card {
-//   padding: 0;
-//   margin: 0;
-//   flex: 1;
-//   text-align: center;
-//   font-weight: bolder;
-// }
-
-// .header-card {
-//   display: flex;
-//   gap: 48px;
-//   height: 14vh;
-// }
-
-// .number {
-//   font-size: 16px;
-//   padding-top: 5px;
-//   margin: 0;
-// }
-
-// .title-numberic-card {
-//   font-size: 16px;
-//   padding-top: 6px;
-//   margin: 0;
-// }
-
-// .graphs-card {
-//   display: flex;
-//   gap: 16px;
-// }
-
-// .graph-card {
-//   flex: 1;
-//   align-items: center;
-//   display: flex;
-//   justify-content: center;
-//   flex-direction: column;
-// }
-
-// .graph-div {
-//   flex: 1;
-//   display: flex;
-//   flex-direction: column;
-//   gap: 16px;
-
-//   mat-card:hover {
-//     cursor: pointer;
-//   }
-// }
-
-// .dashboard-header {
-//   flex: 1;
-// }
-
-// .dashboard-graphs {
-//   flex: 5;
-// }
-
-// .graphs {
-//   height: 100%;
-
-//   mat-card {
-//     height: 100%;
-//     overflow: scroll;
-//   }
-// }
-
-// .wrapper {
-//   align-items: center;
-// }
-
-// tui-root {
-//   height: 100%;
-//   width: 100%;
-// }
-
-// tui-axes {
-//   height: 95%;
-//   width: 100%;
-// }
-
-
 // DASHBOARD V2
 mat-card {
   border-radius: 14px;
@@ -338,4 +208,12 @@ tui-root {
 tui-axes {
   height: 95%;
   width: 100%;
+}
+
+.graph4 {
+  ::ng-deep {
+    tui-bar {
+      background: var(--tui-positive) !important;
+    }
+  }
 }
