@@ -175,7 +175,7 @@
                   (+{{(entrepriseControl.value?.length || 0) - 1}} {{entrepriseControl.value?.length === 2 ? 'autre' : 'autres'}})
                 </span>
               </mat-select-trigger>
-              <mat-option #matOption *ngFor="let entreprise of autoFilteredEntreprises" [value]="entreprise.noSiret"
+              <mat-option #matOption *ngFor="let entreprise of allEntreprises" [value]="entreprise.nomEntreprise"
                 (click)="selectEntreprise(entreprise, matOption.selected)">
                 {{ entreprise?.nomEntreprise }}
                 <span style="font-size: 11px;">
@@ -195,7 +195,7 @@
                   (+{{(questionnaireControl.value?.length || 0) - 1}} {{questionnaireControl.value?.length === 2 ? 'autre' : 'autres'}})
                 </span>
               </mat-select-trigger>
-              <mat-option #matOption *ngFor="let questionnaire of autoFilteredQuestionnaires" [value]="questionnaire.thematique"
+              <mat-option #matOption *ngFor="let questionnaire of allQuestionnaires" [value]="questionnaire.thematique"
                 (click)="selectQuestionnaire(questionnaire, matOption.selected)">{{questionnaire?.thematique}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -210,12 +210,12 @@
                   (+{{(metierControl.value?.length || 0) - 1}} {{metierControl.value?.length === 2 ? 'autre' : 'autres'}})
                 </span>
               </mat-select-trigger>
-              <mat-option #matOption *ngFor="let metier of autoFilteredMetiers" [value]="metier.nomMetier"
+              <mat-option #matOption *ngFor="let metier of allMetiers" [value]="metier.nomMetier"
                 (click)="selectMetier(metier, matOption.selected)">{{metier?.nomMetier}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-        <!-- <div>
+        <div>
           <mat-form-field appearance="fill">
             <mat-label>Plage de dates</mat-label>
             <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
@@ -226,7 +226,7 @@
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
           </mat-form-field>
-        </div> -->
+        </div>
       </div>
     </mat-card>
   </div>
@@ -239,7 +239,7 @@
         </mat-card>
         <mat-card class="numeric-card">
           <p class="title-numeric-card">Nombre de métiers</p>
-          <p class="number">{{ nbMetier }}</p>
+          <p class="number">{{ filteredMetiers.length }}</p>
         </mat-card>
         <mat-card class="numeric-card">
           <p class="title-numeric-card">Nombre d'évaluations</p>
@@ -281,10 +281,7 @@
                   [size]="isExpanded2 ? 'xl' : 'm'"
                   class="tui-space_right-4"
                   [value]="nbReponsesParQuestionnaire"
-                  [tuiHintContent]="hintGraph2"
-                >
-                  <div>{{ getGraph2Labels() }}</div>
-                </tui-ring-chart>
+                ></tui-ring-chart>
               </div>
             </mat-card>
           </div>
@@ -316,7 +313,7 @@
                           [axisXLabels]="libelles"
                           [axisYLabels]="graph4LabelsY">
                   <tui-bar-chart
-                    [max]="allEvaluations.length + 5"
+                    [max]="20"
                     [value]="nbEvalsParLibelle"
                     [tuiHintAppearance]="appearance"
                     [tuiHintContent]="hintGraph4"></tui-bar-chart>
