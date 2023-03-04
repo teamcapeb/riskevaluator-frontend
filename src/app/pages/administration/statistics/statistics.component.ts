@@ -128,7 +128,7 @@ export class StatisticsComponent implements OnInit {
   readonly hintGraph2 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
   this.hintNbReponsesParQuestionnaire
     .reduce(
-      (result, set) => `${result}${set[$implicit]}`, ''
+      (result, set) => `Nombre d'évaluations: ${result}${set[$implicit]}`, ''
     ).trim();
 
   readonly hintGraph3 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
