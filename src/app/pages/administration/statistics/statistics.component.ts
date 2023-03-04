@@ -96,6 +96,7 @@ export class StatisticsComponent implements OnInit {
   nbEvalsParLibelle: number[][] = [];
 
   nbReponsesParQuestionnaire: number[] = [];
+  hintNbReponsesParQuestionnaire: string[][] = [];
 
   scoresMoyensEntreprises: EntrepriseScoreProjectionResponse[];
 
@@ -124,7 +125,11 @@ export class StatisticsComponent implements OnInit {
         ''
       ).trim();
 
-  readonly hintGraph2 = '';
+  readonly hintGraph2 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
+  this.hintNbReponsesParQuestionnaire
+    .reduce(
+      (result, set) => `${result}${set[$implicit]}`, ''
+    ).trim();
 
   readonly hintGraph3 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
     this.scoresMetiers
@@ -338,7 +343,9 @@ export class StatisticsComponent implements OnInit {
   }
 
   getNbReponsesParQuestionnaire(questionnaires: IQuestionnaire[]) {
+    let tmp: string[] = [];
     this.nbReponsesParQuestionnaire = [];
+    this.hintNbReponsesParQuestionnaire = [];
     if (questionnaires.length === 0) {
       questionnaires = this.allQuestionnaires;
     }
@@ -351,8 +358,10 @@ export class StatisticsComponent implements OnInit {
           }
         })
       })
-      this.nbReponsesParQuestionnaire.push(evaluations.length)
+      this.nbReponsesParQuestionnaire.push(evaluations.length);
+      tmp.push(evaluations.length + " (" + Number((evaluations.length/this.filteredEvaluations.length)*100).toFixed(2) + "%)");
     })
+    this.hintNbReponsesParQuestionnaire.push(tmp);
   }
 
   sortEntreprises(entreprises: IEntreprise[]): IEntreprise[] {
