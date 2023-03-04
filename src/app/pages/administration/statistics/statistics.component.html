@@ -175,7 +175,7 @@
                   (+{{(entrepriseControl.value?.length || 0) - 1}} {{entrepriseControl.value?.length === 2 ? 'autre' : 'autres'}})
                 </span>
               </mat-select-trigger>
-              <mat-option #matOption *ngFor="let entreprise of allEntreprises" [value]="entreprise.nomEntreprise"
+              <mat-option #matOption *ngFor="let entreprise of autoFilteredEntreprises" [value]="entreprise.nomEntreprise"
                 (click)="selectEntreprise(entreprise, matOption.selected)">
                 {{ entreprise?.nomEntreprise }}
                 <span style="font-size: 11px;">
@@ -210,7 +210,7 @@
                   (+{{(metierControl.value?.length || 0) - 1}} {{metierControl.value?.length === 2 ? 'autre' : 'autres'}})
                 </span>
               </mat-select-trigger>
-              <mat-option #matOption *ngFor="let metier of allMetiers" [value]="metier.nomMetier"
+              <mat-option #matOption *ngFor="let metier of autoFilteredMetiers" [value]="metier.nomMetier"
                 (click)="selectMetier(metier, matOption.selected)">{{metier?.nomMetier}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -235,11 +235,11 @@
       <div class="header-card">
         <mat-card class="numeric-card">
           <p class="title-numeric-card">Nombre d'entreprises</p>
-          <p class="number">{{ filteredEntreprises.length }}</p>
+          <p class="number">{{ nbEntreprise }}</p>
         </mat-card>
         <mat-card class="numeric-card">
           <p class="title-numeric-card">Nombre de métiers</p>
-          <p class="number">{{ filteredMetiers.length }}</p>
+          <p class="number">{{ nbMetier }}</p>
         </mat-card>
         <mat-card class="numeric-card">
           <p class="title-numeric-card">Nombre d'évaluations</p>

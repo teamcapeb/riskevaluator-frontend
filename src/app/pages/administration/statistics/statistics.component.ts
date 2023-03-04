@@ -51,6 +51,7 @@ export class StatisticsComponent implements OnInit {
   nbMetier : number = 0;
 
   selectedMetiers : IMetier[]  = [];
+  selectedEntreprises : IEntreprise[] = []
 
   filteredEntreprises: IEntreprise[] = [];
   filteredEvaluations: IEvaluation[] = [];
@@ -98,6 +99,7 @@ export class StatisticsComponent implements OnInit {
   nbEvalsParLibelle: number[][] = [];
 
   nbReponsesParQuestionnaire: number[] = [];
+  nbEntreprise = 0 ;
 
   scoresMoyensEntreprises: EntrepriseScoreProjectionResponse[];
 
@@ -144,6 +146,7 @@ export class StatisticsComponent implements OnInit {
       this.filteredEntreprises = [...this.allEntreprises];
       this.autoFilteredEntreprises = [...this.allEntreprises];
       this.separateEntreprisesEffectif(this.filteredEntreprises);
+      this.nbEntreprise = this.filteredEntreprises.length;
       this.cdr.detectChanges();
     });
     this.metierService.getAllMetiers().subscribe((res) => {
@@ -393,8 +396,14 @@ export class StatisticsComponent implements OnInit {
       // }  
       // this.updateFilteredMetiersByEntreprises();
       // this.updateFilteredEvaluationsByEntreprises();
+        this.selectedEntreprises.push(entreprise)
         this.resetAllFilters();
     } else {
+      this.selectedEntreprises.forEach((element,index)=>{
+        if(element.noSiret == entreprise.noSiret){
+          this.selectedEntreprises.splice(index,1)
+        }
+      })
       this.filteredEntreprises.forEach((element, index) => {
         if (element.noSiret == entreprise.noSiret) {
           this.filteredEntreprises.splice(index, 1);
@@ -406,8 +415,26 @@ export class StatisticsComponent implements OnInit {
         this.resetAllFilters();
       }
     }
-    this.autoFilteredMetiers = [];
+    if(this.questionnaireControl.value.length !=0 || this.entrepriseControl.value.length != 0){
+      console.log("test")
+      this.autoFilteredMetiers = [];
+    }
     this.autoFilteredQuestionnaires = [];
+    
+    if(this.metierControl.value.length != 0 || this.questionnaireControl.value.length !=0){
+      if(this.autoFilteredEntreprises.length != this.allEntreprises.length){
+        this.filteredEntreprises = [...this.autoFilteredEntreprises];
+      }
+      
+      this.autoFilteredEntreprises = [];
+    }
+    if(this.metierControl.value.length == 0 && this.questionnaireControl.value.length ==0){
+      this.autoFilteredEntreprises = this.allEntreprises;
+    }
+
+    if(this.questionnaireControl.value.length ==0 && this.entrepriseControl.value.length == 0){
+      this.autoFilteredMetiers = this.allMetiers;
+    }
     this.separateEntreprisesEffectif(this.filteredEntreprises);
     
     if(this.selectedMetiers.length!=0){
@@ -417,18 +444,36 @@ export class StatisticsComponent implements OnInit {
 
     }
 
-    this.filteredEntreprises.forEach((etp)=>{
-      etp.metiers.forEach((met)=>{
+    if(this.selectedEntreprises.length!=0){
+      this.nbEntreprise = this.selectedEntreprises.length
+    }else{
+      this.nbEntreprise = this.filteredEntreprises.length
+
+    }
+
+    console.log("laaaaaa",this.autoFilteredEntreprises)
+
+    console.log(this.filteredEntreprises)
+
+    this.selectedEntreprises.forEach((etp)=>{
+      etp.metiers.forEach(met=>{
         if(!this.includeMetier(this.autoFilteredMetiers,met)){
           this.autoFilteredMetiers.push(met)
         }
       })
+    })
+
+    this.filteredEntreprises.forEach((etp)=>{
+      if(!this.estNumeroSiretExistant(this.autoFilteredEntreprises,etp.noSiret)){
+        this.autoFilteredEntreprises.push(etp)
+      }
       this.allEvaluations.forEach((allEvl)=>{
         etp.evaluations.forEach((evl)=>{
           if(allEvl.idEvaluation == evl.idEvaluation && !this.includesQuestionnaire(this.autoFilteredQuestionnaires,
             allEvl.scoreCategories[0].categorieQuestion.questionnaire)
         ){
           this.autoFilteredQuestionnaires.push(allEvl.scoreCategories[0].categorieQuestion.questionnaire)
+          
         }
       })
       })
@@ -492,27 +537,56 @@ export class StatisticsComponent implements OnInit {
         this.nbMetier = this.filteredMetiers.length
   
       }
+      if(this.selectedEntreprises.length!=0){
+        this.nbEntreprise = this.selectedEntreprises.length
+      }else{
+        this.nbEntreprise = this.filteredEntreprises.length
+  
+      }
+    }
+    console.log(this.nbMetier)
+
+    if(this.questionnaireControl.value.length !=0 || this.entrepriseControl.value.length != 0){
+      this.autoFilteredMetiers = [];
     }
 
-    this.autoFilteredMetiers = [];
-    this.autoFilteredQuestionnaires = [];
+    if(this.metierControl.value.length != 0 || this.questionnaireControl.value.length !=0){
+      if(this.autoFilteredEntreprises.length != this.allEntreprises.length){
+        this.filteredEntreprises = [...this.autoFilteredEntreprises];
+      }
+      this.autoFilteredEntreprises = [];
+    }
+
+    if(this.metierControl.value.length == 0 && this.questionnaireControl.value.length ==0){
+      this.autoFilteredEntreprises = this.allEntreprises;
+    }
+
+    if(this.questionnaireControl.value.length ==0 && this.entrepriseControl.value.length == 0){
+      this.autoFilteredMetiers = this.allMetiers;
+    }
+
     this.separateEntreprisesEffectif(this.filteredEntreprises);
     
 
-    console.log(this.filteredEntreprises)
-    this.filteredEntreprises.forEach((etp)=>{
-      etp.metiers.forEach((met)=>{
+    this.selectedEntreprises.forEach((etp)=>{
+      etp.metiers.forEach(met=>{
         if(!this.includeMetier(this.autoFilteredMetiers,met)){
           this.autoFilteredMetiers.push(met)
-          console.log(met)
         }
       })
+    })
+
+    this.filteredEntreprises.forEach((etp)=>{
+      if(!this.estNumeroSiretExistant(this.autoFilteredEntreprises,etp.noSiret)){
+        this.autoFilteredEntreprises.push(etp)
+      }
       this.allEvaluations.forEach((allEvl)=>{
         etp.evaluations.forEach((evl)=>{
           if(allEvl.idEvaluation == evl.idEvaluation && !this.includesQuestionnaire(this.autoFilteredQuestionnaires,
             allEvl.scoreCategories[0].categorieQuestion.questionnaire)
         ){
           this.autoFilteredQuestionnaires.push(allEvl.scoreCategories[0].categorieQuestion.questionnaire)
+          
         }
       })
       })
@@ -546,7 +620,7 @@ export class StatisticsComponent implements OnInit {
       // });
       // }else{
       //   if(this.questionnaireControl.value.length == 1){
-      //     console.log(this.filteredQuestionnaires)
+      //     //console.log(this.filteredQuestionnaires)
       //     var tmpQuestionnaires : IQuestionnaire[] = [];
       //     this.filteredQuestionnaires.forEach(qst => {
       //       this.questionnaireControl.value.forEach((nom: string) => {
@@ -570,7 +644,7 @@ export class StatisticsComponent implements OnInit {
       //     });
       //   this.filteredQuestionnaires = tmpQuestionnaires;
       //   }
-      //   console.log(this.filteredQuestionnaires)
+      //   //console.log(this.filteredQuestionnaires)
         
         
       // }
@@ -582,6 +656,13 @@ export class StatisticsComponent implements OnInit {
       // this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
       this.resetAllFilters();
       this.autoFilteredQuestionnaires = [];
+      
+    if(this.metierControl.value.length != 0 || this.questionnaireControl.value.length !=0){
+      this.autoFilteredEntreprises = [];
+    }
+    if(this.metierControl.value.length == 0 && this.questionnaireControl.value.length ==0){
+      this.autoFilteredEntreprises = this.allEntreprises;
+    }
     }
     else {
       // this.filteredQuestionnaires.forEach((element, index) => {
@@ -604,28 +685,60 @@ export class StatisticsComponent implements OnInit {
     }
     this.separateEntreprisesEffectif(this.filteredEntreprises);
     this.autoFilteredQuestionnaires = [];
-    this.autoFilteredMetiers = [];
-    console.log("ici",this.filteredMetiers)
-    this.filteredEntreprises.forEach((etp)=>{
-      etp.metiers.forEach((met)=>{
+    if(this.questionnaireControl.value.length !=0 || this.entrepriseControl.value.length != 0){
+      this.autoFilteredMetiers = [];
+    }
+    
+    if(this.metierControl.value.length != 0 || this.questionnaireControl.value.length !=0){
+      if(this.autoFilteredEntreprises.length != this.allEntreprises.length){
+        this.filteredEntreprises = [...this.autoFilteredEntreprises];
+      }
+      this.autoFilteredEntreprises = [];
+    }
+    if(this.metierControl.value.length == 0 && this.questionnaireControl.value.length ==0){
+      this.autoFilteredEntreprises = this.allEntreprises;
+    }
+
+    if(this.questionnaireControl.value.length ==0 && this.entrepriseControl.value.length == 0){
+      this.autoFilteredMetiers = this.allMetiers;
+    }
+
+
+    this.selectedEntreprises.forEach((etp)=>{
+      etp.metiers.forEach(met=>{
         if(!this.includeMetier(this.autoFilteredMetiers,met)){
           this.autoFilteredMetiers.push(met)
         }
       })
+    })
+
+    this.filteredEntreprises.forEach((etp)=>{
+      if(!this.estNumeroSiretExistant(this.autoFilteredEntreprises,etp.noSiret)){
+        this.autoFilteredEntreprises.push(etp)
+      }
       this.allEvaluations.forEach((allEvl)=>{
         etp.evaluations.forEach((evl)=>{
           if(allEvl.idEvaluation == evl.idEvaluation && !this.includesQuestionnaire(this.autoFilteredQuestionnaires,
             allEvl.scoreCategories[0].categorieQuestion.questionnaire)
         ){
           this.autoFilteredQuestionnaires.push(allEvl.scoreCategories[0].categorieQuestion.questionnaire)
+          
         }
       })
       })
+
+     
     })
     if(this.selectedMetiers.length!=0){
       this.nbMetier = this.selectedMetiers.length
     }else{
       this.nbMetier = this.autoFilteredMetiers.length
+    }
+    if(this.selectedEntreprises.length!=0){
+      this.nbEntreprise = this.selectedEntreprises.length
+    }else{
+      this.nbEntreprise = this.filteredEntreprises.length
+
     }
      }
 
@@ -785,7 +898,6 @@ export class StatisticsComponent implements OnInit {
         });
       });
     }else{
-      console.log("YAAAAAAAAAA",this.filteredEntreprises)
       var tmpEtp : IEntreprise[] = [];
       this.filteredEntreprises.forEach((etp) => {
         etp.metiers.forEach((mtr) => {
@@ -1035,7 +1147,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   resetAllFilters() {
-    console.log("1")
+    //console.log("1")
     this.filteredEntreprises = [...this.allEntreprises];
     this.filteredMetiers = [...this.allMetiers];
     this.filteredEvaluations = [...this.allEvaluations];
@@ -1047,7 +1159,7 @@ export class StatisticsComponent implements OnInit {
       this.filteredEntreprises = [];
       this.allEntreprises.forEach(etp => {
         this.entrepriseControl.value.forEach((nom: string) => {
-          if (etp.noSiret === Number(nom) && !this.estNumeroSiretExistant(this.filteredEntreprises,etp.noSiret)) {
+          if (etp.nomEntreprise === nom && !this.estNumeroSiretExistant(this.filteredEntreprises,etp.noSiret)) {
             this.filteredEntreprises.push(etp);
           }
         });
@@ -1077,7 +1189,6 @@ export class StatisticsComponent implements OnInit {
       });
     });
 
-
     this.filteredQuestionnaires = tmpQuestionnaires;
     this.updateFilteredEntreprisesByQuestionnaires();
     this.updateFilteredMetiersByQuestionnaires();
@@ -1087,11 +1198,11 @@ export class StatisticsComponent implements OnInit {
     this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
     }else{
       if(this.entrepriseControl.value.length != 0 && this.metierControl.value.length != 0){
-        console.log("2")
+        //console.log("2")
         this.filteredEntreprises = [];
         this.allEntreprises.forEach(etp => {
           this.entrepriseControl.value.forEach((nom: string) => {
-            if (etp.noSiret === Number(nom) && !this.estNumeroSiretExistant(this.filteredEntreprises,etp.noSiret)) {
+            if (etp.nomEntreprise === nom && !this.estNumeroSiretExistant(this.filteredEntreprises,etp.noSiret)) {
               this.filteredEntreprises.push(etp);
             }
           });
@@ -1111,10 +1222,10 @@ export class StatisticsComponent implements OnInit {
       this.updateFilteredEntreprisesByMetiers();
       this.updateFilteredEvaluationsByMetiers();
       this.getScoreMetiers(this.filteredMetiers);
-      console.log("YES",this.filteredEntreprises)
+      //console.log("YES",this.filteredEntreprises)
       }
       else{
-        console.log("3")
+        //console.log("3")
         if((this.metierControl.value.length != 0 && this.questionnaireControl.value.length != 0)){
           this.filteredMetiers = [];
           this.allMetiers.forEach(mtr => {
@@ -1148,12 +1259,12 @@ export class StatisticsComponent implements OnInit {
         })
       }
         else{
-          console.log("4")
+          //console.log("4")
           if(this.entrepriseControl.value.length != 0 && this.questionnaireControl.value.length != 0){
           this.filteredEntreprises = [];
           this.allEntreprises.forEach(etp => {
             this.entrepriseControl.value.forEach((nom: string) => {
-              if (etp.noSiret === Number(nom) && ! this.estNumeroSiretExistant(this.filteredEntreprises,etp.noSiret)) {
+              if (etp.nomEntreprise === nom && ! this.estNumeroSiretExistant(this.filteredEntreprises,etp.noSiret)) {
                 this.filteredEntreprises.push(etp);
               }
             });
@@ -1179,21 +1290,23 @@ export class StatisticsComponent implements OnInit {
         this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
         }
         else{
-          console.log("5")
+          //console.log("5")
           if(this.entrepriseControl.value.length != 0){
             this.filteredEntreprises = [];
             this.allEntreprises.forEach(etp => {
               this.entrepriseControl.value.forEach((nom: string) => {
-                if (etp.noSiret === Number(nom) && !this.estNumeroSiretExistant(this.filteredEntreprises,etp.noSiret)) {
+                //console.log(nom)
+                if (etp.nomEntreprise === nom && !this.estNumeroSiretExistant(this.filteredEntreprises,etp.noSiret)) {
                   this.filteredEntreprises.push(etp);
                 }
               });
             });
           this.updateFilteredMetiersByEntreprises();
           this.updateFilteredEvaluationsByEntreprises();
+          //console.log(this.filteredEntreprises)
         }
         else{
-          console.log("6")
+          //console.log("6")
           if(this.metierControl.value.length != 0 ){
             this.filteredMetiers = [];
             this.allMetiers.forEach(mtr => {
@@ -1207,7 +1320,7 @@ export class StatisticsComponent implements OnInit {
           this.updateFilteredEvaluationsByMetiers();
           this.getScoreMetiers(this.filteredMetiers);
           }else{
-            console.log("7")
+            //console.log("7")
              if(this.questionnaireControl.value.length != 0){
               this.filteredQuestionnaires = [];
               this.allQuestionnaires.forEach(qst => {
@@ -1223,7 +1336,7 @@ export class StatisticsComponent implements OnInit {
             this.updateFilteredEvaluationsByQuestionnaires();
             this.getNbEvalsParCategorie(this.filteredQuestionnaires);
             this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
-            console.log("8")
+            //console.log("8")
           }
         }   
         }  
@@ -1231,8 +1344,26 @@ export class StatisticsComponent implements OnInit {
     }
   }
     }
-    this.autoFilteredMetiers = [];
+    if(this.questionnaireControl.value.length !=0 || this.entrepriseControl.value.length != 0){
+      this.autoFilteredMetiers = [];
+    }
     this.autoFilteredQuestionnaires = [];
+    
+    if(this.metierControl.value.length != 0 || this.questionnaireControl.value.length !=0){
+      // console.log("yes",this.filteredEntreprises)
+      // console.log("here",this.autoFilteredEntreprises)
+      if(this.autoFilteredEntreprises.length != this.allEntreprises.length){
+        this.filteredEntreprises = [...this.autoFilteredEntreprises];
+      }
+      this.autoFilteredEntreprises = [];
+    }
+    if(this.metierControl.value.length == 0 && this.questionnaireControl.value.length ==0){
+      this.autoFilteredEntreprises = this.allEntreprises;
+    }
+
+    if(this.questionnaireControl.value.length ==0 && this.entrepriseControl.value.length == 0){
+      this.autoFilteredMetiers = this.allMetiers;
+    }
     this.separateEntreprisesEffectif(this.filteredEntreprises);
     if(this.selectedMetiers.length!=0){
       this.nbMetier = this.selectedMetiers.length
@@ -1240,24 +1371,38 @@ export class StatisticsComponent implements OnInit {
       this.nbMetier = this.autoFilteredMetiers.length
 
     }
+    if(this.selectedEntreprises.length!=0){
+      this.nbEntreprise = this.selectedEntreprises.length
+    }else{
+      this.nbEntreprise = this.filteredEntreprises.length
+
+    }
     
-    this.filteredEntreprises.forEach((etp)=>{
-      etp.metiers.forEach((met)=>{
+    this.selectedEntreprises.forEach((etp)=>{
+      etp.metiers.forEach(met=>{
         if(!this.includeMetier(this.autoFilteredMetiers,met)){
           this.autoFilteredMetiers.push(met)
         }
       })
+    })
+
+    this.filteredEntreprises.forEach((etp)=>{
+      if(!this.estNumeroSiretExistant(this.autoFilteredEntreprises,etp.noSiret)){
+        this.autoFilteredEntreprises.push(etp)
+      }
       this.allEvaluations.forEach((allEvl)=>{
         etp.evaluations.forEach((evl)=>{
           if(allEvl.idEvaluation == evl.idEvaluation && !this.includesQuestionnaire(this.autoFilteredQuestionnaires,
             allEvl.scoreCategories[0].categorieQuestion.questionnaire)
         ){
           this.autoFilteredQuestionnaires.push(allEvl.scoreCategories[0].categorieQuestion.questionnaire)
+          
         }
       })
       })
 
      
     })
+    this.filteredEntreprises = [...this.autoFilteredEntreprises];
   }
 }
