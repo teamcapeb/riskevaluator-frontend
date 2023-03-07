@@ -72,6 +72,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import {MatGridListModule} from '@angular/material/grid-list';
 import {TuiPieChartModule} from '@taiga-ui/addon-charts';
 import {TuiRingChartModule} from '@taiga-ui/addon-charts';
 import {TuiBarChartModule} from '@taiga-ui/addon-charts'
@@ -233,6 +234,7 @@ registerLocaleData(localeEn, "en-EN");
     MatNativeDateModule,
     MatSnackBarModule,
     MatAutocompleteModule,
+    MatGridListModule,
     TuiPieChartModule,
     TuiRingChartModule,
     TuiBarChartModule,

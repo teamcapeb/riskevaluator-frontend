@@ -521,15 +521,18 @@ export class StatisticsComponent implements OnInit {
           this.updateFilteredCategoriesByQuestionnaires();
           this.updateFilteredEvaluationsByQuestionnaires();
           this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+          if (this.questionnaireControl.value.length == 0) {
+            this.filteredQuestionnaires = [...this.allQuestionnaires];
+          }
           this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
           this.getScoreEffectifEntreprises(this.filteredEntreprises);
         }
       });
       if (this.questionnaireControl.value.length == 0) {
+        this.resetAllFilters();
         this.allQuestionnaires.forEach((qst) => {
           this.graph2Labels.push(qst.thematique);
         });
-        this.resetAllFilters();
       }
     }
     this.separateEntreprisesEffectif(this.filteredEntreprises);
@@ -790,5 +793,14 @@ export class StatisticsComponent implements OnInit {
     this.filteredQuestionnaires = [...this.allQuestionnaires];
     this.filteredCategories = [...this.allCategories];
     this.filteredCategorieLibelles = this.filterLibelles();
+  }
+
+  getColShown(): number {
+    if (!this.hide1 && !this.hide2 && !this.hide3 && !this.hide4) {
+      return 2;
+    }
+    else {
+      return 1;
+    }
   }
 }

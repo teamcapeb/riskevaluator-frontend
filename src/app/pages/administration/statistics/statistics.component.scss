@@ -2,6 +2,8 @@
 mat-card {
   border-radius: 14px;
   box-shadow: none !important;
+  height: 100%;
+  width: 100%;
 }
 
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
@@ -38,13 +40,12 @@ mat-card-title {
 }
 
 .dashboard-sidebar {
-  height: 100%;
   padding: 8px;
-  min-height: 100%
+  min-height: 100%;
 }
 
 .sidebar-card {
-  height: 78vh;
+  height: 100%
 }
 
 .dashboard-title {
@@ -87,11 +88,6 @@ mat-card-title {
   margin: 0;
 }
 
-.graphs-card {
-  display: flex;
-  gap: 16px;
-}
-
 .graph-card {
   flex: 1;
   // align-items: center;
@@ -119,13 +115,19 @@ mat-card-title {
 
 .graph3n4 .expanded {
   max-width: 100% !important;
-  overflow: scroll;
+  ::ng-deep .t-label-x {
+    font-size: 10px;
+  }
 }
 
 .graph1n2 .expanded {
   max-width: 100% !important;
   ::ng-deep .t-label-x {
-    font-size: 10px;
+    font-size: 16px;
+  }
+
+  ::ng-deep .t-content {
+    font-size: 16px;
   }
 }
 
@@ -138,26 +140,20 @@ mat-card-title {
     text-align: center;
   }
 
+  ::ng-deep .t-content {
+    font-size: 10px;
+  }
 }
 
 .graph3n4 {
   mat-card {
     width: 100%;
-    max-width: 484px;
-    overflow: scroll;
   }
 
   mat-card-header {
     span {
-      position: fixed;
       right: 32px;
     }
-  }
-
-  ::ng-deep .t-label-x {
-    text-align: center;
-    transform: rotate(-36deg);
-    font-size: 7px;
   }
 }
 
@@ -179,26 +175,21 @@ mat-card-title {
 }
 
 .dashboard-graphs {
-  flex: 8;
-}
-
-.graphs {
-  height: 100%;
-
   mat-card {
-    height: 100%;
-    position: relative;
+    div {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
   }
+
+  height: 100%;
 
   div {
     height: 100%;
     display: flex;
     align-items: center;
   }
-}
-
-.wrapper {
-  align-items: center;
 }
 
 tui-root {
@@ -212,21 +203,33 @@ tui-axes {
 }
 
 .graph4 {
+  padding-top: 4px;
+  max-width: 100% !important;
+  height: 100%;
+  overflow-x: scroll;
+
   ::ng-deep {
     tui-bar {
       background: var(--tui-positive) !important;
     }
+
+    .t-label-x {
+      text-align: center;
+      transform: rotate(-36deg);
+      font-size: 7px;
+    }
   }
 }
 
-.graph1n2 {
-  ::ng-deep .t-content {
-    font-size: 10px;
-  }
-}
+.graph2 {
+  padding-top: 4px;
+  max-width: 100% !important;
+  height: 100%;
+  overflow-x: scroll;
 
-.graph1n2 .expanded {
-  ::ng-deep .t-content {
-    font-size: 16px;
+  ::ng-deep .t-label-x {
+    text-align: center;
+    transform: rotate(-36deg);
+    font-size: 8px;
   }
 }

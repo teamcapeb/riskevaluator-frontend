@@ -76,65 +76,36 @@
       </div>
     </div>
     <div class="dashboard-graphs">
-      <div class="graphs">
-        <div class="graphs-card">
-          <div class="graph-div graph1n2" *ngIf="!hide1 || !hide2">
-            <mat-card *ngIf="!hide1" class="graph-card" [ngClass]="{'expanded': isExpanded1}">
-              <mat-card-header style="display: flex; justify-content: space-between;">
-                <mat-card-title>Score moyen par taille d'entreprise</mat-card-title>
-                <span class="fa-solid fa-expand" (click)="expand1()"></span>
-              </mat-card-header>
-              <tui-root>
-                <tui-axes
-                  class="axes"
-                  [axisXLabels]="graph1LabelsX"
-                  [axisYLabels]="graph1LabelsY"
-                >
-                  <tui-bar-chart
-                    [max]="100"
-                    [value]="scoresMoyenGraph1"
-                    [tuiHintAppearance]="appearance"
-                    [tuiHintContent]="hintGraph1"
-                  ></tui-bar-chart>
-                </tui-axes>
-              </tui-root>
-            </mat-card>
-            <mat-card *ngIf="!hide2" class="graph-card" [ngClass]="{'expanded': isExpanded2}">
-              <mat-card-header style="display: flex; justify-content: space-between;">
-                <mat-card-title>Répartition des évaluations par questionnaire</mat-card-title>
-                <span class="fa-solid fa-expand" (click)="expand2()"></span>
-              </mat-card-header>
-              <div class="ring-chart">
-                <tui-ring-chart
-                  [size]="isExpanded2 ? 'xl' : 'm'"
-                  class="tui-space_right-4"
-                  [value]="nbReponsesParQuestionnaire"
-                  [tuiHintContent]="hintGraph2"
-                  [(activeItemIndex)]="activeItemIndex"
-                >
-                  <div>Thématiques des questionnaires</div>
-                </tui-ring-chart>
-                <div class="legend" style="display: flex; flex-direction: column; gap: 16px; justify-content: space-evenly;">
-                    <tui-legend-item
-                        *ngFor="let label of graph2Labels; let index = index"
-                        size="s"
-                        class="item"
-                        [color]="getColor(index)"
-                        [text]="label"
-                        [active]="isItemActive(index)"
-                        (click)="onClick(index, $event)"
-                    >
-                    </tui-legend-item>
-                </div>
-              </div>
-            </mat-card>
-          </div>
-          <div class="graph-div graph3n4" *ngIf="!hide3 || !hide4">
-            <mat-card *ngIf="!hide3" class="graph-card" [ngClass]="{'expanded': isExpanded3}">
-              <mat-card-header style="display: flex; justify-content: space-between;">
-                <mat-card-title>Score moyen par métier</mat-card-title>
-                <span class="fa-solid fa-expand" (click)="expand3()"></span>
-              </mat-card-header>
+      <mat-grid-list [cols]="getColShown()" rowHeight="2:1" gutterSize="16">
+        <mat-grid-tile *ngIf="!hide1" class="graph-div graph1n2">
+          <mat-card class="graph-card" [ngClass]="{'expanded': isExpanded1}">
+            <mat-card-header style="display: flex; justify-content: space-between;">
+              <mat-card-title>Score moyen par taille d'entreprise</mat-card-title>
+              <span class="fa-solid fa-expand" (click)="expand1()"></span>
+            </mat-card-header>
+            <tui-root>
+              <tui-axes
+                class="axes"
+                [axisXLabels]="graph1LabelsX"
+                [axisYLabels]="graph1LabelsY"
+              >
+                <tui-bar-chart
+                  [max]="100"
+                  [value]="scoresMoyenGraph1"
+                  [tuiHintAppearance]="appearance"
+                  [tuiHintContent]="hintGraph1"
+                ></tui-bar-chart>
+              </tui-axes>
+            </tui-root>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!hide3" class="graph-div graph3n4">
+          <mat-card class="graph-card" [ngClass]="{'expanded': isExpanded3}">
+            <mat-card-header style="display: flex; justify-content: space-between;">
+              <mat-card-title>Score moyen par métier</mat-card-title>
+              <span class="fa-solid fa-expand" (click)="expand3()"></span>
+            </mat-card-header>
+            <div class="graph2">
               <tui-root>
                 <tui-axes *ngIf="scoresMetiers.length > 0"
                           [axisXLabels]="metierNames"
@@ -146,39 +117,62 @@
                     [tuiHintContent]="hintGraph3"></tui-bar-chart>
                 </tui-axes>
               </tui-root>
-            </mat-card>
-            <mat-card *ngIf="!hide4" class="graph-card" [ngClass]="{'expanded': isExpanded4}">
-              <mat-card-header style="display: flex; justify-content: space-between;">
-                <mat-card-title>Nombre d'évaluations par catégorie de question</mat-card-title>
-                <span class="fa-solid fa-expand" (click)="expand4()"></span>
-              </mat-card-header>
-              <div class="graph4">
-                <tui-root>
-                  <tui-axes *ngIf="nbEvalsParLibelle.length > 0"
-                            [axisXLabels]="libelles"
-                            [axisYLabels]="graph4LabelsY">
-                    <tui-bar-chart
-                      [max]="allEvaluations.length + 5"
-                      [value]="nbEvalsParLibelle"
-                      [tuiHintAppearance]="appearance"
-                      [tuiHintContent]="hintGraph4"></tui-bar-chart>
-                  </tui-axes>
-                </tui-root>
+            </div>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!hide2" class="graph-div graph1n2">
+          <mat-card class="graph-card" [ngClass]="{'expanded': isExpanded2}">
+            <mat-card-header style="display: flex; justify-content: space-between;">
+              <mat-card-title>Répartition des évaluations par questionnaire</mat-card-title>
+              <span class="fa-solid fa-expand" (click)="expand2()"></span>
+            </mat-card-header>
+            <div class="ring-chart">
+              <tui-ring-chart
+                [size]="isExpanded2 ? 'xl' : 'm'"
+                class="tui-space_right-4"
+                [value]="nbReponsesParQuestionnaire"
+                [tuiHintContent]="hintGraph2"
+                [(activeItemIndex)]="activeItemIndex"
+              >
+                <div>Thématiques des questionnaires</div>
+              </tui-ring-chart>
+              <div class="legend" style="display: flex; flex-direction: column; gap: 16px; justify-content: space-evenly;">
+                  <tui-legend-item
+                      *ngFor="let label of graph2Labels; let index = index"
+                      size="s"
+                      class="item"
+                      [color]="getColor(index)"
+                      [text]="label"
+                      [active]="isItemActive(index)"
+                      (click)="onClick(index, $event)"
+                  >
+                  </tui-legend-item>
               </div>
-            </mat-card>
-          </div>
-        </div>
-      </div>
+            </div>
+          </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!hide4" class="graph-div graph3n4">
+          <mat-card class="graph-card" [ngClass]="{'expanded': isExpanded4}">
+            <mat-card-header style="display: flex; justify-content: space-between;">
+              <mat-card-title>Nombre d'évaluations par catégorie de question</mat-card-title>
+              <span class="fa-solid fa-expand" (click)="expand4()"></span>
+            </mat-card-header>
+            <div class="graph4">
+              <tui-root>
+                <tui-axes *ngIf="nbEvalsParLibelle.length > 0"
+                          [axisXLabels]="libelles"
+                          [axisYLabels]="graph4LabelsY">
+                  <tui-bar-chart
+                    [max]="allEvaluations.length + 5"
+                    [value]="nbEvalsParLibelle"
+                    [tuiHintAppearance]="appearance"
+                    [tuiHintContent]="hintGraph4"></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
+            </div>
+          </mat-card>
+        </mat-grid-tile>
+      </mat-grid-list>
     </div>
-  </div>
-</div>
-
-<div style="position: absolute; right: 0px; z-index: 9999; right: 28px; bottom: 42px; cursor: pointer;"
-  (click)="navigateToPowerBI()">
-  <div style="height: 65px; width: 65px; border-radius: 50%;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
-    background-color: #F1C900; display: flex; align-content: center;
-    align-items: center; justify-content: center;">
-    <img style="height: 38px; padding: 2px;" src="../../../../assets/img/powerbi-logo.png">
   </div>
 </div>
