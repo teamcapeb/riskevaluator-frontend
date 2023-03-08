@@ -1026,26 +1026,15 @@ export class StatisticsComponent implements OnInit {
         this.autoFilteredEntreprises.push(etp)
       }
       if(this.selectedQuestionnaires.length!=0){
-      var idMetiers :number[] = []
-        etp.metiers.forEach(met=>{
-          if(!this.includeMetier(this.autoFilteredMetiers,met)){
-            idMetiers.push(met.idMetier);
-          }
-        })
-      this.questionnaireService.getQuestionnairesByMetiers(idMetiers).subscribe((questionnaires)=>{
-        
           this.selectedQuestionnaires.forEach((quest)=>{
-            questionnaires.forEach((questionnaire)=>{
+            this.allQuestionnaires.forEach((questionnaire)=>{
               etp.metiers.forEach((met)=>{
                  if(quest.idQuestionnaire == questionnaire.idQuestionnaire && !this.includeMetier(this.autoFilteredMetiers,met)){
                 this.autoFilteredMetiers.push(met)
                }
              })
             })
-         })
-
-
-        })
+          })
       }else{
         etp.metiers.forEach((met)=>{
           if(!this.includeMetier(this.autoFilteredMetiers,met)){
@@ -1093,26 +1082,14 @@ export class StatisticsComponent implements OnInit {
                     if(this.selectedEntreprises.length!=0 && !this.includeMetier(this.autoFilteredMetiers,met)){
                       this.selectedEntreprises.forEach((etp)=>{
                       if(this.selectedQuestionnaires.length!=0){
-                      var idMetiers :number[] = []
-                        etp.metiers.forEach(met=>{
-                          if(!this.includeMetier(this.autoFilteredMetiers,met)){
-                            idMetiers.push(met.idMetier);
-                          }
-                        })
-                      this.questionnaireService.getQuestionnairesByMetiers(idMetiers).subscribe((questionnaires)=>{
                           this.selectedQuestionnaires.forEach((quest)=>{
-                            questionnaires.forEach((questionnaire)=>{
+                            this.allQuestionnaires.forEach((questionnaire)=>{
                               etp.metiers.forEach((met)=>{
                                 if(quest.idQuestionnaire == questionnaire.idQuestionnaire && !this.includeMetier(this.autoFilteredMetiers,met)){
                                   this.autoFilteredMetiers.push(met)
                               }
                             })
                             })
-                        })
-
-
-                        }).add(()=>{
-                          this.updateNumbers()
                         })
                       }else{
                         etp.metiers.forEach((met)=>{
