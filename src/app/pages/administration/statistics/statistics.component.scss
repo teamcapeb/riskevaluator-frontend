@@ -117,17 +117,6 @@ mat-card-title {
   }
 }
 
-.graph3n4 .expanded {
-  max-width: 100% !important;
-  ::ng-deep .t-label-x {
-    font-size: 10px;
-  }
-
-  ::ng-deep .t-content {
-    font-size: 16px;
-  }
-}
-
 .graph1n2 .expanded {
   max-width: 100% !important;
   ::ng-deep .t-label-x {
@@ -166,6 +155,92 @@ mat-card-title {
 
   ::ng-deep .t-content {
     font-size: 10px;
+  }
+
+  .graph4 {
+    padding-top: 4px;
+    max-width: 100% !important;
+    height: 100%;
+    overflow-x: scroll;
+
+    ::ng-deep {
+      tui-bar {
+        background: var(--tui-positive) !important;
+      }
+    }
+  }
+
+  ::ng-deep {
+    .t-container {
+      width: 54px;
+    }
+
+    .t-label-x:before {
+      width: 54px;
+    }
+
+    .t-label-x {
+      text-align: center;
+      font-size: 7px;
+    }
+  }
+}
+
+.graph3n4 .expanded {
+  max-width: 100% !important;
+  ::ng-deep .t-label-x {
+    font-size: 10px;
+  }
+
+  ::ng-deep .t-content {
+    font-size: 16px;
+  }
+
+  .graph4 {
+    padding-top: 4px;
+    max-width: 100% !important;
+    height: 100%;
+    overflow-x: scroll;
+
+    ::ng-deep {
+      tui-bar {
+        background: var(--tui-positive) !important;
+      }
+    }
+  }
+
+  ::ng-deep {
+    .t-container {
+      width: 68px;
+    }
+
+    .t-label-x:before {
+      width: 68px;
+    }
+
+    .t-label-x {
+      text-align: center;
+    }
+  }
+}
+
+.graph3 {
+  max-width: 100% !important;
+  height: 100%;
+
+  ::ng-deep {
+    .t-label-x {
+      text-align: center;
+      font-size: 8px;
+    }
+
+    .t-container {
+      width: 54px;
+    }
+
+    .t-label-x:before {
+      width: 54px;
+    }
   }
 }
 
@@ -212,37 +287,6 @@ tui-root {
 tui-axes {
   height: 95%;
   width: 100%;
-}
-
-.graph4 {
-  padding-top: 4px;
-  max-width: 100% !important;
-  height: 100%;
-  overflow-x: scroll;
-
-  ::ng-deep {
-    tui-bar {
-      background: var(--tui-positive) !important;
-    }
-
-    .t-label-x {
-      text-align: center;
-      transform: rotate(-36deg);
-      font-size: 7px;
-    }
-  }
-}
-
-.graph3 {
-  max-width: 100% !important;
-  height: 100%;
-  // overflow-x: scroll;
-
-  ::ng-deep .t-label-x {
-    text-align: center;
-    transform: rotate(-36deg);
-    font-size: 8px;
-  }
 }
 
 .filtres {
