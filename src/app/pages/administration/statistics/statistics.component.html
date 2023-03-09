@@ -86,20 +86,33 @@
               <mat-card-title>Score moyen par taille d'entreprise</mat-card-title>
               <span class="fa-solid fa-expand" (click)="expand1()"></span>
             </mat-card-header>
-            <tui-root>
-              <tui-axes
-                class="axes"
-                [axisXLabels]="graph1LabelsX"
-                [axisYLabels]="graph1LabelsY"
-              >
-                <tui-bar-chart
-                  [max]="100"
-                  [value]="scoresMoyenGraph1"
-                  [tuiHintAppearance]="appearance"
-                  [tuiHintContent]="hintGraph1"
-                ></tui-bar-chart>
-              </tui-axes>
-            </tui-root>
+            <div style="display: flex; flex-direction: column;">
+              <tui-root>
+                <tui-axes
+                  class="axes"
+                  [axisXLabels]="graph1LabelsX"
+                  [axisYLabels]="graph1LabelsY"
+                >
+                  <tui-bar-chart
+                    [max]="100"
+                    [value]="scoresMoyenGraph1"
+                    [tuiHintAppearance]="appearance"
+                    [tuiHintContent]="hintGraph1"
+                  ></tui-bar-chart>
+                </tui-axes>
+              </tui-root>
+              <div style="display: flex; flex-direction: row; gap: 16px; justify-content: space-evenly; height: 16px;">
+                <tui-legend-item
+                    *ngFor="let label of graph2Labels; let index = index"
+                    size="s"
+                    class="item"
+                    [color]="getColor(index)"
+                    [text]="label"
+                    [active]="isItemActive(index)"
+                >
+                </tui-legend-item>
+              </div>
+            </div>
           </mat-card>
         </mat-grid-tile>
         <mat-grid-tile *ngIf="!hide3" class="graph-div graph3n4">
@@ -108,8 +121,8 @@
               <mat-card-title>Score moyen par métier</mat-card-title>
               <span class="fa-solid fa-expand" (click)="expand3()"></span>
             </mat-card-header>
-            <div class="graph2">
-              <tui-root>
+            <div class="graph3" style="display: flex; flex-direction: column;">
+              <tui-root style="overflow-x: scroll; padding-top: 4px;">
                 <tui-axes *ngIf="scoresMetiers.length > 0"
                           [axisXLabels]="metierNames"
                           [axisYLabels]="graph3LabelsY">
@@ -120,6 +133,17 @@
                     [tuiHintContent]="hintGraph3"></tui-bar-chart>
                 </tui-axes>
               </tui-root>
+              <div style="display: flex; flex-direction: row; gap: 16px; justify-content: space-evenly; height: 16px;">
+                <tui-legend-item
+                    *ngFor="let label of graph2Labels; let index = index"
+                    size="s"
+                    class="item"
+                    [color]="getColor(index)"
+                    [text]="label"
+                    [active]="isItemActive(index)"
+                >
+                </tui-legend-item>
+              </div>
             </div>
           </mat-card>
         </mat-grid-tile>
@@ -140,16 +164,16 @@
                 <div>Thématiques des questionnaires</div>
               </tui-ring-chart>
               <div class="legend" style="display: flex; flex-direction: column; gap: 16px; justify-content: space-evenly;">
-                  <tui-legend-item
-                      *ngFor="let label of graph2Labels; let index = index"
-                      size="s"
-                      class="item"
-                      [color]="getColor(index)"
-                      [text]="label"
-                      [active]="isItemActive(index)"
-                      (click)="onClick(index, $event)"
-                  >
-                  </tui-legend-item>
+                <tui-legend-item
+                    *ngFor="let label of graph2Labels; let index = index"
+                    size="s"
+                    class="item"
+                    [color]="getColor(index)"
+                    [text]="label"
+                    [active]="isItemActive(index)"
+                    (click)="onClick(index, $event)"
+                >
+                </tui-legend-item>
               </div>
             </div>
           </mat-card>
@@ -177,5 +201,15 @@
         </mat-grid-tile>
       </mat-grid-list>
     </div>
+  </div>
+</div>
+
+<div style="position: fixed; right: 0px; z-index: 9999; right: 28px; bottom: 28px; cursor: pointer;"
+  (click)="navigateToPowerBI()">
+  <div style="height: 60px; width: 60px; border-radius: 50%;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
+    background-color: #F1C900; display: flex; align-content: center;
+    align-items: center; justify-content: center;">
+    <img style="height: 38px; padding: 2px;" src="../../../../assets/img/powerbi-logo.png">
   </div>
 </div>

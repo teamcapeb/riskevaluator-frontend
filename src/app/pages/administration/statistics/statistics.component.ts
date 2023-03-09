@@ -93,6 +93,7 @@ export class StatisticsComponent implements OnInit {
   graph4LabelsY: string[] = ["0", "30"];
 
   scoresMoyenGraph1: number[][] = [];
+  hintScoresMoyenGraph1: string[][] = [];
   scoresMoyenGraph2: number[] = [];
 
   metierNames: string[];
@@ -121,10 +122,17 @@ export class StatisticsComponent implements OnInit {
       return `var(--tui-chart-${index})`;
   }
 
+  // readonly hintGraph1 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
+  //   this.scoresMoyenGraph1
+  //     .reduce(
+  //       (result, set) => `${result}${tuiFormatNumber(set[$implicit])}%\n`,
+  //       ''
+  //     ).trim();
+
   readonly hintGraph1 = ({ $implicit }: TuiContextWithImplicit<number>): string =>
-    this.scoresMoyenGraph1
+    this.hintScoresMoyenGraph1
       .reduce(
-        (result, set) => `${result}${tuiFormatNumber(set[$implicit])}%\n`,
+        (result, set) => `${result}${set[$implicit]}%\n`,
         ''
       ).trim();
 
@@ -212,7 +220,6 @@ export class StatisticsComponent implements OnInit {
     var tmpQuestionnaire : IQuestionnaire[] = [];
     if(this.selectedEntreprises.length!=0){
       this.filteredEvaluations.forEach(evl=>{
-
         if(!this.includesQuestionnaire(tmpQuestionnaire,evl.scoreCategories[0].categorieQuestion.questionnaire)){
           tmpQuestionnaire.push(evl.scoreCategories[0].categorieQuestion.questionnaire)
         }
@@ -220,10 +227,9 @@ export class StatisticsComponent implements OnInit {
     }else{
       tmpQuestionnaire = this.allQuestionnaires;
     }
-
     this.metierService.getScoreParMetier()
       .subscribe((response: MetierScoreProjectionResponse[]) => {
-        if(this.selectedQuestionnaires.length ==0){
+        if(this.selectedQuestionnaires.length ==0 || this.selectedQuestionnaires.length == this.allQuestionnaires.length){
           tmpQuestionnaire.forEach((qst) => {
             scoreTMP = [];
             this.scoresMetiers = [];
@@ -232,14 +238,14 @@ export class StatisticsComponent implements OnInit {
               response.forEach((rep) => {
                 if (qst.thematique === rep.thematique) {
                   this.metierNames.push(rep.nomMetier);
-                  scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
+                  scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(0)));
                 }
               });
             } else {
               metiers.forEach((mtr) => {
                 response.forEach((rep) => {
                   if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
-                    scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
+                    scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(0)));
                     this.metierNames.push(rep.nomMetier);
                   }
                 });
@@ -248,31 +254,32 @@ export class StatisticsComponent implements OnInit {
             scoresMetiersTMP.push(scoreTMP);
           });
         }else{
-          this.selectedQuestionnaires.forEach((qst) => {
-            scoreTMP = [];
-            this.scoresMetiers = [];
-            this.metierNames = [];
-            if (metiers.length === 0) {
-              response.forEach((rep) => {
-                if (qst.thematique === rep.thematique) {
-                  this.metierNames.push(rep.nomMetier);
-                  scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
-                }
-              });
-            } else {
-              metiers.forEach((mtr) => {
+          if(tmpQuestionnaire.length != 0){
+            this.selectedQuestionnaires.forEach((qst) => {
+              scoreTMP = [];
+              this.scoresMetiers = [];
+              this.metierNames = [];
+              if (metiers.length === 0) {
                 response.forEach((rep) => {
-                  if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
-                    scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
+                  if (qst.thematique === rep.thematique) {
                     this.metierNames.push(rep.nomMetier);
+                    scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(0)));
                   }
                 });
-              });
-            }
-            scoresMetiersTMP.push(scoreTMP);
-          });
-        }
-
+              } else {
+                metiers.forEach((mtr) => {
+                  response.forEach((rep) => {
+                    if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
+                      scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(0)));
+                      this.metierNames.push(rep.nomMetier);
+                    }
+                  });
+                });
+              }
+              scoresMetiersTMP.push(scoreTMP);
+            });
+          }
+          }
         this.scoresMetiers = scoresMetiersTMP;
         this.cdr.detectChanges();
       });
@@ -319,9 +326,7 @@ export class StatisticsComponent implements OnInit {
           this.nbEvalsParLibelle.push(nbEvals);
           }
         }
-        console.log(this.nbEvalsParLibelle);
         this.graph4LabelsY = ["0",  "" + (Math.ceil((Math.max(...this.nbEvalsParLibelle.at(0))+ 3)/5) * 5)   + ""];
-        console.log(this.graph4LabelsY);
         this.cdr.detectChanges();
       });
   }
@@ -336,8 +341,10 @@ export class StatisticsComponent implements OnInit {
     var avgPetites: number = 0;
     var avgMoyennes: number = 0;
     var avgGrandes: number = 0;
-    var sumThematique : number[] = []
-    var tmpScoresMoyensGraph1 : number[][] = []
+    var sumThematique : number[] = [];
+    var tmpSumThematique: string[] = [];
+    var tmpScoresMoyensGraph1 : number[][] = [];
+    var tmpHintScoresMoyensGraph1: string[][] = [];
     this.entrepriseService.getScoreEntreprises().subscribe((response: EntrepriseScoreProjectionResponse[]) => {
       this.scoresMoyensEntreprises = response;
       if(this.selectedEntreprises.length == 0){
@@ -353,6 +360,7 @@ export class StatisticsComponent implements OnInit {
             avgMoyennes = 0;
             avgGrandes = 0;
             sumThematique = []
+            tmpSumThematique = [];
             response.forEach(rep => {
               if (quest.thematique == rep.thematique) {
                 if (rep.taille == "Grande") {
@@ -378,8 +386,12 @@ export class StatisticsComponent implements OnInit {
             if (nbMoyennes !=0) {
               avgMoyennes = sumMoyennes/nbMoyennes;
             }
-            sumThematique.push(parseFloat(avgPetites.toFixed(2)), parseFloat(avgMoyennes.toFixed(2)), parseFloat(avgGrandes.toFixed(2)));
+            sumThematique.push(parseFloat(avgPetites.toFixed(0)), parseFloat(avgMoyennes.toFixed(0)), parseFloat(avgGrandes.toFixed(0)));
+            tmpSumThematique.push(quest.thematique + ": " + avgPetites.toFixed(0),
+                                  quest.thematique + ": " + avgMoyennes.toFixed(0),
+                                  quest.thematique + ": " + avgGrandes.toFixed(0));
             tmpScoresMoyensGraph1.push(sumThematique);
+            tmpHintScoresMoyensGraph1.push(tmpSumThematique);
           })
         }else{
           this.selectedQuestionnaires.forEach((quest) => {
@@ -418,8 +430,12 @@ export class StatisticsComponent implements OnInit {
             if (nbMoyennes !=0) {
               avgMoyennes = sumMoyennes/nbMoyennes;
             }
-            sumThematique.push(parseFloat(avgPetites.toFixed(2)), parseFloat(avgMoyennes.toFixed(2)), parseFloat(avgGrandes.toFixed(2)));
+            sumThematique.push(parseFloat(avgPetites.toFixed(0)), parseFloat(avgMoyennes.toFixed(0)), parseFloat(avgGrandes.toFixed(0)));
+            tmpSumThematique.push(quest.thematique + ": " + avgPetites.toFixed(0),
+                                  quest.thematique + ": " + avgMoyennes.toFixed(0),
+                                  quest.thematique + ": " + avgGrandes.toFixed(0));
             tmpScoresMoyensGraph1.push(sumThematique);
+            tmpHintScoresMoyensGraph1.push(tmpSumThematique);
           })
         }
       }else{
@@ -465,8 +481,12 @@ export class StatisticsComponent implements OnInit {
               }
 
             })
-            sumThematique.push(parseFloat(avgPetites.toFixed(2)), parseFloat(avgMoyennes.toFixed(2)), parseFloat(avgGrandes.toFixed(2)));
+            sumThematique.push(parseFloat(avgPetites.toFixed(0)), parseFloat(avgMoyennes.toFixed(0)), parseFloat(avgGrandes.toFixed(0)));
+            tmpSumThematique.push(quest.thematique + ": " + avgPetites.toFixed(0),
+                                  quest.thematique + ": " + avgMoyennes.toFixed(0),
+                                  quest.thematique + ": " + avgGrandes.toFixed(0));
             tmpScoresMoyensGraph1.push(sumThematique);
+            tmpHintScoresMoyensGraph1.push(tmpSumThematique);
           })
         }else{
           this.selectedQuestionnaires.forEach((quest) => {
@@ -508,13 +528,17 @@ export class StatisticsComponent implements OnInit {
                 avgMoyennes = sumMoyennes/nbMoyennes;
               }
             })
-            sumThematique.push(parseFloat(avgPetites.toFixed(2)), parseFloat(avgMoyennes.toFixed(2)), parseFloat(avgGrandes.toFixed(2)));
+            sumThematique.push(parseFloat(avgPetites.toFixed(0)), parseFloat(avgMoyennes.toFixed(0)), parseFloat(avgGrandes.toFixed(0)));
+            tmpSumThematique.push(quest.thematique + ": " + avgPetites.toFixed(0),
+                                  quest.thematique + ": " + avgMoyennes.toFixed(0),
+                                  quest.thematique + ": " + avgGrandes.toFixed(0));
             tmpScoresMoyensGraph1.push(sumThematique);
+            tmpHintScoresMoyensGraph1.push(tmpSumThematique);
           })
         }
       }
-
       this.scoresMoyenGraph1 = tmpScoresMoyensGraph1;
+      this.hintScoresMoyenGraph1 = tmpHintScoresMoyensGraph1;
       this.cdr.detectChanges();
     });
   }
@@ -545,8 +569,10 @@ export class StatisticsComponent implements OnInit {
           }
         })
       })
-      this.nbReponsesParQuestionnaire.push(evaluations.length);
-      tmp.push(evaluations.length + " (" + Number((evaluations.length/this.filteredEvaluations.length)*100).toFixed(2) + "%)");
+      if (!(this.selectedQuestionnaires.length === 1 && evaluations.length === 0)) {
+        this.nbReponsesParQuestionnaire.push(evaluations.length);
+        tmp.push(evaluations.length + " (" + Number((evaluations.length/this.filteredEvaluations.length)*100).toFixed(0) + "%)");
+      }
     })
     this.hintNbReponsesParQuestionnaire.push(tmp);
   }
@@ -718,16 +744,6 @@ export class StatisticsComponent implements OnInit {
         this.grandesEntreprises.push(etp);
       }
     });
-    this.scoresMoyensTailleEntreprises();
-  }
-
-  scoresMoyensTailleEntreprises() {
-
-    this.setValueGraph1();
-  }
-
-  setValueGraph1() {
-
   }
 
   updateFilteredMetiersByEntreprises() {

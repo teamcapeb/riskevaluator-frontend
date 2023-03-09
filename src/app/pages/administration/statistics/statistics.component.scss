@@ -122,6 +122,10 @@ mat-card-title {
   ::ng-deep .t-label-x {
     font-size: 10px;
   }
+
+  ::ng-deep .t-content {
+    font-size: 16px;
+  }
 }
 
 .graph1n2 .expanded {
@@ -158,6 +162,10 @@ mat-card-title {
     span {
       right: 32px;
     }
+  }
+
+  ::ng-deep .t-content {
+    font-size: 10px;
   }
 }
 
@@ -225,11 +233,10 @@ tui-axes {
   }
 }
 
-.graph2 {
-  padding-top: 4px;
+.graph3 {
   max-width: 100% !important;
   height: 100%;
-  overflow-x: scroll;
+  // overflow-x: scroll;
 
   ::ng-deep .t-label-x {
     text-align: center;
