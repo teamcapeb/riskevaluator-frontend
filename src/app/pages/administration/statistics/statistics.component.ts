@@ -213,29 +213,56 @@ export class StatisticsComponent implements OnInit {
     this.metierService.getScoreParMetier()
       .subscribe((response: MetierScoreProjectionResponse[]) => {
         // TODO PB AUTOFILTERED QUESTIONNAIRES NE CHANGE PAS QUAND ON SELECT QUESTIONNAIRE
-        this.autoFilteredQuestionnaires.forEach((qst) => {
-          scoreTMP = [];
-          this.scoresMetiers = [];
-          this.metierNames = [];
-          if (metiers.length === 0) {
-            response.forEach((rep) => {
-              if (qst.thematique === rep.thematique) {
-                this.metierNames.push(rep.nomMetier);
-                scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
-              }
-            });
-          } else {
-            metiers.forEach((mtr) => {
+        if(this.selectedQuestionnaires.length ==0){
+          this.allQuestionnaires.forEach((qst) => {
+            scoreTMP = [];
+            this.scoresMetiers = [];
+            this.metierNames = [];
+            if (metiers.length === 0) {
               response.forEach((rep) => {
-                if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
-                  scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
+                if (qst.thematique === rep.thematique) {
                   this.metierNames.push(rep.nomMetier);
+                  scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
                 }
               });
-            });
-          }
-          scoresMetiersTMP.push(scoreTMP);
-        });
+            } else {
+              metiers.forEach((mtr) => {
+                response.forEach((rep) => {
+                  if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
+                    scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
+                    this.metierNames.push(rep.nomMetier);
+                  }
+                });
+              });
+            }
+            scoresMetiersTMP.push(scoreTMP);
+          });
+        }else{
+          this.selectedQuestionnaires.forEach((qst) => {
+            scoreTMP = [];
+            this.scoresMetiers = [];
+            this.metierNames = [];
+            if (metiers.length === 0) {
+              response.forEach((rep) => {
+                if (qst.thematique === rep.thematique) {
+                  this.metierNames.push(rep.nomMetier);
+                  scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
+                }
+              });
+            } else {
+              metiers.forEach((mtr) => {
+                response.forEach((rep) => {
+                  if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
+                    scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)));
+                    this.metierNames.push(rep.nomMetier);
+                  }
+                });
+              });
+            }
+            scoresMetiersTMP.push(scoreTMP);
+          });
+        }
+ 
         this.scoresMetiers = scoresMetiersTMP;
         this.cdr.detectChanges();
       });
@@ -307,36 +334,92 @@ export class StatisticsComponent implements OnInit {
     var tmpScoresMoyensGraph1 : number[][] = []
     this.entrepriseService.getScoreEntreprises().subscribe((response: EntrepriseScoreProjectionResponse[]) => {
       this.scoresMoyensEntreprises = response;
-      this.allQuestionnaires.forEach((quest) => {
-        sumThematique = []
-        response.forEach(rep => {
-          if (quest.thematique == rep.thematique) {
-            if (rep.taille == "Grande") {
-              sumGrandes += rep.scoreMoyen;
-              nbGrandes++;
-            } else {
-              if (rep.taille == "Petite") {
-                sumPetites += rep.scoreMoyen;
-                nbPetites++;
+      if(this.selectedQuestionnaires.length == 0){
+        this.allQuestionnaires.forEach((quest) => {
+          nbPetites = 0;
+          nbMoyennes = 0;
+          nbGrandes = 0;
+          sumPetites = 0;
+          sumMoyennes = 0;
+          sumGrandes = 0;
+          avgPetites = 0;
+          avgMoyennes = 0;
+          avgGrandes = 0;
+          sumThematique = []
+          response.forEach(rep => {
+            if (quest.thematique == rep.thematique) {
+              console.log(rep)
+              if (rep.taille == "Grande") {
+                sumGrandes += rep.scoreMoyen;
+                nbGrandes++;
               } else {
-                sumMoyennes += rep.scoreMoyen;
-                nbMoyennes++;
+                if (rep.taille == "Petite") {
+                  sumPetites += rep.scoreMoyen;
+                  nbPetites++;
+                } else {
+                  sumMoyennes += rep.scoreMoyen;
+                  nbMoyennes++;
+                }
               }
             }
+          })
+          if (nbGrandes != 0) {
+            avgGrandes = sumGrandes/nbGrandes;
           }
+          if (nbPetites !=0) {
+            avgPetites = sumPetites/nbPetites;
+          }
+          if (nbMoyennes !=0) {
+            avgMoyennes = sumMoyennes/nbMoyennes;
+          }
+          sumThematique.push(avgPetites, avgMoyennes, avgGrandes);
+          tmpScoresMoyensGraph1.push(sumThematique);
+          console.log("------------")
         })
-        if (nbGrandes != 0) {
-          avgGrandes = sumGrandes/nbGrandes;
-        }
-        if (nbPetites !=0) {
-          avgPetites = sumPetites/nbPetites;
-        }
-        if (nbMoyennes !=0) {
-          avgMoyennes = sumMoyennes/nbMoyennes;
-        }
-        sumThematique.push(avgPetites, avgMoyennes, avgGrandes);
-        tmpScoresMoyensGraph1.push(sumThematique);
-      })
+      }else{
+        this.selectedQuestionnaires.forEach((quest) => {
+          nbPetites = 0;
+          nbMoyennes = 0;
+          nbGrandes = 0;
+          sumPetites = 0;
+          sumMoyennes = 0;
+          sumGrandes = 0;
+          avgPetites = 0;
+          avgMoyennes = 0;
+          avgGrandes = 0;
+          sumThematique = []
+          response.forEach(rep => {
+            if (quest.thematique == rep.thematique) {
+              console.log(rep)
+              if (rep.taille == "Grande") {
+                sumGrandes += rep.scoreMoyen;
+                nbGrandes++;
+              } else {
+                if (rep.taille == "Petite") {
+                  sumPetites += rep.scoreMoyen;
+                  nbPetites++;
+                } else {
+                  sumMoyennes += rep.scoreMoyen;
+                  nbMoyennes++;
+                }
+              }
+            }
+          })
+          console.log(nbPetites,nbMoyennes,nbGrandes)
+          if (nbGrandes != 0) {
+            avgGrandes = sumGrandes/nbGrandes;
+          }
+          if (nbPetites !=0) {
+            avgPetites = sumPetites/nbPetites;
+          }
+          if (nbMoyennes !=0) {
+            avgMoyennes = sumMoyennes/nbMoyennes;
+          }
+          console.log(avgPetites, avgMoyennes, avgGrandes)
+          sumThematique.push(avgPetites, avgMoyennes, avgGrandes);
+          tmpScoresMoyensGraph1.push(sumThematique);
+        })
+      }
       this.scoresMoyenGraph1 = tmpScoresMoyensGraph1;
       this.cdr.detectChanges();
     });

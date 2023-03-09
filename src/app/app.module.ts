@@ -123,7 +123,6 @@ import { StatisticsComponent } from "./pages/administration/statistics/statistic
 import { EvaluationResultatSuppressionComponent } from './pages/visitor/evaluer/evaluation-resultat/evaluation-resultat-suppression/evaluation-resultat-suppression.component';
 import { TuiHintModule, TuiRootModule } from "@taiga-ui/core";
 import {TuiLegendItemModule} from '@taiga-ui/addon-charts';
-import {TuiMoneyModule} from '@taiga-ui/addon-commerce'
 import { PowerBiComponent } from './pages/administration/statistics/power-bi/power-bi.component';
 
 registerLocaleData(localeEn, "en-EN");
@@ -241,7 +240,6 @@ registerLocaleData(localeEn, "en-EN");
     TuiAxesModule,
     TuiHintModule,
     TuiLegendItemModule,
-    TuiMoneyModule,
     NgCircleProgressModule.forRoot({
       // set defaults here
       radius: 100,
