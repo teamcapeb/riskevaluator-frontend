@@ -3,58 +3,61 @@
     <mat-card class="sidebar-card">
       <div class="dashboard-title">
         <h2><b>RiskEvaluator<br>Dashboard</b></h2>
+        <div class="filtres">
+          <div class="entreprise-filtre">
+            <mat-form-field appearance="fill">
+              <mat-label>Entreprises</mat-label>
+              <mat-select [formControl]="entrepriseControl" multiple>
+                <mat-select-trigger>
+                  {{entrepriseControl.value?.[0] || ''}}
+                  <span *ngIf="(entrepriseControl.value?.length || 0) > 1" class="example-additional-selection">
+                    (+{{(entrepriseControl.value?.length || 0) - 1}} {{entrepriseControl.value?.length === 2 ? 'autre' : 'autres'}})
+                  </span>
+                </mat-select-trigger>
+                <mat-option #matOption *ngFor="let entreprise of autoFilteredEntreprises" [value]="entreprise.nomEntreprise"
+                  (click)="selectEntreprise(entreprise, matOption.selected)">
+                  {{ entreprise?.nomEntreprise }}
+                  <span style="font-size: 11px;">
+                    {{ " (SIRET: " + (entreprise?.noSiret) + ")" }}
+                  </span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="questionnaire-filtre">
+            <mat-form-field appearance="fill">
+              <mat-label>Questionnaires</mat-label>
+              <mat-select [formControl]="questionnaireControl" multiple>
+                <mat-select-trigger>
+                  {{questionnaireControl.value?.[0] || ''}}
+                  <span *ngIf="(questionnaireControl.value?.length || 0) > 1" class="example-additional-selection">
+                    (+{{(questionnaireControl.value?.length || 0) - 1}} {{questionnaireControl.value?.length === 2 ? 'autre' : 'autres'}})
+                  </span>
+                </mat-select-trigger>
+                <mat-option #matOption *ngFor="let questionnaire of allQuestionnaires" [value]="questionnaire.thematique"
+                  (click)="selectQuestionnaire(questionnaire, matOption.selected)">{{questionnaire?.thematique}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="metier-filtre">
+            <mat-form-field appearance="fill">
+              <mat-label>Métiers</mat-label>
+              <mat-select [formControl]="metierControl" multiple>
+                <mat-select-trigger>
+                  {{metierControl.value?.[0] || ''}}
+                  <span *ngIf="(metierControl.value?.length || 0) > 1" class="example-additional-selection">
+                    (+{{(metierControl.value?.length || 0) - 1}} {{metierControl.value?.length === 2 ? 'autre' : 'autres'}})
+                  </span>
+                </mat-select-trigger>
+                <mat-option #matOption *ngFor="let metier of autoFilteredMetiers" [value]="metier.nomMetier"
+                  (click)="selectMetier(metier, matOption.selected)">{{metier?.nomMetier}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
       </div>
-      <div class="filtres">
-        <div class="entreprise-filtre">
-          <mat-form-field appearance="fill">
-            <mat-label>Entreprises</mat-label>
-            <mat-select [formControl]="entrepriseControl" multiple>
-              <mat-select-trigger>
-                {{entrepriseControl.value?.[0] || ''}}
-                <span *ngIf="(entrepriseControl.value?.length || 0) > 1" class="example-additional-selection">
-                  (+{{(entrepriseControl.value?.length || 0) - 1}} {{entrepriseControl.value?.length === 2 ? 'autre' : 'autres'}})
-                </span>
-              </mat-select-trigger>
-              <mat-option #matOption *ngFor="let entreprise of autoFilteredEntreprises" [value]="entreprise.nomEntreprise"
-                (click)="selectEntreprise(entreprise, matOption.selected)">
-                {{ entreprise?.nomEntreprise }}
-                <span style="font-size: 11px;">
-                  {{ " (SIRET: " + (entreprise?.noSiret) + ")" }}
-                </span>
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="questionnaire-filtre">
-          <mat-form-field appearance="fill">
-            <mat-label>Questionnaires</mat-label>
-            <mat-select [formControl]="questionnaireControl" multiple>
-              <mat-select-trigger>
-                {{questionnaireControl.value?.[0] || ''}}
-                <span *ngIf="(questionnaireControl.value?.length || 0) > 1" class="example-additional-selection">
-                  (+{{(questionnaireControl.value?.length || 0) - 1}} {{questionnaireControl.value?.length === 2 ? 'autre' : 'autres'}})
-                </span>
-              </mat-select-trigger>
-              <mat-option #matOption *ngFor="let questionnaire of allQuestionnaires" [value]="questionnaire.thematique"
-                (click)="selectQuestionnaire(questionnaire, matOption.selected)">{{questionnaire?.thematique}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="metier-filtre">
-          <mat-form-field appearance="fill">
-            <mat-label>Métiers</mat-label>
-            <mat-select [formControl]="metierControl" multiple>
-              <mat-select-trigger>
-                {{metierControl.value?.[0] || ''}}
-                <span *ngIf="(metierControl.value?.length || 0) > 1" class="example-additional-selection">
-                  (+{{(metierControl.value?.length || 0) - 1}} {{metierControl.value?.length === 2 ? 'autre' : 'autres'}})
-                </span>
-              </mat-select-trigger>
-              <mat-option #matOption *ngFor="let metier of autoFilteredMetiers" [value]="metier.nomMetier"
-                (click)="selectMetier(metier, matOption.selected)">{{metier?.nomMetier}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+      <div>
+        <img style="height: 100px; cursor: pointer" src="./../../../../assets/img/capeb-logo.png">
       </div>
     </mat-card>
   </div>
