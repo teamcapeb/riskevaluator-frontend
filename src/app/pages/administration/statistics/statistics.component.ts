@@ -206,14 +206,25 @@ export class StatisticsComponent implements OnInit {
   }
 
   getScoreMetiers(metiers: IMetier[]) {
-    // TODO CHHECK PQ APPELER 2 FOIS QUAND ON DESELEECTIONNAE ENTREPRISE
     var scoresMetiersTMP: number[][] = [];
     var scoreTMP: number[] = [];
+
+    var tmpQuestionnaire : IQuestionnaire[] = [];
+    if(this.selectedEntreprises.length!=0){
+      this.filteredEvaluations.forEach(evl=>{
+
+        if(!this.includesQuestionnaire(tmpQuestionnaire,evl.scoreCategories[0].categorieQuestion.questionnaire)){
+          tmpQuestionnaire.push(evl.scoreCategories[0].categorieQuestion.questionnaire)
+        }
+      })
+    }else{
+      tmpQuestionnaire = this.allQuestionnaires;
+    }
+
     this.metierService.getScoreParMetier()
       .subscribe((response: MetierScoreProjectionResponse[]) => {
-        // TODO PB AUTOFILTERED QUESTIONNAIRES NE CHANGE PAS QUAND ON SELECT QUESTIONNAIRE
         if(this.selectedQuestionnaires.length ==0){
-          this.allQuestionnaires.forEach((qst) => {
+          tmpQuestionnaire.forEach((qst) => {
             scoreTMP = [];
             this.scoresMetiers = [];
             this.metierNames = [];
@@ -242,7 +253,6 @@ export class StatisticsComponent implements OnInit {
             this.scoresMetiers = [];
             this.metierNames = [];
             if (metiers.length === 0) {
-              console.log("la",response)
               response.forEach((rep) => {
                 if (qst.thematique === rep.thematique) {
                   this.metierNames.push(rep.nomMetier);
@@ -250,7 +260,6 @@ export class StatisticsComponent implements OnInit {
                 }
               });
             } else {
-              console.log(metiers)
               metiers.forEach((mtr) => {
                 response.forEach((rep) => {
                   if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
@@ -665,7 +674,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   selectQuestionnaire(questionnaire: IQuestionnaire, selected: boolean) {
-    // TODO autofiltered ?
     if (selected) {
       this.selectedQuestionnaires = [];
       this.graph2Labels = [];
@@ -949,13 +957,6 @@ export class StatisticsComponent implements OnInit {
     return res;
   }
 
-  // setValueGraph1() {
-  //   this.scoresMoyenGraph1 = [[this.scoreMoyenPetitesEntreprises,
-  //     this.scoreMoyenMoyennesEntreprises,
-  //     this.scoreMoyenGrandesEntreprises]
-  //   ];
-  // }
-
   setValueGraph2() {
     this.scoresMoyenGraph2 = [this.scoreMoyenPetitesEntreprises,
     this.scoreMoyenMoyennesEntreprises,
@@ -1159,7 +1160,6 @@ export class StatisticsComponent implements OnInit {
           this.updateFilteredMetiersByQuestionnaires();
           this.updateFilteredCategoriesByQuestionnaires();
           this.updateFilteredEvaluationsByQuestionnaires();
-          // this.getNbEvalsParCategorie(this.filteredQuestionnaires);
           this.getNbEvalsParCategorie(this.autoFilteredQuestionnaires);
           this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
 
@@ -1192,7 +1192,6 @@ export class StatisticsComponent implements OnInit {
         this.updateFilteredMetiersByQuestionnaires();
         this.updateFilteredCategoriesByQuestionnaires();
         this.updateFilteredEvaluationsByQuestionnaires();
-        // this.getNbEvalsParCategorie(this.filteredQuestionnaires);
         this.getNbEvalsParCategorie(this.autoFilteredQuestionnaires);
         this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
         }
@@ -1240,16 +1239,14 @@ export class StatisticsComponent implements OnInit {
               if(this.selectedQuestionnaires.length != 0){
                 this.getNbEvalsParCategorie(this.selectedQuestionnaires);
                 this.getNbReponsesParQuestionnaire(this.selectedQuestionnaires);
-                // TODO CHECK
-                this.getScoreEffectifEntreprises(this.autoFilteredEntreprises); // ?
+                this.getScoreEffectifEntreprises(this.autoFilteredEntreprises);
                 this.getScoreMetiers(this.filteredMetiers);
               }
             }
             else{
               this.getNbEvalsParCategorie(this.allQuestionnaires);
               this.getNbReponsesParQuestionnaire(this.allQuestionnaires);
-              // TODO CHECK
-              this.getScoreEffectifEntreprises(this.autoFilteredEntreprises); // ?
+              this.getScoreEffectifEntreprises(this.autoFilteredEntreprises);
               this.getScoreMetiers(this.autoFilteredMetiers);
             }
           }
@@ -1390,9 +1387,7 @@ export class StatisticsComponent implements OnInit {
       }
 
       this.filteredEntreprises = [...this.autoFilteredEntreprises];
-      this.filteredMetiers = [...this.autoFilteredMetiers]
-      var questionnaires : IQuestionnaire[]  = []
-      // console.log(questionnaires)
+      this.filteredMetiers = [...this.autoFilteredMetiers];
 
       this.updateNumbers();
     })
