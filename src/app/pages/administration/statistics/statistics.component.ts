@@ -278,12 +278,11 @@ export class StatisticsComponent implements OnInit {
           this.libelles = response.map(item => item.libelle);
           this.nbEvalsParLibelle.push(
             response.map(item => item.count)
-          )
+          );
         } else {
           var nbEvals: number[] = [];
-          // console.log(this.filteredEvaluations)
           var count : number = 0;
-          if(this.selectedEntreprises.length == 0){
+          if (this.selectedEntreprises.length == 0) {
              questionnaire.forEach((quest) => {
             response.forEach(rep => {
                 if (quest.thematique == rep.thematique) {
@@ -293,7 +292,7 @@ export class StatisticsComponent implements OnInit {
               })
           })
           this.nbEvalsParLibelle.push(nbEvals);
-          }else{
+          } else {
             questionnaire.forEach((quest) => {
               response.forEach(rep => {
                 count=0;
@@ -310,8 +309,10 @@ export class StatisticsComponent implements OnInit {
           })
           this.nbEvalsParLibelle.push(nbEvals);
           }
-
         }
+        console.log(this.nbEvalsParLibelle);
+        this.graph4LabelsY = ["0",  "" + (Math.ceil((Math.max(...this.nbEvalsParLibelle.at(0))+ 3)/5) * 5)   + ""];
+        console.log(this.graph4LabelsY);
         this.cdr.detectChanges();
       });
   }

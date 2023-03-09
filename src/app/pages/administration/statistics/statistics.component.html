@@ -166,7 +166,7 @@
                           [axisXLabels]="libelles"
                           [axisYLabels]="graph4LabelsY">
                   <tui-bar-chart
-                    [max]="allEvaluations?.length + 5"
+                    [max]="+(graph4LabelsY[1])"
                     [value]="nbEvalsParLibelle"
                     [tuiHintAppearance]="appearance"
                     [tuiHintContent]="hintGraph4"></tui-bar-chart>
