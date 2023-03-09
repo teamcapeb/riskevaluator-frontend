@@ -207,7 +207,6 @@ export class StatisticsComponent implements OnInit {
 
   getScoreMetiers(metiers: IMetier[]) {
     // TODO CHHECK PQ APPELER 2 FOIS QUAND ON DESELEECTIONNAE ENTREPRISE
-    console.log(metiers);
     var scoresMetiersTMP: number[][] = [];
     var scoreTMP: number[] = [];
     this.metierService.getScoreParMetier()
@@ -262,7 +261,7 @@ export class StatisticsComponent implements OnInit {
             scoresMetiersTMP.push(scoreTMP);
           });
         }
- 
+
         this.scoresMetiers = scoresMetiersTMP;
         this.cdr.detectChanges();
       });
@@ -348,7 +347,6 @@ export class StatisticsComponent implements OnInit {
           sumThematique = []
           response.forEach(rep => {
             if (quest.thematique == rep.thematique) {
-              console.log(rep)
               if (rep.taille == "Grande") {
                 sumGrandes += rep.scoreMoyen;
                 nbGrandes++;
@@ -374,7 +372,6 @@ export class StatisticsComponent implements OnInit {
           }
           sumThematique.push(avgPetites, avgMoyennes, avgGrandes);
           tmpScoresMoyensGraph1.push(sumThematique);
-          console.log("------------")
         })
       }else{
         this.selectedQuestionnaires.forEach((quest) => {
@@ -390,7 +387,6 @@ export class StatisticsComponent implements OnInit {
           sumThematique = []
           response.forEach(rep => {
             if (quest.thematique == rep.thematique) {
-              console.log(rep)
               if (rep.taille == "Grande") {
                 sumGrandes += rep.scoreMoyen;
                 nbGrandes++;
@@ -405,7 +401,6 @@ export class StatisticsComponent implements OnInit {
               }
             }
           })
-          console.log(nbPetites,nbMoyennes,nbGrandes)
           if (nbGrandes != 0) {
             avgGrandes = sumGrandes/nbGrandes;
           }
@@ -415,7 +410,6 @@ export class StatisticsComponent implements OnInit {
           if (nbMoyennes !=0) {
             avgMoyennes = sumMoyennes/nbMoyennes;
           }
-          console.log(avgPetites, avgMoyennes, avgGrandes)
           sumThematique.push(avgPetites, avgMoyennes, avgGrandes);
           tmpScoresMoyensGraph1.push(sumThematique);
         })
