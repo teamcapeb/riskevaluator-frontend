@@ -261,7 +261,7 @@ export class StatisticsComponent implements OnInit {
             scoresMetiersTMP.push(scoreTMP);
           });
         }
- 
+
         this.scoresMetiers = scoresMetiersTMP;
         this.cdr.detectChanges();
       });
