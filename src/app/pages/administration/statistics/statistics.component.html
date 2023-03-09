@@ -163,7 +163,7 @@
                           [axisXLabels]="libelles"
                           [axisYLabels]="graph4LabelsY">
                   <tui-bar-chart
-                    [max]="20"
+                    [max]="allEvaluations?.length + 5"
                     [value]="nbEvalsParLibelle"
                     [tuiHintAppearance]="appearance"
                     [tuiHintContent]="hintGraph4"></tui-bar-chart>

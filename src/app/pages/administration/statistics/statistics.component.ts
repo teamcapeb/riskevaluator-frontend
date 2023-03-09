@@ -90,7 +90,7 @@ export class StatisticsComponent implements OnInit {
   graph1LabelsY: string[] = ["0%", "100%"];
   graph2Labels: string[] = [];
   graph3LabelsY: string[] = ["0%", "100%"];
-  graph4LabelsY: string[] = ["0", "20"];
+  graph4LabelsY: string[] = ["0", "30"];
 
   scoresMoyenGraph1: number[][] = [];
   scoresMoyenGraph2: number[] = [];
@@ -108,10 +108,6 @@ export class StatisticsComponent implements OnInit {
   scoresMoyensEntreprises: EntrepriseScoreProjectionResponse[];
 
   activeItemIndex = NaN;
-
-  readonly value = [13769, 12367, 10172, 3018, 2592];
-  readonly sum = tuiSum(...this.value);
-  readonly labels = ['Food', 'Cafe', 'Open Source', 'Taxi', 'Other'];
 
   isItemActive(index: number): boolean {
       return this.activeItemIndex === index;
@@ -204,19 +200,20 @@ export class StatisticsComponent implements OnInit {
         return categorie.libelle;
       }));
       this.filteredCategorieLibelles = [...this.allCategoriesLibelles];
+      this.getNbEvalsParCategorie(this.filteredQuestionnaires);
       this.cdr.detectChanges();
     });
-
-    this.getScoreMetiers(this.filteredMetiers);
-    this.getNbEvalsParCategorie(this.filteredQuestionnaires);
   }
 
   getScoreMetiers(metiers: IMetier[]) {
+    // TODO CHHECK PQ APPELER 2 FOIS QUAND ON DESELEECTIONNAE ENTREPRISE
+    console.log(metiers);
     var scoresMetiersTMP: number[][] = [];
     var scoreTMP: number[] = [];
     this.metierService.getScoreParMetier()
       .subscribe((response: MetierScoreProjectionResponse[]) => {
-        this.filteredQuestionnaires.forEach((qst) => {
+        // TODO PB AUTOFILTERED QUESTIONNAIRES NE CHANGE PAS QUAND ON SELECT QUESTIONNAIRE
+        this.autoFilteredQuestionnaires.forEach((qst) => {
           scoreTMP = [];
           this.scoresMetiers = [];
           this.metierNames = [];
@@ -290,7 +287,7 @@ export class StatisticsComponent implements OnInit {
               }
             });
           })
-          this.nbEvalsParLibelle.push(nbEvals)
+          this.nbEvalsParLibelle.push(nbEvals);
         }
         this.cdr.detectChanges();
       });
@@ -442,6 +439,8 @@ export class StatisticsComponent implements OnInit {
         if(element.noSiret == entreprise.noSiret){
           this.selectedEntreprises.splice(index,1)
         }
+        this.updateFilteredMetiersByEntreprises();
+        this.updateFilteredEvaluationsByEntreprises();
         this.autoFilteredEntreprises = []
         this.resetAllFilters();
       })
@@ -498,6 +497,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   selectQuestionnaire(questionnaire: IQuestionnaire, selected: boolean) {
+    // TODO autofiltered ?
     if (selected) {
       this.selectedQuestionnaires = [];
       this.graph2Labels = [];
@@ -520,33 +520,14 @@ export class StatisticsComponent implements OnInit {
       })
       this.resetAllFilters();
       if (this.questionnaireControl.value.length == 0) {
+        this.getNbEvalsParCategorie(this.allQuestionnaires);
+        this.getNbReponsesParQuestionnaire(this.allQuestionnaires);
         this.allQuestionnaires.forEach((qst) => {
           this.graph2Labels.push(qst.thematique);
         });
       }
     }
-      // this.filteredQuestionnaires.forEach((element, index) => {
-      //   if (element.thematique == questionnaire.thematique) {
-      //     this.filteredQuestionnaires.splice(index, 1);
-      //     this.graph2Labels = this.graph2Labels.filter(thm => thm !== element.thematique);
-      //     this.updateFilteredEntreprisesByQuestionnaires();
-      //     this.updateFilteredMetiersByQuestionnaires();
-      //     this.updateFilteredCategoriesByQuestionnaires();
-      //     this.updateFilteredEvaluationsByQuestionnaires();
-      //     this.getNbEvalsParCategorie(this.filteredQuestionnaires);
-      //     if (this.questionnaireControl.value.length == 0) {
-      //       this.filteredQuestionnaires = [...this.allQuestionnaires];
-      //     }
-      //     this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
-      //     this.getScoreEffectifEntreprises(this.filteredEntreprises);
-      //   }
-      // });
-      // if (this.questionnaireControl.value.length == 0) {
-      //   this.resetAllFilters();
-      //   this.allQuestionnaires.forEach((qst) => {
-      //     this.graph2Labels.push(qst.thematique);
-      //   });
-    }
+  }
 
   separateEntreprisesEffectif(entreprises: IEntreprise[]) {
     this.petitesEntreprises = [];
@@ -905,15 +886,15 @@ export class StatisticsComponent implements OnInit {
   }
 
   resetAllFilters() {
-
     this.filteredEntreprises = [...this.allEntreprises];
     this.filteredMetiers = [...this.allMetiers];
     this.filteredEvaluations = [...this.allEvaluations];
     this.filteredQuestionnaires = [...this.allQuestionnaires];
     this.filteredCategories = [...this.allCategories];
     this.filteredCategorieLibelles = this.filterLibelles();
-    if(this.entrepriseControl.value.length != 0 && this.metierControl.value.length != 0
-       && this.questionnaireControl.value.length != 0){
+    if (this.entrepriseControl.value.length !== 0 &&
+        this.metierControl.value.length !== 0 &&
+        this.questionnaireControl.value.length !== 0){
       this.filteredEntreprises = [];
       this.allEntreprises.forEach(etp => {
         this.entrepriseControl.value.forEach((nom: string) => {
@@ -952,10 +933,10 @@ export class StatisticsComponent implements OnInit {
     this.updateFilteredMetiersByQuestionnaires();
     this.updateFilteredCategoriesByQuestionnaires();
     this.updateFilteredEvaluationsByQuestionnaires();
-    this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+    this.getNbEvalsParCategorie(this.autoFilteredQuestionnaires);
     this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
-    }else{
-      if(this.entrepriseControl.value.length != 0 && this.metierControl.value.length != 0){
+    } else{
+      if (this.entrepriseControl.value.length !== 0 && this.metierControl.value.length !== 0) {
         this.filteredEntreprises = [];
         this.allEntreprises.forEach(etp => {
           this.entrepriseControl.value.forEach((nom: string) => {
@@ -1010,7 +991,8 @@ export class StatisticsComponent implements OnInit {
           this.updateFilteredMetiersByQuestionnaires();
           this.updateFilteredCategoriesByQuestionnaires();
           this.updateFilteredEvaluationsByQuestionnaires();
-          this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+          // this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+          this.getNbEvalsParCategorie(this.autoFilteredQuestionnaires);
           this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
 
         })
@@ -1042,7 +1024,8 @@ export class StatisticsComponent implements OnInit {
         this.updateFilteredMetiersByQuestionnaires();
         this.updateFilteredCategoriesByQuestionnaires();
         this.updateFilteredEvaluationsByQuestionnaires();
-        this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+        // this.getNbEvalsParCategorie(this.filteredQuestionnaires);
+        this.getNbEvalsParCategorie(this.autoFilteredQuestionnaires);
         this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
         }
         else{
@@ -1072,23 +1055,36 @@ export class StatisticsComponent implements OnInit {
           this.updateFilteredEvaluationsByMetiers();
           this.getScoreMetiers(this.filteredMetiers);
           }else{
-             if(this.questionnaireControl.value.length != 0){
+
+            if(this.questionnaireControl.value.length != 0){
               this.filteredQuestionnaires = [];
               this.allQuestionnaires.forEach(qst => {
-              this.questionnaireControl.value.forEach((nom: string) => {
-                if (qst.thematique === nom && !this.includesQuestionnaire(this.filteredQuestionnaires,qst)) {
-                  this.filteredQuestionnaires.push(qst);
-                }
+                this.questionnaireControl.value.forEach((nom: string) => {
+                  if (qst.thematique === nom && !this.includesQuestionnaire(this.filteredQuestionnaires,qst)) {
+                    this.filteredQuestionnaires.push(qst);
+                  }
+                });
               });
-            });
-            this.updateFilteredEntreprisesByQuestionnaires();
-            this.updateFilteredMetiersByQuestionnaires();
-            this.updateFilteredCategoriesByQuestionnaires();
-            this.updateFilteredEvaluationsByQuestionnaires();
-            this.getNbEvalsParCategorie(this.filteredQuestionnaires);
-            this.getNbReponsesParQuestionnaire(this.filteredQuestionnaires);
+              this.updateFilteredEntreprisesByQuestionnaires();
+              this.updateFilteredMetiersByQuestionnaires();
+              this.updateFilteredCategoriesByQuestionnaires();
+              this.updateFilteredEvaluationsByQuestionnaires();
+              if(this.selectedQuestionnaires.length != 0){
+                this.getNbEvalsParCategorie(this.selectedQuestionnaires);
+                this.getNbReponsesParQuestionnaire(this.selectedQuestionnaires);
+                // TODO CHECK
+                this.getScoreEffectifEntreprises(this.autoFilteredEntreprises); // ?
+                this.getScoreMetiers(this.filteredMetiers);
+              }
+            }
+            else{
+              this.getNbEvalsParCategorie(this.allQuestionnaires);
+              this.getNbReponsesParQuestionnaire(this.allQuestionnaires);
+              // TODO CHECK
+              this.getScoreEffectifEntreprises(this.autoFilteredEntreprises); // ?
+              this.getScoreMetiers(this.autoFilteredMetiers);
+            }
           }
-        }
         }
       }
     }
