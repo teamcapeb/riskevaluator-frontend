@@ -308,7 +308,7 @@ export class StatisticsComponent implements OnInit {
           })
           this.nbEvalsParLibelle.push(nbEvals);
           }
-         
+
         }
         this.cdr.detectChanges();
       });
@@ -366,7 +366,7 @@ export class StatisticsComponent implements OnInit {
             if (nbMoyennes !=0) {
               avgMoyennes = sumMoyennes/nbMoyennes;
             }
-            sumThematique.push(avgPetites, avgMoyennes, avgGrandes);
+            sumThematique.push(parseFloat(avgPetites.toFixed(2)), parseFloat(avgMoyennes.toFixed(2)), parseFloat(avgGrandes.toFixed(2)));
             tmpScoresMoyensGraph1.push(sumThematique);
           })
         }else{
@@ -406,7 +406,7 @@ export class StatisticsComponent implements OnInit {
             if (nbMoyennes !=0) {
               avgMoyennes = sumMoyennes/nbMoyennes;
             }
-            sumThematique.push(avgPetites, avgMoyennes, avgGrandes);
+            sumThematique.push(parseFloat(avgPetites.toFixed(2)), parseFloat(avgMoyennes.toFixed(2)), parseFloat(avgGrandes.toFixed(2)));
             tmpScoresMoyensGraph1.push(sumThematique);
           })
         }
@@ -425,7 +425,7 @@ export class StatisticsComponent implements OnInit {
               sumThematique = []
               this.selectedEntreprises.forEach(etp=>{
 
-              
+
               response.forEach(rep => {
                 if (quest.thematique == rep.thematique && rep.nomEntreprise == etp.nomEntreprise) {
                   if (rep.taille == "Grande" ) {
@@ -453,7 +453,7 @@ export class StatisticsComponent implements OnInit {
               }
 
             })
-            sumThematique.push(avgPetites, avgMoyennes, avgGrandes);
+            sumThematique.push(parseFloat(avgPetites.toFixed(2)), parseFloat(avgMoyennes.toFixed(2)), parseFloat(avgGrandes.toFixed(2)));
             tmpScoresMoyensGraph1.push(sumThematique);
           })
         }else{
@@ -496,7 +496,7 @@ export class StatisticsComponent implements OnInit {
                 avgMoyennes = sumMoyennes/nbMoyennes;
               }
             })
-            sumThematique.push(avgPetites, avgMoyennes, avgGrandes);
+            sumThematique.push(parseFloat(avgPetites.toFixed(2)), parseFloat(avgMoyennes.toFixed(2)), parseFloat(avgGrandes.toFixed(2)));
             tmpScoresMoyensGraph1.push(sumThematique);
           })
         }
@@ -1380,12 +1380,12 @@ export class StatisticsComponent implements OnInit {
       }else{
         this.getNbEvalsParCategorie(this.allQuestionnaires);
       }
-     
+
       this.filteredEntreprises = [...this.autoFilteredEntreprises];
       this.filteredMetiers = [...this.autoFilteredMetiers]
       var questionnaires : IQuestionnaire[]  = []
       // console.log(questionnaires)
-      
+
       this.updateNumbers();
     })
   }
