@@ -242,6 +242,7 @@ export class StatisticsComponent implements OnInit {
             this.scoresMetiers = [];
             this.metierNames = [];
             if (metiers.length === 0) {
+              console.log("la",response)
               response.forEach((rep) => {
                 if (qst.thematique === rep.thematique) {
                   this.metierNames.push(rep.nomMetier);
@@ -249,6 +250,7 @@ export class StatisticsComponent implements OnInit {
                 }
               });
             } else {
+              console.log(metiers)
               metiers.forEach((mtr) => {
                 response.forEach((rep) => {
                   if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
@@ -1373,6 +1375,11 @@ export class StatisticsComponent implements OnInit {
           }
         })
       })
+      if(this.selectedMetiers.length!=0){
+        this.getScoreMetiers(this.selectedMetiers)
+      }else{
+        this.getScoreMetiers(this.autoFilteredMetiers)
+      }
       this.getNbReponsesParQuestionnaire(this.allQuestionnaires)
       this.getScoreEffectifEntreprises(this.allEntreprises)
       if(this.selectedQuestionnaires.length != 0){
