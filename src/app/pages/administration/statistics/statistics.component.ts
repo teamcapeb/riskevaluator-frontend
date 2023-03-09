@@ -267,32 +267,6 @@ export class StatisticsComponent implements OnInit {
       });
   }
 
-  // getScoreMetiers(metiers: IMetier[]) {
-    //   this.metierService.getScoreParMetier()
-    //     .subscribe((response: MetierScoreProjectionResponse[]) => {
-    //       this.scoresMetiers = [];
-    //       this.metierNames = []
-    //       if (metiers.length == 0) {
-    //         this.metierNames = response.map(item => item.nomMetier);
-    //         this.scoresMetiers.push(
-    //           response.map(item => parseFloat(item.scoreMoyen.toFixed(2)))
-    //         );
-    //       } else {
-    //         var scoreTMP: number[] = []
-    //         metiers.forEach((met) => {
-    //           response.forEach((rep) => {
-    //             if (rep.nomMetier == met.nomMetier) {
-    //               this.metierNames.push(rep.nomMetier);
-    //               scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(2)))
-    //             }
-    //           })
-    //         })
-    //         this.scoresMetiers.push(scoreTMP)
-    //       }
-    //       this.cdr.detectChanges();
-    //     });
-    // }
-
   getNbEvalsParCategorie(questionnaire: IQuestionnaire[]) {
     this.evaluationService.getNbEvalsParCategorie()
       .subscribe((response: EvalCategorieProjectionResponse[]) => {

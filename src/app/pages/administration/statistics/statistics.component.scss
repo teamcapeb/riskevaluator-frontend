@@ -45,7 +45,11 @@ mat-card-title {
 }
 
 .sidebar-card {
-  height: 100%
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .dashboard-title {
@@ -232,4 +236,8 @@ tui-axes {
     transform: rotate(-36deg);
     font-size: 8px;
   }
+}
+
+.filtres {
+  padding-top: 32px;
 }
