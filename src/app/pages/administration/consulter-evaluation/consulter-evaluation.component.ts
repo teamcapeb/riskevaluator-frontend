@@ -50,11 +50,9 @@ export class ConsulterEvaluationComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.onGetAllEvaluation();
-
     this.entrepriseService.getAll().subscribe((res) => {
       this.entreprises$ = this.sortEntreprises(res.filter(entreprise => entreprise.evaluations?.length > 0));
-      this.filteredEntreprises = this.sortEntreprises(res.filter(entreprise => entreprise.evaluations?.length > 0));
+      this.filteredEntreprises = [...this.entreprises$];
       this.entreprises$.forEach((res,index)=>{
         this.thematiques[index] = [];
         res.evaluations.forEach(evaluation=>{
@@ -64,6 +62,7 @@ export class ConsulterEvaluationComponent implements OnInit {
             })
         })
       })
+      console.log(this.thematiques)
     });
     this.metierService.getAllMetiers().subscribe((res) => {
       this.metiers$ = res;

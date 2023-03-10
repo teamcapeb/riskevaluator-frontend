@@ -23,12 +23,12 @@ export class ConsulterEvaluationItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.joinedMetiers = this.joinMetiers(this.entreprise.metiers)
-    this.entreprise.evaluations.forEach(evalaluation=>{
-      this.evaluationService.get(evalaluation.idEvaluation).subscribe(res => {
-        if(!this.includeThematique(this.thematiques,res.scoreCategories[0].categorieQuestion.questionnaire.thematique))
-          this.thematiques.push(res.scoreCategories[0].categorieQuestion.questionnaire.thematique);
-      })
-    })
+    // this.entreprise.evaluations.forEach(evalaluation=>{
+    //   this.evaluationService.get(evalaluation.idEvaluation).subscribe(res => {
+    //     if(!this.includeThematique(this.thematiques,res.scoreCategories[0].categorieQuestion.questionnaire.thematique))
+    //       this.thematiques.push(res.scoreCategories[0].categorieQuestion.questionnaire.thematique);
+    //   })
+    // })
   }
 
   includeThematique(themes:string[],theme:string){
