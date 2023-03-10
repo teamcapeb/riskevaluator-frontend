@@ -283,6 +283,124 @@ export class StatisticsComponent implements OnInit {
         this.scoresMetiers = scoresMetiersTMP;
         this.cdr.detectChanges();
       });
+    // this.entrepriseService.getDetailedScoreEntreprises().subscribe((response: EntrepriseScoreProjectionResponse[]) => {
+    //   console.log(response);
+    //   if(this.selectedQuestionnaires.length ==0 || this.selectedQuestionnaires.length == this.allQuestionnaires.length){
+    //     console.log("if")
+    //     tmpQuestionnaire.forEach((qst) => {
+    //       scoreTMP = [];
+    //       this.scoresMetiers = [];
+    //       this.metierNames = [];
+    //       if (metiers.length === 0) {
+    //         response.forEach((rep) => {
+    //           if (qst.thematique === rep.thematique) {
+    //             this.metierNames.push(rep.nomMetier);
+    //             scoreTMP.push(parseFloat(rep.scoreGenerale.toFixed(0)));
+    //           }
+    //         });
+    //       } else {
+    //         metiers.forEach((mtr) => {
+    //           response.forEach((rep) => {
+    //             if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
+    //               scoreTMP.push(parseFloat(rep?.scoreGenerale?.toFixed(0)));
+    //               this.metierNames.push(rep?.nomMetier);
+    //             }
+    //           });
+    //         });
+    //       }
+    //       uniqueScores = []
+    //       uniqueMetiers = []
+    //       for (let i = 0; i < this.metierNames.length; i++) {
+    //         const metier = this.metierNames[i];
+    //         const score = scoreTMP[i];
+    //         if (!uniqueMetiers.includes(metier)) {
+    //           uniqueMetiers.push(metier);
+    //           uniqueScores.push(score);
+    //         } else {
+    //           const index = uniqueMetiers.indexOf(metier);
+    //           uniqueScores[index] = parseFloat(((uniqueScores[index] + score)).toFixed(0));
+    //         }
+    //       }
+    //       uniqueMetiers.forEach((met)=>{
+    //         var nbItem = 0;
+    //         this.metierNames.forEach(metier=>{
+    //           if(met==metier){
+    //             nbItem++
+    //           }
+    //         })
+    //         const index = uniqueMetiers.indexOf(met);
+    //         uniqueScores[index] = parseFloat(((uniqueScores[index])/nbItem).toFixed(0));
+
+    //       })
+    //       this.metierNames = [...uniqueMetiers];
+    //       scoreTMP = [...uniqueScores];
+    //       scoresMetiersTMP.push(scoreTMP);
+
+    //       console.log(this.metierNames);
+    //       console.log(scoreTMP);
+    //     });
+    //   }
+    //   else {
+    //     console.log("else")
+    //     if(tmpQuestionnaire.length != 0){
+    //       this.selectedQuestionnaires.forEach((qst) => {
+    //         scoreTMP = [];
+    //         this.scoresMetiers = [];
+    //         this.metierNames = [];
+    //         if (metiers.length === 0) {
+    //           response.forEach((rep) => {
+    //             if (qst.thematique === rep.thematique) {
+    //               this.metierNames.push(rep.nomMetier);
+    //               scoreTMP.push(parseFloat(rep.scoreMoyen.toFixed(0)));
+    //             }
+    //           });
+    //         } else {
+    //           metiers.forEach((mtr) => {
+    //             response.forEach((rep) => {
+    //               if (mtr.nomMetier === rep.nomMetier && qst.thematique === rep.thematique) {
+    //                 scoreTMP.push(parseFloat(rep?.scoreGenerale?.toFixed(0)));
+    //                 this.metierNames.push(rep?.nomMetier);
+    //               }
+    //             });
+    //           });
+    //         }
+    //         uniqueScores = []
+    //         uniqueMetiers = []
+    //         for (let i = 0; i < this.metierNames.length; i++) {
+    //           const metier = this.metierNames[i];
+    //           const score = scoreTMP[i];
+    //           if (!uniqueMetiers.includes(metier)) {
+    //             uniqueMetiers.push(metier);
+    //             uniqueScores.push(score);
+    //           } else {
+    //             const index = uniqueMetiers.indexOf(metier);
+    //             uniqueScores[index] = parseFloat(((uniqueScores[index] + score)).toFixed(0));
+    //           }
+    //         }
+    //         uniqueMetiers.forEach((met)=>{
+    //           var nbItem = 0;
+    //           this.metierNames.forEach(metier=>{
+    //             if(met==metier){
+    //               nbItem++
+    //             }
+    //           })
+    //           const index = uniqueMetiers.indexOf(met);
+    //           uniqueScores[index] = parseFloat(((uniqueScores[index])/nbItem).toFixed(0));
+
+    //         })
+    //         this.metierNames = [...uniqueMetiers];
+    //         scoreTMP = [...uniqueScores];
+    //         scoresMetiersTMP.push(scoreTMP);
+
+    //         console.log(this.metierNames);
+    //         console.log(scoreTMP);
+    //       });
+    //     }
+    //   }
+    //   this.scoresMetiers = scoresMetiersTMP;
+    //   console.log(this.scoresMetiers);
+    //   this.cdr.detectChanges();
+    // });
   }
 
   getNbEvalsParCategorie(questionnaire: IQuestionnaire[]) {
@@ -642,8 +760,8 @@ export class StatisticsComponent implements OnInit {
         if(element.noSiret == entreprise.noSiret){
           this.selectedEntreprises.splice(index,1)
         }
-        this.updateFilteredMetiersByEntreprises();
-        this.updateFilteredEvaluationsByEntreprises();
+        // this.updateFilteredMetiersByEntreprises();
+        // this.updateFilteredEvaluationsByEntreprises();
         this.autoFilteredEntreprises = []
         this.resetAllFilters();
       })
@@ -666,7 +784,6 @@ export class StatisticsComponent implements OnInit {
           this.filteredMetiers.splice(index, 1);
           this.updateFilteredEntreprisesByMetiers();
           this.updateFilteredEvaluationsByMetiers();
-          this.getScoreMetiers(this.filteredMetiers);
         }
       });
       if (this.metierControl.value.length == 0) {
@@ -756,7 +873,6 @@ export class StatisticsComponent implements OnInit {
             }
           });
         })
-      this.getScoreMetiers(this.filteredMetiers);
     }else{
       var tmpMet : IMetier[] = [];
       this.filteredEntreprises.forEach((etp) => {
@@ -1158,7 +1274,6 @@ export class StatisticsComponent implements OnInit {
 
           this.updateFilteredEntreprisesByMetiers();
           this.updateFilteredEvaluationsByMetiers();
-
           this.getScoreMetiers(this.filteredMetiers);
 
 
@@ -1256,14 +1371,12 @@ export class StatisticsComponent implements OnInit {
                 this.getNbEvalsParCategorie(this.selectedQuestionnaires);
                 this.getNbReponsesParQuestionnaire(this.selectedQuestionnaires);
                 this.getScoreEffectifEntreprises(this.autoFilteredEntreprises);
-                this.getScoreMetiers(this.filteredMetiers);
               }
             }
             else{
               this.getNbEvalsParCategorie(this.allQuestionnaires);
               this.getNbReponsesParQuestionnaire(this.allQuestionnaires);
               this.getScoreEffectifEntreprises(this.autoFilteredEntreprises);
-              this.getScoreMetiers(this.autoFilteredMetiers);
             }
           }
         }
@@ -1389,24 +1502,24 @@ export class StatisticsComponent implements OnInit {
           }
         })
       })
-      if(this.selectedMetiers.length!=0){
-        this.getScoreMetiers(this.selectedMetiers)
-      }else{
-        this.getScoreMetiers(this.autoFilteredMetiers)
-      }
-      this.getNbReponsesParQuestionnaire(this.allQuestionnaires)
-      this.getScoreEffectifEntreprises(this.allEntreprises)
-      if(this.selectedQuestionnaires.length != 0){
-        this.getNbEvalsParCategorie(this.selectedQuestionnaires);
-      }else{
-        this.getNbEvalsParCategorie(this.allQuestionnaires);
-      }
-
-      this.filteredEntreprises = [...this.autoFilteredEntreprises];
-      this.filteredMetiers = [...this.autoFilteredMetiers];
-
-      this.updateNumbers();
     })
+    if(this.selectedMetiers.length!=0){
+      this.getScoreMetiers(this.selectedMetiers)
+    }else{
+      this.getScoreMetiers(this.autoFilteredMetiers)
+    }
+    this.getNbReponsesParQuestionnaire(this.allQuestionnaires)
+    this.getScoreEffectifEntreprises(this.allEntreprises)
+    if(this.selectedQuestionnaires.length != 0){
+      this.getNbEvalsParCategorie(this.selectedQuestionnaires);
+    }else{
+      this.getNbEvalsParCategorie(this.allQuestionnaires);
+    }
+
+    this.filteredEntreprises = [...this.autoFilteredEntreprises];
+    this.filteredMetiers = [...this.autoFilteredMetiers];
+
+    this.updateNumbers();
   }
 
   updateNumbers(){

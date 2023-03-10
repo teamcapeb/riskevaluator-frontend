@@ -1,6 +1,9 @@
 export interface EntrepriseScoreProjectionResponse {
+  idEntreprise?: string,
   nomEntreprise: string,
+  nomMetier?: string,
   taille: string,
   thematique: string,
-  scoreMoyen: number
+  scoreMoyen?: number,
+  scoreGenerale?: number
 }

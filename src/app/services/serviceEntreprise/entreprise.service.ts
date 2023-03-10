@@ -43,4 +43,8 @@ export class EntrepriseService {
   getScoreEntreprises():Observable<EntrepriseScoreProjectionResponse[]> {
     return this.http.get<EntrepriseScoreProjectionResponse[]>(`${this.baseUrl}scores/all`);
   }
+
+  getDetailedScoreEntreprises():Observable<EntrepriseScoreProjectionResponse[]> {
+    return this.http.get<EntrepriseScoreProjectionResponse[]>(`${this.baseUrl}scores/detailed`);
+  }
  }
