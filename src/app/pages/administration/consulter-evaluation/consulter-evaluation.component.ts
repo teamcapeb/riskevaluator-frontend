@@ -1,15 +1,10 @@
 import { IEntreprise } from '@/interfaces/IEntreprise';
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { Observable, of } from "rxjs";
 import { AppDataState,DataStateEnum } from "@/state/questionnaire.state";
 import {IMetier} from "@/interfaces/IMetier";
-import { HttpClient } from "@angular/common/http";
-import { ActivatedRoute, Router } from "@angular/router";
 import { MetierService } from "@services/serviceMetier/metier.service";
-import { catchError, map, startWith } from "rxjs/operators";
 import IQuestionnaire from "@/interfaces/IQuestionnaire";
 import { QuestionnaireService } from "@services/serviceQuestionnaire/questionnaire.service";
-import IEvaluation from "@/interfaces/IEvaluation";
 import { EvaluationApiService } from "@services/serviceEvaluation/evaluation-api.service";
 import { ModalService } from "@services/serviceModal/modal.service";
 import { EntrepriseService } from '@services/serviceEntreprise/entreprise.service';
